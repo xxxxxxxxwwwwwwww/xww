@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xww的个人课程页面</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#165DFF',
+            secondary: '#F5F7FA',
+            accent: '#FF7D00',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .card-hover {
+        @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- 导航栏 -->
+  <nav class="bg-white shadow-sm fixed w-full z-10">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="text-primary font-bold text-xl">Xww的课程页面</div>
+      <div class="hidden md:flex space-x-6">
+        <a href="#home" class="text-gray-700 hover:text-primary transition-colors">首页</a>
+        <a href="#courses" class="text-gray-700 hover:text-primary transition-colors">课程</a>
+        <a href="#about" class="text-gray-700 hover:text-primary transition-colors">关于我</a>
+      </div>
+      <button class="md:hidden text-gray-700">
+        <i class="fa fa-bars text-xl"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- 个人信息区 -->
+  <section id="home" class="pt-24 pb-12 bg-gradient-to-b from-primary/5 to-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-8">
+        <div class="flex flex-col md:flex-row items-center gap-8">
+          <div class="w-32 h-32 rounded-full bg-primary/20 flex items-center justify-center">
+            <i class="fa fa-user text-primary text-4xl"></i>
+          </div>
+          <div class="text-center md:text-left">
+            <h1 class="text-3xl font-bold text-gray-800">Xww</h1>
+            <p class="text-lg text-gray-600 mt-2">广东科学技术职业学院</p>
+            <p class="text-lg text-primary font-medium mt-1">商学院 | 商务数据分析与应用专业</p>
+            <div class="mt-4 flex justify-center md:justify-start space-x-4">
+              <a href="#" class="text-gray-600 hover:text-primary transition-colors">
+                <i class="fa fa-github text-xl"></i>
+              </a>
+              <a href="#" class="text-gray-600 hover:text-primary transition-colors">
+                <i class="fa fa-linkedin text-xl"></i>
+              </a>
+              <a href="#" class="text-gray-600 hover:text-primary transition-colors">
+                <i class="fa fa-envelope text-xl"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 课程列表区 -->
+  <section id="courses" class="py-12">
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">我的课程</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- 课程卡片 1 -->
+        <div class="bg-white rounded-xl shadow-sm p-6 card-hover cursor-pointer" onclick="toggleCourseDetails('course1')">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
+              <i class="fa fa-code text-primary text-xl"></i>
+            </div>
+            <button class="text-gray-500 hover:text-primary transition-colors">
+              <i class="fa fa-chevron-down"></i>
+            </button>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800">Python基础</h3>
+          <p class="text-gray-600 mt-2">学习Python编程语言的基本语法和核心概念，为数据分析打下基础。</p>
+          <div id="course1" class="mt-4 hidden">
+            <div class="border-t border-gray-100 pt-4 mt-4">
+              <h4 class="font-medium text-gray-800">课程目标</h4>
+              <p class="text-gray-600 mt-1">掌握Python基本语法，能够编写简单的程序，理解面向对象编程思想。</p>
+              <h4 class="font-medium text-gray-800 mt-3">学习内容</h4>
+              <ul class="list-disc list-inside text-gray-600 mt-1 space-y-1">
+                <li>Python环境搭建</li>
+                <li>基本数据类型和运算符</li>
+                <li>控制流和循环结构</li>
+                <li>函数和模块</li>
+                <li>面向对象编程</li>
+              </ul>
+              <h4 class="font-medium text-gray-800 mt-3">学习成果</h4>
+              <p class="text-gray-600 mt-1">能够独立编写Python脚本，解决基本的编程问题。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 课程卡片 2 -->
+        <div class="bg-white rounded-xl shadow-sm p-6 card-hover cursor-pointer" onclick="toggleCourseDetails('course2')">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
+              <i class="fa fa-bar-chart text-primary text-xl"></i>
+            </div>
+            <button class="text-gray-500 hover:text-primary transition-colors">
+              <i class="fa fa-chevron-down"></i>
+            </button>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800">数据分析技术</h3>
+          <p class="text-gray-600 mt-2">学习数据清洗、转换、分析和可视化的核心技术。</p>
+          <div id="course2" class="mt-4 hidden">
+            <div class="border-t border-gray-100 pt-4 mt-4">
+              <h4 class="font-medium text-gray-800">课程目标</h4>
+              <p class="text-gray-600 mt-1">掌握数据分析的基本流程和方法，能够使用Python进行数据处理和分析。</p>
+              <h4 class="font-medium text-gray-800 mt-3">学习内容</h4>
+              <ul class="list-disc list-inside text-gray-600 mt-1 space-y-1">
+                <li>数据清洗和预处理</li>
+                <li>数据可视化</li>
+                <li>统计分析方法</li>
+                <li>机器学习基础</li>
+                <li>实战项目</li>
+              </ul>
+              <h4 class="font-medium text-gray-800 mt-3">学习成果</h4>
+              <p class="text-gray-600 mt-1">能够独立完成数据分析项目，从数据中提取有价值的信息。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 课程卡片 3 -->
+        <div class="bg-white rounded-xl shadow-sm p-6 card-hover cursor-pointer" onclick="toggleCourseDetails('course3')">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
+              <i class="fa fa-database text-primary text-xl"></i>
+            </div>
+            <button class="text-gray-500 hover:text-primary transition-colors">
+              <i class="fa fa-chevron-down"></i>
+            </button>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800">数据采集与处理</h3>
+          <p class="text-gray-600 mt-2">学习网络爬虫技术和数据采集方法，获取和处理各类数据源。</p>
+          <div id="course3" class="mt-4 hidden">
+            <div class="border-t border-gray-100 pt-4 mt-4">
+              <h4 class="font-medium text-gray-800">课程目标</h4>
+              <p class="text-gray-600 mt-1">掌握数据采集的方法和工具，能够从网络和其他来源获取数据。</p>
+              <h4 class="font-medium text-gray-800 mt-3">学习内容</h4>
+              <ul class="list-disc list-inside text-gray-600 mt-1 space-y-1">
+                <li>网络爬虫原理</li>
+                <li>Python爬虫库使用</li>
+                <li>数据存储和管理</li>
+                <li>API接口调用</li>
+                <li>数据清洗和转换</li>
+              </ul>
+              <h4 class="font-medium text-gray-800 mt-3">学习成果</h4>
+              <p class="text-gray-600 mt-1">能够独立完成数据采集任务，获取所需的数据源。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 课程卡片 4 -->
+        <div class="bg-white rounded-xl shadow-sm p-6 card-hover cursor-pointer" onclick="toggleCourseDetails('course4')">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
+              <i class="fa fa-truck text-primary text-xl"></i>
+            </div>
+            <button class="text-gray-500 hover:text-primary transition-colors">
+              <i class="fa fa-chevron-down"></i>
+            </button>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800">供应链数据分析</h3>
+          <p class="text-gray-600 mt-2">学习供应链管理中的数据分析方法，优化供应链流程。</p>
+          <div id="course4" class="mt-4 hidden">
+            <div class="border-t border-gray-100 pt-4 mt-4">
+              <h4 class="font-medium text-gray-800">课程目标</h4>
+              <p class="text-gray-600 mt-1">掌握供应链数据分析的方法和工具，能够优化供应链流程。</p>
+              <h4 class="font-medium text-gray-800 mt-3">学习内容</h4>
+              <ul class="list-disc list-inside text-gray-600 mt-1 space-y-1">
+                <li>供应链管理基础</li>
+                <li>需求预测分析</li>
+                <li>库存优化</li>
+                <li>物流网络分析</li>
+                <li>供应链风险管理</li>
+              </ul>
+              <h4 class="font-medium text-gray-800 mt-3">学习成果</h4>
+              <p class="text-gray-600 mt-1">能够应用数据分析方法优化供应链流程，提高供应链效率。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 课程卡片 5 -->
+        <div class="bg-white rounded-xl shadow-sm p-6 card-hover cursor-pointer" onclick="toggleCourseDetails('course5')">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
+              <i class="fa fa-database text-primary text-xl"></i>
+            </div>
+            <button class="text-gray-500 hover:text-primary transition-colors">
+              <i class="fa fa-chevron-down"></i>
+            </button>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800">数据库原理与应用</h3>
+          <p class="text-gray-600 mt-2">学习数据库的基本原理和SQL语言，掌握数据库设计和管理技能。</p>
+          <div id="course5" class="mt-4 hidden">
+            <div class="border-t border-gray-100 pt-4 mt-4">
+              <h4 class="font-medium text-gray-800">课程目标</h4>
+              <p class="text-gray-600 mt-1">掌握数据库的基本原理和SQL语言，能够设计和管理数据库。</p>
+              <h4 class="font-medium text-gray-800 mt-3">学习内容</h4>
+              <ul class="list-disc list-inside text-gray-600 mt-1 space-y-1">
+                <li>数据库基本概念</li>
+                <li>SQL语言基础</li>
+                <li>数据库设计</li>
+                <li>数据库管理</li>
+                <li>NoSQL数据库简介</li>
+              </ul>
+              <h4 class="font-medium text-gray-800 mt-3">学习成果</h4>
+              <p class="text-gray-600 mt-1">能够设计数据库结构，编写SQL查询，管理数据库系统。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 课程卡片 6 -->
+        <div class="bg-white rounded-xl shadow-sm p-6 card-hover cursor-pointer" onclick="toggleCourseDetails('course6')">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
+              <i class="fa fa-line-chart text-primary text-xl"></i>
+            </div>
+            <button class="text-gray-500 hover:text-primary transition-colors">
+              <i class="fa fa-chevron-down"></i>
+            </button>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800">商务智能分析</h3>
+          <p class="text-gray-600 mt-2">学习商务智能工具和方法，从数据中提取商业价值。</p>
+          <div id="course6" class="mt-4 hidden">
+            <div class="border-t border-gray-100 pt-4 mt-4">
+              <h4 class="font-medium text-gray-800">课程目标</h4>
+              <p class="text-gray-600 mt-1">掌握商务智能工具和方法，能够从数据中提取商业价值。</p>
+              <h4 class="font-medium text-gray-800 mt-3">学习内容</h4>
+              <ul class="list-disc list-inside text-gray-600 mt-1 space-y-1">
+                <li>商务智能基础</li>
+                <li>数据仓库设计</li>
+                <li>OLAP分析</li>
+                <li>数据可视化工具</li>
+                <li>商业决策支持</li>
+              </ul>
+              <h4 class="font-medium text-gray-800 mt-3">学习成果</h4>
+              <p class="text-gray-600 mt-1">能够使用商务智能工具进行数据分析，支持商业决策。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 关于我 -->
+  <section id="about" class="py-12 bg-secondary">
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">关于我</h2>
+      <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-sm p-8">
+        <p class="text-gray-600 leading-relaxed">
+          我是广东科学技术职业学院商学院商务数据分析与应用专业的学生Xww。我对数据分析和商务智能有着浓厚的兴趣，希望通过学习和实践，掌握数据分析的核心技能，为未来的职业发展打下坚实的基础。
+        </p>
+        <p class="text-gray-600 leading-relaxed mt-4">
+          在校期间，我学习了多门与数据分析相关的课程，包括Python基础、数据分析技术、数据采集与处理、供应链数据分析、数据库原理与应用等。我希望通过这个页面，展示我所学的课程内容和学习成果，也为自己的学习历程做一个记录。
+        </p>
+        <p class="text-gray-600 leading-relaxed mt-4">
+          未来，我计划继续深入学习数据分析领域的知识和技能，参加相关的实践项目和竞赛，不断提升自己的专业能力。我相信，通过努力和实践，我能够成为一名优秀的数据分析师，为企业和社会创造价值。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-4 md:mb-0">
+          <h3 class="text-lg font-semibold">Xww的个人课程页面</h3>
+          <p class="text-gray-400 mt-1">广东科学技术职业学院 | 商务数据分析与应用专业</p>
+        </div>
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-400 hover:text-white transition-colors">
+            <i class="fa fa-github text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors">
+            <i class="fa fa-linkedin text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors">
+            <i class="fa fa-envelope text-xl"></i>
+          </a>
+        </div>
+      </div>
+      <div class="mt-8 border-t border-gray-700 pt-4 text-center text-gray-400">
+        <p>© 2026 Xww. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleCourseDetails(courseId) {
+      const courseElement = document.getElementById(courseId);
+      courseElement.classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>
