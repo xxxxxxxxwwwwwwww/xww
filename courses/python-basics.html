@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python基础 - Xww的课程页面</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/ace.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#165DFF',
+            secondary: '#F5F7FA',
+            accent: '#FF7D00',
+            code: '#282c34',
+            code-text: '#abb2bf',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .card-hover {
+        @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+      }
+      .code-editor {
+        @apply w-full h-80 bg-code rounded-lg overflow-hidden;
+      }
+      .code-output {
+        @apply w-full h-40 bg-gray-100 rounded-lg p-4 font-mono text-sm overflow-auto;
+      }
+      .step-active {
+        @apply bg-primary text-white;
+      }
+      .step-completed {
+        @apply bg-green-500 text-white;
+      }
+      .step-pending {
+        @apply bg-gray-200 text-gray-600;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- 导航栏 -->
+  <nav class="bg-white shadow-sm fixed w-full z-10">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="text-primary font-bold text-xl">
+        <a href="../index.html" class="hover:text-primary/80 transition-colors">
+          <i class="fa fa-arrow-left mr-2"></i> Xww的课程页面
+        </a>
+      </div>
+      <div class="hidden md:flex space-x-6">
+        <a href="../index.html#home" class="text-gray-700 hover:text-primary transition-colors">首页</a>
+        <a href="../index.html#courses" class="text-gray-700 hover:text-primary transition-colors">课程</a>
+        <a href="../index.html#about" class="text-gray-700 hover:text-primary transition-colors">关于我</a>
+      </div>
+      <button class="md:hidden text-gray-700">
+        <i class="fa fa-bars text-xl"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- 课程标题区 -->
+  <section class="pt-24 pb-12 bg-gradient-to-b from-primary/10 to-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="flex items-center gap-4 mb-4">
+          <div class="w-16 h-16 rounded-lg bg-primary flex items-center justify-center">
+            <i class="fa fa-code text-white text-2xl"></i>
+          </div>
+          <div>
+            <h1 class="text-3xl font-bold text-gray-800">Python基础</h1>
+            <p class="text-gray-600 mt-1">高职大一第二学期 | 48学时</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 学习平台区 -->
+  <section class="py-12">
+    <div class="container mx-auto px-4">
+      <!-- 学习路径 -->
+      <div class="max-w-6xl mx-auto mb-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">学习路径</h2>
+        <div class="flex flex-wrap gap-4">
+          <div class="step-active px-6 py-3 rounded-full text-sm font-medium">
+            <i class="fa fa-check mr-2"></i>1. Python环境搭建
+          </div>
+          <div class="step-active px-6 py-3 rounded-full text-sm font-medium">
+            <i class="fa fa-check mr-2"></i>2. 基础语法
+          </div>
+          <div class="step-active px-6 py-3 rounded-full text-sm font-medium">
+            <i class="fa fa-check mr-2"></i>3. 数据类型
+          </div>
+          <div class="step-active px-6 py-3 rounded-full text-sm font-medium">
+            <i class="fa fa-check mr-2"></i>4. 控制流
+          </div>
+          <div class="step-pending px-6 py-3 rounded-full text-sm font-medium">
+            5. 函数
+          </div>
+          <div class="step-pending px-6 py-3 rounded-full text-sm font-medium">
+            6. 数据结构
+          </div>
+          <div class="step-pending px-6 py-3 rounded-full text-sm font-medium">
+            7. 面向对象
+          </div>
+        </div>
+      </div>
+
+      <!-- 交互式学习区 -->
+      <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- 左侧：课程内容 -->
+        <div class="lg:col-span-2 space-y-6">
+          <!-- 课程标题 -->
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <h3 class="text-xl font-bold text-gray-800">模块4：控制流与循环结构</h3>
+            <p class="text-gray-600 mt-2">学习Python中的条件语句和循环结构，掌握程序的流程控制。</p>
+          </div>
+
+          <!-- 学习内容 -->
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <h4 class="text-lg font-semibold text-gray-800 mb-4">条件语句</h4>
+            <div class="space-y-4">
+              <p class="text-gray-600">Python中的条件语句使用 <code class="bg-gray-100 px-2 py-1 rounded">if</code>、<code class="bg-gray-100 px-2 py-1 rounded">elif</code> 和 <code class="bg-gray-100 px-2 py-1 rounded">else</code> 关键字。</p>
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <pre class="font-mono text-sm text-gray-800">
+# 条件语句示例
+age = 18
+if age >= 18:
+    print("你是成年人")
+elif age >= 13:
+    print("你是青少年")
+else:
+    print("你是儿童")
+                </pre>
+              </div>
+              <h4 class="text-lg font-semibold text-gray-800 mt-6">循环语句</h4>
+              <p class="text-gray-600">Python支持 <code class="bg-gray-100 px-2 py-1 rounded">for</code> 循环和 <code class="bg-gray-100 px-2 py-1 rounded">while</code> 循环。</p>
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <pre class="font-mono text-sm text-gray-800">
+# for循环示例
+for i in range(5):
+    print(i)
+
+# while循环示例
+count = 0
+while count < 5:
+    print(count)
+    count += 1
+                </pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- 代码编辑器 -->
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h4 class="text-lg font-semibold text-gray-800">代码编辑器</h4>
+              <button id="runCode" class="bg-primary hover:bg-primary/80 text-white px-4 py-2 rounded-lg transition-colors">
+                <i class="fa fa-play mr-2"></i>运行代码
+              </button>
+            </div>
+            <div id="codeEditor" class="code-editor"></div>
+            <div class="mt-4">
+              <h5 class="text-sm font-medium text-gray-700 mb-2">输出结果：</h5>
+              <div id="codeOutput" class="code-output">
+                运行代码查看输出...
+              </div>
+            </div>
+          </div>
+
+          <!-- 练习题目 -->
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <h4 class="text-lg font-semibold text-gray-800 mb-4">练习题</h4>
+            <div class="space-y-4">
+              <div class="border-l-4 border-primary pl-4">
+                <h5 class="font-medium text-gray-800">练习1：判断奇偶数</h5>
+                <p class="text-gray-600 mt-1">编写一个程序，输入一个整数，判断它是奇数还是偶数。</p>
+              </div>
+              <div class="border-l-4 border-primary pl-4">
+                <h5 class="font-medium text-gray-800">练习2：计算累加和</h5>
+                <p class="text-gray-600 mt-1">使用循环计算1到100的累加和。</p>
+              </div>
+              <div class="border-l-4 border-primary pl-4">
+                <h5 class="font-medium text-gray-800">练习3：打印乘法表</h5>
+                <p class="text-gray-600 mt-1">使用嵌套循环打印99乘法表。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右侧：学习辅助 -->
+        <div class="space-y-6">
+          <!-- 学习进度 -->
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">学习进度</h3>
+            <div class="space-y-4">
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-gray-600">总体进度</span>
+                  <span class="font-medium text-gray-800">57%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                  <div class="bg-primary h-2 rounded-full" style="width: 57%"></div>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div class="bg-gray-50 p-3 rounded-lg text-center">
+                  <div class="text-2xl font-bold text-primary">4/7</div>
+                  <div class="text-sm text-gray-600">完成模块</div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg text-center">
+                  <div class="text-2xl font-bold text-primary">12</div>
+                  <div class="text-sm text-gray-600">完成练习</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 学习资源 -->
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">学习资源</h3>
+            <div class="space-y-3">
+              <a href="#" class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-primary hover:bg-gray-50 transition-colors">
+                <i class="fa fa-book text-primary"></i>
+                <span class="text-gray-800">Python官方文档</span>
+              </a>
+              <a href="#" class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-primary hover:bg-gray-50 transition-colors">
+                <i class="fa fa-video-camera text-primary"></i>
+                <span class="text-gray-800">Python基础视频教程</span>
+              </a>
+              <a href="#" class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-primary hover:bg-gray-50 transition-colors">
+                <i class="fa fa-code text-primary"></i>
+                <span class="text-gray-800">GitHub代码示例</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 帮助中心 -->
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">帮助中心</h3>
+            <div class="space-y-3">
+              <div class="flex items-start gap-3">
+                <i class="fa fa-question-circle text-primary mt-1"></i>
+                <div>
+                  <h4 class="font-medium text-gray-800">遇到问题？</h4>
+                  <p class="text-sm text-gray-600">查看常见问题或联系助教</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <i class="fa fa-comments text-primary mt-1"></i>
+                <div>
+                  <h4 class="font-medium text-gray-800">讨论社区</h4>
+                  <p class="text-sm text-gray-600">与同学交流学习心得</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <i class="fa fa-lightbulb-o text-primary mt-1"></i>
+                <div>
+                  <h4 class="font-medium text-gray-800">学习提示</h4>
+                  <p class="text-sm text-gray-600">每天坚持练习30分钟</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // 初始化代码编辑器
+    const editor = ace.edit('codeEditor');
+    editor.setTheme('ace/theme/monokai');
+    editor.session.setMode('ace/mode/python');
+    editor.setOptions({
+      fontSize: '14px',
+      tabSize: 4,
+      useSoftTabs: true,
+      showPrintMargin: false
+    });
+
+    // 设置默认代码
+    editor.setValue(`# 控制流练习
+
+# 练习1：判断奇偶数
+num = int(input("请输入一个整数: "))
+if num % 2 == 0:
+    print(f"{num} 是偶数")
+else:
+    print(f"{num} 是奇数")
+
+# 练习2：计算累加和
+sum = 0
+for i in range(1, 101):
+    sum += i
+print(f"1到100的累加和是: {sum}")
+
+# 练习3：打印乘法表
+print("\n99乘法表:")
+for i in range(1, 10):
+    for j in range(1, i+1):
+        print(f"{j} × {i} = {i*j}", end="\t")
+    print()`);
+
+    // 运行代码功能
+    document.getElementById('runCode').addEventListener('click', function() {
+      const code = editor.getValue();
+      const output = document.getElementById('codeOutput');
+      
+      // 模拟代码运行
+      output.textContent = "运行中...";
+      
+      // 简单的代码执行模拟
+      setTimeout(() => {
+        let result = "";
+        
+        // 模拟输入
+        const inputs = [42, 0];
+        let inputIndex = 0;
+        
+        // 模拟print函数
+        const originalPrint = console.log;
+        console.log = function(...args) {
+          result += args.join(' ') + "\n";
+          originalPrint(...args);
+        };
+        
+        try {
+          // 模拟input函数
+          const originalInput = globalThis.input;
+          globalThis.input = function(prompt) {
+            result += prompt + " " + inputs[inputIndex] + "\n";
+            return inputs[inputIndex++].toString();
+          };
+          
+          // 执行代码
+          eval(code);
+        } catch (error) {
+          result += "错误: " + error.message + "\n";
+        } finally {
+          // 恢复原始函数
+          console.log = originalPrint;
+          if (globalThis.input) {
+            delete globalThis.input;
+          }
+        }
+        
+        output.textContent = result || "无输出";
+      }, 500);
+    });
+  </script>
+
+  <!-- 页脚 -->
+  <footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-4 md:mb-0">
+          <h3 class="text-lg font-semibold">Xww的个人课程页面</h3>
+          <p class="text-gray-400 mt-1">广东科学技术职业学院 | 商务数据分析与应用专业</p>
+        </div>
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-400 hover:text-white transition-colors">
+            <i class="fa fa-github text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors">
+            <i class="fa fa-linkedin text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors">
+            <i class="fa fa-envelope text-xl"></i>
+          </a>
+        </div>
+      </div>
+      <div class="mt-8 border-t border-gray-700 pt-4 text-center text-gray-400">
+        <p>© 2026 Xww. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
