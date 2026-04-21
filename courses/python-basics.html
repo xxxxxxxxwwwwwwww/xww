@@ -7,16 +7,19 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/ace.js"></script>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            primary: '#165DFF',
-            secondary: '#F5F7FA',
-            accent: '#FF7D00',
-            code: '#282c34',
-            code-text: '#abb2bf',
+            primary: '#06b6d4',
+            secondary: '#1e293b',
+            accent: '#10b981',
+            code: '#1e293b',
+            codeText: '#e2e8f0',
+            dark: '#111827',
+            'dark-gray': '#1f2937',
           },
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -31,341 +34,1277 @@
       .content-auto {
         content-visibility: auto;
       }
-      .card-hover {
-        @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
-      }
       .code-editor {
-        @apply w-full h-80 bg-code rounded-lg overflow-hidden;
+        @apply w-full h-96 bg-dark rounded-lg overflow-hidden border border-gray-700;
       }
       .code-output {
-        @apply w-full h-40 bg-gray-100 rounded-lg p-4 font-mono text-sm overflow-auto;
+        @apply w-full h-64 bg-dark rounded-lg p-4 font-mono text-sm overflow-auto border border-gray-700;
       }
-      .step-active {
-        @apply bg-primary text-white;
+      .btn-primary {
+        @apply bg-cyan-500 hover:bg-cyan-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2;
       }
-      .step-completed {
-        @apply bg-green-500 text-white;
+      .btn-secondary {
+        @apply bg-dark-gray hover:bg-gray-700 text-gray-200 px-4 py-2 rounded-lg transition-all duration-300 border border-gray-700 flex items-center gap-2;
       }
-      .step-pending {
-        @apply bg-gray-200 text-gray-600;
+      .btn-accent {
+        @apply bg-emerald-500 hover:bg-emerald-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2;
+      }
+      .nav-link {
+        @apply relative text-gray-300 hover:text-cyan-400 transition-colors px-4 py-2 rounded-lg hover:bg-dark-gray flex items-center gap-2;
+      }
+      .nav-link.active {
+        @apply text-cyan-400 bg-dark-gray;
+      }
+      .nav-link::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300;
+      }
+      .nav-link:hover::after {
+        @apply w-full;
+      }
+      .problem-item {
+        @apply flex items-center gap-3 p-3 rounded-lg hover:bg-dark-gray transition-colors cursor-pointer border border-gray-700;
+      }
+      .problem-item.active {
+        @apply bg-dark-gray border-cyan-500;
+      }
+      .problem-item.solved {
+        @apply border-emerald-500;
+      }
+      .problem-item.attempted {
+        @apply border-yellow-500;
+      }
+      .section-title {
+        @apply text-xl font-bold text-gray-200 mb-4 relative pb-2;
+      }
+      .section-title::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-16 h-1 bg-cyan-500 rounded-full;
+      }
+      .topic-title {
+        @apply text-lg font-semibold text-gray-300 mb-3 flex items-center gap-2 cursor-pointer;
+      }
+      .topic-title:hover {
+        @apply text-cyan-400;
+      }
+      .problem-description {
+        @apply text-gray-300 space-y-4;
+      }
+      .problem-description code {
+        @apply bg-dark-gray px-2 py-1 rounded text-cyan-400;
+      }
+      .answer-analysis {
+        @apply text-gray-300 space-y-3;
+      }
+      .answer-analysis h4 {
+        @apply text-lg font-semibold text-emerald-400 mb-2;
+      }
+      .run-info {
+        @apply flex justify-between items-center mb-2 text-xs text-gray-400;
+      }
+      .difficulty-tag {
+        @apply text-xs px-2 py-1 rounded-full;
+      }
+      .difficulty-easy {
+        @apply bg-emerald-900 text-emerald-300;
+      }
+      .difficulty-medium {
+        @apply bg-yellow-900 text-yellow-300;
+      }
+      .difficulty-hard {
+        @apply bg-red-900 text-red-300;
+      }
+      .chapter-item {
+        @apply mb-6;
+      }
+      .chapter-content {
+        @apply space-y-2 ml-4 transition-all duration-300;
+      }
+      .chapter-content.collapsed {
+        @apply hidden;
+      }
+      .scrollbar-thin {
+        scrollbar-width: thin;
+      }
+      .scrollbar-thin::-webkit-scrollbar {
+        width: 6px;
+      }
+      .scrollbar-thin::-webkit-scrollbar-track {
+        @apply bg-dark;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb {
+        @apply bg-gray-700 rounded-full;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        @apply bg-gray-600;
+      }
+      .knowledge-nav.active {
+        @apply bg-cyan-500 text-gray-900;
+      }
+      .knowledge-nav:not(.active) {
+        @apply bg-gray-600 text-gray-200 hover:bg-gray-500;
       }
     }
   </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-  <!-- 导航栏 -->
-  <nav class="bg-white shadow-sm fixed w-full z-10">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <div class="text-primary font-bold text-xl">
-        <a href="../index.html" class="hover:text-primary/80 transition-colors">
+<body class="bg-dark min-h-screen text-gray-200">
+  <!-- 顶部导航栏 -->
+  <nav class="bg-dark-gray shadow-lg fixed w-full z-10">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center flex-wrap gap-4">
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="text-cyan-400 font-bold text-xl flex items-center gap-2">
           <i class="fa fa-arrow-left mr-2"></i> Xww的课程页面
         </a>
       </div>
-      <div class="hidden md:flex space-x-6">
-        <a href="../index.html#home" class="text-gray-700 hover:text-primary transition-colors">首页</a>
-        <a href="../index.html#courses" class="text-gray-700 hover:text-primary transition-colors">课程</a>
-        <a href="../index.html#about" class="text-gray-700 hover:text-primary transition-colors">关于我</a>
+      <div class="flex items-center gap-2 flex-wrap">
+        <a href="#" class="nav-link active" onclick="showTab('question-bank')">
+          <i class="fa fa-list"></i> 题库
+        </a>
+        <a href="#" class="nav-link" onclick="showTab('wrong-questions')">
+          <i class="fa fa-times-circle"></i> 错题
+        </a>
+        <a href="#" class="nav-link" onclick="showTab('favorites')">
+          <i class="fa fa-star"></i> 收藏
+        </a>
+        <a href="#" class="nav-link" onclick="showTab('knowledge')">
+          <i class="fa fa-book"></i> 知识点
+        </a>
       </div>
-      <button class="md:hidden text-gray-700">
-        <i class="fa fa-bars text-xl"></i>
-      </button>
+      <div class="flex items-center gap-4">
+        <div class="text-sm text-gray-300">
+          完成进度: <span id="overall-progress" class="text-cyan-400 font-semibold">0%</span>
+        </div>
+        <div class="w-48 bg-gray-700 rounded-full h-2.5">
+          <div id="progress-bar" class="bg-cyan-500 h-2.5 rounded-full" style="width: 0%"></div>
+        </div>
+      </div>
     </div>
   </nav>
 
-  <!-- 课程标题区 -->
-  <section class="pt-24 pb-12 bg-gradient-to-b from-primary/10 to-white">
+  <!-- 主要内容区 -->
+  <div class="pt-24 min-h-screen">
     <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
-        <div class="flex items-center gap-4 mb-4">
-          <div class="w-16 h-16 rounded-lg bg-primary flex items-center justify-center">
-            <i class="fa fa-code text-white text-2xl"></i>
-          </div>
-          <div>
-            <h1 class="text-3xl font-bold text-gray-800">Python基础</h1>
-            <p class="text-gray-600 mt-1">高职大一第二学期 | 48学时</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 学习平台区 -->
-  <section class="py-12">
-    <div class="container mx-auto px-4">
-      <!-- 学习路径 -->
-      <div class="max-w-6xl mx-auto mb-8">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">学习路径</h2>
-        <div class="flex flex-wrap gap-4">
-          <div class="step-active px-6 py-3 rounded-full text-sm font-medium">
-            <i class="fa fa-check mr-2"></i>1. Python环境搭建
-          </div>
-          <div class="step-active px-6 py-3 rounded-full text-sm font-medium">
-            <i class="fa fa-check mr-2"></i>2. 基础语法
-          </div>
-          <div class="step-active px-6 py-3 rounded-full text-sm font-medium">
-            <i class="fa fa-check mr-2"></i>3. 数据类型
-          </div>
-          <div class="step-active px-6 py-3 rounded-full text-sm font-medium">
-            <i class="fa fa-check mr-2"></i>4. 控制流
-          </div>
-          <div class="step-pending px-6 py-3 rounded-full text-sm font-medium">
-            5. 函数
-          </div>
-          <div class="step-pending px-6 py-3 rounded-full text-sm font-medium">
-            6. 数据结构
-          </div>
-          <div class="step-pending px-6 py-3 rounded-full text-sm font-medium">
-            7. 面向对象
-          </div>
-        </div>
-      </div>
-
-      <!-- 交互式学习区 -->
-      <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- 左侧：课程内容 -->
-        <div class="lg:col-span-2 space-y-6">
-          <!-- 课程标题 -->
-          <div class="bg-white rounded-xl shadow-sm p-6">
-            <h3 class="text-xl font-bold text-gray-800">模块4：控制流与循环结构</h3>
-            <p class="text-gray-600 mt-2">学习Python中的条件语句和循环结构，掌握程序的流程控制。</p>
-          </div>
-
-          <!-- 学习内容 -->
-          <div class="bg-white rounded-xl shadow-sm p-6">
-            <h4 class="text-lg font-semibold text-gray-800 mb-4">条件语句</h4>
-            <div class="space-y-4">
-              <p class="text-gray-600">Python中的条件语句使用 <code class="bg-gray-100 px-2 py-1 rounded">if</code>、<code class="bg-gray-100 px-2 py-1 rounded">elif</code> 和 <code class="bg-gray-100 px-2 py-1 rounded">else</code> 关键字。</p>
-              <div class="bg-gray-50 p-4 rounded-lg">
-                <pre class="font-mono text-sm text-gray-800">
-# 条件语句示例
-age = 18
-if age >= 18:
-    print("你是成年人")
-elif age >= 13:
-    print("你是青少年")
-else:
-    print("你是儿童")
-                </pre>
-              </div>
-              <h4 class="text-lg font-semibold text-gray-800 mt-6">循环语句</h4>
-              <p class="text-gray-600">Python支持 <code class="bg-gray-100 px-2 py-1 rounded">for</code> 循环和 <code class="bg-gray-100 px-2 py-1 rounded">while</code> 循环。</p>
-              <div class="bg-gray-50 p-4 rounded-lg">
-                <pre class="font-mono text-sm text-gray-800">
-# for循环示例
-for i in range(5):
-    print(i)
-
-# while循环示例
-count = 0
-while count < 5:
-    print(count)
-    count += 1
-                </pre>
-              </div>
-            </div>
-          </div>
-
-          <!-- 代码编辑器 -->
-          <div class="bg-white rounded-xl shadow-sm p-6">
-            <div class="flex justify-between items-center mb-4">
-              <h4 class="text-lg font-semibold text-gray-800">代码编辑器</h4>
-              <button id="runCode" class="bg-primary hover:bg-primary/80 text-white px-4 py-2 rounded-lg transition-colors">
-                <i class="fa fa-play mr-2"></i>运行代码
-              </button>
-            </div>
-            <div id="codeEditor" class="code-editor"></div>
-            <div class="mt-4">
-              <h5 class="text-sm font-medium text-gray-700 mb-2">输出结果：</h5>
-              <div id="codeOutput" class="code-output">
-                运行代码查看输出...
-              </div>
-            </div>
-          </div>
-
-          <!-- 练习题目 -->
-          <div class="bg-white rounded-xl shadow-sm p-6">
-            <h4 class="text-lg font-semibold text-gray-800 mb-4">练习题</h4>
-            <div class="space-y-4">
-              <div class="border-l-4 border-primary pl-4">
-                <h5 class="font-medium text-gray-800">练习1：判断奇偶数</h5>
-                <p class="text-gray-600 mt-1">编写一个程序，输入一个整数，判断它是奇数还是偶数。</p>
-              </div>
-              <div class="border-l-4 border-primary pl-4">
-                <h5 class="font-medium text-gray-800">练习2：计算累加和</h5>
-                <p class="text-gray-600 mt-1">使用循环计算1到100的累加和。</p>
-              </div>
-              <div class="border-l-4 border-primary pl-4">
-                <h5 class="font-medium text-gray-800">练习3：打印乘法表</h5>
-                <p class="text-gray-600 mt-1">使用嵌套循环打印99乘法表。</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 右侧：学习辅助 -->
-        <div class="space-y-6">
-          <!-- 学习进度 -->
-          <div class="bg-white rounded-xl shadow-sm p-6">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">学习进度</h3>
-            <div class="space-y-4">
-              <div>
-                <div class="flex justify-between mb-1">
-                  <span class="text-gray-600">总体进度</span>
-                  <span class="font-medium text-gray-800">57%</span>
-                </div>
-                <div class="w-full bg-gray-200 rounded-full h-2">
-                  <div class="bg-primary h-2 rounded-full" style="width: 57%"></div>
+      <!-- 题库标签页 -->
+      <div id="question-bank" class="tab-content">
+        <div class="flex flex-col lg:flex-row gap-6 py-6">
+          <!-- 左侧：题目列表/章节目录 -->
+          <div class="lg:w-1/4 bg-dark-gray rounded-xl p-4 border border-gray-700 h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin">
+            <h2 class="section-title">Python基础题库</h2>
+            
+            <!-- 章节列表 -->
+            <div class="space-y-6">
+              <!-- 章节1：控制流与循环 -->
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter1')">
+                  <i class="fa fa-chevron-down text-gray-400 transition-transform duration-300" id="chapter1-icon"></i>
+                  控制流与循环
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">2/6</span>
+                    <span class="progress-percentage">(33%)</span>
+                  </span>
+                </h3>
+                <div class="chapter-content" id="chapter1-content">
+                  <div class="problem-item active" onclick="loadProblem(1)">
+                    <div class="w-8 h-8 rounded-full bg-cyan-500 flex items-center justify-center text-gray-900 font-bold">1</div>
+                    <div class="flex-1">
+                      <div class="font-medium">判断奇偶数</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-gray-400">10分钟</span>
+                      </div>
+                    </div>
+                    <div class="text-emerald-400">
+                      <i class="fa fa-check-circle"></i>
+                    </div>
+                  </div>
+                  <div class="problem-item solved" onclick="loadProblem(2)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">2</div>
+                    <div class="flex-1">
+                      <div class="font-medium">计算累加和</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-gray-400">10分钟</span>
+                      </div>
+                    </div>
+                    <div class="text-emerald-400">
+                      <i class="fa fa-check-circle"></i>
+                    </div>
+                  </div>
+                  <div class="problem-item attempted" onclick="loadProblem(3)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">3</div>
+                    <div class="flex-1">
+                      <div class="font-medium">打印乘法表</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">15分钟</span>
+                      </div>
+                    </div>
+                    <div class="text-yellow-400">
+                      <i class="fa fa-clock-o"></i>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProblem(4)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">4</div>
+                    <div class="flex-1">
+                      <div class="font-medium">判断质数</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProblem(5)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">5</div>
+                    <div class="flex-1">
+                      <div class="font-medium">斐波那契数列</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProblem(6)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">6</div>
+                    <div class="flex-1">
+                      <div class="font-medium">猜数字游戏</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-hard">困难</span>
+                        <span class="text-xs text-gray-400">30分钟</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="grid grid-cols-2 gap-2">
-                <div class="bg-gray-50 p-3 rounded-lg text-center">
-                  <div class="text-2xl font-bold text-primary">4/7</div>
-                  <div class="text-sm text-gray-600">完成模块</div>
-                </div>
-                <div class="bg-gray-50 p-3 rounded-lg text-center">
-                  <div class="text-2xl font-bold text-primary">12</div>
-                  <div class="text-sm text-gray-600">完成练习</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 学习资源 -->
-          <div class="bg-white rounded-xl shadow-sm p-6">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">学习资源</h3>
-            <div class="space-y-3">
-              <a href="#" class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-primary hover:bg-gray-50 transition-colors">
-                <i class="fa fa-book text-primary"></i>
-                <span class="text-gray-800">Python官方文档</span>
-              </a>
-              <a href="#" class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-primary hover:bg-gray-50 transition-colors">
-                <i class="fa fa-video-camera text-primary"></i>
-                <span class="text-gray-800">Python基础视频教程</span>
-              </a>
-              <a href="#" class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-primary hover:bg-gray-50 transition-colors">
-                <i class="fa fa-code text-primary"></i>
-                <span class="text-gray-800">GitHub代码示例</span>
-              </a>
-            </div>
-          </div>
-
-          <!-- 帮助中心 -->
-          <div class="bg-white rounded-xl shadow-sm p-6">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">帮助中心</h3>
-            <div class="space-y-3">
-              <div class="flex items-start gap-3">
-                <i class="fa fa-question-circle text-primary mt-1"></i>
-                <div>
-                  <h4 class="font-medium text-gray-800">遇到问题？</h4>
-                  <p class="text-sm text-gray-600">查看常见问题或联系助教</p>
+              
+              <!-- 章节2：函数 -->
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter2')">
+                  <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter2-icon"></i>
+                  函数
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/2</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
+                </h3>
+                <div class="chapter-content collapsed" id="chapter2-content">
+                  <div class="problem-item" onclick="loadProblem(7)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">7</div>
+                    <div class="flex-1">
+                      <div class="font-medium">计算阶乘</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">15分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProblem(8)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">8</div>
+                    <div class="flex-1">
+                      <div class="font-medium">二分查找</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-hard">困难</span>
+                        <span class="text-xs text-gray-400">25分钟</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="flex items-start gap-3">
-                <i class="fa fa-comments text-primary mt-1"></i>
-                <div>
-                  <h4 class="font-medium text-gray-800">讨论社区</h4>
-                  <p class="text-sm text-gray-600">与同学交流学习心得</p>
-                </div>
-              </div>
-              <div class="flex items-start gap-3">
-                <i class="fa fa-lightbulb-o text-primary mt-1"></i>
-                <div>
-                  <h4 class="font-medium text-gray-800">学习提示</h4>
-                  <p class="text-sm text-gray-600">每天坚持练习30分钟</p>
+              
+              <!-- 章节3：数据结构 -->
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter3')">
+                  <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter3-icon"></i>
+                  数据结构
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/2</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
+                </h3>
+                <div class="chapter-content collapsed" id="chapter3-content">
+                  <div class="problem-item" onclick="loadProblem(9)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">9</div>
+                    <div class="flex-1">
+                      <div class="font-medium">列表去重</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-gray-400">10分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProblem(10)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">10</div>
+                    <div class="flex-1">
+                      <div class="font-medium">字典操作</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">15分钟</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <script>
-    // 初始化代码编辑器
-    const editor = ace.edit('codeEditor');
-    editor.setTheme('ace/theme/monokai');
-    editor.session.setMode('ace/mode/python');
-    editor.setOptions({
-      fontSize: '14px',
-      tabSize: 4,
-      useSoftTabs: true,
-      showPrintMargin: false
-    });
-
-    // 设置默认代码
-    editor.setValue(`# 控制流练习
-
-# 练习1：判断奇偶数
-num = int(input("请输入一个整数: "))
+          
+          <!-- 右侧：问题、代码编辑器、运行结果、答案解析 -->
+          <div class="lg:w-3/4 space-y-6">
+            <!-- 题目描述 -->
+            <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
+              <h3 class="text-xl font-bold text-gray-200" id="problem-title">问题1：判断奇偶数</h3>
+              <div class="flex items-center gap-4 flex-wrap">
+                <div class="flex items-center gap-2">
+                  <i class="fa fa-clock-o text-cyan-400"></i>
+                  <span id="timer" class="text-gray-200 font-mono">00:00</span>
+                </div>
+                <span class="difficulty-tag difficulty-easy" id="difficulty-tag">简单</span>
+                <button class="text-gray-400 hover:text-yellow-400 transition-colors" onclick="toggleFavorite(1)" id="favorite-btn">
+                  <i class="fa fa-star-o"></i>
+                </button>
+              </div>
+            </div>
+              <div class="problem-description" id="problem-description">
+                <p>编写一个程序，输入一个整数，判断它是奇数还是偶数。</p>
+                <p><strong>输入格式：</strong></p>
+                <p>一个整数 <code>num</code></p>
+                <p><strong>输出格式：</strong></p>
+                <p>如果是偶数，输出 "<code>num 是偶数</code>"；如果是奇数，输出 "<code>num 是奇数</code>"。</p>
+                <p><strong>示例：</strong></p>
+                <div class="bg-dark p-3 rounded-lg mt-2">
+                  <p class="text-gray-400">输入：42</p>
+                  <p class="text-emerald-400">输出：42 是偶数</p>
+                </div>
+                <div class="bg-dark p-3 rounded-lg mt-2">
+                  <p class="text-gray-400">输入：17</p>
+                  <p class="text-emerald-400">输出：17 是奇数</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 代码编辑框 -->
+            <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
+                <h3 class="text-lg font-semibold text-gray-200">代码编辑器</h3>
+                <div class="flex gap-2">
+                  <button id="resetCode" class="btn-secondary text-sm">
+                    <i class="fa fa-refresh"></i> 重置
+                  </button>
+                  <button id="runCode" class="btn-primary">
+                    <i class="fa fa-play"></i> 运行代码
+                  </button>
+                </div>
+              </div>
+              <div id="codeEditor" class="code-editor"></div>
+              <div id="pyodide-status" class="mt-2 text-sm text-yellow-400">
+                <i class="fa fa-spinner fa-spin"></i> 正在加载Python解释器...
+              </div>
+            </div>
+            
+            <!-- 运行结果和答案解析 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- 运行结果 -->
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">运行结果</h3>
+                <div class="run-info">
+                  <span id="execution-time">执行时间：0ms</span>
+                  <span id="memory-usage">内存：0MB</span>
+                </div>
+                <div id="code-output" class="code-output">
+                  运行代码查看输出...
+                </div>
+              </div>
+              
+              <!-- 答案解析 -->
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">答案解析</h3>
+                <div class="answer-analysis" id="answer-analysis">
+                  <h4>解题思路</h4>
+                  <p>使用取模运算符 <code>%</code> 判断一个数是否能被2整除。如果余数为0，则是偶数；否则是奇数。</p>
+                  <h4>代码示例</h4>
+                  <div class="bg-dark p-3 rounded-lg font-mono text-sm">
+                    <pre class="text-cyan-300">
+num = int(input())
 if num % 2 == 0:
     print(f"{num} 是偶数")
 else:
     print(f"{num} 是奇数")
-
-# 练习2：计算累加和
-sum = 0
-for i in range(1, 101):
-    sum += i
-print(f"1到100的累加和是: {sum}")
-
-# 练习3：打印乘法表
-print("\n99乘法表:")
-for i in range(1, 10):
-    for j in range(1, i+1):
-        print(f"{j} × {i} = {i*j}", end="\t")
-    print()`);
-
-    // 运行代码功能
-    document.getElementById('runCode').addEventListener('click', function() {
-      const code = editor.getValue();
-      const output = document.getElementById('codeOutput');
+                    </pre>
+                  </div>
+                  <h4>知识点</h4>
+                <ul class="list-disc list-inside space-y-1 mt-2">
+                  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('basic-syntax')">条件语句 if-else</a></li>
+                  <li>取模运算符 %</li>
+                  <li>输入输出操作</li>
+                </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       
-      // 模拟代码运行
-      output.textContent = "运行中...";
+      <!-- 错题标签页 -->
+      <div id="wrong-questions" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">错题本</h2>
+          <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+            <div class="text-center py-12">
+              <i class="fa fa-times-circle text-4xl text-red-500 mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无错题</h3>
+              <p class="text-gray-400">当你在练习中答错题目时，它们会自动添加到这里</p>
+              <button class="btn-primary mt-6" onclick="showTab('question-bank')">
+                <i class="fa fa-list"></i> 开始练习
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       
-      // 简单的代码执行模拟
-      setTimeout(() => {
-        let result = "";
-        
-        // 模拟输入
-        const inputs = [42, 0];
-        let inputIndex = 0;
-        
-        // 模拟print函数
-        const originalPrint = console.log;
-        console.log = function(...args) {
-          result += args.join(' ') + "\n";
-          originalPrint(...args);
-        };
-        
-        try {
-          // 模拟input函数
-          const originalInput = globalThis.input;
-          globalThis.input = function(prompt) {
-            result += prompt + " " + inputs[inputIndex] + "\n";
-            return inputs[inputIndex++].toString();
-          };
+      <!-- 收藏标签页 -->
+      <div id="favorites" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">收藏题目</h2>
+          <div class="bg-dark-gray rounded-xl p-6 border border-gray-700" id="favorites-container">
+            <div class="text-center py-12">
+              <i class="fa fa-star-o text-4xl text-yellow-500 mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无收藏</h3>
+              <p class="text-gray-400">在题库中点击题目旁边的星标图标来收藏题目</p>
+              <button class="btn-primary mt-6" onclick="showTab('question-bank')">
+                <i class="fa fa-list"></i> 浏览题库
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 知识点标签页 -->
+      <div id="knowledge" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">📚 知识点学习</h2>
           
-          // 执行代码
-          eval(code);
-        } catch (error) {
-          result += "错误: " + error.message + "\n";
-        } finally {
-          // 恢复原始函数
-          console.log = originalPrint;
-          if (globalThis.input) {
-            delete globalThis.input;
-          }
-        }
-        
-        output.textContent = result || "无输出";
-      }, 500);
-    });
-  </script>
+          <!-- 导航栏 -->
+          <div class="flex flex-wrap gap-3 mb-8 bg-dark-gray p-4 rounded-xl border border-gray-700">
+            <button class="knowledge-nav active px-4 py-2 rounded-lg font-semibold transition" data-target="basic-syntax">基础语法</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="control-flow">控制流</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="data-structures">数据结构</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="functions">函数</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="strings">字符串</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="io">输入输出</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="modules">常用模块</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="oop">面向对象</button>
+          </div>
+
+          <div class="space-y-8">
+            <!-- 基础语法 -->
+            <div id="basic-syntax" class="knowledge-section">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-code"></i> 基础语法
+                </h3>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                  <!-- 变量与数据类型 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-cube text-emerald-400"></i> 变量与数据类型
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">Python是动态类型语言，变量无需声明类型。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 整数 (int)
+a = 10
+b = -5
+c = 0
+
+# 浮点数 (float)
+pi = 3.14159
+d = 2.0
+e = 1.5e3  # 科学计数法
+
+# 字符串 (str)
+name = "Alice"
+greeting = 'Hello, World!'
+multiline = """多行
+字符串"""
+
+# 布尔值 (bool)
+is_student = True
+is_teacher = False
+
+# 空值 (None)
+result = None
+
+# 查看类型
+print(type(a))  # <class 'int'>
+print(type(name))  # <class 'str'>
+
+# 类型转换
+num_str = "123"
+num = int(num_str)
+float_num = float("3.14")
+str_num = str(456)
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 运算符 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-calculator text-yellow-400"></i> 运算符
+                    </h4>
+                    <div class="space-y-4">
+                      <div>
+                        <h5 class="text-sm font-semibold text-gray-300 mb-2">算术运算符</h5>
+                        <div class="bg-dark-gray p-2 rounded font-mono text-xs">
+                          <pre class="text-cyan-300">
+x = 10
+y = 3
+print(x + y)  # 加法 13
+print(x - y)  # 减法 7
+print(x * y)  # 乘法 30
+print(x / y)  # 除法 3.333...
+print(x % y)  # 取模 1
+print(x ** y) # 幂运算 1000
+print(x // y) # 整除 3
+                          </pre>
+                        </div>
+                      </div>
+                      <div>
+                        <h5 class="text-sm font-semibold text-gray-300 mb-2">比较运算符</h5>
+                        <div class="bg-dark-gray p-2 rounded font-mono text-xs">
+                          <pre class="text-cyan-300">
+print(x > y)   # 大于 True
+print(x < y)   # 小于 False
+print(x == y)  # 等于 False
+print(x != y)  # 不等于 True
+print(x >= y)  # 大于等于 True
+print(x <= y)  # 小于等于 False
+                          </pre>
+                        </div>
+                      </div>
+                      <div>
+                        <h5 class="text-sm font-semibold text-gray-300 mb-2">逻辑运算符</h5>
+                        <div class="bg-dark-gray p-2 rounded font-mono text-xs">
+                          <pre class="text-cyan-300">
+print(True and False)  # 与 False
+print(True or False)   # 或 True
+print(not True)        # 非 False
+                          </pre>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 控制流 -->
+            <div id="control-flow" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-exchange"></i> 控制流
+                </h3>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <!-- 条件语句 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-check-square text-emerald-400"></i> 条件语句 (if-else)
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">根据条件执行不同的代码块。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+score = 85
+
+if score >= 90:
+    grade = "A"
+elif score >= 80:
+    grade = "B"
+elif score >= 70:
+    grade = "C"
+elif score >= 60:
+    grade = "D"
+else:
+    grade = "F"
+
+print(f"成绩等级: {grade}")
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 循环语句 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-refresh text-yellow-400"></i> 循环语句
+                    </h4>
+                    <div class="space-y-4">
+                      <div>
+                        <h5 class="text-sm font-semibold text-gray-300 mb-2">for循环</h5>
+                        <div class="bg-dark-gray p-2 rounded font-mono text-xs">
+                          <pre class="text-cyan-300">
+# 遍历列表
+fruits = ["苹果", "香蕉", "橙子"]
+for fruit in fruits:
+    print(fruit)
+
+# range()函数
+for i in range(5):      # 0,1,2,3,4
+    print(i)
+for i in range(2, 7):   # 2,3,4,5,6
+    print(i)
+for i in range(0, 10, 2): # 0,2,4,6,8
+    print(i)
+                          </pre>
+                        </div>
+                      </div>
+                      <div>
+                        <h5 class="text-sm font-semibold text-gray-300 mb-2">while循环</h5>
+                        <div class="bg-dark-gray p-2 rounded font-mono text-xs">
+                          <pre class="text-cyan-300">
+count = 0
+while count < 5:
+    print(count)
+    count += 1
+                          </pre>
+                        </div>
+                      </div>
+                      <div>
+                        <h5 class="text-sm font-semibold text-gray-300 mb-2">break和continue</h5>
+                        <div class="bg-dark-gray p-2 rounded font-mono text-xs">
+                          <pre class="text-cyan-300">
+# break: 跳出循环
+for i in range(10):
+    if i == 5:
+        break
+    print(i)  # 0-4
+
+# continue: 跳过本次
+for i in range(10):
+    if i % 2 == 0:
+        continue
+    print(i)  # 1,3,5,7,9
+                          </pre>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 数据结构 -->
+            <div id="data-structures" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-database"></i> 数据结构
+                </h3>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <!-- 列表 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-list text-emerald-400"></i> 列表 (List)
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">有序、可变的序列。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 创建列表
+numbers = [1, 2, 3, 4, 5]
+mixed = [1, "hello", True, 3.14]
+empty = []
+
+# 访问元素（索引从0开始）
+print(numbers[0])   # 1
+print(numbers[-1])  # 5（最后一个）
+
+# 切片 [start:end:step]
+print(numbers[1:3])      # [2, 3]
+print(numbers[:3])       # [1, 2, 3]
+print(numbers[2:])       # [3, 4, 5]
+print(numbers[::2])      # [1, 3, 5]
+
+# 修改
+numbers[0] = 100
+
+# 添加元素
+numbers.append(6)         # 末尾添加
+numbers.insert(0, 0)      # 指定位置插入
+
+# 删除
+numbers.remove(3)         # 删除第一个匹配值
+popped = numbers.pop()    # 弹出最后一个
+del numbers[0]            # 删除指定索引
+
+# 常用方法
+print(len(numbers))       # 长度
+print(2 in numbers)       # 包含判断
+numbers.sort()            # 排序
+numbers.reverse()         # 反转
+print(numbers.index(2))   # 查找索引
+print(numbers.count(2))   # 统计次数
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 字典 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-book text-yellow-400"></i> 字典 (Dict)
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">键值对的无序集合，键必须唯一。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 创建字典
+student = {
+    "name": "张三",
+    "age": 20,
+    "major": "计算机科学"
+}
+
+# 访问
+print(student["name"])           # 张三
+print(student.get("age", 0))     # 20（get带默认值）
+
+# 添加/修改
+student["grade"] = "大二"        # 添加
+student["age"] = 21              # 修改
+
+# 删除
+del student["major"]
+age = student.pop("age")
+
+# 常用操作
+print(student.keys())            # 所有键
+print(student.values())          # 所有值
+print(student.items())           # 所有键值对
+
+# 遍历
+for key, value in student.items():
+    print(f"{key}: {value}")
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 元组 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-link text-blue-400"></i> 元组 (Tuple)
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">有序、不可变的序列（创建后不能修改）。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 创建元组
+point = (3, 4)
+colors = ("红", "绿", "蓝")
+single = (1,)  # 单元素元组需要逗号
+
+# 访问
+print(point[0])  # 3
+
+# 元组解包
+x, y = point
+print(x, y)  # 3 4
+
+# 用途：函数返回多个值
+def get_size():
+    return 100, 200
+
+width, height = get_size()
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 集合 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-circle-o text-purple-400"></i> 集合 (Set)
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">无序、唯一的元素集合，自动去重。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 创建集合
+s1 = {1, 2, 3, 3, 4}  # {1,2,3,4}（自动去重）
+s2 = set([3, 4, 5, 6])
+
+# 添加删除
+s1.add(5)
+s1.remove(1)
+
+# 集合运算
+print(s1 | s2)  # 并集 {2,3,4,5,6}
+print(s1 & s2)  # 交集 {3,4}
+print(s1 - s2)  # 差集 {2}
+print(s1 ^ s2)  # 对称差 {2,5,6}
+
+# 去重应用
+lst = [1, 2, 2, 3, 3, 3, 4]
+unique = list(set(lst))  # [1,2,3,4]
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 函数 -->
+            <div id="functions" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-cog"></i> 函数
+                </h3>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <!-- 函数基础 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-wrench text-emerald-400"></i> 函数基础
+                    </h4>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 定义函数
+def greet(name):
+    """这是文档字符串，说明函数用途"""
+    return f"你好, {name}"
+
+# 调用函数
+message = greet("张三")
+print(message)
+
+# 带默认参数
+def power(x, n=2):
+    return x ** n
+
+print(power(3))      # 9 (默认n=2)
+print(power(3, 3))   # 27
+
+# 可变参数 *args
+def sum_all(*numbers):
+    total = 0
+    for num in numbers:
+        total += num
+    return total
+
+print(sum_all(1, 2, 3, 4, 5))  # 15
+
+# 关键字参数 **kwargs
+def print_info(**kwargs):
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+print_info(name="张三", age=20)
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 递归与作用域 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-repeat text-yellow-400"></i> 递归与作用域
+                    </h4>
+                    <div class="space-y-4">
+                      <div>
+                        <h5 class="text-sm font-semibold text-gray-300 mb-2">递归函数</h5>
+                        <div class="bg-dark-gray p-2 rounded font-mono text-xs">
+                          <pre class="text-cyan-300">
+# 阶乘
+def factorial(n):
+    if n == 0 or n == 1:
+        return 1
+    return n * factorial(n - 1)
+
+print(factorial(5))  # 120
+
+# 斐波那契
+def fib(n):
+    if n <= 1:
+        return n
+    return fib(n - 1) + fib(n - 2)
+
+print(fib(10))  # 55
+                          </pre>
+                        </div>
+                      </div>
+                      <div>
+                        <h5 class="text-sm font-semibold text-gray-300 mb-2">变量作用域</h5>
+                        <div class="bg-dark-gray p-2 rounded font-mono text-xs">
+                          <pre class="text-cyan-300">
+x = 10  # 全局变量
+
+def func():
+    x = 20  # 局部变量
+    print(x)  # 20
+
+func()
+print(x)  # 10（全局x没变）
+
+# 使用global修改全局变量
+def change_global():
+    global x
+    x = 30
+
+change_global()
+print(x)  # 30
+                          </pre>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 字符串 -->
+            <div id="strings" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-font"></i> 字符串操作
+                </h3>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <!-- 字符串基础 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-font text-emerald-400"></i> 字符串基础
+                    </h4>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 创建字符串
+s1 = "Hello"
+s2 = 'World'
+s3 = """多行
+字符串"""
+
+# 访问与切片
+s = "Python"
+print(s[0])    # P
+print(s[-1])   # n
+print(s[1:4])  # yth
+
+# 拼接与重复
+print("Hello" + " " + "World")
+print("Hi" * 3)
+
+# 长度
+print(len("Hello"))  # 5
+
+# 成员检查
+print("th" in "Python")  # True
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 字符串方法 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-magic text-yellow-400"></i> 常用方法
+                    </h4>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+s = "  Hello, World!  "
+
+# 大小写
+print(s.upper())  # HELLO, WORLD!
+print(s.lower())  # hello, world!
+print(s.title())  # Hello, World!
+
+# 去除空白
+print(s.strip())   # "Hello, World!"
+print(s.lstrip())  # "Hello, World!  "
+print(s.rstrip())  # "  Hello, World!"
+
+# 分割与连接
+print(s.split(","))  # ["  Hello", " World!  "]
+print("-".join(["a", "b", "c"]))  # a-b-c
+
+# 替换
+print(s.replace("World", "Python"))
+
+# 查找
+print(s.find("World"))  # 8
+print(s.count("l"))     # 3
+
+# 判断
+print(s.startswith("He"))
+print(s.endswith("!"))
+print(s.isdigit())
+print(s.isalpha())
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 字符串格式化 -->
+                <div class="bg-dark p-5 rounded-lg border border-gray-700 mt-6">
+                  <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                    <i class="fa fa-align-left text-blue-400"></i> 字符串格式化
+                  </h4>
+                  <div class="grid md:grid-cols-3 gap-4">
+                    <div class="bg-dark-gray p-3 rounded font-mono text-xs">
+                      <h5 class="text-gray-300 mb-2 font-semibold">f-string (推荐)</h5>
+                      <pre class="text-cyan-300">
+name = "张三"
+age = 20
+print(f"{name}今年{age}岁")
+print(f"{name}明年{age + 1}岁")
+                      </pre>
+                    </div>
+                    <div class="bg-dark-gray p-3 rounded font-mono text-xs">
+                      <h5 class="text-gray-300 mb-2 font-semibold">format方法</h5>
+                      <pre class="text-cyan-300">
+print("{}今年{}岁".format(name, age))
+print("{1}今年{0}岁".format(age, name))
+                      </pre>
+                    </div>
+                    <div class="bg-dark-gray p-3 rounded font-mono text-xs">
+                      <h5 class="text-gray-300 mb-2 font-semibold">数字格式化</h5>
+                      <pre class="text-cyan-300">
+pi = 3.1415926
+print(f"{pi:.2f}")  # 3.14
+print(f"{1000:,}")  # 1,000
+print(f"{0.5:.1%}") # 50.0%
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 输入输出 -->
+            <div id="io" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-keyboard-o"></i> 输入输出 (I/O)
+                </h3>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <!-- 输入 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-arrow-down text-emerald-400"></i> 输入
+                    </h4>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 基本输入
+name = input("请输入姓名: ")
+print(f"你好, {name}!")
+
+# 获取数字
+age = int(input("请输入年龄: "))
+height = float(input("请输入身高(米): "))
+
+# 多个输入
+nums = input("请输入3个数字,用空格分隔: ").split()
+x, y, z = map(int, nums)
+print(f"和: {x + y + z}")
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 输出 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-arrow-up text-yellow-400"></i> 输出
+                    </h4>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# print函数
+print("Hello")
+print(1, 2, 3)
+print(1, 2, 3, sep="-")  # 1-2-3
+print("Hello", end=" ")   # 不换行
+print("World")
+
+# 格式化输出
+name = "Alice"
+print(f"Name: {name}")
+print("Name: {}".format(name))
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 文件操作 -->
+                <div class="bg-dark p-5 rounded-lg border border-gray-700 mt-6">
+                  <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                    <i class="fa fa-file-text-o text-blue-400"></i> 文件操作
+                  </h4>
+                  <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <pre class="text-cyan-300">
+# 写入文件
+with open("test.txt", "w", encoding="utf-8") as f:
+    f.write("Hello, World!\n")
+    f.write("第二行")
+
+# 读取文件
+with open("test.txt", "r", encoding="utf-8") as f:
+    content = f.read()  # 全部读取
+    print(content)
+
+# 逐行读取
+with open("test.txt", "r", encoding="utf-8") as f:
+    for line in f:
+        print(line.strip())
+
+# 追加
+with open("test.txt", "a", encoding="utf-8") as f:
+    f.write("\n第三行")
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 常用模块 -->
+            <div id="modules" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-puzzle-piece"></i> 常用模块
+                </h3>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                  <!-- math -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-calculator text-emerald-400"></i> math - 数学
+                    </h4>
+                    <div class="bg-dark p-3 rounded font-mono text-xs">
+                      <pre class="text-cyan-300">
+import math
+
+print(math.pi)     # π
+print(math.e)      # e
+print(math.sqrt(16))   # 4
+print(math.sin(math.pi/2))  # 1
+print(math.cos(0))  # 1
+print(math.log(10))   # 自然对数
+print(math.pow(2, 3))  # 8
+print(math.factorial(5))  # 120
+print(math.floor(3.7))  # 3
+print(math.ceil(3.2))   # 4
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- random -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-random text-yellow-400"></i> random - 随机
+                    </h4>
+                    <div class="bg-dark p-3 rounded font-mono text-xs">
+                      <pre class="text-cyan-300">
+import random
+
+print(random.random())      # 0-1随机浮点数
+print(random.randint(1, 10))  # 1-10随机整数
+print(random.uniform(1, 10))  # 1-10随机浮点数
+print(random.choice(["红", "绿", "蓝"]))  # 随机选择
+lst = [1,2,3,4,5]
+random.shuffle(lst)  # 打乱
+print(lst)
+print(random.sample(lst, 3))  # 随机取3个
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- time & datetime -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-clock-o text-blue-400"></i> time & datetime
+                    </h4>
+                    <div class="bg-dark p-3 rounded font-mono text-xs">
+                      <pre class="text-cyan-300">
+import time
+from datetime import datetime
+
+print(time.time())  # 时间戳
+time.sleep(2)       # 暂停2秒
+
+now = datetime.now()
+print(now)
+print(now.year, now.month, now.day)
+print(now.strftime("%Y-%m-%d %H:%M:%S"))
+
+# 字符串转日期
+date_str = "2024-01-01"
+date_obj = datetime.strptime(date_str, "%Y-%m-%d")
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 面向对象 -->
+            <div id="oop" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-cubes"></i> 面向对象 (OOP)
+                </h3>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <!-- 类与对象 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-cube text-emerald-400"></i> 类与对象
+                    </h4>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 定义类
+class Person:
+    # 构造方法
+    def __init__(self, name, age):
+        self.name = name  # 属性
+        self.age = age
+    
+    # 方法
+    def greet(self):
+        return f"你好, 我是{self.name}"
+    
+    def have_birthday(self):
+        self.age += 1
+        return f"{self.name}今年{self.age}岁了！"
+
+# 创建对象
+p = Person("张三", 20)
+print(p.name)  # 张三
+print(p.greet())  # 你好, 我是张三
+print(p.have_birthday())  # 张三今年21岁了！
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 继承 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-sitemap text-yellow-400"></i> 继承
+                    </h4>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+class Student(Person):  # 继承Person
+    def __init__(self, name, age, student_id):
+        super().__init__(name, age)  # 调用父类构造
+        self.student_id = student_id
+    
+    def study(self):
+        return f"{self.name}正在学习，学号{self.student_id}"
+
+s = Student("李四", 19, "2024001")
+print(s.greet())  # 继承的方法
+print(s.study())  # 自己的方法
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- 页脚 -->
-  <footer class="bg-gray-800 text-white py-8">
+  <footer class="bg-dark-gray text-white py-8 mt-12">
     <div class="container mx-auto px-4">
       <div class="flex flex-col md:flex-row justify-between items-center">
         <div class="mb-4 md:mb-0">
@@ -389,5 +1328,972 @@ for i in range(1, 10):
       </div>
     </div>
   </footer>
+
+  <script>
+    // 初始化代码编辑器
+    const editor = ace.edit('codeEditor');
+    editor.setTheme('ace/theme/monokai');
+    editor.session.setMode('ace/mode/python');
+    editor.setOptions({
+      fontSize: '14px',
+      tabSize: 4,
+      useSoftTabs: true,
+      showPrintMargin: false,
+      enableBasicAutocompletion: true,
+      enableSnippets: true,
+      enableLiveAutocompletion: true
+    });
+
+    // 设置默认代码
+    const defaultCode = `# 练习1：判断奇偶数
+num = int(input("请输入一个整数: "))
+if num % 2 == 0:
+    print(f"{num} 是偶数")
+else:
+    print(f"{num} 是奇数")`;
+
+    editor.setValue(defaultCode);
+
+    // Pyodide初始化
+    let pyodide;
+    
+    async function initPyodide() {
+      try {
+        const statusEl = document.getElementById('pyodide-status');
+        statusEl.innerHTML = '<i class="fa fa-spinner fa-spin"></i> 正在加载Python解释器...';
+        
+        pyodide = await loadPyodide({
+          stdout: (text) => {
+            appendOutput(text);
+          },
+          stderr: (text) => {
+            appendOutput(text, 'error');
+          }
+        });
+        
+        // 加载常用包
+        await pyodide.loadPackage(["math", "random", "datetime"]);
+        
+        statusEl.innerHTML = '<i class="fa fa-check-circle text-emerald-400"></i> Python解释器已就绪';
+        statusEl.className = 'mt-2 text-sm text-emerald-400';
+      } catch (error) {
+        console.error('Pyodide加载失败:', error);
+        const statusEl = document.getElementById('pyodide-status');
+        statusEl.innerHTML = '<i class="fa fa-exclamation-circle text-red-400"></i> Python解释器加载失败，请刷新页面重试';
+        statusEl.className = 'mt-2 text-sm text-red-400';
+      }
+    }
+    
+    initPyodide();
+    
+    // 输出管理
+    let currentOutput = '';
+    
+    function appendOutput(text, type = 'normal') {
+      currentOutput += text;
+      const outputEl = document.getElementById('code-output');
+      outputEl.innerHTML = currentOutput.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      outputEl.scrollTop = outputEl.scrollHeight;
+    }
+    
+    function clearOutput() {
+      currentOutput = '';
+      document.getElementById('code-output').innerHTML = '';
+    }
+
+    // 章节展开/折叠功能
+    function toggleChapter(chapterId) {
+      const content = document.getElementById(`${chapterId}-content`);
+      const icon = document.getElementById(`${chapterId}-icon`);
+      
+      content.classList.toggle('collapsed');
+      if (content.classList.contains('collapsed')) {
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-right');
+      } else {
+        icon.classList.remove('fa-chevron-right');
+        icon.classList.add('fa-chevron-down');
+      }
+    }
+
+    // 收藏的题目
+    let favoriteProblems = [];
+    
+    // 错题
+    let wrongProblems = [];
+    
+    // 完成的题目
+    let completedProblems = [1, 2]; // 初始状态：问题1和2已完成
+    
+    // 章节题目数量
+    const chapterProblems = {
+      chapter1: 6, // 控制流与循环
+      chapter2: 2, // 函数
+      chapter3: 2  // 数据结构
+    };
+    
+    // 题目数据
+    const problems = {
+      1: {
+        title: "问题1：判断奇偶数",
+        difficulty: "easy",
+        description: `<p>编写一个程序，输入一个整数，判断它是奇数还是偶数。</p>
+                      <p><strong>输入格式：</strong></p>
+                      <p>一个整数 <code>num</code></p>
+                      <p><strong>输出格式：</strong></p>
+                      <p>如果是偶数，输出 "<code>num 是偶数</code>"；如果是奇数，输出 "<code>num 是奇数</code>"。</p>
+                      <p><strong>示例：</strong></p>
+                      <div class="bg-dark p-3 rounded-lg mt-2">
+                        <p class="text-gray-400">输入：42</p>
+                        <p class="text-emerald-400">输出：42 是偶数</p>
+                      </div>
+                      <div class="bg-dark p-3 rounded-lg mt-2">
+                        <p class="text-gray-400">输入：17</p>
+                        <p class="text-emerald-400">输出：17 是奇数</p>
+                      </div>`,
+        code: `# 练习1：判断奇偶数
+num = int(input("请输入一个整数: "))
+if num % 2 == 0:
+    print(f"{num} 是偶数")
+else:
+    print(f"{num} 是奇数")`,
+        analysis: `<h4>解题思路</h4>
+                   <p>使用取模运算符 <code>%</code> 判断一个数是否能被2整除。如果余数为0，则是偶数；否则是奇数。</p>
+                   <h4>代码示例</h4>
+                   <div class="bg-dark p-3 rounded-lg font-mono text-sm">
+                     <pre class="text-cyan-300">
+num = int(input())
+if num % 2 == 0:
+    print(f"{num} 是偶数")
+else:
+    print(f"{num} 是奇数")
+                     </pre>
+                   </div>
+                   <h4>知识点</h4>
+                   <ul class="list-disc list-inside space-y-1 mt-2">
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('basic-syntax')">条件语句 if-else</a></li>
+                     <li>取模运算符 %</li>
+                     <li>输入输出操作</li>
+                   </ul>`
+      },
+      2: {
+        title: "问题2：计算累加和",
+        difficulty: "easy",
+        description: `<p>使用循环计算1到100的累加和。</p>
+                      <p><strong>输入格式：</strong></p>
+                      <p>无</p>
+                      <p><strong>输出格式：</strong></p>
+                      <p>输出1到100的累加和。</p>
+                      <p><strong>示例：</strong></p>
+                      <div class="bg-dark p-3 rounded-lg mt-2">
+                        <p class="text-emerald-400">输出：5050</p>
+                      </div>`,
+        code: `# 练习2：计算累加和
+sum_val = 0
+for i in range(1, 101):
+    sum_val += i
+print(f"1到100的累加和是: {sum_val}")`,
+        analysis: `<h4>解题思路</h4>
+                   <p>使用for循环遍历1到100的所有整数，将它们累加到一个变量中，最后输出结果。</p>
+                   <h4>代码示例</h4>
+                   <div class="bg-dark p-3 rounded-lg font-mono text-sm">
+                     <pre class="text-cyan-300">
+sum_val = 0
+for i in range(1, 101):
+    sum_val += i
+print(sum_val)
+                     </pre>
+                   </div>
+                   <h4>知识点</h4>
+                   <ul class="list-disc list-inside space-y-1 mt-2">
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('control-flow')">for循环</a></li>
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('control-flow')">range函数</a></li>
+                     <li>变量累加</li>
+                   </ul>`
+      },
+      3: {
+        title: "问题3：打印乘法表",
+        difficulty: "medium",
+        description: `<p>使用嵌套循环打印99乘法表。</p>
+                      <p><strong>输入格式：</strong></p>
+                      <p>无</p>
+                      <p><strong>输出格式：</strong></p>
+                      <p>输出99乘法表。</p>
+                      <p><strong>示例：</strong></p>
+                      <div class="bg-dark p-3 rounded-lg mt-2">
+                        <p class="text-emerald-400">1 × 1 = 1</p>
+                        <p class="text-emerald-400">1 × 2 = 2	2 × 2 = 4</p>
+                        <p class="text-emerald-400">...</p>
+                      </div>`,
+        code: `# 练习3：打印乘法表
+print("99乘法表:")
+for i in range(1, 10):
+    for j in range(1, i+1):
+        print(f"{j} × {i} = {i*j}", end="\\t")
+    print()`,
+        analysis: `<h4>解题思路</h4>
+                   <p>使用嵌套循环，外层循环控制乘法表的行数，内层循环控制每行的列数。</p>
+                   <h4>代码示例</h4>
+                   <div class="bg-dark p-3 rounded-lg font-mono text-sm">
+                     <pre class="text-cyan-300">
+for i in range(1, 10):
+    for j in range(1, i+1):
+        print(f"{j} × {i} = {i*j}", end="\\t")
+    print()
+                     </pre>
+                   </div>
+                   <h4>知识点</h4>
+                   <ul class="list-disc list-inside space-y-1 mt-2">
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('control-flow')">嵌套循环</a></li>
+                     <li>print函数的end参数</li>
+                   </ul>`
+      },
+      4: {
+        title: "问题4：判断质数",
+        difficulty: "medium",
+        description: `<p>编写一个程序，输入一个整数，判断它是否是质数。</p>
+                      <p><strong>输入格式：</strong></p>
+                      <p>一个整数 <code>num</code></p>
+                      <p><strong>输出格式：</strong></p>
+                      <p>如果是质数，输出 "<code>num 是质数</code>"；否则输出 "<code>num 不是质数</code>"。</p>
+                      <p><strong>示例：</strong></p>
+                      <div class="bg-dark p-3 rounded-lg mt-2">
+                        <p class="text-gray-400">输入：17</p>
+                        <p class="text-emerald-400">输出：17 是质数</p>
+                      </div>
+                      <div class="bg-dark p-3 rounded-lg mt-2">
+                        <p class="text-gray-400">输入：4</p>
+                        <p class="text-emerald-400">输出：4 不是质数</p>
+                      </div>`,
+        code: `# 练习4：判断质数
+num = int(input("请输入一个整数: "))
+if num <= 1:
+    print(f"{num} 不是质数")
+else:
+    is_prime = True
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            is_prime = False
+            break
+    if is_prime:
+        print(f"{num} 是质数")
+    else:
+        print(f"{num} 不是质数")`,
+        analysis: `<h4>解题思路</h4>
+                   <p>质数是大于1的自然数，除了1和它本身外，不能被其他自然数整除。使用循环检查从2到该数平方根的所有数是否能整除该数。</p>
+                   <h4>代码示例</h4>
+                   <div class="bg-dark p-3 rounded-lg font-mono text-sm">
+                     <pre class="text-cyan-300">
+num = int(input())
+if num <= 1:
+    print(f"{num} 不是质数")
+else:
+    is_prime = True
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            is_prime = False
+            break
+    print(f"{num} {'是' if is_prime else '不是'}质数")
+                     </pre>
+                   </div>
+                   <h4>知识点</h4>
+                   <ul class="list-disc list-inside space-y-1 mt-2">
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('control-flow')">循环控制</a></li>
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('basic-syntax')">条件判断</a></li>
+                     <li>数学运算</li>
+                   </ul>`
+      },
+      5: {
+        title: "问题5：斐波那契数列",
+        difficulty: "medium",
+        description: `<p>编写一个程序，输出斐波那契数列的前n项。</p>
+                      <p><strong>输入格式：</strong></p>
+                      <p>一个整数 <code>n</code>（n ≥ 1）</p>
+                      <p><strong>输出格式：</strong></p>
+                      <p>输出斐波那契数列的前n项，用空格分隔。</p>
+                      <p><strong>示例：</strong></p>
+                      <div class="bg-dark p-3 rounded-lg mt-2">
+                        <p class="text-gray-400">输入：5</p>
+                        <p class="text-emerald-400">输出：0 1 1 2 3</p>
+                      </div>`,
+        code: `# 练习5：斐波那契数列
+n = int(input("请输入一个整数: "))
+if n == 1:
+    print(0)
+elif n == 2:
+    print("0 1")
+else:
+    a, b = 0, 1
+    result = [a, b]
+    for i in range(2, n):
+        a, b = b, a + b
+        result.append(b)
+    print(' '.join(map(str, result)))`,
+        analysis: `<h4>解题思路</h4>
+                   <p>斐波那契数列的前两项是0和1，后续每一项都是前两项的和。使用循环计算并存储前n项。</p>
+                   <h4>代码示例</h4>
+                   <div class="bg-dark p-3 rounded-lg font-mono text-sm">
+                     <pre class="text-cyan-300">
+n = int(input())
+a, b = 0, 1
+for _ in range(n):
+    print(a, end=" ")
+    a, b = b, a + b
+                     </pre>
+                   </div>
+                   <h4>知识点</h4>
+                   <ul class="list-disc list-inside space-y-1 mt-2">
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('control-flow')">循环控制</a></li>
+                     <li>变量交换</li>
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-structures')">列表操作</a></li>
+                   </ul>`
+      },
+      6: {
+        title: "问题6：猜数字游戏",
+        difficulty: "hard",
+        description: `<p>编写一个猜数字游戏，程序随机生成一个1-100的整数，用户输入猜测的数字，程序提示"太大了"或"太小了"，直到猜对为止。</p>
+                      <p><strong>输入格式：</strong></p>
+                      <p>多次输入整数，直到猜对为止。</p>
+                      <p><strong>输出格式：</strong></p>
+                      <p>每次猜测后提示"太大了"或"太小了"，猜对后提示"恭喜你猜对了！"。</p>
+                      <p><strong>示例：</strong></p>
+                      <div class="bg-dark p-3 rounded-lg mt-2">
+                        <p class="text-gray-400">输入：50</p>
+                        <p class="text-yellow-400">输出：太大了</p>
+                        <p class="text-gray-400">输入：25</p>
+                        <p class="text-yellow-400">输出：太小了</p>
+                        <p class="text-gray-400">输入：37</p>
+                        <p class="text-emerald-400">输出：恭喜你猜对了！</p>
+                      </div>`,
+        code: `# 练习6：猜数字游戏
+import random
+
+secret_number = random.randint(1, 100)
+print("猜数字游戏开始！请猜一个1-100之间的整数。")
+
+while True:
+    guess = int(input("请输入你的猜测: "))
+    if guess > secret_number:
+        print("太大了")
+    elif guess < secret_number:
+        print("太小了")
+    else:
+        print("恭喜你猜对了！")
+        break`,
+        analysis: `<h4>解题思路</h4>
+                   <p>使用random模块生成一个1-100的随机数，然后使用无限循环让用户不断猜测，直到猜对为止。</p>
+                   <h4>代码示例</h4>
+                   <div class="bg-dark p-3 rounded-lg font-mono text-sm">
+                     <pre class="text-cyan-300">
+import random
+
+secret = random.randint(1, 100)
+while True:
+    guess = int(input())
+    if guess > secret:
+        print("太大了")
+    elif guess < secret:
+        print("太小了")
+    else:
+        print("恭喜你猜对了！")
+        break
+                     </pre>
+                   </div>
+                   <h4>知识点</h4>
+                   <ul class="list-disc list-inside space-y-1 mt-2">
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('control-flow')">while循环</a></li>
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('basic-syntax')">条件判断</a></li>
+                     <li>random模块</li>
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('control-flow')">无限循环与break语句</a></li>
+                   </ul>`
+      },
+      7: {
+        title: "问题7：计算阶乘",
+        difficulty: "medium",
+        description: `<p>编写一个函数，计算一个整数的阶乘。</p>
+                      <p><strong>输入格式：</strong></p>
+                      <p>一个非负整数 <code>n</code></p>
+                      <p><strong>输出格式：</strong></p>
+                      <p>输出 <code>n</code> 的阶乘。</p>
+                      <p><strong>示例：</strong></p>
+                      <div class="bg-dark p-3 rounded-lg mt-2">
+                        <p class="text-gray-400">输入：5</p>
+                        <p class="text-emerald-400">输出：120</p>
+                      </div>`,
+        code: `# 练习7：计算阶乘
+def factorial(n):
+    if n == 0 or n == 1:
+        return 1
+    else:
+        return n * factorial(n-1)
+
+n = int(input("请输入一个非负整数: "))
+print(f"{n}的阶乘是: {factorial(n)}")`,
+        analysis: `<h4>解题思路</h4>
+                   <p>阶乘是从1乘到n的积，0和1的阶乘都是1。可以使用递归或循环来计算阶乘。</p>
+                   <h4>代码示例</h4>
+                   <div class="bg-dark p-3 rounded-lg font-mono text-sm">
+                     <pre class="text-cyan-300">
+def factorial(n):
+    result = 1
+    for i in range(1, n+1):
+        result *= i
+    return result
+
+n = int(input())
+print(factorial(n))
+                     </pre>
+                   </div>
+                   <h4>知识点</h4>
+                   <ul class="list-disc list-inside space-y-1 mt-2">
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('functions')">函数定义</a></li>
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('functions')">递归</a> 或 <a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('control-flow')">循环</a></li>
+                   </ul>`
+      },
+      8: {
+        title: "问题8：二分查找",
+        difficulty: "hard",
+        description: `<p>编写一个函数，使用二分查找算法在有序列表中查找目标值。</p>
+                      <p><strong>输入格式：</strong></p>
+                      <p>第一行输入一个有序列表（用空格分隔），第二行输入目标值。</p>
+                      <p><strong>输出格式：</strong></p>
+                      <p>如果找到目标值，输出其索引；否则输出-1。</p>
+                      <p><strong>示例：</strong></p>
+                      <div class="bg-dark p-3 rounded-lg mt-2">
+                        <p class="text-gray-400">输入：1 3 5 7 9</p>
+                        <p class="text-gray-400">输入：5</p>
+                        <p class="text-emerald-400">输出：2</p>
+                      </div>`,
+        code: `# 练习8：二分查找
+def binary_search(arr, target):
+    left = 0
+    right = len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+
+# 输入处理
+arr = list(map(int, input("请输入有序列表（用空格分隔）: ").split()))
+target = int(input("请输入目标值: "))
+result = binary_search(arr, target)
+print(f"目标值的索引是: {result}")`,
+        analysis: `<h4>解题思路</h4>
+                   <p>二分查找是一种高效的查找算法，它通过不断将搜索范围减半来查找目标值。</p>
+                   <h4>代码示例</h4>
+                   <div class="bg-dark p-3 rounded-lg font-mono text-sm">
+                     <pre class="text-cyan-300">
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+
+arr = list(map(int, input().split()))
+target = int(input())
+print(binary_search(arr, target))
+                     </pre>
+                   </div>
+                   <h4>知识点</h4>
+                   <ul class="list-disc list-inside space-y-1 mt-2">
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('functions')">函数定义</a></li>
+                     <li>二分查找算法</li>
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-structures')">列表操作</a></li>
+                   </ul>`
+      },
+      9: {
+        title: "问题9：列表去重",
+        difficulty: "easy",
+        description: `<p>编写一个程序，去除列表中的重复元素。</p>
+                      <p><strong>输入格式：</strong></p>
+                      <p>输入一个列表（用空格分隔）。</p>
+                      <p><strong>输出格式：</strong></p>
+                      <p>输出去重后的列表，保持原顺序。</p>
+                      <p><strong>示例：</strong></p>
+                      <div class="bg-dark p-3 rounded-lg mt-2">
+                        <p class="text-gray-400">输入：1 2 3 2 1 4 5 4</p>
+                        <p class="text-emerald-400">输出：1 2 3 4 5</p>
+                      </div>`,
+        code: `# 练习9：列表去重
+lst = list(map(int, input("请输入一个列表（用空格分隔）: ").split()))
+
+# 方法1：使用集合去重（不保持顺序）
+# unique_lst = list(set(lst))
+
+# 方法2：保持顺序去重
+unique_lst = []
+for item in lst:
+    if item not in unique_lst:
+        unique_lst.append(item)
+
+print("去重后的列表:", ' '.join(map(str, unique_lst)))`,
+        analysis: `<h4>解题思路</h4>
+                   <p>可以使用集合去重（但会打乱顺序），或者使用列表遍历的方法保持原顺序去重。</p>
+                   <h4>代码示例</h4>
+                   <div class="bg-dark p-3 rounded-lg font-mono text-sm">
+                     <pre class="text-cyan-300">
+lst = list(map(int, input().split()))
+unique = []
+for item in lst:
+    if item not in unique:
+        unique.append(item)
+print(' '.join(map(str, unique)))
+                     </pre>
+                   </div>
+                   <h4>知识点</h4>
+                   <ul class="list-disc list-inside space-y-1 mt-2">
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-structures')">列表操作</a></li>
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-structures')">集合操作</a></li>
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('control-flow')">条件判断</a></li>
+                   </ul>`
+      },
+      10: {
+        title: "问题10：字典操作",
+        difficulty: "medium",
+        description: `<p>编写一个程序，统计字符串中每个字符出现的次数。</p>
+                      <p><strong>输入格式：</strong></p>
+                      <p>输入一个字符串。</p>
+                      <p><strong>输出格式：</strong></p>
+                      <p>输出每个字符及其出现次数。</p>
+                      <p><strong>示例：</strong></p>
+                      <div class="bg-dark p-3 rounded-lg mt-2">
+                        <p class="text-gray-400">输入：hello</p>
+                        <p class="text-emerald-400">输出：h: 1</p>
+                        <p class="text-emerald-400">输出：e: 1</p>
+                        <p class="text-emerald-400">输出：l: 2</p>
+                        <p class="text-emerald-400">输出：o: 1</p>
+                      </div>`,
+        code: `# 练习10：字典操作
+s = input("请输入一个字符串: ")
+char_count = {}
+
+for char in s:
+    if char in char_count:
+        char_count[char] += 1
+    else:
+        char_count[char] = 1
+
+print("字符出现次数:")
+for char, count in char_count.items():
+    print(f"{char}: {count}")`,
+        analysis: `<h4>解题思路</h4>
+                   <p>使用字典来存储每个字符及其出现次数，遍历字符串中的每个字符，更新字典中的计数。</p>
+                   <h4>代码示例</h4>
+                   <div class="bg-dark p-3 rounded-lg font-mono text-sm">
+                     <pre class="text-cyan-300">
+s = input()
+count = {}
+for c in s:
+    count[c] = count.get(c, 0) + 1
+for c, num in count.items():
+    print(f"{c}: {num}")
+                     </pre>
+                   </div>
+                   <h4>知识点</h4>
+                   <ul class="list-disc list-inside space-y-1 mt-2">
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-structures')">字典操作</a></li>
+                     <li>字符串遍历</li>
+                     <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-structures')">字典的get方法</a></li>
+                   </ul>`
+      }
+    };
+
+    // 当前激活的题目
+    let currentProblemNumber = 1;
+
+    // 题目加载功能
+    function loadProblem(problemNumber) {
+      // 移除所有问题项的active类
+      document.querySelectorAll('.problem-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      // 为当前点击的问题项添加active类
+      event.currentTarget.classList.add('active');
+      
+      // 重置计时器
+      resetTimer();
+      startTimer();
+      
+      // 加载问题内容
+      const problem = problems[problemNumber];
+      if (problem) {
+        // 更新题目标题和难度
+        document.getElementById('problem-title').textContent = problem.title;
+        
+        // 更新难度标签
+        const difficultyTag = document.getElementById('difficulty-tag');
+        difficultyTag.className = 'difficulty-tag';
+        difficultyTag.classList.add(\`difficulty-\${problem.difficulty}\`);
+        difficultyTag.textContent = problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难';
+        
+        // 更新题目描述
+        document.getElementById('problem-description').innerHTML = problem.description;
+        
+        // 更新代码编辑器内容
+        editor.setValue(problem.code);
+        
+        // 更新答案解析
+        document.getElementById('answer-analysis').innerHTML = problem.analysis;
+        
+        // 清空运行结果
+        clearOutput();
+        document.getElementById('execution-time').textContent = '执行时间：0ms';
+        document.getElementById('memory-usage').textContent = '内存：0MB';
+        
+        currentProblemNumber = problemNumber;
+      }
+    }
+
+    // 代码重置功能
+    document.getElementById('resetCode').addEventListener('click', function() {
+      const problem = problems[currentProblemNumber];
+      if (problem) {
+        editor.setValue(problem.code);
+      } else {
+        editor.setValue(defaultCode);
+      }
+    });
+
+    // 计时器功能
+    let timerInterval;
+    let startTime;
+    let elapsedTime = 0;
+    
+    function startTimer() {
+      startTime = Date.now() - elapsedTime;
+      timerInterval = setInterval(() => {
+        elapsedTime = Date.now() - startTime;
+        const minutes = Math.floor(elapsedTime / 60000);
+        const seconds = Math.floor((elapsedTime % 60000) / 1000);
+        document.getElementById('timer').textContent = \`\${minutes.toString().padStart(2, '0')}:\${seconds.toString().padStart(2, '0')}\`;
+      }, 1000);
+    }
+    
+    function stopTimer() {
+      clearInterval(timerInterval);
+    }
+    
+    function resetTimer() {
+      clearInterval(timerInterval);
+      elapsedTime = 0;
+      document.getElementById('timer').textContent = '00:00';
+    }
+
+    // 每个题目对应的测试数据输入（模拟input()调用）
+    const testData = {
+      1: { inputs: [42, 17] },
+      2: { inputs: [] },
+      3: { inputs: [] },
+      4: { inputs: [17, 4] },
+      5: { inputs: [5] },
+      6: { inputs: [50, 25, 37] },
+      7: { inputs: [5] },
+      8: { inputs: ["1 3 5 7 9", "5"] },
+      9: { inputs: ["1 2 3 2 1 4 5 4"] },
+      10: { inputs: ["hello"] }
+    };
+    
+    // 运行代码功能
+    document.getElementById('runCode').addEventListener('click', async function() {
+      const code = editor.getValue();
+      const output = document.getElementById('code-output');
+      const executionTimeEl = document.getElementById('execution-time');
+      const memoryUsageEl = document.getElementById('memory-usage');
+      
+      if (!pyodide) {
+        output.textContent = 'Python解释器还在加载中，请稍等...';
+        return;
+      }
+      
+      // 清空输出
+      clearOutput();
+      output.textContent = '运行中...';
+      executionTimeEl.textContent = '执行时间：计算中...';
+      memoryUsageEl.textContent = '内存：计算中...';
+      
+      const startTime = performance.now();
+      
+      try {
+        // 替换input函数为模拟输入
+        let inputIndex = 0;
+        const inputs = testData[currentProblemNumber]?.inputs || [];
+        
+        // 在Pyodide全局定义input函数
+        pyodide.globals.set('py_input', (prompt = '') => {
+          if (inputIndex < inputs.length) {
+            const val = inputs[inputIndex++];
+            appendOutput(\`\${prompt}\${val}\\n\`);
+            return String(val);
+          }
+          return '';
+        });
+        
+        // 替换代码中的input()调用
+        let processedCode = code.replace(/input\\s*\\(/g, 'py_input(');
+        
+        // 运行代码
+        await pyodide.runPythonAsync(processedCode);
+        
+        const endTime = performance.now();
+        const executionTime = (endTime - startTime).toFixed(2);
+        const memoryUsage = (Math.random() * 10 + 1).toFixed(2);
+        
+        executionTimeEl.textContent = \`执行时间：\${executionTime}ms\`;
+        memoryUsageEl.textContent = \`内存：\${memoryUsage}MB\`;
+        
+        // 标记题目为完成
+        markProblemAsCompleted(currentProblemNumber);
+        
+        // 更新问题项的状态为已完成
+        const activeItem = document.querySelector('.problem-item.active');
+        if (activeItem) {
+          activeItem.classList.add('solved');
+          if (!activeItem.querySelector('.text-emerald-400')) {
+            const statusDiv = document.createElement('div');
+            statusDiv.className = 'text-emerald-400';
+            statusDiv.innerHTML = '<i class="fa fa-check-circle"></i>';
+            activeItem.appendChild(statusDiv);
+          }
+        }
+        
+      } catch (error) {
+        const errorHtml = \`<span style="color: #ef4444;">运行错误: \${error.message}</span>\`;
+        output.innerHTML = errorHtml;
+        executionTimeEl.textContent = '执行时间：0ms';
+        memoryUsageEl.textContent = '内存：0MB';
+        console.error(error);
+      }
+    });
+    
+    // 标签页切换功能
+    function showTab(tabId) {
+      // 隐藏所有标签页内容
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.add('hidden');
+      });
+      
+      // 显示选中的标签页内容
+      document.getElementById(tabId).classList.remove('hidden');
+      
+      // 更新导航链接状态
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+      });
+      
+      // 为当前点击的导航链接添加active类
+      event.currentTarget.classList.add('active');
+    }
+    
+    // 知识点导航功能
+    document.querySelectorAll('.knowledge-nav').forEach(btn => {
+      btn.addEventListener('click', function() {
+        // 移除所有active类
+        document.querySelectorAll('.knowledge-nav').forEach(b => {
+          b.classList.remove('active');
+          b.classList.add('bg-gray-600');
+          b.classList.add('text-gray-200');
+          b.classList.add('hover:bg-gray-500');
+        });
+        
+        // 为当前按钮添加active类
+        this.classList.add('active');
+        this.classList.remove('bg-gray-600');
+        this.classList.remove('text-gray-200');
+        this.classList.remove('hover:bg-gray-500');
+        this.classList.add('bg-cyan-500');
+        this.classList.add('text-gray-900');
+        
+        // 隐藏所有知识点章节
+        document.querySelectorAll('.knowledge-section').forEach(section => {
+          section.classList.add('hidden');
+        });
+        
+        // 显示目标章节
+        const targetId = this.getAttribute('data-target');
+        document.getElementById(targetId).classList.remove('hidden');
+      });
+    });
+    
+    // 收藏功能
+    function toggleFavorite(problemNumber) {
+      const starIcon = document.querySelector('#favorite-btn i');
+      const index = favoriteProblems.indexOf(problemNumber);
+      
+      if (index === -1) {
+        // 添加到收藏
+        favoriteProblems.push(problemNumber);
+        starIcon.classList.remove('fa-star-o');
+        starIcon.classList.add('fa-star');
+        starIcon.classList.add('text-yellow-400');
+        alert('已添加到收藏');
+        updateFavoritesDisplay();
+      } else {
+        // 从收藏中移除
+        favoriteProblems.splice(index, 1);
+        starIcon.classList.remove('fa-star');
+        starIcon.classList.remove('text-yellow-400');
+        starIcon.classList.add('fa-star-o');
+        alert('已从收藏中移除');
+        updateFavoritesDisplay();
+      }
+    }
+    
+    // 更新收藏题目显示
+    function updateFavoritesDisplay() {
+      const container = document.getElementById('favorites-container');
+      
+      if (favoriteProblems.length === 0) {
+        container.innerHTML = \`
+          <div class="text-center py-12">
+            <i class="fa fa-star-o text-4xl text-yellow-500 mb-4"></i>
+            <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无收藏</h3>
+            <p class="text-gray-400">在题库中点击题目旁边的星标图标来收藏题目</p>
+            <button class="btn-primary mt-6" onclick="showTab('question-bank')">
+              <i class="fa fa-list"></i> 浏览题库
+            </button>
+          </div>
+        \`;
+      } else {
+        let html = '<div class="grid gap-4">';
+        favoriteProblems.forEach(num => {
+          const problem = problems[num];
+          if (problem) {
+            html += \`
+              <div class="bg-dark p-4 rounded-lg border border-gray-700 cursor-pointer hover:border-cyan-500 transition" onclick="showTab('question-bank'); loadProblem(\${num});">
+                <h4 class="text-lg font-semibold text-gray-200 mb-2">\${problem.title}</h4>
+                <span class="difficulty-tag difficulty-\${problem.difficulty}">\${problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难'}</span>
+              </div>
+            \`;
+          }
+        });
+        html += '</div>';
+        container.innerHTML = html;
+      }
+    }
+    
+    // 滚动到知识点
+    function scrollToKnowledge(sectionId) {
+      setTimeout(() => {
+        // 点击对应的导航按钮
+        const targetBtn = document.querySelector(\`.knowledge-nav[data-target="\${sectionId}"]\`);
+        if (targetBtn) {
+          targetBtn.click();
+        }
+        // 滚动到顶部
+        const knowledgeEl = document.getElementById('knowledge');
+        knowledgeEl.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+    
+    // 计算章节进度
+    function calculateChapterProgress(chapterId) {
+      let completedCount = 0;
+      const totalCount = chapterProblems[chapterId];
+      
+      // 根据章节ID确定题目范围
+      let startProblem, endProblem;
+      switch(chapterId) {
+        case 'chapter1': // 控制流与循环
+          startProblem = 1;
+          endProblem = 6;
+          break;
+        case 'chapter2': // 函数
+          startProblem = 7;
+          endProblem = 8;
+          break;
+        case 'chapter3': // 数据结构
+          startProblem = 9;
+          endProblem = 10;
+          break;
+      }
+      
+      // 计算该章节已完成的题目数量
+      for (let i = startProblem; i <= endProblem; i++) {
+        if (completedProblems.includes(i)) {
+          completedCount++;
+        }
+      }
+      
+      return { completed: completedCount, total: totalCount, percentage: Math.round((completedCount / totalCount) * 100) };
+    }
+    
+    // 计算整体进度
+    function calculateOverallProgress() {
+      const totalProblems = Object.values(chapterProblems).reduce((sum, count) => sum + count, 0);
+      const completedCount = completedProblems.length;
+      const percentage = Math.round((completedCount / totalProblems) * 100);
+      return { completed: completedCount, total: totalProblems, percentage: percentage };
+    }
+    
+    // 更新章节进度显示
+    function updateChapterProgress() {
+      // 更新章节1进度
+      const chapter1Progress = calculateChapterProgress('chapter1');
+      const chapter1Element = document.querySelector('#chapter1-icon').parentElement.querySelector('.chapter-progress');
+      const chapter1Percentage = document.querySelector('#chapter1-icon').parentElement.querySelector('.progress-percentage');
+      if (chapter1Element && chapter1Percentage) {
+        chapter1Element.textContent = \`\${chapter1Progress.completed}/\${chapter1Progress.total}\`;
+        chapter1Percentage.textContent = \`(\${chapter1Progress.percentage}%)\`;
+      }
+      
+      // 更新章节2进度
+      const chapter2Progress = calculateChapterProgress('chapter2');
+      const chapter2Element = document.querySelector('#chapter2-icon')?.parentElement.querySelector('.chapter-progress');
+      const chapter2Percentage = document.querySelector('#chapter2-icon')?.parentElement.querySelector('.progress-percentage');
+      if (chapter2Element && chapter2Percentage) {
+        chapter2Element.textContent = \`\${chapter2Progress.completed}/\${chapter2Progress.total}\`;
+        chapter2Percentage.textContent = \`(\${chapter2Progress.percentage}%)\`;
+      }
+      
+      // 更新章节3进度
+      const chapter3Progress = calculateChapterProgress('chapter3');
+      const chapter3Element = document.querySelector('#chapter3-icon')?.parentElement.querySelector('.chapter-progress');
+      const chapter3Percentage = document.querySelector('#chapter3-icon')?.parentElement.querySelector('.progress-percentage');
+      if (chapter3Element && chapter3Percentage) {
+        chapter3Element.textContent = \`\${chapter3Progress.completed}/\${chapter3Progress.total}\`;
+        chapter3Percentage.textContent = \`(\${chapter3Progress.percentage}%)\`;
+      }
+    }
+    
+    // 更新整体进度显示
+    function updateOverallProgress() {
+      const overallProgress = calculateOverallProgress();
+      document.getElementById('overall-progress').textContent = \`\${overallProgress.percentage}%\`;
+      document.getElementById('progress-bar').style.width = \`\${overallProgress.percentage}%\`;
+    }
+    
+    // 标记题目为完成
+    function markProblemAsCompleted(problemNumber) {
+      if (!completedProblems.includes(problemNumber)) {
+        completedProblems.push(problemNumber);
+        updateChapterProgress();
+        updateOverallProgress();
+      }
+    }
+    
+    // 初始化进度
+    function initProgress() {
+      updateChapterProgress();
+      updateOverallProgress();
+    }
+    
+    // 页面加载完成后初始化
+    window.addEventListener('load', function() {
+      initProgress();
+      startTimer();
+    });
+  </script>
 </body>
 </html>
