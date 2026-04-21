@@ -2043,7 +2043,7 @@ for c, num in count.items():
         });
         
         // 替换代码中的input()调用
-        let processedCode = code.replace(/input\\s*\\(/g, 'py_input(');
+        let processedCode = code.replace(/input\s*\(/g, 'py_input(');
         
         // 运行代码
         await pyodide.runPythonAsync(processedCode);
