@@ -1937,7 +1937,7 @@ for c, num in count.items():
         // 更新难度标签
         const difficultyTag = document.getElementById('difficulty-tag');
         difficultyTag.className = 'difficulty-tag';
-        difficultyTag.classList.add(\`difficulty-\${problem.difficulty}\`);
+        difficultyTag.classList.add(`difficulty-${problem.difficulty}`);
         difficultyTag.textContent = problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难';
         
         // 更新题目描述
@@ -1979,7 +1979,7 @@ for c, num in count.items():
         elapsedTime = Date.now() - startTime;
         const minutes = Math.floor(elapsedTime / 60000);
         const seconds = Math.floor((elapsedTime % 60000) / 1000);
-        document.getElementById('timer').textContent = \`\${minutes.toString().padStart(2, '0')}:\${seconds.toString().padStart(2, '0')}\`;
+        document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
       }, 1000);
     }
     
@@ -2036,7 +2036,7 @@ for c, num in count.items():
         pyodide.globals.set('py_input', (prompt = '') => {
           if (inputIndex < inputs.length) {
             const val = inputs[inputIndex++];
-            appendOutput(\`\${prompt}\${val}\\n\`);
+            appendOutput(`${prompt}${val}\n`);
             return String(val);
           }
           return '';
@@ -2052,8 +2052,8 @@ for c, num in count.items():
         const executionTime = (endTime - startTime).toFixed(2);
         const memoryUsage = (Math.random() * 10 + 1).toFixed(2);
         
-        executionTimeEl.textContent = \`执行时间：\${executionTime}ms\`;
-        memoryUsageEl.textContent = \`内存：\${memoryUsage}MB\`;
+        executionTimeEl.textContent = `执行时间：${executionTime}ms`;
+        memoryUsageEl.textContent = `内存：${memoryUsage}MB`;
         
         // 标记题目为完成
         markProblemAsCompleted(currentProblemNumber);
@@ -2071,7 +2071,7 @@ for c, num in count.items():
         }
         
       } catch (error) {
-        const errorHtml = \`<span style="color: #ef4444;">运行错误: \${error.message}</span>\`;
+        const errorHtml = `<span style="color: #ef4444;">运行错误: ${error.message}</span>`;
         output.innerHTML = errorHtml;
         executionTimeEl.textContent = '执行时间：0ms';
         memoryUsageEl.textContent = '内存：0MB';
@@ -2159,7 +2159,7 @@ for c, num in count.items():
       const container = document.getElementById('favorites-container');
       
       if (favoriteProblems.length === 0) {
-        container.innerHTML = \`
+        container.innerHTML = `
           <div class="text-center py-12">
             <i class="fa fa-star-o text-4xl text-yellow-500 mb-4"></i>
             <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无收藏</h3>
@@ -2168,18 +2168,18 @@ for c, num in count.items():
               <i class="fa fa-list"></i> 浏览题库
             </button>
           </div>
-        \`;
+        `;
       } else {
         let html = '<div class="grid gap-4">';
         favoriteProblems.forEach(num => {
           const problem = problems[num];
           if (problem) {
-            html += \`
-              <div class="bg-dark p-4 rounded-lg border border-gray-700 cursor-pointer hover:border-cyan-500 transition" onclick="showTab('question-bank'); loadProblem(\${num});">
-                <h4 class="text-lg font-semibold text-gray-200 mb-2">\${problem.title}</h4>
-                <span class="difficulty-tag difficulty-\${problem.difficulty}">\${problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难'}</span>
+            html += `
+              <div class="bg-dark p-4 rounded-lg border border-gray-700 cursor-pointer hover:border-cyan-500 transition" onclick="showTab('question-bank'); loadProblem(${num});">
+                <h4 class="text-lg font-semibold text-gray-200 mb-2">${problem.title}</h4>
+                <span class="difficulty-tag difficulty-${problem.difficulty}">${problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难'}</span>
               </div>
-            \`;
+            `;
           }
         });
         html += '</div>';
@@ -2191,7 +2191,7 @@ for c, num in count.items():
     function scrollToKnowledge(sectionId) {
       setTimeout(() => {
         // 点击对应的导航按钮
-        const targetBtn = document.querySelector(\`.knowledge-nav[data-target="\${sectionId}"]\`);
+        const targetBtn = document.querySelector(`.knowledge-nav[data-target="${sectionId}"]`);
         if (targetBtn) {
           targetBtn.click();
         }
@@ -2248,8 +2248,8 @@ for c, num in count.items():
       const chapter1Element = document.querySelector('#chapter1-icon').parentElement.querySelector('.chapter-progress');
       const chapter1Percentage = document.querySelector('#chapter1-icon').parentElement.querySelector('.progress-percentage');
       if (chapter1Element && chapter1Percentage) {
-        chapter1Element.textContent = \`\${chapter1Progress.completed}/\${chapter1Progress.total}\`;
-        chapter1Percentage.textContent = \`(\${chapter1Progress.percentage}%)\`;
+        chapter1Element.textContent = `${chapter1Progress.completed}/${chapter1Progress.total}`;
+        chapter1Percentage.textContent = `(${chapter1Progress.percentage}%)`;
       }
       
       // 更新章节2进度
@@ -2257,8 +2257,8 @@ for c, num in count.items():
       const chapter2Element = document.querySelector('#chapter2-icon')?.parentElement.querySelector('.chapter-progress');
       const chapter2Percentage = document.querySelector('#chapter2-icon')?.parentElement.querySelector('.progress-percentage');
       if (chapter2Element && chapter2Percentage) {
-        chapter2Element.textContent = \`\${chapter2Progress.completed}/\${chapter2Progress.total}\`;
-        chapter2Percentage.textContent = \`(\${chapter2Progress.percentage}%)\`;
+        chapter2Element.textContent = `${chapter2Progress.completed}/${chapter2Progress.total}`;
+        chapter2Percentage.textContent = `(${chapter2Progress.percentage}%)`;
       }
       
       // 更新章节3进度
@@ -2266,16 +2266,16 @@ for c, num in count.items():
       const chapter3Element = document.querySelector('#chapter3-icon')?.parentElement.querySelector('.chapter-progress');
       const chapter3Percentage = document.querySelector('#chapter3-icon')?.parentElement.querySelector('.progress-percentage');
       if (chapter3Element && chapter3Percentage) {
-        chapter3Element.textContent = \`\${chapter3Progress.completed}/\${chapter3Progress.total}\`;
-        chapter3Percentage.textContent = \`(\${chapter3Progress.percentage}%)\`;
+        chapter3Element.textContent = `${chapter3Progress.completed}/${chapter3Progress.total}`;
+        chapter3Percentage.textContent = `(${chapter3Progress.percentage}%)`;
       }
     }
     
     // 更新整体进度显示
     function updateOverallProgress() {
       const overallProgress = calculateOverallProgress();
-      document.getElementById('overall-progress').textContent = \`\${overallProgress.percentage}%\`;
-      document.getElementById('progress-bar').style.width = \`\${overallProgress.percentage}%\`;
+      document.getElementById('overall-progress').textContent = `${overallProgress.percentage}%`;
+      document.getElementById('progress-bar').style.width = `${overallProgress.percentage}%`;
     }
     
     // 标记题目为完成
