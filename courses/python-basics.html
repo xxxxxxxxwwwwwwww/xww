@@ -1920,7 +1920,9 @@ for c, num in count.items():
       });
       
       // 为当前点击的问题项添加active类
-      event.currentTarget.classList.add('active');
+      if (event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
+      }
       
       // 重置计时器
       resetTimer();
@@ -2093,7 +2095,9 @@ for c, num in count.items():
       });
       
       // 为当前点击的导航链接添加active类
-      event.currentTarget.classList.add('active');
+      if (event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
+      }
     }
     
     // 知识点导航功能
