@@ -1348,12 +1348,8 @@ print(s.study())  # 自己的方法
     });
 
     // 设置默认代码
-    const defaultCode = `# 练习1：判断奇偶数
-num = int(input("请输入一个整数: "))
-if num % 2 == 0:
-    print(f"{num} 是偶数")
-else:
-    print(f"{num} 是奇数")`;
+    const defaultCode = `# 请编写代码
+`;
 
     editor.setValue(defaultCode);
 
@@ -1518,12 +1514,8 @@ else:
                         <p class="text-gray-400">输入：17</p>
                         <p class="text-emerald-400">输出：17 是奇数</p>
                       </div>`,
-        code: `# 练习1：判断奇偶数
-num = int(input("请输入一个整数: "))
-if num % 2 == 0:
-    print(f"{num} 是偶数")
-else:
-    print(f"{num} 是奇数")`,
+        code: `# 请编写代码
+`,
         analysis: `<h4>解题思路</h4>
                    <p>使用取模运算符 <code>%</code> 判断一个数是否能被2整除。如果余数为0，则是偶数；否则是奇数。</p>
                    <h4>代码示例</h4>
@@ -1555,11 +1547,8 @@ else:
                       <div class="bg-dark p-3 rounded-lg mt-2">
                         <p class="text-emerald-400">输出：5050</p>
                       </div>`,
-        code: `# 练习2：计算累加和
-sum_val = 0
-for i in range(1, 101):
-    sum_val += i
-print(f"1到100的累加和是: {sum_val}")`,
+        code: `# 请编写代码
+`,
         analysis: `<h4>解题思路</h4>
                    <p>使用for循环遍历1到100的所有整数，将它们累加到一个变量中，最后输出结果。</p>
                    <h4>代码示例</h4>
@@ -1592,12 +1581,8 @@ print(sum_val)
                         <p class="text-emerald-400">1 × 2 = 2	2 × 2 = 4</p>
                         <p class="text-emerald-400">...</p>
                       </div>`,
-        code: `# 练习3：打印乘法表
-print("99乘法表:")
-for i in range(1, 10):
-    for j in range(1, i+1):
-        print(f"{j} × {i} = {i*j}", end="\\t")
-    print()`,
+        code: `# 请编写代码
+`,
         analysis: `<h4>解题思路</h4>
                    <p>使用嵌套循环，外层循环控制乘法表的行数，内层循环控制每行的列数。</p>
                    <h4>代码示例</h4>
@@ -1632,20 +1617,8 @@ for i in range(1, 10):
                         <p class="text-gray-400">输入：4</p>
                         <p class="text-emerald-400">输出：4 不是质数</p>
                       </div>`,
-        code: `# 练习4：判断质数
-num = int(input("请输入一个整数: "))
-if num <= 1:
-    print(f"{num} 不是质数")
-else:
-    is_prime = True
-    for i in range(2, int(num**0.5) + 1):
-        if num % i == 0:
-            is_prime = False
-            break
-    if is_prime:
-        print(f"{num} 是质数")
-    else:
-        print(f"{num} 不是质数")`,
+        code: `# 请编写代码
+`,
         analysis: `<h4>解题思路</h4>
                    <p>质数是大于1的自然数，除了1和它本身外，不能被其他自然数整除。使用循环检查从2到该数平方根的所有数是否能整除该数。</p>
                    <h4>代码示例</h4>
@@ -1683,19 +1656,8 @@ else:
                         <p class="text-gray-400">输入：5</p>
                         <p class="text-emerald-400">输出：0 1 1 2 3</p>
                       </div>`,
-        code: `# 练习5：斐波那契数列
-n = int(input("请输入一个整数: "))
-if n == 1:
-    print(0)
-elif n == 2:
-    print("0 1")
-else:
-    a, b = 0, 1
-    result = [a, b]
-    for i in range(2, n):
-        a, b = b, a + b
-        result.append(b)
-    print(' '.join(map(str, result)))`,
+        code: `# 请编写代码
+`,
         analysis: `<h4>解题思路</h4>
                    <p>斐波那契数列的前两项是0和1，后续每一项都是前两项的和。使用循环计算并存储前n项。</p>
                    <h4>代码示例</h4>
@@ -1732,21 +1694,8 @@ for _ in range(n):
                         <p class="text-gray-400">输入：37</p>
                         <p class="text-emerald-400">输出：恭喜你猜对了！</p>
                       </div>`,
-        code: `# 练习6：猜数字游戏
-import random
-
-secret_number = random.randint(1, 100)
-print("猜数字游戏开始！请猜一个1-100之间的整数。")
-
-while True:
-    guess = int(input("请输入你的猜测: "))
-    if guess > secret_number:
-        print("太大了")
-    elif guess < secret_number:
-        print("太小了")
-    else:
-        print("恭喜你猜对了！")
-        break`,
+        code: `# 请编写代码
+`,
         analysis: `<h4>解题思路</h4>
                    <p>使用random模块生成一个1-100的随机数，然后使用无限循环让用户不断猜测，直到猜对为止。</p>
                    <h4>代码示例</h4>
@@ -1787,15 +1736,8 @@ while True:
                         <p class="text-gray-400">输入：5</p>
                         <p class="text-emerald-400">输出：120</p>
                       </div>`,
-        code: `# 练习7：计算阶乘
-def factorial(n):
-    if n == 0 or n == 1:
-        return 1
-    else:
-        return n * factorial(n-1)
-
-n = int(input("请输入一个非负整数: "))
-print(f"{n}的阶乘是: {factorial(n)}")`,
+        code: `# 请编写代码
+`,
         analysis: `<h4>解题思路</h4>
                    <p>阶乘是从1乘到n的积，0和1的阶乘都是1。可以使用递归或循环来计算阶乘。</p>
                    <h4>代码示例</h4>
@@ -1831,25 +1773,8 @@ print(factorial(n))
                         <p class="text-gray-400">输入：5</p>
                         <p class="text-emerald-400">输出：2</p>
                       </div>`,
-        code: `# 练习8：二分查找
-def binary_search(arr, target):
-    left = 0
-    right = len(arr) - 1
-    while left <= right:
-        mid = (left + right) // 2
-        if arr[mid] == target:
-            return mid
-        elif arr[mid] < target:
-            left = mid + 1
-        else:
-            right = mid - 1
-    return -1
-
-# 输入处理
-arr = list(map(int, input("请输入有序列表（用空格分隔）: ").split()))
-target = int(input("请输入目标值: "))
-result = binary_search(arr, target)
-print(f"目标值的索引是: {result}")`,
+        code: `# 请编写代码
+`,
         analysis: `<h4>解题思路</h4>
                    <p>二分查找是一种高效的查找算法，它通过不断将搜索范围减半来查找目标值。</p>
                    <h4>代码示例</h4>
@@ -1892,19 +1817,8 @@ print(binary_search(arr, target))
                         <p class="text-gray-400">输入：1 2 3 2 1 4 5 4</p>
                         <p class="text-emerald-400">输出：1 2 3 4 5</p>
                       </div>`,
-        code: `# 练习9：列表去重
-lst = list(map(int, input("请输入一个列表（用空格分隔）: ").split()))
-
-# 方法1：使用集合去重（不保持顺序）
-# unique_lst = list(set(lst))
-
-# 方法2：保持顺序去重
-unique_lst = []
-for item in lst:
-    if item not in unique_lst:
-        unique_lst.append(item)
-
-print("去重后的列表:", ' '.join(map(str, unique_lst)))`,
+        code: `# 请编写代码
+`,
         analysis: `<h4>解题思路</h4>
                    <p>可以使用集合去重（但会打乱顺序），或者使用列表遍历的方法保持原顺序去重。</p>
                    <h4>代码示例</h4>
@@ -1941,19 +1855,8 @@ print(' '.join(map(str, unique)))
                         <p class="text-emerald-400">输出：l: 2</p>
                         <p class="text-emerald-400">输出：o: 1</p>
                       </div>`,
-        code: `# 练习10：字典操作
-s = input("请输入一个字符串: ")
-char_count = {}
-
-for char in s:
-    if char in char_count:
-        char_count[char] += 1
-    else:
-        char_count[char] = 1
-
-print("字符出现次数:")
-for char, count in char_count.items():
-    print(f"{char}: {count}")`,
+        code: `# 请编写代码
+`,
         analysis: `<h4>解题思路</h4>
                    <p>使用字典来存储每个字符及其出现次数，遍历字符串中的每个字符，更新字典中的计数。</p>
                    <h4>代码示例</h4>
