@@ -1356,35 +1356,99 @@ else:
 
     // Pyodide初始化
     let pyodide;
+    let initAttempts = 0;
+    const maxAttempts = 3;
+    const initTimeout = 30000; // 30秒超时
+    let currentCDNIndex = 0;
+    const cdnSources = [
+      "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/",
+      "https://unpkg.com/pyodide@0.24.1/full/",
+      "https://cdnjs.cloudflare.com/ajax/libs/pyodide/0.24.1/"
+    ];
     
     async function initPyodide() {
+      initAttempts++;
       try {
         const statusEl = document.getElementById('pyodide-status');
-        statusEl.innerHTML = '<i class="fa fa-spinner fa-spin"></i> 正在加载Python解释器...';
+        const currentCDN = cdnSources[currentCDNIndex];
+        statusEl.innerHTML = `<i class="fa fa-spinner fa-spin"></i> 正在加载Python解释器... (CDN: ${currentCDNIndex + 1}/${cdnSources.length}, 尝试 ${initAttempts}/${maxAttempts})`;
+        statusEl.className = 'mt-2 text-sm text-yellow-400';
         
-        pyodide = await loadPyodide({
-          stdout: (text) => {
-            appendOutput(text);
-          },
-          stderr: (text) => {
-            appendOutput(text, 'error');
-          }
+        // 创建超时Promise
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('加载超时')), initTimeout);
         });
         
-        // 加载常用包
-        await pyodide.loadPackage(["math", "random", "datetime"]);
+        // 配置Pyodide
+        pyodide = await Promise.race([
+          loadPyodide({
+            indexURL: currentCDN,
+            stdout: (text) => {
+              appendOutput(text);
+            },
+            stderr: (text) => {
+              appendOutput(text, 'error');
+            }
+          }),
+          timeoutPromise
+        ]);
         
-        statusEl.innerHTML = '<i class="fa fa-check-circle text-emerald-400"></i> Python解释器已就绪';
+        // 加载常用包（可选，即使失败也不影响核心功能）
+        try {
+          statusEl.innerHTML = `<i class="fa fa-spinner fa-spin"></i> 正在加载Python解释器... 加载常用包 (尝试 ${initAttempts}/${maxAttempts})`;
+          await pyodide.loadPackage(["math", "random", "datetime"]);
+        } catch (pkgError) {
+          console.warn('包加载失败，继续使用核心功能:', pkgError);
+          // 包加载失败不影响核心功能，继续执行
+        }
+        
+        statusEl.innerHTML = '<i class="fa fa-check-circle text-emerald-400"></i> Python解释器已就绪 (CDN: ' + (currentCDNIndex + 1) + '/' + cdnSources.length + ')';
+        
         statusEl.className = 'mt-2 text-sm text-emerald-400';
       } catch (error) {
         console.error('Pyodide加载失败:', error);
         const statusEl = document.getElementById('pyodide-status');
-        statusEl.innerHTML = '<i class="fa fa-exclamation-circle text-red-400"></i> Python解释器加载失败，请刷新页面重试';
-        statusEl.className = 'mt-2 text-sm text-red-400';
+        
+        if (initAttempts < maxAttempts) {
+          statusEl.innerHTML = `<i class="fa fa-exclamation-circle text-yellow-400"></i> 加载失败 (${error.message})，正在重试... (CDN: ${currentCDNIndex + 1}/${cdnSources.length}, 尝试 ${initAttempts}/${maxAttempts})`;
+          statusEl.className = 'mt-2 text-sm text-yellow-400';
+          // 延迟重试，递增延迟时间
+          const delay = 2000 * initAttempts;
+          setTimeout(initPyodide, delay);
+        } else {
+          // 尝试下一个CDN
+          if (currentCDNIndex < cdnSources.length - 1) {
+            currentCDNIndex++;
+            initAttempts = 0;
+            statusEl.innerHTML = `<i class="fa fa-spinner fa-spin"></i> 切换到备用CDN... (${currentCDNIndex + 1}/${cdnSources.length})`;
+            statusEl.className = 'mt-2 text-sm text-yellow-400';
+            setTimeout(initPyodide, 1000);
+          } else {
+            statusEl.innerHTML = '<i class="fa fa-exclamation-circle text-red-400"></i> Python解释器加载失败，请检查网络连接后重试';
+            statusEl.className = 'mt-2 text-sm text-red-400';
+            // 添加手动重试按钮
+            statusEl.innerHTML += ' <button class="ml-2 text-cyan-400 hover:underline" onclick="initPyodide()">重试</button>';
+            // 添加CDN切换按钮
+            statusEl.innerHTML += ' <button class="ml-2 text-cyan-400 hover:underline" onclick="switchCDN()">切换CDN</button>';
+          }
+        }
       }
     }
     
-    initPyodide();
+    // 切换CDN源
+    function switchCDN() {
+      const statusEl = document.getElementById('pyodide-status');
+      statusEl.innerHTML = '<i class="fa fa-spinner fa-spin"></i> 正在切换CDN源...';
+      statusEl.className = 'mt-2 text-sm text-yellow-400';
+      
+      // 切换到下一个CDN
+      currentCDNIndex = (currentCDNIndex + 1) % cdnSources.length;
+      initAttempts = 0;
+      setTimeout(initPyodide, 1000);
+    }
+    
+    // 页面加载完成后初始化
+    window.addEventListener('load', initPyodide);
     
     // 输出管理
     let currentOutput = '';
