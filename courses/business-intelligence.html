@@ -675,164 +675,402 @@ print(df)
             <div id="bi-fundamentals" class="knowledge-section">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-lightbulb-o"></i> 模块1：商务智能基础（8学时）
+                  <i class="fa fa-lightbulb-o"></i> 模块1：商务智能概述（8学时）
                 </h3>
                 
                 <div class="grid md:grid-cols-2 gap-6">
-                  <!-- 商务智能概念与发展 -->
+                  <!-- 商务智能概念与定义 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-book text-yellow-400"></i> 商务智能概念与发展
+                      <i class="fa fa-book text-yellow-400"></i> 商务智能概念与定义
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">商务智能（Business Intelligence，BI）是一套完整的解决方案，用于将企业中现有的数据转化为知识，帮助企业做出明智的业务经营决策。BI的发展经历了从报表系统到数据分析平台，再到智能决策支持系统的演进过程。</p>
-                    <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">核心概念</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>数据采集与整合</li>
-                          <li>数据存储与管理</li>
-                          <li>数据分析与挖掘</li>
-                          <li>信息呈现与决策支持</li>
-                        </ul>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">商务智能（Business Intelligence，简称BI）是一套完整的解决方案，旨在将企业中现有的数据转化为知识，帮助企业做出明智的业务经营决策。BI不仅仅是一个技术工具，更是一种数据驱动的管理理念和方法论。它涵盖了从数据采集、存储、分析到呈现的完整流程，帮助企业从海量数据中提取有价值的信息，支持战略决策和日常运营。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">📊</span> 数据采集与整合
+                        </h5>
+                        <p class="text-gray-300 text-sm leading-relaxed">从企业内部各业务系统（ERP、CRM、SCM等）和外部数据源（市场数据、社交媒体、第三方数据）收集数据，并进行清洗、转换和整合，形成统一的数据视图。数据采集是BI的基础，数据质量直接决定分析结果的可靠性。</p>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-cyan-400 font-semibold mb-1">发展历程</h5>
-                        <p class="text-gray-400">1960s决策支持系统 → 1980s执行信息系统 → 1990s数据仓库 → 2000s商务智能平台 → 2010s大数据与AI融合</p>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">💾</span> 数据存储与管理
+                        </h5>
+                        <p class="text-gray-300 text-sm leading-relaxed">构建数据仓库和数据集市，采用合理的维度建模方法，实现数据的高效存储和快速检索。数据仓库是BI的核心基础设施，支持海量历史数据的存储和多维分析。</p>
                       </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🔍</span> 数据分析与挖掘
+                        </h5>
+                        <p class="text-gray-300 text-sm leading-relaxed">运用统计分析、OLAP分析、数据挖掘等技术，从数据中发现规律、趋势和异常。分析方法包括描述性分析（发生了什么）、诊断性分析（为什么发生）、预测性分析（将会发生什么）和规范性分析（应该怎么做）。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-pink-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">📈</span> 信息呈现与决策支持
+                        </h5>
+                        <p class="text-gray-300 text-sm leading-relaxed">通过可视化仪表盘、报表、数据故事等方式，将分析结果直观地呈现给决策者，支持各级管理人员的决策需求。良好的可视化设计能够帮助用户快速理解数据，发现问题和机会。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 商务智能核心价值链
+# 数据 → 信息 → 知识 → 智慧 → 决策
+
+# BI价值链示例
+bi_value_chain = {
+    "数据层": "原始数据（交易记录、日志、传感器数据）",
+    "信息层": "处理后数据（汇总报表、KPI指标）",
+    "知识层": "分析洞察（趋势分析、关联规则、预测模型）",
+    "智慧层": "决策建议（优化方案、风险评估、战略规划）",
+    "决策层": "行动执行（业务优化、资源配置、战略调整）"
+}
+
+# BI成熟度模型
+maturity_levels = [
+    "Level 1: 报表阶段 - 基础数据报表",
+    "Level 2: 分析阶段 - 多维分析和钻取",
+    "Level 3: 预测阶段 - 预测建模和预警",
+    "Level 4: 优化阶段 - 自动化决策支持",
+    "Level 5: 智能阶段 - AI驱动的智能决策"
+]
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 商务智能发展历程 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-history text-blue-400"></i> 商务智能发展历程
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">商务智能的发展历程反映了信息技术与企业管理深度融合的过程。从早期的决策支持系统到现代的智能分析平台，BI经历了多次技术革新和应用拓展。了解BI的发展历程有助于我们理解当前技术趋势和未来发展方向。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-yellow-500">
+                        <h5 class="text-yellow-400 font-semibold mb-1">1960s-1970s：决策支持系统（DSS）时代</h5>
+                        <p class="text-gray-300 text-sm">早期的决策支持系统主要针对特定问题提供分析支持，如财务规划、资源配置等。系统功能单一，数据量有限，主要服务于高层管理决策。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-blue-500">
+                        <h5 class="text-blue-400 font-semibold mb-1">1980s：执行信息系统（EIS）时代</h5>
+                        <p class="text-gray-300 text-sm">EIS专为高层管理人员设计，提供关键绩效指标的实时监控和预警功能。这一时期开始重视数据可视化和用户友好的界面设计。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-emerald-500">
+                        <h5 class="text-emerald-400 font-semibold mb-1">1990s：数据仓库时代</h5>
+                        <p class="text-gray-300 text-sm">Bill Inmon和Ralph Kimball提出数据仓库理论，OLAP技术成熟。企业开始构建企业级数据仓库，实现数据的集中管理和多维分析。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-pink-500">
+                        <h5 class="text-pink-400 font-semibold mb-1">2000s：商务智能平台时代</h5>
+                        <p class="text-gray-300 text-sm">BI工具日趋成熟，Tableau、Qlik、MicroStrategy等厂商崛起。自助式BI开始普及，业务用户可以自主进行数据分析。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-purple-500">
+                        <h5 class="text-purple-400 font-semibold mb-1">2010s至今：大数据与AI融合时代</h5>
+                        <p class="text-gray-300 text-sm">Hadoop、Spark等大数据技术兴起，AI/ML与BI深度融合。实时分析、增强分析、自然语言查询成为新趋势，BI进入智能化时代。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# BI技术演进时间线
+timeline = """
+┌─────────────────────────────────────────────────────────────┐
+│                    商务智能技术演进历程                        │
+├─────────────────────────────────────────────────────────────┤
+│ 1960s │ 决策支持系统(DSS) → 模型驱动的决策支持               │
+│ 1970s │ 管理信息系统(MIS) → 结构化报表系统                   │
+│ 1980s │ 执行信息系统(EIS) → 高管仪表盘                       │
+│ 1990s │ 数据仓库(DW) + OLAP → 多维数据分析                   │
+│ 2000s │ 商务智能平台 → 自助式分析、可视化                    │
+│ 2010s │ 大数据BI → Hadoop/Spark、实时分析                    │
+│ 2020s │ 智能BI → AI/ML集成、增强分析、NLQ                   │
+└─────────────────────────────────────────────────────────────┘
+"""
+
+# BI技术栈演进
+tech_evolution = {
+    "存储技术": ["关系数据库", "数据仓库", "数据湖", "湖仓一体"],
+    "处理技术": ["批处理", "ETL", "ELT", "流处理"],
+    "分析技术": ["SQL查询", "OLAP", "数据挖掘", "机器学习"],
+    "展示技术": ["静态报表", "交互仪表盘", "数据故事", "增强分析"]
+}
+                      </pre>
                     </div>
                   </div>
 
                   <!-- 商务智能系统架构 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-sitemap text-blue-400"></i> 商务智能系统架构
+                      <i class="fa fa-sitemap text-emerald-400"></i> 商务智能系统架构
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">典型的BI系统采用多层架构设计，从数据源到最终用户界面，各层协同工作实现数据的采集、处理、分析和展示。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">典型的BI系统采用多层架构设计，从数据源到最终用户界面，各层协同工作实现数据的采集、处理、分析和展示。合理的架构设计是BI项目成功的关键，需要综合考虑性能、可扩展性、安全性和维护成本等因素。</p>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm mb-4">
                       <pre class="text-cyan-300">
-┌─────────────────────────────────────────┐
-│           用户界面层 (Presentation)        │
-│   仪表盘 | 报表 | 数据可视化 | 移动端      │
-├─────────────────────────────────────────┤
-│           分析层 (Analytics)              │
-│   OLAP | 数据挖掘 | 预测分析 | 统计分析    │
-├─────────────────────────────────────────┤
-│           数据层 (Data)                   │
-│   数据仓库 | 数据集市 | 数据湖 | ODS      │
-├─────────────────────────────────────────┤
-│           ETL层 (Integration)            │
-│   数据抽取 | 数据转换 | 数据加载          │
-├─────────────────────────────────────────┤
-│           数据源层 (Sources)              │
-│   ERP | CRM | 外部数据 | 文件系统        │
-└─────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────┐
+│              用户界面层 (Presentation Layer)              │
+│   仪表盘 | 交互报表 | 数据可视化 | 移动端 | 数据故事       │
+│   工具：Tableau, Power BI, Superset, Metabase           │
+├─────────────────────────────────────────────────────────┤
+│              分析层 (Analytics Layer)                    │
+│   OLAP分析 | 数据挖掘 | 预测建模 | 统计分析 | AI/ML       │
+│   技术：MDX, Python, R, Spark ML, TensorFlow            │
+├─────────────────────────────────────────────────────────┤
+│              数据层 (Data Layer)                         │
+│   数据仓库 | 数据集市 | 数据湖 | ODS | 主数据管理          │
+│   技术：Snowflake, Redshift, BigQuery, Hive             │
+├─────────────────────────────────────────────────────────┤
+│              集成层 (Integration Layer)                  │
+│   数据抽取 | 数据清洗 | 数据转换 | 数据加载 | 数据治理      │
+│   工具：Informatica, Talend, Airflow, dbt               │
+├─────────────────────────────────────────────────────────┤
+│              数据源层 (Data Source Layer)                │
+│   ERP | CRM | SCM | 外部API | IoT设备 | 文件系统         │
+│   类型：结构化数据, 半结构化数据, 非结构化数据             │
+└─────────────────────────────────────────────────────────┘
                       </pre>
+                    </div>
+                    
+                    <div class="space-y-3">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-cyan-400 font-semibold mb-1">🏗️ 架构设计原则</h5>
+                        <ul class="text-gray-300 text-sm space-y-1">
+                          <li>• <strong>分层解耦：</strong>各层职责明确，降低系统复杂度</li>
+                          <li>• <strong>可扩展性：</strong>支持数据量和用户量的增长</li>
+                          <li>• <strong>高性能：</strong>优化查询响应时间，支持实时分析</li>
+                          <li>• <strong>安全性：</strong>数据权限控制，敏感数据保护</li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
 
                   <!-- 商务智能应用场景 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-industry text-emerald-400"></i> 商务智能应用场景
+                      <i class="fa fa-industry text-pink-400"></i> 商务智能应用场景
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">BI在各行业中有广泛的应用，帮助企业实现数据驱动的决策。</p>
-                    <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-yellow-400 font-semibold mb-1">零售行业</h5>
-                        <p class="text-gray-400">销售分析、库存优化、客户细分、促销效果评估</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">BI在各行业中有广泛的应用，帮助企业实现数据驱动的决策。不同行业的BI应用场景各有侧重，但核心目标都是通过数据分析提升业务绩效。以下是典型行业的BI应用案例。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🛒</span> 零售行业
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-2">零售行业是BI应用最成熟的领域之一，涵盖从商品管理到客户营销的各个环节。</p>
+                        <ul class="text-gray-400 text-xs list-disc list-inside space-y-1">
+                          <li><strong>销售分析：</strong>销售趋势分析、门店业绩对比、商品销售排名</li>
+                          <li><strong>库存优化：</strong>库存周转分析、安全库存计算、补货预测</li>
+                          <li><strong>客户细分：</strong>RFM分析、客户生命周期价值、精准营销</li>
+                          <li><strong>促销效果：</strong>促销ROI分析、价格弹性分析、促销组合优化</li>
+                        </ul>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-pink-400 font-semibold mb-1">金融行业</h5>
-                        <p class="text-gray-400">风险管理、客户信用评估、欺诈检测、投资分析</p>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-pink-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🏦</span> 金融行业
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-2">金融行业对数据分析和风险管理有极高要求，BI在风险控制和客户服务方面发挥重要作用。</p>
+                        <ul class="text-gray-400 text-xs list-disc list-inside space-y-1">
+                          <li><strong>风险管理：</strong>信用风险评估、市场风险监控、操作风险分析</li>
+                          <li><strong>客户画像：</strong>客户信用评分、客户价值分析、流失预警</li>
+                          <li><strong>欺诈检测：</strong>异常交易识别、反洗钱监控、欺诈模式挖掘</li>
+                          <li><strong>投资分析：</strong>投资组合分析、业绩归因、市场趋势预测</li>
+                        </ul>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-blue-400 font-semibold mb-1">制造业</h5>
-                        <p class="text-gray-400">生产计划优化、质量控制、供应链管理、设备维护预测</p>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🏭</span> 制造业
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-2">制造业BI应用聚焦于生产效率提升和供应链优化，实现智能制造转型。</p>
+                        <ul class="text-gray-400 text-xs list-disc list-inside space-y-1">
+                          <li><strong>生产分析：</strong>产能利用率、生产效率OEE、质量缺陷分析</li>
+                          <li><strong>供应链：</strong>供应商绩效评估、需求预测、物流优化</li>
+                          <li><strong>设备维护：</strong>预测性维护、设备故障预警、备件管理</li>
+                          <li><strong>成本控制：</strong>成本结构分析、差异分析、成本优化</li>
+                        </ul>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-orange-400 font-semibold mb-1">医疗健康</h5>
-                        <p class="text-gray-400">患者分析、医疗资源配置、疾病预测、药物研发</p>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-orange-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🏥</span> 医疗健康
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-2">医疗行业BI应用帮助提升医疗服务质量和运营效率。</p>
+                        <ul class="text-gray-400 text-xs list-disc list-inside space-y-1">
+                          <li><strong>患者分析：</strong>患者画像、就诊行为分析、满意度分析</li>
+                          <li><strong>资源优化：</strong>床位利用率、医疗设备调度、人员排班</li>
+                          <li><strong>疾病预测：</strong>疾病风险预测、流行病监测、健康干预</li>
+                          <li><strong>药物研发：</strong>临床试验分析、药物效果评估、市场预测</li>
+                        </ul>
                       </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 零售行业BI应用示例
+import pandas as pd
+
+# 销售数据分析
+sales_data = pd.DataFrame({
+    'date': pd.date_range('2024-01-01', periods=30),
+    'store': ['北京店']*10 + ['上海店']*10 + ['广州店']*10,
+    'category': ['食品', '服装', '电子'] * 10,
+    'sales': [10000, 15000, 20000] * 10,
+    'profit': [2000, 3000, 4000] * 10
+})
+
+# 门店销售汇总
+store_summary = sales_data.groupby('store').agg({
+    'sales': 'sum',
+    'profit': 'sum'
+}).round(2)
+print("📊 门店销售汇总:\n", store_summary)
+
+# 品类销售分析
+category_analysis = sales_data.groupby('category').agg({
+    'sales': ['sum', 'mean'],
+    'profit': ['sum', 'mean']
+}).round(2)
+print("\n📈 品类销售分析:\n", category_analysis)
+                      </pre>
                     </div>
                   </div>
 
                   <!-- 商务智能价值与挑战 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700 md:col-span-2">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-balance-scale text-purple-400"></i> 商务智能价值与挑战
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">BI为企业带来显著价值的同时，也面临着诸多挑战需要克服。</p>
-                    <div class="grid grid-cols-2 gap-3">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-2">✓ 核心价值</h5>
-                        <ul class="text-gray-400 text-xs list-disc list-inside space-y-1">
-                          <li>提高决策效率与准确性</li>
-                          <li>发现隐藏的商业机会</li>
-                          <li>优化业务流程</li>
-                          <li>增强竞争优势</li>
-                          <li>降低运营成本</li>
-                        </ul>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">BI为企业带来显著价值的同时，也面临着诸多挑战需要克服。成功实施BI项目需要技术、管理、文化等多方面的协同配合。理解这些价值和挑战，有助于企业更好地规划和实施BI战略。</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-3 flex items-center gap-2">
+                          <span class="text-xl">✅</span> 核心价值
+                        </h5>
+                        <div class="space-y-2">
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-cyan-400 text-sm font-semibold">🎯 提高决策效率与准确性</p>
+                            <p class="text-gray-400 text-xs">实时数据支持快速决策，减少主观判断带来的偏差，提升决策质量。</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-cyan-400 text-sm font-semibold">💡 发现隐藏的商业机会</p>
+                            <p class="text-gray-400 text-xs">通过数据挖掘发现潜在的市场机会、客户需求和业务优化空间。</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-cyan-400 text-sm font-semibold">⚙️ 优化业务流程</p>
+                            <p class="text-gray-400 text-xs">识别流程瓶颈，优化资源配置，提升运营效率和客户满意度。</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-cyan-400 text-sm font-semibold">🏆 增强竞争优势</p>
+                            <p class="text-gray-400 text-xs">数据驱动的敏捷响应能力，快速适应市场变化，领先竞争对手。</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-cyan-400 text-sm font-semibold">💰 降低运营成本</p>
+                            <p class="text-gray-400 text-xs">精准预测需求，优化库存管理，减少浪费和冗余成本。</p>
+                          </div>
+                        </div>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-red-400 font-semibold mb-2">✗ 主要挑战</h5>
-                        <ul class="text-gray-400 text-xs list-disc list-inside space-y-1">
-                          <li>数据质量问题</li>
-                          <li>数据孤岛现象</li>
-                          <li>技术人才短缺</li>
-                          <li>数据安全与隐私</li>
-                          <li>组织文化阻力</li>
-                        </ul>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-red-400 font-semibold mb-3 flex items-center gap-2">
+                          <span class="text-xl">⚠️</span> 主要挑战
+                        </h5>
+                        <div class="space-y-2">
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-yellow-400 text-sm font-semibold">📊 数据质量问题</p>
+                            <p class="text-gray-400 text-xs">数据缺失、重复、不一致等问题影响分析结果的准确性和可信度。</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-yellow-400 text-sm font-semibold">🏝️ 数据孤岛现象</p>
+                            <p class="text-gray-400 text-xs">各业务系统数据分散，难以整合，无法形成统一的数据视图。</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-yellow-400 text-sm font-semibold">👥 技术人才短缺</p>
+                            <p class="text-gray-400 text-xs">缺乏既懂业务又懂技术的复合型人才，影响BI项目的实施效果。</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-yellow-400 text-sm font-semibold">🔒 数据安全与隐私</p>
+                            <p class="text-gray-400 text-xs">数据泄露风险、合规要求、隐私保护等问题日益突出。</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-yellow-400 text-sm font-semibold">🏢 组织文化阻力</p>
+                            <p class="text-gray-400 text-xs">传统决策习惯难以改变，数据文化尚未建立，变革阻力大。</p>
+                          </div>
+                        </div>
                       </div>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-cyan-900 bg-opacity-20 rounded-lg border border-cyan-700">
+                      <h5 class="text-cyan-400 font-semibold mb-2">💡 BI项目成功关键因素</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>高层支持：</strong>获得管理层的认可和资源支持</li>
+                        <li>• <strong>业务驱动：</strong>以业务需求为导向，而非技术驱动</li>
+                        <li>• <strong>数据治理：</strong>建立完善的数据质量管理体系</li>
+                        <li>• <strong>敏捷迭代：</strong>小步快跑，快速验证，持续优化</li>
+                        <li>• <strong>用户培训：</strong>加强用户培训，提升数据素养</li>
+                      </ul>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- 模块2：数据仓库设计 -->
+            <!-- 模块2：数据仓库 -->
             <div id="data-warehouse" class="knowledge-section hidden">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-database"></i> 模块2：数据仓库设计（12学时）
+                  <i class="fa fa-database"></i> 模块2：数据仓库（12学时）
                 </h3>
 
                 <div class="grid md:grid-cols-2 gap-6">
-                  <!-- 数据仓库概念与特点 -->
+                  <!-- 数据仓库概念与特征 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-cubes text-yellow-400"></i> 数据仓库概念与特点
+                      <i class="fa fa-cubes text-yellow-400"></i> 数据仓库概念与特征
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">数据仓库（Data Warehouse）是一个面向主题的、集成的、相对稳定的、反映历史变化的数据集合，用于支持管理决策。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">数据仓库（Data Warehouse，简称DW或DWH）是一个面向主题的、集成的、相对稳定的、反映历史变化的数据集合，用于支持管理决策。数据仓库之父Bill Inmon将其定义为"一个面向主题的、集成的、非易失的、随时间变化的数据集合，用于支持管理决策"。数据仓库是BI系统的核心基础设施，为数据分析提供统一、高质量的数据基础。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-yellow-500">
+                        <h5 class="text-yellow-400 font-semibold mb-1">🎯 面向主题 (Subject-Oriented)</h5>
+                        <p class="text-gray-300 text-sm">数据仓库围绕特定业务主题组织数据，而非按应用系统划分。例如销售主题、客户主题、产品主题、财务主题等。主题划分使数据更易于理解和分析，支持跨部门的综合分析需求。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-blue-500">
+                        <h5 class="text-blue-400 font-semibold mb-1">🔗 集成性 (Integrated)</h5>
+                        <p class="text-gray-300 text-sm">数据仓库将多个数据源的数据进行整合，统一数据格式、编码标准和命名规范。消除数据不一致性，确保数据的准确性和一致性。例如，不同系统中的性别字段可能用M/F、0/1、男/女等不同表示，需要统一转换。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-emerald-500">
+                        <h5 class="text-emerald-400 font-semibold mb-1">🔒 非易失性 (Non-Volatile)</h5>
+                        <p class="text-gray-300 text-sm">数据仓库中的数据一旦加载，通常不进行更新或删除操作。数据主要进行查询和分析，支持历史数据的保存和追溯。这种特性使得数据仓库能够保留历史快照，支持趋势分析和审计需求。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-pink-500">
+                        <h5 class="text-pink-400 font-semibold mb-1">⏰ 时变性 (Time-Variant)</h5>
+                        <p class="text-gray-300 text-sm">数据仓库包含历史数据，支持时间序列分析。数据通常带有时间维度，可以分析数据随时间的变化趋势。例如，可以分析过去5年的销售趋势、客户增长情况等。</p>
+                      </div>
+                    </div>
+                    
                     <div class="bg-dark p-3 rounded font-mono text-sm">
                       <pre class="text-cyan-300">
-# 数据仓库四大特征 (ACID)
+# 数据仓库 vs 操作型数据库对比
+comparison = """
+┌──────────────┬─────────────────────┬─────────────────────┐
+│    特征      │      操作型数据库     │      数据仓库       │
+├──────────────┼─────────────────────┼─────────────────────┤
+│ 数据内容     │ 当前数据             │ 历史数据            │
+│ 数据更新     │ 频繁增删改           │ 定期加载            │
+│ 查询模式     │ 事务处理(OLTP)       │ 分析查询(OLAP)      │
+│ 数据粒度     │ 详细数据             │ 汇总+详细数据       │
+│ 用户群体     │ 业务操作人员         │ 决策分析人员        │
+│ 数据量       │ 相对较小             │ 海量数据            │
+│ 响应时间     │ 毫秒级               │ 秒级到分钟级        │
+│ 冗余度       │ 低(规范化设计)       │ 高(反规范化设计)    │
+└──────────────┴─────────────────────┴─────────────────────┘
+"""
 
-1. 面向主题 (Subject-Oriented)
-   - 围绕特定业务主题组织数据
-   - 如：销售、客户、产品、财务
-
-2. 集成性 (Integrated)
-   - 统一数据格式和编码标准
-   - 消除数据不一致性
-
-3. 非易失性 (Non-Volatile)
-   - 数据一旦加载，不进行更新
-   - 支持历史数据分析
-
-4. 时变性 (Time-Variant)
-   - 包含历史数据
-   - 支持时间序列分析
-
-# 数据仓库 vs 操作型数据库
-┌──────────────┬─────────────┬─────────────┐
-│    特征      │  操作型DB   │  数据仓库   │
-├──────────────┼─────────────┼─────────────┤
-│ 数据内容     │ 当前数据    │ 历史数据    │
-│ 数据更新     │ 频繁更新    │ 定期加载    │
-│ 查询模式     │ 事务处理    │ 分析查询    │
-│ 数据粒度     │ 详细数据    │ 汇总数据    │
-│ 用户群体     │ 业务人员    │ 决策人员    │
-└──────────────┴─────────────┴─────────────┘
+# 数据仓库的价值
+dw_values = {
+    "统一数据视图": "整合企业各系统数据，消除数据孤岛",
+    "历史数据分析": "保留历史数据，支持趋势分析",
+    "高性能查询": "优化的存储结构，快速响应分析查询",
+    "数据质量保障": "ETL过程确保数据质量和一致性",
+    "决策支持": "为BI工具提供可靠的数据基础"
+}
                       </pre>
                     </div>
                   </div>
@@ -842,134 +1080,372 @@ print(df)
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-sitemap text-blue-400"></i> 数据仓库架构设计
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">数据仓库架构设计决定了系统的性能、可扩展性和维护成本。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">数据仓库架构设计决定了系统的性能、可扩展性和维护成本。合理的架构设计需要考虑数据量、用户数、查询复杂度、实时性要求等因素。常见的数据仓库架构包括企业级数据仓库（EDW）、数据集市和操作数据存储（ODS）等。</p>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm mb-4">
                       <pre class="text-cyan-300">
-# 三层架构模型
+# 数据仓库三层架构模型
 
-┌─────────────────────────────────────┐
-│         顶层：访问层                  │
-│   报表工具 | OLAP工具 | 数据挖掘工具  │
-├─────────────────────────────────────┤
-│         中间层：数据仓库层            │
-│   原子数据 | 汇总数据 | 数据集市      │
-├─────────────────────────────────────┤
-│         底层：数据获取层              │
-│   ETL工具 | 数据清洗 | 数据转换      │
-└─────────────────────────────────────┘
-
-# 常见架构模式
-
-1. 企业级数据仓库 (EDW)
-   - 集中式架构，统一数据模型
-   - 适合大型企业
-
-2. 数据集市 (Data Mart)
-   - 部门级数据仓库
-   - 快速部署，成本较低
-
-3. 联邦式架构
-   - 分布式数据仓库
-   - 整合多个数据源
+┌─────────────────────────────────────────────────────────┐
+│                  顶层：访问层 (Access Layer)              │
+│   报表工具 | OLAP工具 | 数据挖掘工具 | 自助分析平台        │
+│   工具：Tableau, Power BI, Excel, Python/R              │
+├─────────────────────────────────────────────────────────┤
+│                中间层：数据仓库层 (Warehouse Layer)        │
+│   ┌─────────────────────────────────────────────────┐   │
+│   │  数据集市 (Data Marts) - 部门级数据视图          │   │
+│   │  销售集市 | 财务集市 | 人事集市 | 供应链集市      │   │
+│   └─────────────────────────────────────────────────┘   │
+│   ┌─────────────────────────────────────────────────┐   │
+│   │  原子数据层 (Atomic Layer) - 最细粒度数据        │   │
+│   │  事实表 | 维度表 | 汇总表 | 聚合表               │   │
+│   └─────────────────────────────────────────────────┘   │
+├─────────────────────────────────────────────────────────┤
+│                底层：数据获取层 (Acquisition Layer)       │
+│   ETL工具 | 数据清洗 | 数据转换 | 数据质量检查            │
+│   工具：Informatica, Talend, Airflow, dbt, Spark        │
+├─────────────────────────────────────────────────────────┤
+│                源数据层 (Source Layer)                   │
+│   ERP | CRM | SCM | 外部数据 | IoT设备 | 日志文件        │
+└─────────────────────────────────────────────────────────┘
                       </pre>
+                    </div>
+                    
+                    <div class="space-y-3">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-cyan-400 font-semibold mb-1">🏢 企业级数据仓库 (EDW)</h5>
+                        <p class="text-gray-300 text-sm">集中式架构，统一数据模型，适合大型企业。优点是数据一致性好，便于全局分析；缺点是建设周期长，成本高，灵活性较低。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📊 数据集市 (Data Mart)</h5>
+                        <p class="text-gray-300 text-sm">部门级数据仓库，针对特定业务领域。优点是快速部署，成本低，灵活性高；缺点是可能产生数据孤岛，一致性难以保证。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">🔄 操作数据存储 (ODS)</h5>
+                        <p class="text-gray-300 text-sm">操作型数据存储，提供近实时的数据访问能力。作为源系统和数据仓库之间的缓冲层，支持操作性报表和实时分析。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-pink-400 font-semibold mb-1">🌊 数据湖 (Data Lake)</h5>
+                        <p class="text-gray-300 text-sm">存储原始数据，支持结构化、半结构化和非结构化数据。优点是灵活性高，成本低；缺点是需要良好的数据治理。</p>
+                      </div>
                     </div>
                   </div>
 
-                  <!-- ETL过程 -->
+                  <!-- ETL过程详解 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-exchange text-emerald-400"></i> ETL过程
+                      <i class="fa fa-exchange text-emerald-400"></i> ETL过程详解
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">ETL（Extract-Transform-Load）是数据仓库建设的核心过程，负责数据的抽取、转换和加载。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">ETL（Extract-Transform-Load）是数据仓库建设的核心过程，负责将数据从源系统抽取、转换并加载到目标系统。ETL过程直接影响数据仓库的数据质量和可用性，是BI项目成功的关键环节。现代数据架构中也出现了ELT模式，即先加载后转换，利用目标系统的计算能力。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">📤</span> 数据抽取 (Extract)
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-2">从源系统获取数据，支持全量抽取和增量抽取两种模式。</p>
+                        <ul class="text-gray-400 text-xs list-disc list-inside space-y-1">
+                          <li><strong>全量抽取：</strong>每次抽取源表的全部数据，适合数据量小或需要完全重建的场景</li>
+                          <li><strong>增量抽取：</strong>只抽取变化的数据，适合大数据量和频繁更新的场景</li>
+                          <li><strong>变更数据捕获(CDC)：</strong>实时捕获数据变更，支持准实时数据同步</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🔄</span> 数据转换 (Transform)
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-2">对抽取的数据进行清洗、转换、聚合等处理。</p>
+                        <ul class="text-gray-400 text-xs list-disc list-inside space-y-1">
+                          <li><strong>数据清洗：</strong>处理缺失值、异常值、重复数据</li>
+                          <li><strong>数据转换：</strong>格式转换、编码转换、计算派生字段</li>
+                          <li><strong>数据聚合：</strong>汇总计算、预计算指标</li>
+                          <li><strong>数据整合：</strong>多源数据合并、主数据匹配</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">📥</span> 数据加载 (Load)
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-2">将转换后的数据写入目标系统。</p>
+                        <ul class="text-gray-400 text-xs list-disc list-inside space-y-1">
+                          <li><strong>全量加载：</strong>删除目标表数据后重新加载</li>
+                          <li><strong>增量加载：</strong>追加新数据或更新已有数据</li>
+                          <li><strong>缓慢变化维处理：</strong>处理维度数据的历史变化</li>
+                        </ul>
+                      </div>
+                    </div>
+                    
                     <div class="bg-dark p-3 rounded font-mono text-sm">
                       <pre class="text-cyan-300">
-# ETL三阶段详解
+# ETL流程示例代码
+import pandas as pd
+from datetime import datetime
 
 # 1. 数据抽取 (Extract)
-# 从源系统获取数据
-sources = {
-    'ERP系统': '销售订单数据',
-    'CRM系统': '客户信息数据',
-    '外部数据': '市场调研数据'
-}
-
-# 增量抽取策略
-def incremental_extract(last_extract_time):
-    return f"SELECT * FROM orders 
-            WHERE update_time > '{last_extract_time}'"
+def extract_data(source_config):
+    """从源系统抽取数据"""
+    if source_config['type'] == 'database':
+        query = f"SELECT * FROM {source_config['table']}"
+        if source_config.get('incremental'):
+            last_extract = source_config['last_extract_time']
+            query += f" WHERE update_time > '{last_extract}'"
+        return pd.read_sql(query, source_config['connection'])
+    elif source_config['type'] == 'file':
+        return pd.read_csv(source_config['path'])
+    elif source_config['type'] == 'api':
+        return pd.DataFrame(requests.get(source_config['url']).json())
 
 # 2. 数据转换 (Transform)
-# 数据清洗、转换、聚合
-def transform_data(raw_data):
+def transform_data(raw_df):
+    """数据清洗和转换"""
     # 数据清洗
-    cleaned = raw_data.dropna()
-    # 数据标准化
-    cleaned['date'] = pd.to_datetime(cleaned['date'])
+    df = raw_df.drop_duplicates()  # 去重
+    df = df.dropna(subset=['customer_id'])  # 删除关键列缺失
+    
+    # 数据类型转换
+    df['order_date'] = pd.to_datetime(df['order_date'])
+    df['amount'] = pd.to_numeric(df['amount'], errors='coerce')
+    
+    # 计算派生字段
+    df['year'] = df['order_date'].dt.year
+    df['month'] = df['order_date'].dt.month
+    df['quarter'] = df['order_date'].dt.quarter
+    
     # 数据聚合
-    aggregated = cleaned.groupby('category').sum()
-    return aggregated
+    summary = df.groupby(['customer_id', 'year', 'month']).agg({
+        'amount': ['sum', 'mean', 'count'],
+        'order_id': 'nunique'
+    }).reset_index()
+    
+    return df, summary
 
 # 3. 数据加载 (Load)
-# 将数据写入目标系统
-def load_to_warehouse(data, target_table):
-    # 全量加载
-    data.to_sql(target_table, con=engine, 
-                if_exists='replace')
-    # 增量加载
-    data.to_sql(target_table, con=engine, 
-                if_exists='append')
+def load_to_warehouse(df, table_name, mode='append'):
+    """加载数据到数据仓库"""
+    if mode == 'overwrite':
+        # 全量加载：先删除后插入
+        execute_sql(f"TRUNCATE TABLE {table_name}")
+    # 使用批量插入提高性能
+    df.to_sql(table_name, con=engine, 
+              if_exists=mode, index=False, chunksize=10000)
+    print(f"成功加载 {len(df)} 条记录到 {table_name}")
+
+# ETL主流程
+def run_etl_pipeline():
+    sources = get_source_configs()
+    for source in sources:
+        raw_data = extract_data(source)
+        clean_data, summary = transform_data(raw_data)
+        load_to_warehouse(clean_data, 'fact_orders')
+        load_to_warehouse(summary, 'agg_monthly_sales')
+        update_extract_log(source['id'])
                       </pre>
                     </div>
                   </div>
 
-                  <!-- 数据建模方法 -->
+                  <!-- 维度建模方法 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-object-group text-pink-400"></i> 数据建模方法
+                      <i class="fa fa-object-group text-pink-400"></i> 维度建模方法
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">数据建模是数据仓库设计的核心，常见的建模方法包括星型模型和雪花模型。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">维度建模是数据仓库设计的核心方法，由Ralph Kimball提出。与传统的实体关系建模（ER建模）不同，维度建模以业务过程为中心，将数据组织为事实表和维度表，支持高效的分析查询。常见的维度模型包括星型模型（Star Schema）和雪花模型（Snowflake Schema）。</p>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm mb-4">
                       <pre class="text-cyan-300">
-# 星型模型 (Star Schema)
+# 星型模型 (Star Schema) 示例
 
-        ┌─────────────┐
-        │  时间维度   │
-        └──────┬──────┘
-               │
-┌─────────────┼─────────────┐
-│             │             │
-│    ┌────────┴────────┐    │
-│    │    事实表       │    │
-│    │  (销售事实)     │    │
-│    └────────┬────────┘    │
-│             │             │
-└─────────────┼─────────────┘
-              │
-    ┌─────────┼─────────┐
-    │         │         │
-┌───┴───┐ ┌───┴───┐ ┌───┴───┐
-│产品维度│ │地区维度│ │客户维度│
-└───────┘ └───────┘ └───────┘
-
-# 维度表设计示例
-dim_product = {
-    'product_key': 'INT PRIMARY KEY',
-    'product_id': 'VARCHAR(20)',
-    'product_name': 'VARCHAR(100)',
-    'category': 'VARCHAR(50)',
-    'brand': 'VARCHAR(50)'
-}
-
-# 事实表设计示例
-fact_sales = {
-    'date_key': 'INT FOREIGN KEY',
-    'product_key': 'INT FOREIGN KEY',
-    'customer_key': 'INT FOREIGN KEY',
-    'quantity': 'INT',
-    'amount': 'DECIMAL(10,2)',
-    'profit': 'DECIMAL(10,2)'
-}
+              ┌─────────────────┐
+              │   dim_date      │
+              │ ─────────────── │
+              │ date_key (PK)   │
+              │ date            │
+              │ year            │
+              │ quarter         │
+              │ month           │
+              │ day_of_week     │
+              └────────┬────────┘
+                       │
+┌─────────────────┐   │   ┌─────────────────┐
+│  dim_product    │   │   │  dim_customer   │
+│ ─────────────── │   │   │ ─────────────── │
+│ product_key(PK) │   │   │ customer_key(PK)│
+│ product_id      │   │   │ customer_id     │
+│ product_name    ├───┼───│ customer_name   │
+│ category        │   │   │ segment         │
+│ brand           │   │   │ region          │
+│ price           │   │   │ city            │
+└─────────────────┘   │   └─────────────────┘
+                      │
+              ┌───────┴───────┐
+              │  fact_sales   │
+              │ ───────────────│
+              │ date_key (FK)  │
+              │ product_key(FK)│
+              │ customer_key(FK)│
+              │ ────────────── │
+              │ quantity       │
+              │ sales_amount   │
+              │ cost           │
+              │ profit         │
+              └───────────────┘
+                      │
+              ┌───────┴───────┐
+              │  dim_store    │
+              │ ───────────────│
+              │ store_key (PK) │
+              │ store_id       │
+              │ store_name     │
+              │ region         │
+              └───────────────┘
                       </pre>
+                    </div>
+                    
+                    <div class="space-y-3">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">⭐ 星型模型 (Star Schema)</h5>
+                        <p class="text-gray-300 text-sm">事实表位于中心，维度表围绕事实表，维度表不再有子维度。优点是查询简单、性能好；缺点是存在数据冗余。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">❄️ 雪花模型 (Snowflake Schema)</h5>
+                        <p class="text-gray-300 text-sm">星型模型的扩展，维度表可以有子维度表。优点是减少冗余、易于维护；缺点是查询复杂、性能较低。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📊 事实表设计</h5>
+                        <p class="text-gray-300 text-sm">事实表存储业务过程的度量值，包含外键和度量。类型包括：事务事实表、周期快照事实表、累积快照事实表。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-pink-400 font-semibold mb-1">📐 维度表设计</h5>
+                        <p class="text-gray-300 text-sm">维度表存储业务实体的描述性属性，包含代理键和业务属性。设计要点：缓慢变化维处理、退化维度、杂项维度。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="mt-4 bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 维度建模示例代码
+# 创建维度表和事实表
+
+# 时间维度表
+dim_date_ddl = """
+CREATE TABLE dim_date (
+    date_key INT PRIMARY KEY,
+    date DATE NOT NULL,
+    year INT,
+    quarter INT,
+    month INT,
+    month_name VARCHAR(20),
+    day INT,
+    day_of_week INT,
+    day_name VARCHAR(20),
+    is_weekend BOOLEAN,
+    is_holiday BOOLEAN
+);
+"""
+
+# 产品维度表
+dim_product_ddl = """
+CREATE TABLE dim_product (
+    product_key INT PRIMARY KEY,
+    product_id VARCHAR(50),
+    product_name VARCHAR(200),
+    category VARCHAR(100),
+    subcategory VARCHAR(100),
+    brand VARCHAR(100),
+    supplier VARCHAR(100),
+    cost_price DECIMAL(10,2),
+    list_price DECIMAL(10,2),
+    effective_date DATE,
+    expiration_date DATE,
+    is_current BOOLEAN
+);
+"""
+
+# 销售事实表
+fact_sales_ddl = """
+CREATE TABLE fact_sales (
+    sales_id BIGINT PRIMARY KEY,
+    date_key INT REFERENCES dim_date(date_key),
+    product_key INT REFERENCES dim_product(product_key),
+    customer_key INT REFERENCES dim_customer(customer_key),
+    store_key INT REFERENCES dim_store(store_key),
+    quantity INT,
+    unit_price DECIMAL(10,2),
+    discount DECIMAL(10,2),
+    sales_amount DECIMAL(12,2),
+    cost_amount DECIMAL(12,2),
+    profit_amount DECIMAL(12,2),
+    transaction_time TIMESTAMP
+);
+"""
+
+# 缓慢变化维处理 (SCD Type 2)
+def handle_scd_type2(dim_table, new_data, natural_key):
+    """处理缓慢变化维 - Type 2: 保留历史记录"""
+    # 1. 关闭当前记录
+    update_sql = f"""
+        UPDATE {dim_table}
+        SET expiration_date = CURRENT_DATE,
+            is_current = FALSE
+        WHERE {natural_key} = %s AND is_current = TRUE
+    """
+    # 2. 插入新记录
+    insert_sql = f"""
+        INSERT INTO {dim_table}
+        SELECT nextval('dim_key_seq'), 
+               new_data.*, 
+               CURRENT_DATE as effective_date,
+               '9999-12-31' as expiration_date,
+               TRUE as is_current
+    """
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 数据仓库技术选型 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700 md:col-span-2">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-server text-purple-400"></i> 数据仓库技术选型
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">选择合适的数据仓库技术平台是项目成功的关键。现代数据仓库技术发展迅速，从传统的关系型数据仓库到云原生数据仓库，再到湖仓一体架构，企业需要根据自身需求选择合适的技术方案。</p>
+                    
+                    <div class="grid md:grid-cols-3 gap-4">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-3">🏢 传统数据仓库</h5>
+                        <ul class="text-gray-300 text-sm space-y-2">
+                          <li><strong>Oracle DW：</strong>企业级功能完善，成本较高</li>
+                          <li><strong>Teradata：</strong>大规模并行处理，性能优秀</li>
+                          <li><strong>IBM Netezza：</strong>一体机方案，部署简单</li>
+                          <li><strong>Microsoft SSAS：</strong>与SQL Server深度集成</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-3">☁️ 云原生数据仓库</h5>
+                        <ul class="text-gray-300 text-sm space-y-2">
+                          <li><strong>Snowflake：</strong>多云支持，弹性扩展，按需付费</li>
+                          <li><strong>Amazon Redshift：</strong>AWS生态，列式存储</li>
+                          <li><strong>Google BigQuery：</strong>Serverless，按查询量计费</li>
+                          <li><strong>Azure Synapse：</strong>集成数据分析平台</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-3">🌊 开源/大数据方案</h5>
+                        <ul class="text-gray-300 text-sm space-y-2">
+                          <li><strong>Apache Hive：</strong>Hadoop生态，适合离线分析</li>
+                          <li><strong>Apache Spark：</strong>内存计算，批流一体</li>
+                          <li><strong>ClickHouse：</strong>高性能OLAP，适合实时分析</li>
+                          <li><strong>Apache Doris：</strong>MPP架构，实时数仓</li>
+                        </ul>
+                      </div>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-cyan-900 bg-opacity-20 rounded-lg border border-cyan-700">
+                      <h5 class="text-cyan-400 font-semibold mb-2">💡 技术选型建议</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>数据规模：</strong>小规模选传统方案，大规模选云原生或大数据方案</li>
+                        <li>• <strong>实时性要求：</strong>实时分析选ClickHouse/Doris，离线分析选Hive/Spark</li>
+                        <li>• <strong>成本预算：</strong>有限预算选开源方案，充足预算选云原生方案</li>
+                        <li>• <strong>技术团队能力：</strong>考虑团队技术栈和运维能力</li>
+                        <li>• <strong>云策略：</strong>已上云企业优先选择云原生方案</li>
+                      </ul>
                     </div>
                   </div>
                 </div>
@@ -989,165 +1465,414 @@ fact_sales = {
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-cubes text-yellow-400"></i> OLAP基本概念
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">OLAP（Online Analytical Processing）联机分析处理，是一种软件技术，它允许用户从多个视角快速、交互式地分析数据。</p>
-                    <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">OLAP特点</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>多维数据分析</li>
-                          <li>快速响应查询</li>
-                          <li>支持复杂计算</li>
-                          <li>灵活的报表生成</li>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">OLAP（Online Analytical Processing，联机分析处理）是一种软件技术，它允许用户从多个视角快速、交互式地分析数据。OLAP由关系数据库之父Edgar F. Codd于1993年提出，旨在解决传统SQL查询在多维数据分析方面的局限性。OLAP技术是BI系统的核心组件，支持复杂的分析操作，为决策者提供深入的业务洞察。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-yellow-500">
+                        <h5 class="text-yellow-400 font-semibold mb-1">⚡ 快速响应</h5>
+                        <p class="text-gray-300 text-sm">OLAP系统针对分析查询进行了优化，能够在秒级甚至亚秒级响应复杂的多维聚合查询，支持交互式分析。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-blue-500">
+                        <h5 class="text-blue-400 font-semibold mb-1">📊 多维分析</h5>
+                        <p class="text-gray-300 text-sm">支持从多个维度（如时间、地区、产品、客户等）对数据进行分析，用户可以灵活选择分析视角。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-emerald-500">
+                        <h5 class="text-emerald-400 font-semibold mb-1">🔄 交互式操作</h5>
+                        <p class="text-gray-300 text-sm">支持钻取、切片、切块、旋转等操作，用户可以自由探索数据，发现隐藏的模式和趋势。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-pink-500">
+                        <h5 class="text-pink-400 font-semibold mb-1">📈 复杂计算</h5>
+                        <p class="text-gray-300 text-sm">支持复杂的统计计算、同比环比、占比、排名等分析指标，满足各种业务分析需求。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# OLAP vs OLTP 对比
+comparison = """
+┌──────────────┬─────────────────────┬─────────────────────┐
+│    特征      │        OLTP         │        OLAP         │
+├──────────────┼─────────────────────┼─────────────────────┤
+│ 全称         │ 联机事务处理         │ 联机分析处理        │
+│ 用户         │ 业务操作人员         │ 决策分析人员        │
+│ 数据内容     │ 当前详细数据         │ 历史汇总数据        │
+│ 数据库设计   │ 规范化(3NF)         │ 星型/雪花模型       │
+│ 查询类型     │ 简单、标准化         │ 复杂、聚合          │
+│ 响应时间     │ 毫秒级              │ 秒级到分钟级        │
+│ 读写比例     │ 读写频繁             │ 读多写少            │
+│ 数据量       │ MB到GB              │ GB到PB              │
+│ 典型应用     │ ERP、CRM、订单系统   │ BI报表、数据分析    │
+└──────────────┴─────────────────────┴─────────────────────┘
+"""
+
+# OLAP应用场景
+olap_scenarios = {
+    "销售分析": "按时间、地区、产品分析销售趋势",
+    "财务分析": "多维度的财务报表和预算分析",
+    "客户分析": "客户细分、RFM分析、生命周期价值",
+    "库存分析": "库存周转、安全库存、补货分析",
+    "绩效分析": "KPI监控、目标达成、趋势分析"
+}
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- OLAP类型与架构 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-server text-blue-400"></i> OLAP类型与架构
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">根据数据存储方式的不同，OLAP系统可分为MOLAP、ROLAP和HOLAP三种类型。每种类型都有其特点和适用场景，企业需要根据数据量、查询性能要求和成本预算选择合适的OLAP方案。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🎲</span> MOLAP (Multidimensional OLAP)
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-2">多维OLAP，数据存储在专用的多维数组结构中。</p>
+                        <ul class="text-gray-400 text-xs list-disc list-inside space-y-1">
+                          <li><strong>优点：</strong>查询性能极佳，支持复杂的预计算</li>
+                          <li><strong>缺点：</strong>数据加载时间长，存储空间需求大</li>
+                          <li><strong>适用：</strong>数据量适中、查询频繁、需要快速响应</li>
+                          <li><strong>代表：</strong>Essbase、SSAS多维模式</li>
                         </ul>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-cyan-400 font-semibold mb-1">OLAP类型</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li><strong>MOLAP：</strong>多维OLAP，基于多维数组存储</li>
-                          <li><strong>ROLAP：</strong>关系OLAP，基于关系数据库</li>
-                          <li><strong>HOLAP：</strong>混合OLAP，结合两者优势</li>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🗃️</span> ROLAP (Relational OLAP)
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-2">关系OLAP，数据存储在关系数据库中。</p>
+                        <ul class="text-gray-400 text-xs list-disc list-inside space-y-1">
+                          <li><strong>优点：</strong>可扩展性好，适合大数据量，存储效率高</li>
+                          <li><strong>缺点：</strong>查询性能相对较低，复杂查询优化困难</li>
+                          <li><strong>适用：</strong>数据量大、维度多、实时性要求高</li>
+                          <li><strong>代表：</strong>MicroStrategy、SSAS关系模式</li>
                         </ul>
                       </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🔀</span> HOLAP (Hybrid OLAP)
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-2">混合OLAP，结合MOLAP和ROLAP的优点。</p>
+                        <ul class="text-gray-400 text-xs list-disc list-inside space-y-1">
+                          <li><strong>优点：</strong>平衡性能和存储，灵活性高</li>
+                          <li><strong>缺点：</strong>架构复杂，维护成本较高</li>
+                          <li><strong>适用：</strong>需要兼顾性能和可扩展性的场景</li>
+                          <li><strong>代表：</strong>SSAS混合模式、Oracle OLAP</li>
+                        </ul>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# OLAP架构示意图
+architecture = """
+┌─────────────────────────────────────────────────────────┐
+│                    OLAP系统架构                          │
+├─────────────────────────────────────────────────────────┤
+│  ┌─────────────────────────────────────────────────┐   │
+│  │              前端展示层                          │   │
+│  │  Excel透视表 | BI工具 | 自定义应用               │   │
+│  └─────────────────────────────────────────────────┘   │
+│                         ↓                               │
+│  ┌─────────────────────────────────────────────────┐   │
+│  │              OLAP引擎层                          │   │
+│  │  查询解析 | 聚合计算 | 缓存管理 | 安全控制       │   │
+│  └─────────────────────────────────────────────────┘   │
+│                         ↓                               │
+│  ┌─────────────────────────────────────────────────┐   │
+│  │              数据存储层                          │   │
+│  │  MOLAP: 多维数组 | ROLAP: 关系表 | HOLAP: 混合  │   │
+│  └─────────────────────────────────────────────────┘   │
+│                         ↓                               │
+│  ┌─────────────────────────────────────────────────┐   │
+│  │              数据仓库层                          │   │
+│  │  事实表 | 维度表 | 聚合表                        │   │
+│  └─────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────┘
+"""
+                      </pre>
                     </div>
                   </div>
 
                   <!-- 多维数据模型 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-cube text-blue-400"></i> 多维数据模型
+                      <i class="fa fa-cube text-emerald-400"></i> 多维数据模型与数据立方体
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">多维数据模型是OLAP的核心，将数据组织成立方体结构，支持多维度分析。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">多维数据模型是OLAP的核心，将数据组织成立方体（Cube）结构，支持多维度分析。数据立方体由维度（Dimensions）和度量（Measures）组成，维度定义分析视角，度量定义分析指标。理解多维数据模型是掌握OLAP分析的关键。</p>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm mb-4">
                       <pre class="text-cyan-300">
-# 多维数据立方体示例
+# 多维数据立方体结构示意
 
-# 维度定义
-dimensions = {
-    '时间': ['年', '季度', '月', '日'],
-    '地区': ['国家', '省份', '城市'],
-    '产品': ['类别', '品牌', '产品']
-}
-
-# 度量定义
-measures = ['销售额', '利润', '销量', '成本']
-
-# 数据立方体结构
-"""
          时间维度
             │
+            │  ┌─────────────────────┐
+            │  │                     │
+            │  │    销售数据立方体    │
+            │  │    (度量值)         │
+            │  │    销售额、利润      │
+            │  │    销量、成本        │
+            │  │                     │
+            │  └─────────────────────┘
             │
-    ┌───────┼───────┐
-    │       │       │
-    │    销售数据    │
-    │    (度量值)    │
-    │       │       │
-    └───────┼───────┘
-            │
-            │
-       地区维度 ─── 产品维度
-"""
+  地区维度 ──┴── 产品维度
 
-# Python实现示例
+# 维度层次结构示例
+dimension_hierarchy = {
+    "时间维度": {
+        "层级": ["年", "季度", "月", "日"],
+        "成员": {
+            "2024年": ["Q1", "Q2", "Q3", "Q4"],
+            "Q1": ["1月", "2月", "3月"]
+        }
+    },
+    "地区维度": {
+        "层级": ["国家", "省份", "城市"],
+        "成员": {
+            "中国": ["北京", "上海", "广东"],
+            "北京": ["朝阳区", "海淀区"]
+        }
+    },
+    "产品维度": {
+        "层级": ["类别", "品牌", "产品"],
+        "成员": {
+            "电子产品": ["手机", "电脑", "平板"],
+            "手机": ["iPhone", "华为", "小米"]
+        }
+    }
+}
+
+# 度量类型
+measure_types = {
+    "基础度量": "直接来源于事实表，如销售额、数量",
+    "计算度量": "基于其他度量计算，如利润率、均价",
+    "聚合度量": "预计算的汇总值，如年累计、月均值"
+}
+                      </pre>
+                    </div>
+                    
+                    <div class="space-y-3">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-cyan-400 font-semibold mb-1">📐 维度设计要点</h5>
+                        <ul class="text-gray-300 text-sm space-y-1">
+                          <li>• <strong>层次结构：</strong>定义维度的钻取路径，如年→季→月→日</li>
+                          <li>• <strong>属性成员：</strong>维度的具体取值，如北京、上海、广州</li>
+                          <li>• <strong>计算成员：</strong>基于现有成员计算的派生成员</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📊 度量设计要点</h5>
+                        <ul class="text-gray-300 text-sm space-y-1">
+                          <li>• <strong>聚合函数：</strong>SUM、COUNT、AVG、MAX、MIN等</li>
+                          <li>• <strong>半累加性：</strong>某些度量只在特定维度累加，如库存</li>
+                          <li>• <strong>非累加性：</strong>不能累加的度量，如比率、百分比</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- OLAP操作详解 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-arrows text-pink-400"></i> OLAP操作详解
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">OLAP提供了丰富的操作来支持多维数据分析，包括钻取、切片、切块、旋转等核心操作。这些操作使用户能够从不同角度、不同粒度探索数据，发现数据背后的规律和洞察。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🔍</span> 钻取 (Drill)
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-2">在维度层次结构中上下移动，改变数据的粒度。</p>
+                        <ul class="text-gray-400 text-xs list-disc list-inside space-y-1">
+                          <li><strong>下钻(Drill-down)：</strong>从汇总到明细，如年度→季度→月度</li>
+                          <li><strong>上钻(Roll-up)：</strong>从明细到汇总，如城市→省份→国家</li>
+                          <li><strong>钻透(Drill-through)：</strong>从汇总数据穿透到原始明细</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">✂️</span> 切片 (Slice)
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-2">选择一个维度的特定成员，得到一个"切片"。</p>
+                        <p class="text-gray-400 text-xs">例如：选择"2024年"的时间切片，查看2024年各地区的销售数据。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">📦</span> 切块 (Dice)
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-2">选择多个维度的特定成员范围，得到一个"子立方体"。</p>
+                        <p class="text-gray-400 text-xs">例如：选择"2024年Q1"和"北京、上海"的数据块进行分析。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-pink-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🔄</span> 旋转 (Pivot)
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-2">改变维度的排列方式，从不同角度查看数据。</p>
+                        <p class="text-gray-400 text-xs">例如：将"地区"从行维度旋转到列维度，改变数据展示视角。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# OLAP操作Python示例
 import pandas as pd
+import numpy as np
 
 # 创建销售数据
 sales_data = pd.DataFrame({
-    '日期': ['2024-01', '2024-01', '2024-02', '2024-02'],
-    '地区': ['北京', '上海', '北京', '上海'],
-    '产品': ['A', 'A', 'B', 'B'],
-    '销售额': [10000, 15000, 12000, 18000]
+    'year': [2023, 2023, 2023, 2023, 2024, 2024, 2024, 2024],
+    'quarter': ['Q1', 'Q1', 'Q2', 'Q2', 'Q1', 'Q1', 'Q2', 'Q2'],
+    'region': ['北京', '上海', '北京', '上海', '北京', '上海', '北京', '上海'],
+    'product': ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'],
+    'sales': [100, 120, 110, 130, 150, 160, 140, 170]
 })
 
-# 创建多维透视表
-cube = pd.pivot_table(
-    sales_data,
-    values='销售额',
-    index=['地区'],
-    columns=['产品'],
-    aggfunc='sum'
-)
-                      </pre>
-                    </div>
-                  </div>
+# 1. 钻取操作 (Drill-down/Roll-up)
+# 年度汇总 (上钻)
+yearly = sales_data.groupby('year')['sales'].sum()
+print("年度销售汇总:\n", yearly)
 
-                  <!-- OLAP操作 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-arrows text-emerald-400"></i> OLAP操作（钻取、切片、切块）
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">OLAP提供了丰富的操作来支持多维数据分析，包括钻取、切片、切块、旋转等。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-# OLAP核心操作
+# 季度明细 (下钻)
+quarterly = sales_data.groupby(['year', 'quarter'])['sales'].sum()
+print("\n季度销售明细:\n", quarterly)
 
-# 1. 钻取 (Drill)
-# - 下钻 (Drill-down): 从汇总到明细
-# - 上钻 (Roll-up): 从明细到汇总
+# 2. 切片操作 (Slice)
+# 选择2024年的数据切片
+slice_2024 = sales_data[sales_data['year'] == 2024]
+print("\n2024年数据切片:\n", slice_2024)
 
-# 年度销售 → 季度销售 → 月度销售
-yearly_sales = df.groupby('year')['sales'].sum()
-quarterly_sales = df.groupby(['year', 'quarter'])['sales'].sum()
-monthly_sales = df.groupby(['year', 'quarter', 'month'])['sales'].sum()
-
-# 2. 切片 (Slice)
-# 选择一个维度的特定值
-slice_data = df[df['region'] == '北京']
-
-# 3. 切块 (Dice)
-# 选择多个维度的特定值范围
-dice_data = df[
-    (df['region'].isin(['北京', '上海'])) &
-    (df['product'] == 'A') &
-    (df['year'] == 2024)
+# 3. 切块操作 (Dice)
+# 选择2024年Q1北京和上海的数据块
+dice_data = sales_data[
+    (sales_data['year'] == 2024) & 
+    (sales_data['quarter'] == 'Q1') &
+    (sales_data['region'].isin(['北京', '上海']))
 ]
+print("\n2024年Q1北京上海数据块:\n", dice_data)
 
-# 4. 旋转 (Pivot)
-# 改变维度的排列方式
+# 4. 旋转操作 (Pivot)
+# 创建透视表，改变维度排列
 pivot_table = pd.pivot_table(
-    df,
+    sales_data,
     values='sales',
-    index='region',
-    columns='product',
+    index='region',      # 行维度
+    columns='quarter',   # 列维度
     aggfunc='sum'
 )
+print("\n旋转后的透视表:\n", pivot_table)
 
-# 5. 聚合 (Aggregate)
-# 计算汇总统计
-agg_result = df.groupby('region').agg({
-    'sales': ['sum', 'mean', 'count'],
-    'profit': ['sum', 'mean']
-})
+# 5. 聚合计算
+# 计算同比、环比
+sales_pivot = sales_data.pivot_table(
+    values='sales',
+    index=['region', 'quarter'],
+    columns='year',
+    aggfunc='sum'
+)
+# 同比增长
+sales_pivot['yoy_growth'] = (sales_pivot[2024] - sales_pivot[2023]) / sales_pivot[2023] * 100
+print("\n同比增长分析:\n", sales_pivot)
                       </pre>
                     </div>
                   </div>
 
-                  <!-- OLAP工具使用 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                  <!-- MDX查询语言 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700 md:col-span-2">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-tools text-pink-400"></i> OLAP工具使用
+                      <i class="fa fa-code text-purple-400"></i> MDX查询语言
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">主流OLAP工具提供了丰富的功能来支持多维数据分析。</p>
-                    <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-yellow-400 font-semibold mb-1">主流OLAP工具</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li><strong>Microsoft SSAS：</strong>SQL Server Analysis Services</li>
-                          <li><strong>Oracle OLAP：</strong>Oracle数据库内置OLAP</li>
-                          <li><strong>Apache Kylin：</strong>开源分布式OLAP引擎</li>
-                          <li><strong>ClickHouse：</strong>高性能列式OLAP数据库</li>
-                        </ul>
-                      </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-cyan-400 font-semibold mb-1">MDX查询示例</h5>
-                        <div class="bg-dark p-2 rounded font-mono text-xs">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">MDX（Multidimensional Expressions）是OLAP的标准查询语言，类似于SQL之于关系数据库。MDX用于查询多维数据立方体，支持复杂的分析计算。掌握MDX是进行高级OLAP分析的必备技能。</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-cyan-400 font-semibold mb-3">📝 MDX基本语法</h5>
+                        <div class="bg-dark p-3 rounded font-mono text-sm">
                           <pre class="text-cyan-300">
--- MDX多维查询语言
+-- MDX基本查询结构
+SELECT 
+  {维度成员} ON COLUMNS,  -- 列轴
+  {维度成员} ON ROWS      -- 行轴
+FROM [立方体名称]
+WHERE [切片条件]
+
+-- 示例：查询2024年各地区销售额
 SELECT 
   {[Measures].[销售额], [Measures].[利润]} ON COLUMNS,
-  {[地区].[北京], [地区].[上海]} ON ROWS
+  {[地区].[北京], [地区].[上海], [地区].[广州]} ON ROWS
 FROM [销售立方体]
-WHERE [时间].[2024].[Q1]
+WHERE [时间].[2024年]
+
+-- 查询所有地区
+SELECT 
+  {[Measures].[销售额]} ON COLUMNS,
+  {[地区].[所有地区].Children} ON ROWS
+FROM [销售立方体]
                           </pre>
+                        </div>
+                      </div>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-3">🔧 MDX高级计算</h5>
+                        <div class="bg-dark p-3 rounded font-mono text-sm">
+                          <pre class="text-cyan-300">
+-- 计算成员：利润率
+WITH MEMBER [Measures].[利润率] AS
+  [Measures].[利润] / [Measures].[销售额],
+  FORMAT_STRING = 'Percent'
+SELECT 
+  {[Measures].[销售额], [Measures].[利润], [Measures].[利润率]} 
+  ON COLUMNS,
+  {[产品].[类别].Members} ON ROWS
+FROM [销售立方体]
+
+-- 同比增长计算
+WITH MEMBER [Measures].[去年同期] AS
+  (ParallelPeriod([时间].[年], 1), [Measures].[销售额])
+MEMBER [Measures].[同比增长] AS
+  ([Measures].[销售额] - [Measures].[去年同期]) 
+  / [Measures].[去年同期],
+  FORMAT_STRING = 'Percent'
+SELECT 
+  {[Measures].[销售额], [Measures].[同比增长]} ON COLUMNS,
+  {[地区].[所有地区].Children} ON ROWS
+FROM [销售立方体]
+WHERE [时间].[2024年]
+                          </pre>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-cyan-900 bg-opacity-20 rounded-lg border border-cyan-700">
+                      <h5 class="text-cyan-400 font-semibold mb-2">💡 MDX常用函数</h5>
+                      <div class="grid md:grid-cols-3 gap-4 text-sm">
+                        <div>
+                          <p class="text-gray-300 font-semibold mb-1">导航函数</p>
+                          <ul class="text-gray-400 space-y-1">
+                            <li>• .Children - 子成员</li>
+                            <li>• .Parent - 父成员</li>
+                            <li>• .PrevMember - 前一成员</li>
+                            <li>• .NextMember - 后一成员</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <p class="text-gray-300 font-semibold mb-1">聚合函数</p>
+                          <ul class="text-gray-400 space-y-1">
+                            <li>• SUM() - 求和</li>
+                            <li>• AVG() - 平均值</li>
+                            <li>• COUNT() - 计数</li>
+                            <li>• MAX()/MIN() - 最大/最小</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <p class="text-gray-300 font-semibold mb-1">时间函数</p>
+                          <ul class="text-gray-400 space-y-1">
+                            <li>• ParallelPeriod() - 平行周期</li>
+                            <li>• PeriodsToDate() - 累计周期</li>
+                            <li>• YTD()/QTD()/MTD() - 年/季/月累计</li>
+                            <li>• Lag()/Lead() - 滞后/领先</li>
+                          </ul>
                         </div>
                       </div>
                     </div>
@@ -1169,538 +1894,1314 @@ WHERE [时间].[2024].[Q1]
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-eye text-yellow-400"></i> 数据可视化原理
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">数据可视化是将数据转换为图形表示的过程，帮助用户快速理解数据模式和趋势。</p>
-                    <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">可视化设计原则</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>清晰性：信息传达准确无歧义</li>
-                          <li>简洁性：去除不必要的装饰</li>
-                          <li>一致性：统一的视觉风格</li>
-                          <li>可访问性：考虑色盲等特殊需求</li>
-                        </ul>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">数据可视化是将数据转换为图形表示的过程，利用人类视觉系统的强大能力来发现数据中的模式、趋势和异常。有效的数据可视化能够将复杂的数据转化为直观的图形，帮助用户快速理解数据、发现洞察并做出决策。数据可视化不仅是技术，更是一门艺术，需要平衡信息传达的准确性和视觉美感。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-yellow-500">
+                        <h5 class="text-yellow-400 font-semibold mb-1">🎯 清晰性原则</h5>
+                        <p class="text-gray-300 text-sm">信息传达准确无歧义，避免误导性的视觉表达。图表标题、轴标签、图例等元素要清晰明确，数据映射关系要直观。</p>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-cyan-400 font-semibold mb-1">视觉编码方式</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>位置编码：散点图</li>
-                          <li>长度编码：柱状图</li>
-                          <li>角度编码：饼图</li>
-                          <li>颜色编码：热力图</li>
-                        </ul>
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-blue-500">
+                        <h5 class="text-blue-400 font-semibold mb-1">✨ 简洁性原则</h5>
+                        <p class="text-gray-300 text-sm">去除不必要的装饰元素，减少视觉噪音。遵循"数据墨水比"原则，最大化数据信息的展示，最小化非数据元素。</p>
                       </div>
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-emerald-500">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📐 一致性原则</h5>
+                        <p class="text-gray-300 text-sm">统一的视觉风格和交互模式，降低用户认知负担。颜色、字体、布局等保持一致，形成统一的视觉语言。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-pink-500">
+                        <h5 class="text-pink-400 font-semibold mb-1">♿ 可访问性原则</h5>
+                        <p class="text-gray-300 text-sm">考虑色盲用户、视力障碍用户的需求。避免仅依赖颜色传达信息，提供替代的文字说明和交互方式。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 数据可视化设计流程
+design_process = """
+┌─────────────────────────────────────────────────────────┐
+│                  数据可视化设计流程                       │
+├─────────────────────────────────────────────────────────┤
+│  1. 理解需求                                             │
+│     • 目标受众是谁？                                      │
+│     • 要传达什么信息？                                    │
+│     • 用户需要做什么决策？                                │
+├─────────────────────────────────────────────────────────┤
+│  2. 数据准备                                             │
+│     • 数据清洗和转换                                      │
+│     • 确定关键指标                                        │
+│     • 计算派生字段                                        │
+├─────────────────────────────────────────────────────────┤
+│  3. 选择图表                                             │
+│     • 根据数据类型选择                                    │
+│     • 根据分析目的选择                                    │
+│     • 考虑交互需求                                        │
+├─────────────────────────────────────────────────────────┤
+│  4. 视觉设计                                             │
+│     • 颜色方案选择                                        │
+│     • 布局和排版                                          │
+│     • 标注和说明                                          │
+├─────────────────────────────────────────────────────────┤
+│  5. 交互设计                                             │
+│     • 筛选和钻取                                          │
+│     • 工具提示                                            │
+│     • 动画效果                                            │
+├─────────────────────────────────────────────────────────┤
+│  6. 测试优化                                             │
+│     • 用户测试                                            │
+│     • 性能优化                                            │
+│     • 迭代改进                                            │
+└─────────────────────────────────────────────────────────┘
+"""
+                      </pre>
                     </div>
                   </div>
 
-                  <!-- 数据可视化工具 -->
+                  <!-- 视觉编码方式 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-paint-brush text-blue-400"></i> 数据可视化工具
+                      <i class="fa fa-paint-brush text-blue-400"></i> 视觉编码方式
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">现代BI平台提供了丰富的可视化工具，支持从简单图表到复杂交互式仪表盘的创建。</p>
-                    <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-yellow-400 font-semibold mb-1">商业BI工具</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li><strong>Tableau：</strong>强大的数据探索和可视化</li>
-                          <li><strong>Power BI：</strong>Microsoft生态集成</li>
-                          <li><strong>Qlik Sense：</strong>关联数据引擎</li>
-                          <li><strong>SAP BO：</strong>企业级BI解决方案</li>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">视觉编码是将数据映射到视觉属性的过程。不同的视觉属性具有不同的感知效果，选择合适的视觉编码方式是创建有效可视化的关键。根据Cleveland和McGill的研究，视觉属性的感知精度从高到低依次为：位置 > 长度 > 角度 > 面积 > 体积 > 颜色饱和度。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">📍</span> 位置编码
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-1">最精确的视觉编码方式，用于表示数值大小和关系。</p>
+                        <p class="text-gray-400 text-xs">应用：散点图、气泡图、地图可视化</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">📏</span> 长度编码
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-1">精确度仅次于位置，适合比较数值大小。</p>
+                        <p class="text-gray-400 text-xs">应用：柱状图、条形图、误差条</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">📐</span> 角度编码
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-1">用于表示比例和占比关系，但精确度较低。</p>
+                        <p class="text-gray-400 text-xs">应用：饼图、环形图、雷达图</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-pink-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🎨</span> 颜色编码
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-1">用于区分类别或表示数值大小，支持分类和连续数据。</p>
+                        <p class="text-gray-400 text-xs">应用：热力图、树状图、地理地图</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 颜色方案选择指南
+color_schemes = {
+    "分类数据": {
+        "方案": "定性色板 (Qualitative)",
+        "特点": "颜色差异明显，无顺序感",
+        "示例": ["#4e79a7", "#f28e2c", "#e15759", 
+                 "#76b7b2", "#59a14f"],
+        "适用": "不同类别的区分"
+    },
+    "顺序数据": {
+        "方案": "顺序色板 (Sequential)",
+        "特点": "颜色深浅渐变，有顺序感",
+        "示例": "浅蓝 → 深蓝 渐变",
+        "适用": "数值大小、等级高低"
+    },
+    "发散数据": {
+        "方案": "发散色板 (Diverging)",
+        "特点": "两端对比，中间中性色",
+        "示例": "红 → 白 → 蓝 渐变",
+        "适用": "正负对比、偏离均值"
+    }
+}
+
+# 可视化配色建议
+color_tips = """
+• 避免使用过多颜色（建议不超过7种）
+• 考虑色盲友好（避免红绿搭配）
+• 重要数据使用醒目颜色
+• 背景色与数据色形成对比
+• 同一报告中保持配色一致
+"""
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 图表类型选择 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-bar-chart text-emerald-400"></i> 图表类型选择
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">选择合适的图表类型是数据可视化的关键。不同的图表类型适合不同的数据关系和分析目的。正确的图表选择能够有效传达信息，错误的选择则可能导致误解或信息丢失。</p>
+                    
+                    <div class="grid grid-cols-2 gap-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">📊 比较类</h5>
+                        <ul class="text-gray-400 text-xs space-y-1">
+                          <li>• <strong>柱状图：</strong>类别比较</li>
+                          <li>• <strong>条形图：</strong>长标签比较</li>
+                          <li>• <strong>雷达图：</strong>多维度比较</li>
+                          <li>• <strong>子弹图：</strong>目标达成比较</li>
                         </ul>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-pink-400 font-semibold mb-1">开源可视化库</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li><strong>D3.js：</strong>数据驱动的文档</li>
-                          <li><strong>ECharts：</strong>百度开源可视化库</li>
-                          <li><strong>Plotly：</strong>交互式图表库</li>
-                          <li><strong>Matplotlib/Seaborn：</strong>Python可视化</li>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-2">📈 趋势类</h5>
+                        <ul class="text-gray-400 text-xs space-y-1">
+                          <li>• <strong>折线图：</strong>时间趋势</li>
+                          <li>• <strong>面积图：</strong>累积趋势</li>
+                          <li>• <strong>蜡烛图：</strong>股票走势</li>
+                          <li>• <strong>斜率图：</strong>前后对比</li>
                         </ul>
                       </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">🍩 占比类</h5>
+                        <ul class="text-gray-400 text-xs space-y-1">
+                          <li>• <strong>饼图：</strong>简单占比</li>
+                          <li>• <strong>环形图：</strong>占比+中心信息</li>
+                          <li>• <strong>树状图：</strong>层级占比</li>
+                          <li>• <strong>旭日图：</strong>多层级占比</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-pink-400 font-semibold mb-2">🔗 关系类</h5>
+                        <ul class="text-gray-400 text-xs space-y-1">
+                          <li>• <strong>散点图：</strong>两变量关系</li>
+                          <li>• <strong>气泡图：</strong>三变量关系</li>
+                          <li>• <strong>热力图：</strong>矩阵关系</li>
+                          <li>• <strong>桑基图：</strong>流向关系</li>
+                        </ul>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 图表选择决策树
+chart_selection = """
+想展示什么？
+│
+├─ 比较
+│   ├─ 类别间比较 → 柱状图/条形图
+│   ├─ 时间变化 → 折线图
+│   └─ 多维度比较 → 雷达图
+│
+├─ 趋势
+│   ├─ 单一趋势 → 折线图
+│   ├─ 累积趋势 → 面积图
+│   └─ 多系列趋势 → 多折线图
+│
+├─ 占比
+│   ├─ 简单占比 → 饼图/环形图
+│   ├─ 层级占比 → 树状图
+│   └─ 时间占比变化 → 堆叠面积图
+│
+├─ 关系
+│   ├─ 两变量关系 → 散点图
+│   ├─ 三变量关系 → 气泡图
+│   └─ 分布关系 → 直方图/箱线图
+│
+└─ 分布
+    ├─ 单变量分布 → 直方图
+    ├─ 多组分布对比 → 箱线图
+    └─ 密度分布 → 密度图
+"""
+                      </pre>
                     </div>
                   </div>
 
                   <!-- 仪表盘设计 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-dashboard text-emerald-400"></i> 仪表盘设计
+                      <i class="fa fa-dashboard text-pink-400"></i> 仪表盘设计
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">仪表盘是BI系统的核心组件，将关键指标集中展示，支持实时监控和决策。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">仪表盘是BI系统的核心组件，将关键指标集中展示，支持实时监控和决策。一个优秀的仪表盘设计需要在有限空间内高效传达信息，支持用户快速获取洞察并采取行动。仪表盘设计需要考虑用户角色、使用场景、数据更新频率等因素。</p>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm mb-4">
                       <pre class="text-cyan-300">
-# 仪表盘设计最佳实践
-
-# 1. KPI选择原则
-# - 与业务目标对齐
-# - 可量化、可追踪
-# - 数量适中（5-9个核心指标）
-
-# 2. 布局设计
+# 仪表盘布局设计模板
 dashboard_layout = """
-┌─────────────────────────────────────┐
-│           标题 & 筛选器              │
-├───────────────┬─────────────────────┤
-│   KPI卡片1    │     KPI卡片2        │
-├───────────────┼─────────────────────┤
-│   KPI卡片3    │     KPI卡片4        │
-├───────────────┴─────────────────────┤
-│                                     │
-│         主图表区域                   │
-│    (趋势图/对比图/分布图)            │
-│                                     │
-├─────────────────────────────────────┤
-│    明细表格 / 下钻区域               │
-└─────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────┐
+│  📊 销售分析仪表盘                    筛选: 时间 | 地区  │
+├─────────────────────────────────────────────────────────┤
+│  ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌──────────┐│
+│  │ 销售总额  │ │  利润率   │ │  客户数   │ │ 订单数  ││
+│  │ ¥1,250万 │ │  23.5%   │ │  15,680  │ │ 45,230 ││
+│  │ ↑12.5%   │ │ ↑2.3%    │ │ ↑8.2%    │ │ ↑15.3% ││
+│  └───────────┘ └───────────┘ └───────────┘ └──────────┘│
+├─────────────────────────────────────────────────────────┤
+│  ┌───────────────────────┐ ┌─────────────────────────┐ │
+│  │    销售趋势图          │ │    地区销售分布         │ │
+│  │    (折线图/面积图)      │ │    (地图/柱状图)       │ │
+│  │                        │ │                         │ │
+│  └───────────────────────┘ └─────────────────────────┘ │
+├─────────────────────────────────────────────────────────┤
+│  ┌───────────────────────────────────────────────────┐ │
+│  │              产品销售排名 (条形图)                  │ │
+│  │  产品A ████████████████ 45%                       │ │
+│  │  产品B ████████████ 35%                           │ │
+│  │  产品C ████████ 20%                               │ │
+│  └───────────────────────────────────────────────────┘ │
+├─────────────────────────────────────────────────────────┤
+│  ┌───────────────────────────────────────────────────┐ │
+│  │              销售明细表格 (可钻取)                  │ │
+│  │  日期 | 地区 | 产品 | 销售额 | 利润 | 操作        │ │
+│  └───────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────┘
 """
-
-# 3. 配色建议
-color_scheme = {
-    'primary': '#1890ff',    # 主色调
-    'success': '#52c41a',    # 正向指标
-    'warning': '#faad14',    # 警告
-    'danger': '#f5222d',     # 危险/异常
-    'neutral': '#8c8c8c'     # 中性
-}
                       </pre>
+                    </div>
+                    
+                    <div class="space-y-3">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-cyan-400 font-semibold mb-1">🎯 KPI选择原则</h5>
+                        <ul class="text-gray-300 text-sm space-y-1">
+                          <li>• <strong>业务对齐：</strong>与业务目标直接相关</li>
+                          <li>• <strong>可量化：</strong>能够用数据衡量</li>
+                          <li>• <strong>可行动：</strong>指标变化能指导行动</li>
+                          <li>• <strong>数量适中：</strong>5-9个核心指标为宜</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📐 布局设计要点</h5>
+                        <ul class="text-gray-300 text-sm space-y-1">
+                          <li>• <strong>F型阅读模式：</strong>重要信息放在左上角</li>
+                          <li>• <strong>视觉层次：</strong>KPI卡片 → 主图表 → 明细表格</li>
+                          <li>• <strong>留白空间：</strong>避免信息过载</li>
+                          <li>• <strong>响应式设计：</strong>适配不同屏幕尺寸</li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
 
                   <!-- 交互式可视化 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700 md:col-span-2">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-mouse-pointer text-pink-400"></i> 交互式可视化
+                      <i class="fa fa-mouse-pointer text-purple-400"></i> 交互式可视化与工具
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">交互式可视化允许用户与数据进行互动，探索数据背后的故事。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">交互式可视化允许用户与数据进行互动，探索数据背后的故事。现代BI工具提供了丰富的交互功能，包括筛选、钻取、联动、工具提示等。良好的交互设计能够提升用户体验，支持更深入的数据探索。</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-cyan-400 font-semibold mb-3">🔧 交互功能类型</h5>
+                        <div class="space-y-2">
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-yellow-400 text-sm font-semibold">🔍 筛选与钻取</p>
+                            <p class="text-gray-400 text-xs">通过条件筛选数据，从汇总到明细逐层钻取</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-blue-400 text-sm font-semibold">🔗 联动分析</p>
+                            <p class="text-gray-400 text-xs">多个图表之间联动，点击一个图表更新其他图表</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-emerald-400 text-sm font-semibold">💬 工具提示</p>
+                            <p class="text-gray-400 text-xs">悬停显示详细数据，支持富文本和迷你图表</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-pink-400 text-sm font-semibold">⬇️ 数据导出</p>
+                            <p class="text-gray-400 text-xs">支持导出图表图片、底层数据等</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-3">🛠️ 主流BI工具</h5>
+                        <div class="space-y-2">
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-cyan-400 text-sm font-semibold">Tableau</p>
+                            <p class="text-gray-400 text-xs">强大的数据探索和可视化，适合分析师</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-blue-400 text-sm font-semibold">Power BI</p>
+                            <p class="text-gray-400 text-xs">Microsoft生态集成，适合企业用户</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-emerald-400 text-sm font-semibold">Apache Superset</p>
+                            <p class="text-gray-400 text-xs">开源BI平台，可定制性强</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-pink-400 text-sm font-semibold">ECharts/D3.js</p>
+                            <p class="text-gray-400 text-xs">前端可视化库，高度可定制</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
                     <div class="bg-dark p-3 rounded font-mono text-sm">
                       <pre class="text-cyan-300">
-# 交互式可视化功能
-
-# 1. 筛选与钻取
+# Python交互式可视化示例
 import plotly.express as px
-
-fig = px.scatter(
-    df, 
-    x='sales', 
-    y='profit',
-    color='region',
-    size='quantity',
-    hover_data=['product', 'date']
-)
-
-# 添加交互功能
-fig.update_layout(
-    # 范围选择器
-    xaxis=dict(rangeslider=dict(visible=True)),
-    # 缩放和平移
-    dragmode='zoom'
-)
-
-# 2. 动态更新
-def update_chart(selected_region):
-    filtered = df[df['region'] == selected_region]
-    fig.data[0].x = filtered['sales']
-    fig.data[0].y = filtered['profit']
-    return fig
-
-# 3. 联动筛选
-# 多个图表之间的联动
-charts = {
-    'main': create_main_chart(),
-    'detail': create_detail_chart()
-}
-
-# 点击主图表更新明细图表
-def on_click(event):
-    selected_data = event.data
-    update_detail_chart(selected_data)
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 模块5：商业决策支持 -->
-            <div id="decision-support" class="knowledge-section hidden">
-              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
-                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-line-chart"></i> 模块5：商业决策支持（8学时）
-                </h3>
-
-                <div class="grid md:grid-cols-2 gap-6">
-                  <!-- 决策支持系统 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-sitemap text-yellow-400"></i> 决策支持系统
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">决策支持系统（DSS）是辅助管理者进行决策的计算机系统，结合数据分析、模型和知识库。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-# DSS系统架构
-
-┌─────────────────────────────────────┐
-│           用户界面                   │
-│   问题定义 | 方案生成 | 结果展示     │
-├─────────────────────────────────────┤
-│           模型库                     │
-│   优化模型 | 预测模型 | 仿真模型     │
-├─────────────────────────────────────┤
-│           知识库                     │
-│   规则库 | 案例库 | 专家知识         │
-├─────────────────────────────────────┤
-│           数据库                     │
-│   内部数据 | 外部数据 | 历史数据     │
-└─────────────────────────────────────┘
-
-# 决策类型
-decision_types = {
-    '结构化决策': '可用算法自动处理',
-    '半结构化决策': '需要人机交互',
-    '非结构化决策': '主要依赖人工判断'
-}
-                      </pre>
-                    </div>
-                  </div>
-
-                  <!-- 预测分析 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-area-chart text-blue-400"></i> 预测分析
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">预测分析利用历史数据和统计模型来预测未来趋势，支持前瞻性决策。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-# 时间序列预测示例
-import pandas as pd
-from statsmodels.tsa.arima.model import ARIMA
-from sklearn.linear_model import LinearRegression
-import numpy as np
-
-# 销售数据预测
-sales_data = pd.DataFrame({
-    'date': pd.date_range('2023-01', periods=12, freq='M'),
-    'sales': [100, 120, 150, 130, 160, 180, 
-              200, 190, 210, 230, 250, 280]
-})
-
-# ARIMA模型
-model = ARIMA(sales_data['sales'], order=(1, 1, 1))
-fitted = model.fit()
-forecast = fitted.forecast(steps=3)
-print("未来3个月销售预测:", forecast)
-
-# 线性回归预测
-X = np.arange(len(sales_data)).reshape(-1, 1)
-y = sales_data['sales'].values
-lr = LinearRegression()
-lr.fit(X, y)
-future_X = np.arange(len(sales_data), len(sales_data) + 3).reshape(-1, 1)
-future_sales = lr.predict(future_X)
-print("线性趋势预测:", future_sales)
-
-# 预测评估指标
-from sklearn.metrics import mean_absolute_error, mean_squared_error
-mae = mean_absolute_error(y_true, y_pred)
-rmse = np.sqrt(mean_squared_error(y_true, y_pred))
-                      </pre>
-                    </div>
-                  </div>
-
-                  <!-- 优化模型 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-sliders text-emerald-400"></i> 优化模型
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">优化模型帮助企业在约束条件下找到最优解决方案，实现资源的最优配置。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-# 线性规划示例：生产计划优化
-from scipy.optimize import linprog
-
-# 问题：最大化利润
-# 产品A利润100元，产品B利润150元
-# 约束：原材料、工时、设备
-
-# 目标函数系数（最小化负值 = 最大化）
-c = [-100, -150]
-
-# 约束条件系数矩阵
-A_ub = [
-    [2, 3],    # 原材料约束
-    [4, 2],    # 工时约束
-    [1, 1]     # 设备约束
-]
-
-# 约束条件右端值
-b_ub = [100, 120, 50]
-
-# 变量非负约束
-x_bounds = [(0, None), (0, None)]
-
-# 求解
-result = linprog(c, A_ub=A_ub, b_ub=b_ub, bounds=x_bounds)
-
-print(f"最优产量：产品A={result.x[0]:.2f}, 产品B={result.x[1]:.2f}")
-print(f"最大利润：{-result.fun:.2f}元")
-
-# 库存优化模型
-def eoq(demand, order_cost, holding_cost):
-    """经济订货量模型"""
-    import math
-    return math.sqrt(2 * demand * order_cost / holding_cost)
-
-# 年需求10000件，订货成本50元，持有成本2元/件/年
-optimal_order = eoq(10000, 50, 2)
-print(f"最优订货量：{optimal_order:.0f}件")
-                      </pre>
-                    </div>
-                  </div>
-
-                  <!-- 商业智能应用案例 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-briefcase text-pink-400"></i> 商业智能应用案例
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">通过实际案例了解BI在不同业务场景中的应用。</p>
-                    <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-yellow-400 font-semibold mb-1">案例1：零售销售分析</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>销售趋势分析与预测</li>
-                          <li>商品关联规则挖掘</li>
-                          <li>客户细分与精准营销</li>
-                        </ul>
-                      </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-cyan-400 font-semibold mb-1">案例2：供应链优化</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>需求预测与库存管理</li>
-                          <li>供应商绩效评估</li>
-                          <li>物流路径优化</li>
-                        </ul>
-                      </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">案例3：客户关系管理</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>客户生命周期价值分析</li>
-                          <li>流失预警模型</li>
-                          <li>客户满意度分析</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 模块6：综合项目实战 -->
-            <div id="project-practice" class="knowledge-section hidden">
-              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
-                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-rocket"></i> 模块6：综合项目实战（8学时）
-                </h3>
-
-                <div class="grid md:grid-cols-2 gap-6">
-                  <!-- 项目选题与规划 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-lightbulb-o text-yellow-400"></i> 项目选题与规划
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">项目选题应结合实际业务场景，确保有明确的分析目标和可获取的数据。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-# 项目规划流程
-
-# 1. 项目立项
-project_charter = {
-    '项目名称': '电商销售分析系统',
-    '项目背景': '需要分析销售数据，优化库存和营销策略',
-    '项目目标': '构建完整的销售分析BI系统',
-    '预期成果': '销售仪表盘 + 预测模型 + 分析报告',
-    '项目周期': '8周',
-    '团队成员': ['项目经理', '数据工程师', '分析师']
-}
-
-# 2. 需求分析
-requirements = {
-    '功能需求': [
-        '销售数据ETL处理',
-        '多维销售分析',
-        '销售趋势预测',
-        '可视化仪表盘'
-    ],
-    '非功能需求': [
-        '数据更新频率：每日',
-        '查询响应时间：<5秒',
-        '系统可用性：99%'
-    ]
-}
-
-# 3. 项目计划（WBS）
-wbs = {
-    '阶段1': '需求调研与数据准备（2周）',
-    '阶段2': '数据仓库设计与ETL开发（2周）',
-    '阶段3': '分析模型开发（2周）',
-    '阶段4': '可视化与系统集成（1周）',
-    '阶段5': '测试与部署（1周）'
-}
-                      </pre>
-                    </div>
-                  </div>
-
-                  <!-- 商务智能系统设计 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-sitemap text-blue-400"></i> 商务智能系统设计
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">系统设计是项目成功的关键，需要综合考虑架构、数据模型和技术选型。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-# 系统架构设计
-
-# 技术栈选型
-tech_stack = {
-    '数据存储': 'PostgreSQL + Redis',
-    'ETL工具': 'Apache Airflow',
-    '数据分析': 'Python (Pandas, Scikit-learn)',
-    '可视化': 'Metabase / Apache Superset',
-    '调度': 'Cron / Airflow'
-}
-
-# 数据模型设计
-# 星型模型示例
-dimensions = {
-    'dim_date': {
-        'date_key': 'INT PRIMARY KEY',
-        'date': 'DATE',
-        'year': 'INT',
-        'quarter': 'INT',
-        'month': 'INT',
-        'day_of_week': 'INT'
-    },
-    'dim_product': {
-        'product_key': 'INT PRIMARY KEY',
-        'product_id': 'VARCHAR(50)',
-        'product_name': 'VARCHAR(200)',
-        'category': 'VARCHAR(100)',
-        'brand': 'VARCHAR(100)'
-    },
-    'dim_customer': {
-        'customer_key': 'INT PRIMARY KEY',
-        'customer_id': 'VARCHAR(50)',
-        'customer_name': 'VARCHAR(200)',
-        'segment': 'VARCHAR(50)',
-        'region': 'VARCHAR(100)'
-    }
-}
-
-fact_tables = {
-    'fact_sales': {
-        'date_key': 'INT FOREIGN KEY',
-        'product_key': 'INT FOREIGN KEY',
-        'customer_key': 'INT FOREIGN KEY',
-        'quantity': 'INT',
-        'sales_amount': 'DECIMAL(12,2)',
-        'profit': 'DECIMAL(12,2)'
-    }
-}
-                      </pre>
-                    </div>
-                  </div>
-
-                  <!-- 数据可视化实现 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-bar-chart text-emerald-400"></i> 数据可视化实现
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">将分析结果通过可视化方式呈现，支持业务决策。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-# 仪表盘实现示例
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import pandas as pd
 
-# 创建仪表盘布局
-fig = make_subplots(
+# 创建示例数据
+df = pd.DataFrame({
+    'date': pd.date_range('2024-01-01', periods=100),
+    'sales': [100 + i*2 + (i%10)*5 for i in range(100)],
+    'region': ['北京']*25 + ['上海']*25 + ['广州']*25 + ['深圳']*25,
+    'product': ['A', 'B', 'C', 'D'] * 25
+})
+
+# 1. 交互式散点图
+fig_scatter = px.scatter(
+    df, x='date', y='sales', color='region',
+    size='sales', hover_data=['product'],
+    title='销售趋势散点图'
+)
+fig_scatter.show()
+
+# 2. 交互式仪表盘
+fig_dashboard = make_subplots(
     rows=2, cols=2,
-    specs=[
-        [{'type': 'indicator'}, {'type': 'indicator'}],
-        [{'type': 'bar'}, {'type': 'line'}]
-    ],
-    subplot_titles=('总销售额', '利润率', '地区销售', '销售趋势')
+    specs=[[{'type': 'indicator'}, {'type': 'indicator'}],
+           [{'type': 'bar'}, {'type': 'line'}]],
+    subplot_titles=('总销售额', '平均利润率', '地区销售', '销售趋势')
 )
 
 # KPI指标卡
-fig.add_trace(go.Indicator(
+fig_dashboard.add_trace(go.Indicator(
     mode='number+delta',
-    value=1500000,
-    delta={'reference': 1200000, 'relative': True},
-    title={'text': '总销售额'},
-    number={'prefix': '¥', 'valueformat': ',.0f'}
+    value=df['sales'].sum(),
+    delta={'reference': df['sales'].sum() * 0.9},
+    title={'text': '总销售额'}
 ), row=1, col=1)
 
 # 柱状图
-fig.add_trace(go.Bar(
-    x=['北京', '上海', '广州', '深圳'],
-    y=[450000, 380000, 320000, 350000],
-    marker_color='#1890ff'
+region_sales = df.groupby('region')['sales'].sum()
+fig_dashboard.add_trace(go.Bar(
+    x=region_sales.index, y=region_sales.values,
+    marker_color=['#1890ff', '#52c41a', '#faad14', '#f5222d']
 ), row=2, col=1)
 
 # 趋势线
-fig.add_trace(go.Scatter(
-    x=['1月', '2月', '3月', '4月', '5月', '6月'],
-    y=[200000, 220000, 250000, 280000, 300000, 350000],
-    mode='lines+markers',
-    line=dict(color='#52c41a', width=2)
+daily_sales = df.groupby('date')['sales'].sum()
+fig_dashboard.add_trace(go.Scatter(
+    x=daily_sales.index, y=daily_sales.values,
+    mode='lines', line=dict(color='#1890ff')
 ), row=2, col=2)
 
-fig.update_layout(
-    height=800,
-    showlegend=False,
-    title_text='销售分析仪表盘'
-)
+fig_dashboard.update_layout(height=600, showlegend=False)
+fig_dashboard.show()
+                      </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-cyan-900 bg-opacity-20 rounded-lg border border-cyan-700">
+                      <h5 class="text-cyan-400 font-semibold mb-2">💡 可视化最佳实践</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>故事化呈现：</strong>用数据讲故事，引导用户发现洞察</li>
+                        <li>• <strong>渐进式披露：</strong>从概览到细节，逐层展示信息</li>
+                        <li>• <strong>上下文信息：</strong>提供对比基准，如目标值、历史值</li>
+                        <li>• <strong>异常标注：</strong>自动识别并标注异常数据点</li>
+                        <li>• <strong>移动端适配：</strong>确保在手机和平板上也能良好展示</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 模块5：数据挖掘 -->
+            <div id="decision-support" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-line-chart"></i> 模块5：数据挖掘（8学时）
+                </h3>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <!-- 数据挖掘概述 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-magic text-yellow-400"></i> 数据挖掘概述
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">数据挖掘（Data Mining）是从大量数据中自动发现有用模式、规律和知识的过程。它结合了机器学习、统计学、数据库技术等多个领域的知识，是BI系统的高级分析功能。数据挖掘能够发现人类难以察觉的隐藏模式，为企业决策提供更深层次的洞察。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-yellow-500">
+                        <h5 class="text-yellow-400 font-semibold mb-1">🎯 数据挖掘目标</h5>
+                        <p class="text-gray-300 text-sm">从数据中提取有价值的、先前未知的、可理解的信息，用于预测趋势、发现模式、支持决策。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-blue-500">
+                        <h5 class="text-blue-400 font-semibold mb-1">📊 数据挖掘任务</h5>
+                        <p class="text-gray-300 text-sm">分类、聚类、关联规则、异常检测、回归预测、序列模式发现等。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-emerald-500">
+                        <h5 class="text-emerald-400 font-semibold mb-1">🔄 数据挖掘流程</h5>
+                        <p class="text-gray-300 text-sm">业务理解 → 数据理解 → 数据准备 → 建模 → 评估 → 部署（CRISP-DM标准流程）。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 数据挖掘标准流程 (CRISP-DM)
+crisp_dm = """
+┌─────────────────────────────────────────────────────────┐
+│                CRISP-DM 数据挖掘流程                      │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│    ┌──────────────┐         ┌──────────────┐           │
+│    │  业务理解     │ ←────→ │  数据理解     │           │
+│    │ Business     │         │ Data         │           │
+│    │ Understanding│         │ Understanding│           │
+│    └──────┬───────┘         └──────┬───────┘           │
+│           │                        │                    │
+│           ↓                        ↓                    │
+│    ┌──────────────┐         ┌──────────────┐           │
+│    │  数据准备     │ ←────→ │   建模       │           │
+│    │ Data         │         │ Modeling     │           │
+│    │ Preparation  │         │              │           │
+│    └──────┬───────┘         └──────┬───────┘           │
+│           │                        │                    │
+│           └────────┬───────────────┘                    │
+│                    ↓                                    │
+│             ┌──────────────┐                            │
+│             │    评估      │                            │
+│             │ Evaluation   │                            │
+│             └──────┬───────┘                            │
+│                    ↓                                    │
+│             ┌──────────────┐                            │
+│             │    部署      │                            │
+│             │ Deployment   │                            │
+│             └──────────────┘                            │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+"""
+
+# 数据挖掘应用场景
+dm_applications = {
+    "客户分析": ["客户细分", "流失预测", "价值评估"],
+    "营销分析": ["响应预测", "交叉销售", "市场篮子分析"],
+    "风险分析": ["信用评分", "欺诈检测", "异常交易识别"],
+    "运营分析": ["需求预测", "库存优化", "设备故障预测"]
+}
                       </pre>
                     </div>
                   </div>
 
-                  <!-- 项目展示与答辩 -->
+                  <!-- 分类与预测 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-comments text-pink-400"></i> 项目展示与答辩
+                      <i class="fa fa-tags text-blue-400"></i> 分类与预测算法
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">项目展示是检验项目成果的重要环节，需要清晰传达项目价值。</p>
-                    <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-yellow-400 font-semibold mb-1">展示内容框架</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>项目背景与目标</li>
-                          <li>技术方案与架构</li>
-                          <li>核心功能演示</li>
-                          <li>数据分析结果</li>
-                          <li>业务价值与收益</li>
-                          <li>总结与展望</li>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">分类是数据挖掘中最常见的任务之一，目标是根据已知类别的训练数据构建模型，预测新数据的类别。预测（回归）则是预测连续数值。常用的分类算法包括决策树、逻辑回归、支持向量机、神经网络等。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">🌳 决策树</h5>
+                        <p class="text-gray-300 text-sm">通过树状结构进行决策，易于理解和解释。常用算法：ID3、C4.5、CART、Random Forest。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">📈 逻辑回归</h5>
+                        <p class="text-gray-300 text-sm">经典的二分类算法，输出概率值。适合线性可分问题，计算效率高。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">🎯 支持向量机 (SVM)</h5>
+                        <p class="text-gray-300 text-sm">寻找最优分类超平面，适合高维数据。核技巧可处理非线性问题。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-pink-400 font-semibold mb-1">🧠 神经网络</h5>
+                        <p class="text-gray-300 text-sm">模拟人脑神经元结构，适合复杂模式识别。深度学习是其延伸。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 分类算法示例 - 客户流失预测
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report, confusion_matrix
+import pandas as pd
+
+# 准备数据
+# 特征：使用时长、消费金额、登录频次、投诉次数等
+# 标签：是否流失 (0/1)
+
+# 划分训练集和测试集
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42
+)
+
+# 1. 决策树模型
+dt_model = DecisionTreeClassifier(
+    max_depth=5, 
+    min_samples_leaf=10,
+    random_state=42
+)
+dt_model.fit(X_train, y_train)
+dt_pred = dt_model.predict(X_test)
+
+# 2. 随机森林模型
+rf_model = RandomForestClassifier(
+    n_estimators=100,
+    max_depth=10,
+    random_state=42
+)
+rf_model.fit(X_train, y_train)
+rf_pred = rf_model.predict(X_test)
+
+# 模型评估
+print("决策树分类报告:")
+print(classification_report(y_test, dt_pred))
+
+print("\n随机森林分类报告:")
+print(classification_report(y_test, rf_pred))
+
+# 特征重要性
+feature_importance = pd.DataFrame({
+    'feature': feature_names,
+    'importance': rf_model.feature_importances_
+}).sort_values('importance', ascending=False)
+print("\n特征重要性:")
+print(feature_importance)
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 聚类分析 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-object-group text-emerald-400"></i> 聚类分析
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">聚类是一种无监督学习方法，将相似的数据对象分组到同一簇中，使簇内对象相似度高、簇间对象相似度低。聚类广泛应用于客户细分、市场划分、异常检测等场景。常用算法包括K-Means、层次聚类、DBSCAN等。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📊 K-Means聚类</h5>
+                        <p class="text-gray-300 text-sm">最常用的聚类算法，通过迭代优化簇中心位置。需要预先指定簇数量K，适合球形簇。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">🌳 层次聚类</h5>
+                        <p class="text-gray-300 text-sm">构建聚类树状图，无需预设簇数量。可分为凝聚型（自底向上）和分裂型（自顶向下）。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">🌀 DBSCAN</h5>
+                        <p class="text-gray-300 text-sm">基于密度的聚类，能发现任意形状的簇，自动识别噪声点。适合空间数据分析。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 聚类分析示例 - 客户细分
+from sklearn.cluster import KMeans, DBSCAN
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import silhouette_score
+import matplotlib.pyplot as plt
+
+# 数据标准化
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(customer_features)
+
+# 1. K-Means聚类
+# 使用肘部法确定最佳K值
+inertias = []
+K_range = range(2, 11)
+for k in K_range:
+    kmeans = KMeans(n_clusters=k, random_state=42)
+    kmeans.fit(X_scaled)
+    inertias.append(kmeans.inertia_)
+
+# 绘制肘部图
+plt.plot(K_range, inertias, 'bx-')
+plt.xlabel('K值')
+plt.ylabel('簇内平方和')
+plt.title('肘部法确定最佳K值')
+plt.show()
+
+# 使用最佳K值进行聚类
+best_k = 4  # 根据肘部图确定
+kmeans = KMeans(n_clusters=best_k, random_state=42)
+clusters = kmeans.fit_predict(X_scaled)
+
+# 计算轮廓系数评估聚类质量
+silhouette = silhouette_score(X_scaled, clusters)
+print(f"轮廓系数: {silhouette:.3f}")
+
+# 分析各簇特征
+customer_data['cluster'] = clusters
+cluster_summary = customer_data.groupby('cluster').agg({
+    'age': 'mean',
+    'income': 'mean',
+    'spending_score': 'mean',
+    'purchase_frequency': 'mean'
+}).round(2)
+print("\n各簇特征分析:")
+print(cluster_summary)
+
+# 2. DBSCAN聚类
+dbscan = DBSCAN(eps=0.5, min_samples=5)
+db_clusters = dbscan.fit_predict(X_scaled)
+print(f"\nDBSCAN发现 {len(set(db_clusters))} 个簇")
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 关联规则挖掘 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-link text-pink-400"></i> 关联规则挖掘
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">关联规则挖掘发现数据项之间的关联关系，最著名的应用是购物篮分析。通过分析商品之间的购买关联，可以发现"买了A商品的顾客也倾向于购买B商品"这样的模式，支持交叉销售和商品陈列优化。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📊 核心指标</h5>
+                        <ul class="text-gray-300 text-sm space-y-1">
+                          <li>• <strong>支持度(Support)：</strong>包含规则项的交易占比</li>
+                          <li>• <strong>置信度(Confidence)：</strong>条件概率 P(B|A)</li>
+                          <li>• <strong>提升度(Lift)：</strong>置信度/期望置信度，>1表示正相关</li>
                         </ul>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-cyan-400 font-semibold mb-1">答辩常见问题</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>为什么选择这个技术方案？</li>
-                          <li>如何保证数据质量？</li>
-                          <li>系统如何扩展？</li>
-                          <li>遇到了哪些挑战？如何解决？</li>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">🔧 常用算法</h5>
+                        <ul class="text-gray-300 text-sm space-y-1">
+                          <li>• <strong>Apriori：</strong>经典算法，基于频繁项集</li>
+                          <li>• <strong>FP-Growth：</strong>更高效，无需候选项集</li>
+                          <li>• <strong>Eclat：</strong>基于垂直数据格式</li>
                         </ul>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">评分标准</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>技术实现（30%）</li>
-                          <li>分析深度（25%）</li>
-                          <li>创新性（20%）</li>
-                          <li>展示效果（15%）</li>
-                          <li>答辩表现（10%）</li>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 关联规则挖掘示例 - 购物篮分析
+from mlxtend.frequent_patterns import apriori, association_rules
+import pandas as pd
+
+# 构建交易数据矩阵
+# 每行代表一次交易，每列代表一个商品
+transactions = pd.DataFrame({
+    '牛奶': [1, 0, 1, 1, 0, 1, 0, 1, 1, 0],
+    '面包': [1, 1, 0, 1, 1, 1, 0, 1, 0, 1],
+    '黄油': [0, 1, 1, 1, 0, 0, 1, 1, 0, 0],
+    '果酱': [1, 0, 0, 0, 1, 1, 0, 0, 1, 1],
+    '咖啡': [0, 1, 1, 0, 0, 1, 1, 0, 1, 0]
+})
+
+# 使用Apriori算法发现频繁项集
+frequent_items = apriori(
+    transactions, 
+    min_support=0.3,  # 最小支持度阈值
+    use_colnames=True
+)
+print("频繁项集:")
+print(frequent_items)
+
+# 生成关联规则
+rules = association_rules(
+    frequent_items,
+    metric="confidence",
+    min_threshold=0.5  # 最小置信度阈值
+)
+
+# 筛选有意义的规则
+meaningful_rules = rules[
+    (rules['lift'] > 1) &  # 提升度大于1
+    (rules['confidence'] > 0.6)  # 置信度大于60%
+].sort_values('lift', ascending=False)
+
+print("\n关联规则:")
+print(meaningful_rules[['antecedents', 'consequents', 
+                        'support', 'confidence', 'lift']])
+
+# 规则解释示例
+# {牛奶} -> {面包}: 支持度40%, 置信度67%, 提升度1.2
+# 解释：购买牛奶的顾客有67%的概率也会购买面包，
+#      这个概率比随机购买面包的概率高20%
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 预测建模与评估 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700 md:col-span-2">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-line-chart text-purple-400"></i> 预测建模与模型评估
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">预测建模是数据挖掘的核心应用，包括分类预测和数值预测。模型评估是确保模型质量的关键步骤，需要使用合适的指标和方法来评估模型性能。好的模型不仅要在训练集上表现良好，更要在未见过的数据上保持稳定的预测能力。</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-cyan-400 font-semibold mb-3">📊 分类模型评估指标</h5>
+                        <div class="space-y-2">
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-yellow-400 text-sm font-semibold">准确率 (Accuracy)</p>
+                            <p class="text-gray-400 text-xs">正确预测的比例，适合平衡数据集</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-blue-400 text-sm font-semibold">精确率 (Precision)</p>
+                            <p class="text-gray-400 text-xs">预测为正的样本中实际为正的比例</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-emerald-400 text-sm font-semibold">召回率 (Recall)</p>
+                            <p class="text-gray-400 text-xs">实际为正的样本被正确预测的比例</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-pink-400 text-sm font-semibold">F1分数</p>
+                            <p class="text-gray-400 text-xs">精确率和召回率的调和平均</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-purple-400 text-sm font-semibold">AUC-ROC</p>
+                            <p class="text-gray-400 text-xs">ROC曲线下面积，评估分类器整体性能</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-3">📈 回归模型评估指标</h5>
+                        <div class="space-y-2">
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-cyan-400 text-sm font-semibold">均方误差 (MSE)</p>
+                            <p class="text-gray-400 text-xs">预测值与真实值差的平方平均</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-blue-400 text-sm font-semibold">均方根误差 (RMSE)</p>
+                            <p class="text-gray-400 text-xs">MSE的平方根，与原数据同量纲</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-emerald-400 text-sm font-semibold">平均绝对误差 (MAE)</p>
+                            <p class="text-gray-400 text-xs">预测值与真实值差的绝对值平均</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-pink-400 text-sm font-semibold">R²决定系数</p>
+                            <p class="text-gray-400 text-xs">模型解释的方差比例，越接近1越好</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 模型评估完整示例
+from sklearn.model_selection import cross_val_score, GridSearchCV
+from sklearn.metrics import (accuracy_score, precision_score, recall_score,
+                            f1_score, roc_auc_score, confusion_matrix,
+                            classification_report, roc_curve)
+import matplotlib.pyplot as plt
+
+# 1. 交叉验证评估模型稳定性
+cv_scores = cross_val_score(model, X, y, cv=5, scoring='accuracy')
+print(f"交叉验证准确率: {cv_scores.mean():.3f} (+/- {cv_scores.std()*2:.3f})")
+
+# 2. 模型预测
+y_pred = model.predict(X_test)
+y_prob = model.predict_proba(X_test)[:, 1]  # 预测概率
+
+# 3. 分类指标计算
+print("\n分类指标:")
+print(f"准确率: {accuracy_score(y_test, y_pred):.3f}")
+print(f"精确率: {precision_score(y_test, y_pred):.3f}")
+print(f"召回率: {recall_score(y_test, y_pred):.3f}")
+print(f"F1分数: {f1_score(y_test, y_pred):.3f}")
+print(f"AUC: {roc_auc_score(y_test, y_prob):.3f}")
+
+# 4. 混淆矩阵
+print("\n混淆矩阵:")
+print(confusion_matrix(y_test, y_pred))
+
+# 5. ROC曲线
+fpr, tpr, thresholds = roc_curve(y_test, y_prob)
+plt.figure(figsize=(8, 6))
+plt.plot(fpr, tpr, label=f'ROC曲线 (AUC = {roc_auc_score(y_test, y_prob):.3f})')
+plt.plot([0, 1], [0, 1], 'k--')
+plt.xlabel('假正率')
+plt.ylabel('真正率')
+plt.title('ROC曲线')
+plt.legend()
+plt.show()
+
+# 6. 超参数调优
+param_grid = {
+    'n_estimators': [50, 100, 200],
+    'max_depth': [5, 10, 15],
+    'min_samples_split': [2, 5, 10]
+}
+grid_search = GridSearchCV(
+    RandomForestClassifier(), 
+    param_grid, 
+    cv=5, 
+    scoring='f1'
+)
+grid_search.fit(X_train, y_train)
+print(f"\n最佳参数: {grid_search.best_params_}")
+print(f"最佳F1分数: {grid_search.best_score_:.3f}")
+                      </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-cyan-900 bg-opacity-20 rounded-lg border border-cyan-700">
+                      <h5 class="text-cyan-400 font-semibold mb-2">💡 数据挖掘最佳实践</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>数据质量优先：</strong>垃圾进垃圾出，确保数据质量是第一步</li>
+                        <li>• <strong>业务理解先行：</strong>深入理解业务问题，选择合适的分析方法</li>
+                        <li>• <strong>特征工程关键：</strong>好的特征比复杂的模型更重要</li>
+                        <li>• <strong>避免过拟合：</strong>使用交叉验证、正则化等技术</li>
+                        <li>• <strong>模型可解释：</strong>平衡模型性能和可解释性</li>
+                        <li>• <strong>持续监控：</strong>模型上线后持续监控性能，及时更新</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 模块6：BI项目实践 -->
+            <div id="project-practice" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-rocket"></i> 模块6：BI项目实践（8学时）
+                </h3>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <!-- 项目规划与需求分析 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-clipboard text-yellow-400"></i> 项目规划与需求分析
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">BI项目成功的关键在于前期的规划和需求分析。需要明确项目目标、界定范围、识别干系人、评估资源需求。需求分析要深入理解业务痛点，将业务需求转化为技术需求，确保项目成果能够真正解决业务问题。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-yellow-500">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📋 项目立项要点</h5>
+                        <ul class="text-gray-300 text-sm space-y-1">
+                          <li>• <strong>业务背景：</strong>为什么需要这个BI项目？</li>
+                          <li>• <strong>项目目标：</strong>要解决什么问题？达成什么效果？</li>
+                          <li>• <strong>范围界定：</strong>包含哪些内容？不包含哪些？</li>
+                          <li>• <strong>干系人识别：</strong>谁会受影响？谁需要参与？</li>
                         </ul>
                       </div>
+                      <div class="bg-dark-gray p-3 rounded-lg border-l-4 border-blue-500">
+                        <h5 class="text-blue-400 font-semibold mb-1">🔍 需求分析方法</h5>
+                        <ul class="text-gray-300 text-sm space-y-1">
+                          <li>• <strong>访谈法：</strong>与业务人员深入交流</li>
+                          <li>• <strong>问卷法：</strong>大规模收集需求</li>
+                          <li>• <strong>观察法：</strong>实地了解业务流程</li>
+                          <li>• <strong>原型法：</strong>快速验证需求理解</li>
+                        </ul>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# BI项目规划模板
+project_charter = {
+    "项目名称": "销售分析BI系统",
+    "项目背景": """
+    当前销售数据分散在多个系统中，管理层无法及时获取
+    销售概况，决策缺乏数据支持，需要构建统一的销售分析平台
+    """,
+    "项目目标": """
+    1. 整合销售数据，提供实时销售监控
+    2. 支持多维销售分析，发现销售机会
+    3. 预测销售趋势，支持销售计划制定
+    """,
+    "SMART目标": [
+        "3个月内完成系统上线",
+        "覆盖全国5大区域销售数据",
+        "支持10+维度分析",
+        "报表响应时间<5秒"
+    ],
+    "项目范围": {
+        "包含": ["销售数据仓库", "销售仪表盘", "销售预测模型"],
+        "不包含": ["财务分析", "库存管理", "客户服务"]
+    },
+    "干系人": {
+        "发起人": "销售总监",
+        "用户": "销售经理、销售代表、管理层",
+        "支持者": "IT部门、数据团队"
+    },
+    "里程碑": {
+        "M1-第2周": "需求确认完成",
+        "M2-第6周": "数据仓库开发完成",
+        "M3-第10周": "分析功能开发完成",
+        "M4-第12周": "系统上线"
+    }
+}
+
+# 需求优先级矩阵
+priority_matrix = """
+┌────────────┬─────────────┬─────────────┐
+│  业务价值  │   实现难度低  │  实现难度高  │
+├────────────┼─────────────┼─────────────┤
+│   高价值   │   优先实现    │   计划实现   │
+├────────────┼─────────────┼─────────────┤
+│   低价值   │   可选实现    │   暂不实现   │
+└────────────┴─────────────┴─────────────┘
+"""
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 系统设计与技术选型 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-cogs text-blue-400"></i> 系统设计与技术选型
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">系统设计是BI项目的核心环节，需要综合考虑架构设计、数据模型设计、技术选型等因素。合理的技术选型能够降低项目风险，提高开发效率，确保系统的可维护性和可扩展性。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-cyan-400 font-semibold mb-1">🏗️ 架构设计原则</h5>
+                        <ul class="text-gray-300 text-sm space-y-1">
+                          <li>• <strong>分层解耦：</strong>数据层、服务层、展示层分离</li>
+                          <li>• <strong>可扩展：</strong>支持数据量和用户量增长</li>
+                          <li>• <strong>高可用：</strong>关键组件冗余设计</li>
+                          <li>• <strong>安全可控：</strong>数据权限、访问控制</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">🔧 技术选型考量</h5>
+                        <ul class="text-gray-300 text-sm space-y-1">
+                          <li>• <strong>团队能力：</strong>选择团队熟悉的技术</li>
+                          <li>• <strong>社区支持：</strong>优先选择活跃的开源项目</li>
+                          <li>• <strong>成本预算：</strong>平衡功能需求和成本</li>
+                          <li>• <strong>长期维护：</strong>考虑后续维护成本</li>
+                        </ul>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 技术选型方案示例
+tech_stack = {
+    "数据存储": {
+        "数据仓库": "Snowflake / BigQuery",
+        "缓存": "Redis",
+        "文件存储": "S3 / MinIO"
+    },
+    "数据处理": {
+        "ETL工具": "Apache Airflow + dbt",
+        "实时处理": "Apache Kafka + Flink",
+        "批处理": "Apache Spark"
+    },
+    "数据分析": {
+        "OLAP引擎": "ClickHouse / Apache Doris",
+        "数据挖掘": "Python (scikit-learn, pandas)",
+        "报表引擎": "Apache Superset"
+    },
+    "数据可视化": {
+        "BI工具": "Metabase / Apache Superset",
+        "可视化库": "ECharts / D3.js",
+        "移动端": "响应式Web设计"
+    },
+    "基础设施": {
+        "容器化": "Docker + Kubernetes",
+        "监控告警": "Prometheus + Grafana",
+        "日志管理": "ELK Stack"
+    }
+}
+
+# 数据模型设计示例
+data_model = """
+# 星型模型设计
+
+## 事实表: fact_sales
+- sales_id (PK)
+- date_key (FK)
+- product_key (FK)
+- customer_key (FK)
+- store_key (FK)
+- quantity
+- sales_amount
+- profit_amount
+
+## 维度表: dim_date
+- date_key (PK)
+- date
+- year, quarter, month, day
+- is_weekend, is_holiday
+
+## 维度表: dim_product
+- product_key (PK)
+- product_id, product_name
+- category, subcategory, brand
+"""
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 项目实施与开发 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-code text-emerald-400"></i> 项目实施与开发
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">BI项目实施建议采用敏捷开发方法，小步快跑、快速迭代。将大项目拆分为多个小的迭代周期，每个周期交付可用的功能，及时获取用户反馈，降低项目风险。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📊 敏捷迭代流程</h5>
+                        <ul class="text-gray-300 text-sm space-y-1">
+                          <li>• <strong>Sprint规划：</strong>确定本迭代要完成的功能</li>
+                          <li>• <strong>每日站会：</strong>同步进度，识别障碍</li>
+                          <li>• <strong>迭代演示：</strong>向用户展示成果</li>
+                          <li>• <strong>回顾总结：</strong>持续改进流程</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-pink-400 font-semibold mb-1">🧪 测试策略</h5>
+                        <ul class="text-gray-300 text-sm space-y-1">
+                          <li>• <strong>数据验证：</strong>确保数据准确性</li>
+                          <li>• <strong>功能测试：</strong>验证功能完整性</li>
+                          <li>• <strong>性能测试：</strong>确保响应时间达标</li>
+                          <li>• <strong>用户验收：</strong>业务用户确认</li>
+                        </ul>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 敏捷迭代计划示例
+sprint_plan = {
+    "Sprint 1 (第1-2周)": {
+        "目标": "搭建基础架构，完成数据接入",
+        "任务": [
+            "环境搭建和配置",
+            "数据源连接开发",
+            "基础ETL流程开发",
+            "数据质量检查"
+        ],
+        "交付物": ["开发环境", "数据接入流程"]
+    },
+    "Sprint 2 (第3-4周)": {
+        "目标": "完成数据仓库核心模型",
+        "任务": [
+            "维度表开发",
+            "事实表开发",
+            "数据加载流程",
+            "增量更新机制"
+        ],
+        "交付物": ["数据仓库模型", "ETL作业"]
+    },
+    "Sprint 3 (第5-6周)": {
+        "目标": "开发核心分析功能",
+        "任务": [
+            "销售分析仪表盘",
+            "多维分析功能",
+            "报表导出功能",
+            "权限控制实现"
+        ],
+        "交付物": ["分析仪表盘", "报表功能"]
+    },
+    "Sprint 4 (第7-8周)": {
+        "目标": "完善功能，准备上线",
+        "任务": [
+            "用户培训",
+            "系统测试",
+            "性能优化",
+            "上线部署"
+        ],
+        "交付物": ["培训材料", "生产系统"]
+    }
+}
+
+# ETL开发示例
+etl_pipeline = """
+# Apache Airflow DAG示例
+from airflow import DAG
+from airflow.operators.python import PythonOperator
+
+def extract_sales_data():
+    # 从源系统抽取销售数据
+    pass
+
+def transform_data():
+    # 数据清洗和转换
+    pass
+
+def load_to_warehouse():
+    # 加载到数据仓库
+    pass
+
+dag = DAG(
+    'sales_etl_pipeline',
+    schedule_interval='0 2 * * *',  # 每天凌晨2点执行
+    start_date=datetime(2024, 1, 1)
+)
+
+extract_task = PythonOperator(
+    task_id='extract_sales',
+    python_callable=extract_sales_data,
+    dag=dag
+)
+
+transform_task = PythonOperator(
+    task_id='transform_data',
+    python_callable=transform_data,
+    dag=dag
+)
+
+load_task = PythonOperator(
+    task_id='load_warehouse',
+    python_callable=load_to_warehouse,
+    dag=dag
+)
+
+extract_task >> transform_task >> load_task
+"""
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 项目案例分析 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-briefcase text-pink-400"></i> 项目案例分析
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">通过实际案例分析，了解BI项目在不同业务场景中的应用。案例涵盖零售、金融、制造等典型行业，展示BI如何解决实际业务问题，创造商业价值。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🛒</span> 案例1：零售销售分析系统
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-2"><strong>业务痛点：</strong>销售数据分散，无法实时监控销售业绩，促销效果难以评估。</p>
+                        <p class="text-gray-300 text-sm mb-2"><strong>解决方案：</strong>构建销售数据仓库，开发销售分析仪表盘，支持多维分析和预测。</p>
+                        <p class="text-gray-400 text-xs"><strong>项目成果：</strong>销售决策时间缩短50%，促销ROI提升20%。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🏦</span> 案例2：金融风控分析平台
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-2"><strong>业务痛点：</strong>风险识别滞后，欺诈检测效率低，合规报表制作繁琐。</p>
+                        <p class="text-gray-300 text-sm mb-2"><strong>解决方案：</strong>实时风险监控仪表盘，欺诈检测模型，自动化合规报表。</p>
+                        <p class="text-gray-400 text-xs"><strong>项目成果：</strong>风险识别提前3天，欺诈损失降低30%。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🏭</span> 案例3：制造业生产分析系统
+                        </h5>
+                        <p class="text-gray-300 text-sm mb-2"><strong>业务痛点：</strong>生产效率难以量化，设备故障预测困难，质量追溯复杂。</p>
+                        <p class="text-gray-300 text-sm mb-2"><strong>解决方案：</strong>生产KPI仪表盘，设备预测性维护模型，质量追溯系统。</p>
+                        <p class="text-gray-400 text-xs"><strong>项目成果：</strong>设备停机时间减少25%，产品质量提升15%。</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 最佳实践与项目管理 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700 md:col-span-2">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-trophy text-purple-400"></i> 最佳实践与项目管理
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">BI项目成功需要技术、管理、文化等多方面的协同。以下总结了BI项目的最佳实践和常见陷阱，帮助项目团队规避风险，提高成功率。</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-3">✅ 成功关键因素</h5>
+                        <div class="space-y-2">
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-cyan-400 text-sm font-semibold">🎯 高层支持</p>
+                            <p class="text-gray-400 text-xs">获得管理层的认可和资源支持，确保项目优先级</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-yellow-400 text-sm font-semibold">👥 业务驱动</p>
+                            <p class="text-gray-400 text-xs">以业务需求为导向，而非技术驱动，确保解决实际问题</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-blue-400 text-sm font-semibold">📊 数据治理</p>
+                            <p class="text-gray-400 text-xs">建立完善的数据质量管理体系，确保数据可信</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-emerald-400 text-sm font-semibold">🔄 敏捷迭代</p>
+                            <p class="text-gray-400 text-xs">小步快跑，快速验证，持续优化，降低风险</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-pink-400 text-sm font-semibold">📚 用户培训</p>
+                            <p class="text-gray-400 text-xs">加强用户培训，提升数据素养，促进系统使用</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-red-400 font-semibold mb-3">⚠️ 常见陷阱</h5>
+                        <div class="space-y-2">
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-yellow-400 text-sm font-semibold">🔧 技术驱动</p>
+                            <p class="text-gray-400 text-xs">过度关注技术而忽视业务需求，导致系统无人使用</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-blue-400 text-sm font-semibold">📊 数据质量忽视</p>
+                            <p class="text-gray-400 text-xs">忽视数据质量问题，导致分析结果不可信</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-emerald-400 text-sm font-semibold">🎯 范围蔓延</p>
+                            <p class="text-gray-400 text-xs">需求不断膨胀，项目无法收尾，资源耗尽</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-pink-400 text-sm font-semibold">👥 用户参与不足</p>
+                            <p class="text-gray-400 text-xs">缺乏用户参与，系统功能不符合实际需求</p>
+                          </div>
+                          <div class="bg-dark p-2 rounded">
+                            <p class="text-purple-400 text-sm font-semibold">📈 忽视变革管理</p>
+                            <p class="text-gray-400 text-xs">忽视组织变革和文化建设，系统推广困难</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# BI项目成功评估指标
+success_metrics = {
+    "项目交付": {
+        "按时交付": "实际完成时间 vs 计划完成时间",
+        "预算控制": "实际成本 vs 预算成本",
+        "功能完成度": "已实现功能 vs 计划功能"
+    },
+    "系统质量": {
+        "数据准确性": "数据质量检查通过率",
+        "系统可用性": "系统正常运行时间占比",
+        "响应性能": "查询平均响应时间"
+    },
+    "业务价值": {
+        "决策效率": "决策时间缩短比例",
+        "用户采纳": "活跃用户数 / 总用户数",
+        "ROI": "(业务收益 - 项目成本) / 项目成本"
+    },
+    "用户满意度": {
+        "功能满意度": "用户功能满意度评分",
+        "易用性": "系统易用性评分",
+        "培训效果": "培训后考核通过率"
+    }
+}
+
+# 项目复盘模板
+project_retrospective = """
+## 项目复盘报告
+
+### 1. 项目概况
+- 项目名称、周期、团队
+- 项目目标和范围
+
+### 2. 成果总结
+- 已交付成果
+- 关键指标达成情况
+- 业务价值实现
+
+### 3. 成功经验
+- 做得好的地方
+- 可复制的最佳实践
+
+### 4. 问题与教训
+- 遇到的问题
+- 根本原因分析
+- 改进措施
+
+### 5. 后续建议
+- 系统优化方向
+- 功能扩展建议
+- 运维保障建议
+"""
+                      </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-cyan-900 bg-opacity-20 rounded-lg border border-cyan-700">
+                      <h5 class="text-cyan-400 font-semibold mb-2">💡 BI项目成功建议</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>从小做起：</strong>选择高价值、易实现的场景作为切入点，快速产出价值</li>
+                        <li>• <strong>持续迭代：</strong>BI系统不是一次性项目，需要持续优化和扩展</li>
+                        <li>• <strong>培养数据文化：</strong>推动数据驱动决策文化，提升全员数据素养</li>
+                        <li>• <strong>建立数据治理：</strong>制定数据标准，明确数据责任，确保数据质量</li>
+                        <li>• <strong>重视用户体验：</strong>系统易用性决定用户采纳率，影响项目成败</li>
+                        <li>• <strong>做好知识转移：</strong>文档齐全、培训到位，确保系统可持续维护</li>
+                      </ul>
                     </div>
                   </div>
                 </div>

@@ -665,17 +665,17 @@ print(df)
             <button class="knowledge-nav active px-4 py-2 rounded-lg font-semibold transition" data-target="scm-basics">模块1：供应链管理基础</button>
             <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="demand-forecasting">模块2：需求预测分析</button>
             <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="inventory-optimization">模块3：库存优化</button>
-            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="logistics-network">模块4：物流网络分析</button>
-            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="scm-risk">模块5：供应链风险管理</button>
-            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="comprehensive-project">模块6：综合项目实战</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="supplier-evaluation">模块4：供应商评估</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="logistics-optimization">模块5：物流优化</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="comprehensive-project">模块6：综合案例分析</button>
           </div>
 
           <div class="space-y-8">
-            <!-- 模块1：供应链管理基础 -->
+            <!-- 模块1：供应链分析基础 -->
             <div id="scm-basics" class="knowledge-section">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-link"></i> 模块1：供应链管理基础（8学时）
+                  <i class="fa fa-link"></i> 模块1：供应链分析基础（8学时）
                 </h3>
                 
                 <div class="grid md:grid-cols-2 gap-6">
@@ -684,7 +684,23 @@ print(df)
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-lightbulb-o text-yellow-400"></i> 供应链管理概念与重要性
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">供应链管理是对从原材料采购到最终产品交付给客户的整个流程进行规划、协调和控制的管理活动。核心目标是以最低成本满足客户需求，实现供应链整体优化。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">供应链管理（Supply Chain Management, SCM）是对从原材料采购到最终产品交付给客户的整个流程进行规划、协调和控制的管理活动。它涵盖了供应商、制造商、分销商、零售商直到最终消费者的完整网络。供应链管理的核心目标是以最低的总成本满足客户需求，同时实现供应链各环节的协同优化。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">🎯 核心目标</h5>
+                        <p class="text-gray-400 text-sm">降低总成本、提高服务水平、缩短响应时间、增强供应链灵活性。优秀的供应链管理可以为企业带来15-25%的成本节约。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📊 管理范围</h5>
+                        <p class="text-gray-400 text-sm">包括计划、采购、制造、交付、回收五大流程。涉及信息流、物流、资金流的三流协同管理。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">🔄 价值创造</h5>
+                        <p class="text-gray-400 text-sm">通过优化供应链网络设计、库存管理、运输规划等环节，创造竞争优势和客户价值。</p>
+                      </div>
+                    </div>
+                    
                     <div class="bg-dark p-3 rounded font-mono text-sm">
                       <pre class="text-cyan-300">
 import pandas as pd
@@ -711,10 +727,45 @@ supply_chain_data['利润率'] = ((supply_chain_data['销售价格'] -
                             supply_chain_data['总成本']) / 
                             supply_chain_data['销售价格'] * 100).round(2)
 
-print("供应链成本分析:")
-print(supply_chain_data)
-print(f"\n平均利润率: {supply_chain_data['利润率'].mean():.2f}%")
+# 成本结构分析
+supply_chain_data['采购占比'] = (supply_chain_data['采购成本'] / 
+                              supply_chain_data['总成本'] * 100).round(1)
+supply_chain_data['生产占比'] = (supply_chain_data['生产成本'] / 
+                              supply_chain_data['总成本'] * 100).round(1)
+
+print("=" * 60)
+print("📊 供应链成本分析报告")
+print("=" * 60)
+print("\n【产品成本明细】")
+print(supply_chain_data[['产品', '总成本', '销售价格', '利润率']])
+print(f"\n【整体绩效】")
+print(f"平均利润率: {supply_chain_data['利润率'].mean():.2f}%")
+print(f"总成本: {supply_chain_data['总成本'].sum()}元")
+print(f"总收入: {supply_chain_data['销售价格'].sum()}元")
+print(f"总利润: {(supply_chain_data['销售价格'] - supply_chain_data['总成本']).sum()}元")
+
+# 成本结构饼图数据
+cost_structure = {
+    '采购成本': supply_chain_data['采购成本'].sum(),
+    '生产成本': supply_chain_data['生产成本'].sum(),
+    '运输成本': supply_chain_data['运输成本'].sum(),
+    '库存成本': supply_chain_data['库存成本'].sum()
+}
+print("\n【成本结构占比】")
+total = sum(cost_structure.values())
+for cost_type, amount in cost_structure.items():
+    print(f"  {cost_type}: {amount}元 ({amount/total*100:.1f}%)")
                       </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-cyan-900 bg-opacity-20 rounded-lg border border-cyan-700">
+                      <h5 class="text-cyan-400 font-semibold mb-2">💡 实践要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>全局视角：</strong>不要只关注单一环节优化，要从供应链整体角度思考</li>
+                        <li>• <strong>数据驱动：</strong>建立完善的供应链数据采集和分析体系</li>
+                        <li>• <strong>协同合作：</strong>与供应商、客户建立战略合作伙伴关系</li>
+                        <li>• <strong>持续改进：</strong>定期评估供应链绩效，持续优化改进</li>
+                      </ul>
                     </div>
                   </div>
 
@@ -723,43 +774,124 @@ print(f"\n平均利润率: {supply_chain_data['利润率'].mean():.2f}%")
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-sitemap text-emerald-400"></i> 供应链流程与环节
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">供应链主要环节包括：采购、生产、仓储、运输、配送。每个环节都有其特定的KPI指标和管理重点。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">供应链由多个关键环节组成，每个环节都有其特定的功能和管理重点。理解各环节的运作机制和相互关系，是进行供应链分析的基础。主要环节包括：计划、采购、生产、仓储、运输、配送，每个环节都需要精细化管理。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-red-400 font-semibold mb-1">📋 计划环节</h5>
+                        <p class="text-gray-400 text-sm">需求预测、产能规划、物料需求计划(MRP)、主生产计划(MPS)。是供应链的"大脑"，决定了整体运作方向。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">🛒 采购环节</h5>
+                        <p class="text-gray-400 text-sm">供应商选择、采购订单管理、价格谈判、供应商绩效评估。直接影响成本和质量。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">🏭 生产环节</h5>
+                        <p class="text-gray-400 text-sm">生产排程、质量控制、设备管理、工艺优化。是价值创造的核心环节。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-purple-400 font-semibold mb-1">📦 仓储环节</h5>
+                        <p class="text-gray-400 text-sm">库存管理、仓库布局、出入库管理、库存盘点。平衡服务水平与库存成本。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">🚚 运输配送</h5>
+                        <p class="text-gray-400 text-sm">运输方式选择、路径优化、配送调度、最后一公里配送。直接影响客户体验。</p>
+                      </div>
+                    </div>
+                    
                     <div class="bg-dark p-3 rounded font-mono text-sm">
                       <pre class="text-cyan-300">
 import pandas as pd
+import numpy as np
 
 # 供应链各环节效率分析
 sc_processes = pd.DataFrame({
     '环节': ['采购', '生产', '仓储', '运输', '配送'],
     '周期时间_天': [7, 14, 3, 5, 2],
     '成本占比_%': [35, 30, 10, 15, 10],
-    '效率得分': [85, 78, 92, 88, 95]
+    '效率得分': [85, 78, 92, 88, 95],
+    '人员数量': [20, 50, 15, 25, 30],
+    '自动化率_%': [60, 75, 80, 40, 30]
 })
 
 # 计算总周期时间
 total_cycle_time = sc_processes['周期时间_天'].sum()
-print(f"供应链总周期时间: {total_cycle_time}天")
+print("=" * 60)
+print("📊 供应链环节效率分析报告")
+print("=" * 60)
+
+print(f"\n【供应链总周期时间】: {total_cycle_time}天")
 
 # 识别瓶颈环节
 bottleneck = sc_processes.loc[sc_processes['效率得分'].idxmin()]
-print(f"\n瓶颈环节: {bottleneck['环节']}")
-print(f"效率得分: {bottleneck['效率得分']}")
+print(f"\n【瓶颈环节识别】")
+print(f"  瓶颈环节: {bottleneck['环节']}")
+print(f"  效率得分: {bottleneck['效率得分']}分")
+print(f"  周期时间: {bottleneck['周期时间_天']}天")
+print(f"  自动化率: {bottleneck['自动化率_%']}%")
 
-# 成本结构可视化数据
-print("\n成本结构分析:")
+# 成本结构分析
+print("\n【成本结构分析】")
+total_cost_pct = sc_processes['成本占比_%'].sum()
 for idx, row in sc_processes.iterrows():
-    print(f"{row['环节']}: {row['成本占比_%']}%")
+    bar = "█" * int(row['成本占比_%'] / 2)
+    print(f"  {row['环节']}: {bar} {row['成本占比_%']}%")
+
+# 效率得分可视化
+print("\n【效率得分排名】")
+sc_sorted = sc_processes.sort_values('效率得分', ascending=False)
+for i, (_, row) in enumerate(sc_sorted.iterrows(), 1):
+    stars = "★" * (row['效率得分'] // 20)
+    print(f"  {i}. {row['环节']}: {stars} {row['效率得分']}分")
+
+# 改进建议
+print("\n【改进建议】")
+low_efficiency = sc_processes[sc_processes['效率得分'] < 85]
+for _, row in low_efficiency.iterrows():
+    print(f"  ⚠️ {row['环节']}: 效率低于85分，建议优化")
+    if row['自动化率_%'] < 50:
+        print(f"     - 自动化率仅{row['自动化率_%']}%，建议提升自动化水平")
                       </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-emerald-900 bg-opacity-20 rounded-lg border border-emerald-700">
+                      <h5 class="text-emerald-400 font-semibold mb-2">💡 环节优化策略</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>识别瓶颈：</strong>找到效率最低的环节，优先改进</li>
+                        <li>• <strong>缩短周期：</strong>减少各环节的处理时间，加快响应速度</li>
+                        <li>• <strong>提升自动化：</strong>在合适环节引入自动化技术</li>
+                        <li>• <strong>信息共享：</strong>建立跨环节的信息共享机制</li>
+                      </ul>
                     </div>
                   </div>
 
                   <!-- 供应链绩效指标 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-tachometer text-blue-400"></i> 供应链绩效指标
+                      <i class="fa fa-tachometer text-blue-400"></i> 供应链绩效指标体系
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">关键绩效指标(KPI)包括：订单履行率、准时交付率、库存周转率、供应链响应时间、总供应链成本等。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">供应链绩效指标（KPI）是衡量供应链运作效率和效果的关键工具。一个完善的KPI体系应该涵盖成本、时间、质量、服务等多个维度，能够全面反映供应链的运行状况。选择合适的KPI并设定合理的目标值，是供应链管理的重要基础工作。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-red-400 font-semibold mb-1">💰 成本指标</h5>
+                        <p class="text-gray-400 text-sm">供应链总成本、采购成本占比、库存持有成本、运输成本占比、质量成本等。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">⏱️ 时间指标</h5>
+                        <p class="text-gray-400 text-sm">订单履行周期、现金周转周期、供应链响应时间、生产周期、运输时间等。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">📈 服务指标</h5>
+                        <p class="text-gray-400 text-sm">订单履行率、准时交付率、完美订单率、客户投诉率、退货率等。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-purple-400 font-semibold mb-1">📊 效率指标</h5>
+                        <p class="text-gray-400 text-sm">库存周转率、资产利用率、产能利用率、人员效率、设备OEE等。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
                       <pre class="text-cyan-300">
 import pandas as pd
 import numpy as np
@@ -769,82 +901,307 @@ kpi_data = {
     '订单总数': 1000,
     '按时交付订单': 920,
     '完整订单': 950,
+    '完美订单': 880,
     '库存平均价值': 5000000,
     '年销售成本': 25000000,
     '供应链总成本': 8000000,
-    '年销售收入': 35000000
+    '年销售收入': 35000000,
+    '应收账款': 3000000,
+    '应付账款': 2000000
 }
+
+print("=" * 60)
+print("📊 供应链绩效指标综合报告")
+print("=" * 60)
 
 # 计算关键KPI
 order_fill_rate = kpi_data['完整订单'] / kpi_data['订单总数'] * 100
 on_time_delivery = kpi_data['按时交付订单'] / kpi_data['订单总数'] * 100
+perfect_order_rate = kpi_data['完美订单'] / kpi_data['订单总数'] * 100
 inventory_turnover = kpi_data['年销售成本'] / kpi_data['库存平均价值']
 sc_cost_ratio = kpi_data['供应链总成本'] / kpi_data['年销售收入'] * 100
 
-print("=== 供应链绩效指标 ===")
-print(f"订单履行率: {order_fill_rate:.1f}%")
-print(f"准时交付率: {on_time_delivery:.1f}%")
-print(f"库存周转率: {inventory_turnover:.1f}次/年")
-print(f"供应链成本占比: {sc_cost_ratio:.1f}%")
+# 现金周转周期计算
+days_inventory = 365 / inventory_turnover
+days_receivable = (kpi_data['应收账款'] / kpi_data['年销售收入']) * 365
+days_payable = (kpi_data['应付账款'] / kpi_data['年销售成本']) * 365
+cash_conversion_cycle = days_inventory + days_receivable - days_payable
+
+print("\n【服务指标】")
+print(f"  订单履行率: {order_fill_rate:.1f}% {'✅' if order_fill_rate >= 95 else '⚠️'}")
+print(f"  准时交付率: {on_time_delivery:.1f}% {'✅' if on_time_delivery >= 90 else '⚠️'}")
+print(f"  完美订单率: {perfect_order_rate:.1f}% {'✅' if perfect_order_rate >= 85 else '⚠️'}")
+
+print("\n【效率指标】")
+print(f"  库存周转率: {inventory_turnover:.1f}次/年")
+print(f"  库存周转天数: {days_inventory:.1f}天")
+
+print("\n【成本指标】")
+print(f"  供应链成本占比: {sc_cost_ratio:.1f}%")
+print(f"  供应链总成本: {kpi_data['供应链总成本']:,}元")
+
+print("\n【现金周转周期】")
+print(f"  库存周转天数: {days_inventory:.1f}天")
+print(f"  应收账款天数: {days_receivable:.1f}天")
+print(f"  应付账款天数: {days_payable:.1f}天")
+print(f"  现金周转周期: {cash_conversion_cycle:.1f}天")
 
 # KPI评分卡
+print("\n" + "=" * 60)
+print("📋 KPI评分卡")
+print("=" * 60)
 kpi_scorecard = pd.DataFrame({
-    'KPI': ['订单履行率', '准时交付率', '库存周转率', '供应链成本占比'],
-    '目标值': ['≥95%', '≥90%', '≥5次', '≤20%'],
+    'KPI': ['订单履行率', '准时交付率', '完美订单率', '库存周转率', '供应链成本占比', '现金周转周期'],
+    '目标值': ['≥95%', '≥90%', '≥85%', '≥5次', '≤20%', '≤60天'],
     '实际值': [f'{order_fill_rate:.1f}%', f'{on_time_delivery:.1f}%', 
-               f'{inventory_turnover:.1f}次', f'{sc_cost_ratio:.1f}%'],
-    '达标': ['是' if order_fill_rate >= 95 else '否',
-             '是' if on_time_delivery >= 90 else '否',
-             '是' if inventory_turnover >= 5 else '否',
-             '是' if sc_cost_ratio <= 20 else '否']
+               f'{perfect_order_rate:.1f}%', f'{inventory_turnover:.1f}次',
+               f'{sc_cost_ratio:.1f}%', f'{cash_conversion_cycle:.1f}天'],
+    '达标': ['✅' if order_fill_rate >= 95 else '❌',
+             '✅' if on_time_delivery >= 90 else '❌',
+             '✅' if perfect_order_rate >= 85 else '❌',
+             '✅' if inventory_turnover >= 5 else '❌',
+             '✅' if sc_cost_ratio <= 20 else '❌',
+             '✅' if cash_conversion_cycle <= 60 else '❌']
 })
-print("\nKPI评分卡:")
-print(kpi_scorecard)
+print(kpi_scorecard.to_string(index=False))
+
+# 综合评分
+score = sum([order_fill_rate >= 95, on_time_delivery >= 90, 
+             perfect_order_rate >= 85, inventory_turnover >= 5,
+             sc_cost_ratio <= 20, cash_conversion_cycle <= 60])
+print(f"\n【综合评分】: {score}/6项达标 ({score/6*100:.0f}%)")
                       </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-blue-900 bg-opacity-20 rounded-lg border border-blue-700">
+                      <h5 class="text-blue-400 font-semibold mb-2">💡 KPI设定原则</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>SMART原则：</strong>具体、可衡量、可达成、相关性、时限性</li>
+                        <li>• <strong>平衡性：</strong>兼顾成本、质量、时间、服务多个维度</li>
+                        <li>• <strong>可比性：</strong>与行业标杆、历史数据对比</li>
+                        <li>• <strong>可操作性：</strong>指标能够指导具体改进行动</li>
+                      </ul>
                     </div>
                   </div>
 
                   <!-- 供应链管理挑战 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-exclamation-triangle text-red-400"></i> 供应链管理挑战
+                      <i class="fa fa-exclamation-triangle text-red-400"></i> 供应链管理挑战与应对
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">供应链面临的主要挑战：需求不确定性、供应中断风险、成本压力、信息不对称、全球化复杂性等。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">现代供应链面临着日益复杂的挑战，包括需求不确定性、供应中断风险、成本压力、信息不对称、全球化复杂性等。理解这些挑战的本质和影响机制，是制定有效应对策略的前提。其中，牛鞭效应是最经典的供应链现象之一。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-red-400 font-semibold mb-1">📈 牛鞭效应</h5>
+                        <p class="text-gray-400 text-sm">需求信息在供应链各层级传递过程中被逐级放大的现象。会导致库存积压、产能浪费、成本上升。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">⚠️ 供应中断</h5>
+                        <p class="text-gray-400 text-sm">自然灾害、政治风险、供应商破产等因素导致的供应中断，影响严重且难以预测。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">🌐 全球化复杂性</h5>
+                        <p class="text-gray-400 text-sm">跨国供应链涉及关税、汇率、文化差异、法规差异等复杂因素。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-purple-400 font-semibold mb-1">🔄 可持续发展</h5>
+                        <p class="text-gray-400 text-sm">碳排放、社会责任、循环经济等可持续发展要求日益重要。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
                       <pre class="text-cyan-300">
 import pandas as pd
 import numpy as np
 
-# 牛鞭效应分析 - 需求波动放大
-periods = 12
-customer_demand = [100 + np.random.randint(-10, 10) for _ in range(periods)]
+print("=" * 60)
+print("📊 牛鞭效应量化分析")
+print("=" * 60)
 
-# 模拟各层级需求放大
-retailer_order = [d * 1.1 + np.random.randint(-5, 5) for d in customer_demand]
-wholesaler_order = [d * 1.2 + np.random.randint(-8, 8) for d in retailer_order]
-distributor_order = [d * 1.3 + np.random.randint(-10, 10) for d in wholesaler_order]
-manufacturer_order = [d * 1.4 + np.random.randint(-12, 12) for d in distributor_order]
+# 牛鞭效应分析 - 需求波动放大
+np.random.seed(42)
+periods = 12
+
+# 模拟客户需求（基础需求+随机波动）
+base_demand = 100
+customer_demand = [base_demand + np.random.randint(-10, 10) for _ in range(periods)]
+
+# 模拟各层级需求放大（每层增加安全库存和批量订货）
+retailer_order = [int(d * 1.15 + np.random.randint(-5, 5)) for d in customer_demand]
+wholesaler_order = [int(d * 1.25 + np.random.randint(-8, 8)) for d in retailer_order]
+distributor_order = [int(d * 1.35 + np.random.randint(-10, 10)) for d in wholesaler_order]
+manufacturer_order = [int(d * 1.45 + np.random.randint(-12, 12)) for d in distributor_order]
 
 bullwhip_df = pd.DataFrame({
     '月份': range(1, periods + 1),
     '客户需求': customer_demand,
-    '零售商订单': [int(x) for x in retailer_order],
-    '批发商订单': [int(x) for x in wholesaler_order],
-    '分销商订单': [int(x) for x in distributor_order],
-    '制造商订单': [int(x) for x in manufacturer_order]
+    '零售商订单': retailer_order,
+    '批发商订单': wholesaler_order,
+    '分销商订单': distributor_order,
+    '制造商订单': manufacturer_order
 })
 
-# 计算波动系数
-cv_customer = np.std(customer_demand) / np.mean(customer_demand)
-cv_manufacturer = np.std(manufacturer_order) / np.mean(manufacturer_order)
-bullwhip_effect = cv_manufacturer / cv_customer
+print("\n【需求传递数据】")
+print(bullwhip_df.to_string(index=False))
 
-print("=== 牛鞭效应分析 ===")
-print(f"客户需求变异系数: {cv_customer:.3f}")
-print(f"制造商订单变异系数: {cv_manufacturer:.3f}")
-print(f"牛鞭效应系数: {bullwhip_effect:.2f}")
-print("\n注: 系数>1表示存在牛鞭效应")
+# 计算各层级波动系数
+print("\n【波动分析】")
+levels = ['客户需求', '零售商订单', '批发商订单', '分销商订单', '制造商订单']
+cv_values = []
+for level in levels:
+    mean_val = np.mean(bullwhip_df[level])
+    std_val = np.std(bullwhip_df[level])
+    cv = std_val / mean_val
+    cv_values.append(cv)
+    print(f"  {level}: 均值={mean_val:.0f}, 标准差={std_val:.1f}, CV={cv:.3f}")
+
+# 计算牛鞭效应系数
+bullwhip_effect = cv_values[-1] / cv_values[0]
+print(f"\n【牛鞭效应系数】: {bullwhip_effect:.2f}")
+print(f"  解读: 制造商需求波动是客户需求的{bullwhip_effect:.1f}倍")
+
+# 影响分析
+print("\n【影响分析】")
+avg_demand = np.mean(customer_demand)
+avg_manufacturer = np.mean(manufacturer_order)
+excess_inventory = avg_manufacturer - avg_demand
+print(f"  平均需求: {avg_demand:.0f}单位")
+print(f"  制造商平均订单: {avg_manufacturer:.0f}单位")
+print(f"  过量生产: {excess_inventory:.0f}单位 ({excess_inventory/avg_demand*100:.1f}%)")
+
+# 缓解策略
+print("\n【缓解策略建议】")
+print("  1. 信息共享：建立供应链协同平台，实时共享需求信息")
+print("  2. VMI模式：供应商管理库存，减少信息扭曲")
+print("  3. 缩短提前期：减少各环节处理时间")
+print("  4. 稳定订货：避免批量订货，采用小批量多频次策略")
+print("  5. 价格稳定：减少促销波动，采用天天低价策略")
                       </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-red-900 bg-opacity-20 rounded-lg border border-red-700">
+                      <h5 class="text-red-400 font-semibold mb-2">⚠️ 应对策略要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>信息共享：</strong>建立供应链协同平台，实现需求信息透明化</li>
+                        <li>• <strong>风险分散：</strong>多源供应、安全库存、弹性产能</li>
+                        <li>• <strong>敏捷响应：</strong>缩短提前期，提高供应链柔性</li>
+                        <li>• <strong>持续监控：</strong>建立风险预警机制，定期评估供应链健康度</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- 供应链分析框架 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700 md:col-span-2">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-cogs text-purple-400"></i> 供应链分析框架与方法论
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">供应链分析需要系统化的方法论指导。常用的分析框架包括SCOR模型、供应链平衡计分卡、价值链分析等。这些框架提供了结构化的分析思路，帮助分析师全面诊断供应链问题，识别改进机会。在实际应用中，需要根据具体问题选择合适的分析框架。</p>
+                    
+                    <div class="grid md:grid-cols-3 gap-4 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📊 SCOR模型</h5>
+                        <p class="text-gray-400 text-sm">计划(Plan)、采购(Source)、制造(Make)、交付(Deliver)、回收(Return)五大流程，是供应链分析的标准框架。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">⚖️ 平衡计分卡</h5>
+                        <p class="text-gray-400 text-sm">从财务、客户、内部流程、学习成长四个维度评估供应链绩效，实现平衡发展。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">🔗 价值链分析</h5>
+                        <p class="text-gray-400 text-sm">分析各环节的价值创造活动，识别增值与非增值环节，优化价值流。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                      <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+
+print("=" * 60)
+print("📊 SCOR模型供应链分析框架")
+print("=" * 60)
+
+# SCOR模型各流程分析
+scor_analysis = pd.DataFrame({
+    '流程': ['计划', '采购', '制造', '交付', '回收'],
+    '主要活动': ['需求预测、产能规划', '供应商管理、采购执行', 
+                '生产排程、质量控制', '订单管理、物流配送', '退货处理、逆向物流'],
+    '关键指标': ['预测准确率', '供应商准时率', '产能利用率', '准时交付率', '退货处理时效'],
+    '当前得分': [82, 88, 75, 91, 68],
+    '目标得分': [90, 92, 85, 95, 80],
+    '权重': [0.25, 0.20, 0.25, 0.20, 0.10]
+})
+
+print("\n【SCOR流程分析】")
+for _, row in scor_analysis.iterrows():
+    gap = row['目标得分'] - row['当前得分']
+    status = "✅" if gap <= 0 else "⚠️" if gap <= 10 else "❌"
+    print(f"\n{row['流程']}流程 {status}")
+    print(f"  主要活动: {row['主要活动']}")
+    print(f"  关键指标: {row['关键指标']}")
+    print(f"  得分: {row['当前得分']}/{row['目标得分']} (差距: {gap})")
+
+# 综合评分
+scor_analysis['加权得分'] = scor_analysis['当前得分'] * scor_analysis['权重']
+total_score = scor_analysis['加权得分'].sum()
+print(f"\n【综合评分】: {total_score:.1f}分")
+
+# 改进优先级
+print("\n【改进优先级排序】")
+scor_analysis['差距'] = scor_analysis['目标得分'] - scor_analysis['当前得分']
+scor_sorted = scor_analysis.sort_values('差距', ascending=False)
+for i, (_, row) in enumerate(scor_sorted.iterrows(), 1):
+    if row['差距'] > 0:
+        print(f"  {i}. {row['流程']}: 差距{row['差距']}分 (权重{row['权重']*100:.0f}%)")
+
+# 平衡计分卡分析
+print("\n" + "=" * 60)
+print("📊 供应链平衡计分卡")
+print("=" * 60)
+
+bsc = pd.DataFrame({
+    '维度': ['财务', '客户', '内部流程', '学习成长'],
+    '指标': ['供应链成本率', '客户满意度', '流程效率', '员工培训率'],
+    '实际值': ['18.5%', '87%', '82%', '75%'],
+    '目标值': ['≤20%', '≥90%', '≥85%', '≥80%'],
+    '得分': [90, 85, 88, 78]
+})
+
+print("\n" + bsc.to_string(index=False))
+print(f"\n【平衡计分卡综合得分】: {bsc['得分'].mean():.1f}分")
+
+# 价值链分析
+print("\n" + "=" * 60)
+print("📊 价值链增值分析")
+print("=" * 60)
+
+value_chain = pd.DataFrame({
+    '环节': ['研发设计', '采购', '生产', '仓储', '物流', '销售', '服务'],
+    '成本占比_%': [8, 25, 35, 10, 12, 7, 3],
+    '增值贡献_%': [15, 10, 30, 5, 8, 20, 12],
+    '效率评分': [85, 78, 82, 88, 75, 90, 85]
+})
+
+value_chain['增值效率比'] = value_chain['增值贡献_%'] / value_chain['成本占比_%']
+print("\n" + value_chain.to_string(index=False))
+
+print("\n【增值效率分析】")
+high_eff = value_chain[value_chain['增值效率比'] > 1]
+low_eff = value_chain[value_chain['增值效率比'] <= 1]
+print(f"  高增值效率环节: {', '.join(high_eff['环节'].tolist())}")
+print(f"  低增值效率环节: {', '.join(low_eff['环节'].tolist())} (需优化)")
+                      </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-purple-900 bg-opacity-20 rounded-lg border border-purple-700">
+                      <h5 class="text-purple-400 font-semibold mb-2">💡 分析框架选择指南</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>SCOR模型：</strong>适用于流程优化和绩效评估，提供标准化的分析维度</li>
+                        <li>• <strong>平衡计分卡：</strong>适用于战略层面评估，平衡短期与长期目标</li>
+                        <li>• <strong>价值链分析：</strong>适用于识别增值环节，优化成本结构</li>
+                        <li>• <strong>组合使用：</strong>复杂问题需要组合多个框架，多角度分析</li>
+                      </ul>
                     </div>
                   </div>
                 </div>
@@ -862,175 +1219,647 @@ print("\n注: 系数>1表示存在牛鞭效应")
                   <!-- 需求预测的重要性 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-star text-yellow-400"></i> 需求预测的重要性
+                      <i class="fa fa-star text-yellow-400"></i> 需求预测的重要性与影响
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">准确的需求预测是供应链管理的核心，直接影响库存水平、生产计划、采购决策和客户满意度。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">准确的需求预测是供应链管理的核心基础，直接影响库存水平、生产计划、采购决策和客户满意度。预测偏差会导致严重的后果：预测过高造成库存积压和资金占用，预测过低则导致缺货和客户流失。研究表明，预测准确率每提高10%，可带来库存成本降低5-10%的收益。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-red-400 font-semibold mb-1">📉 预测偏差的影响</h5>
+                        <p class="text-gray-400 text-sm">高估需求：库存积压、资金占用、过期损耗、仓储成本增加。低估需求：缺货损失、客户流失、紧急采购成本、生产中断。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📈 准确预测的价值</h5>
+                        <p class="text-gray-400 text-sm">优化库存水平、提高客户满意度、降低运营成本、改善生产计划、增强供应链协同。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">🎯 预测目标设定</h5>
+                        <p class="text-gray-400 text-sm">不同产品设定不同目标：A类产品MAPE<10%，B类产品MAPE<20%，C类产品MAPE<30%。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
                       <pre class="text-cyan-300">
 import pandas as pd
 import numpy as np
 
+print("=" * 60)
+print("📊 预测准确性对供应链成本的影响分析")
+print("=" * 60)
+
 # 预测准确性对成本的影响分析
-forecast_accuracy_analysis = pd.DataFrame({
-    '预测准确率': ['90%', '80%', '70%', '60%'],
-    '库存成本_万元': [100, 120, 150, 200],
-    '缺货成本_万元': [20, 35, 55, 80],
-    '过剩成本_万元': [15, 25, 40, 60],
-    '总成本_万元': [135, 180, 245, 340]
+forecast_impact = pd.DataFrame({
+    '预测准确率': ['95%', '90%', '85%', '80%', '75%', '70%'],
+    '库存成本_万元': [100, 115, 130, 150, 175, 200],
+    '缺货成本_万元': [10, 20, 30, 45, 65, 90],
+    '过剩成本_万元': [8, 15, 25, 35, 50, 70],
+    '紧急采购成本_万元': [5, 10, 18, 28, 40, 55]
 })
 
-print("=== 预测准确率对成本的影响 ===")
-print(forecast_accuracy_analysis)
+# 计算总成本
+forecast_impact['总成本_万元'] = (forecast_impact['库存成本_万元'] + 
+                                forecast_impact['缺货成本_万元'] + 
+                                forecast_impact['过剩成本_万元'] + 
+                                forecast_impact['紧急采购成本_万元'])
 
-# 计算准确率提升带来的成本节约
-cost_saving = forecast_accuracy_analysis.loc[0, '总成本_万元'] - \
-              forecast_accuracy_analysis.loc[1, '总成本_万元']
-print(f"\n准确率从80%提升到90%可节约成本: {cost_saving}万元")
+print("\n【预测准确率与成本关系】")
+print(forecast_impact.to_string(index=False))
+
+# 成本敏感性分析
+print("\n【成本敏感性分析】")
+base_cost = forecast_impact.loc[0, '总成本_万元']
+for i in range(1, len(forecast_impact)):
+    accuracy_drop = 95 - int(forecast_impact.loc[i, '预测准确率'].replace('%', ''))
+    cost_increase = forecast_impact.loc[i, '总成本_万元'] - base_cost
+    pct_increase = cost_increase / base_cost * 100
+    print(f"  准确率下降{accuracy_drop}%: 成本增加{cost_increase}万元 (+{pct_increase:.1f}%)")
+
+# 投资回报分析
+print("\n【预测系统投资回报分析】")
+improvement_scenarios = [
+    {'投资': 50, '准确率提升': 5, '年节约': 45},
+    {'投资': 100, '准确率提升': 10, '年节约': 95},
+    {'投资': 200, '准确率提升': 15, '年节约': 180}
+]
+for s in improvement_scenarios:
+    roi = (s['年节约'] - s['投资']) / s['投资'] * 100
+    payback = s['投资'] / (s['年节约'] / 12)
+    print(f"  投资{s['投资']}万元, 准确率提升{s['准确率提升']}%: "
+          f"年节约{s['年节约']}万元, ROI={roi:.0f}%, 回收期{payback:.1f}月")
+
+# 预测误差容忍度分析
+print("\n【不同产品类别的预测误差容忍度】")
+tolerance = pd.DataFrame({
+    '产品类别': ['A类（高价值）', 'B类（中价值）', 'C类（低价值）'],
+    '目标MAPE': ['<10%', '<20%', '<30%'],
+    '安全库存策略': ['高服务水平', '中等服务水平', '低服务水平'],
+    '预测频率': ['每周更新', '每两周更新', '每月更新'],
+    '监控频率': ['实时监控', '每周监控', '每月监控']
+})
+print(tolerance.to_string(index=False))
                       </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-yellow-900 bg-opacity-20 rounded-lg border border-yellow-700">
+                      <h5 class="text-yellow-400 font-semibold mb-2">💡 预测管理要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>分层管理：</strong>根据产品重要性设定不同的预测精度目标</li>
+                        <li>• <strong>持续监控：</strong>建立预测偏差监控机制，及时调整模型</li>
+                        <li>• <strong>协同预测：</strong>整合销售、市场、供应链多方信息</li>
+                        <li>• <strong>滚动更新：</strong>定期更新预测，保持预测的时效性</li>
+                      </ul>
                     </div>
                   </div>
 
                   <!-- 时间序列分析方法 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-clock-o text-cyan-400"></i> 时间序列分析方法
+                      <i class="fa fa-clock-o text-cyan-400"></i> 时间序列分析方法详解
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">常用方法：移动平均、指数平滑、ARIMA、季节性分解等。选择合适的方法取决于数据特征和预测目标。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">时间序列分析是需求预测的核心方法，基于历史数据的时序特征进行预测。常用方法包括移动平均、指数平滑、ARIMA模型、季节性分解等。选择合适的方法需要考虑数据的趋势性、季节性、周期性和随机性特征。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📊 移动平均法</h5>
+                        <p class="text-gray-400 text-sm">简单移动平均(SMA)、加权移动平均(WMA)。适用于短期预测，数据平稳无趋势。优点是简单易用，缺点是滞后性强。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📈 指数平滑法</h5>
+                        <p class="text-gray-400 text-sm">简单指数平滑、Holt双参数法、Holt-Winters三参数法。适用于有趋势和季节性的数据，是最常用的预测方法之一。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">📉 ARIMA模型</h5>
+                        <p class="text-gray-400 text-sm">自回归积分滑动平均模型，适用于平稳或差分后平稳的时间序列。需要识别AR(p)、I(d)、MA(q)参数。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-purple-400 font-semibold mb-1">🔄 季节性分解</h5>
+                        <p class="text-gray-400 text-sm">将时间序列分解为趋势、季节、循环和随机成分，分别预测后组合。适用于强季节性数据。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
                       <pre class="text-cyan-300">
 import pandas as pd
 import numpy as np
 
-# 生成示例销售数据
+print("=" * 60)
+print("📊 时间序列预测方法综合比较")
+print("=" * 60)
+
+# 生成示例销售数据（包含趋势和季节性）
 np.random.seed(42)
-dates = pd.date_range(start='2023-01-01', periods=24, freq='M')
-trend = np.linspace(100, 150, 24)
-seasonality = 20 * np.sin(np.arange(24) * np.pi / 6)
-noise = np.random.normal(0, 5, 24)
+dates = pd.date_range(start='2022-01-01', periods=36, freq='M')
+trend = np.linspace(100, 180, 36)  # 上升趋势
+seasonality = 25 * np.sin(np.arange(36) * np.pi / 6)  # 年度季节性
+noise = np.random.normal(0, 8, 36)  # 随机噪声
 sales = trend + seasonality + noise
 
 df = pd.DataFrame({'日期': dates, '销售额': sales})
 
-# 简单移动平均
-df['MA_3'] = df['销售额'].rolling(window=3).mean()
-df['MA_6'] = df['销售额'].rolling(window=6).mean()
+# 方法1: 简单移动平均（3期）
+df['SMA_3'] = df['销售额'].rolling(window=3).mean()
 
-# 指数平滑
+# 方法2: 简单移动平均（6期）
+df['SMA_6'] = df['销售额'].rolling(window=6).mean()
+
+# 方法3: 加权移动平均
+weights = [0.5, 0.3, 0.2]
+df['WMA'] = df['销售额'].rolling(3).apply(lambda x: sum(x * weights), raw=True)
+
+# 方法4: 简单指数平滑
 alpha = 0.3
-df['ES'] = df['销售额'].ewm(alpha=alpha).mean()
+df['SES'] = df['销售额'].ewm(alpha=alpha, adjust=False).mean()
 
-print("=== 时间序列预测方法比较 ===")
-print(df[['日期', '销售额', 'MA_3', 'MA_6', 'ES']].tail(6).round(2))
+# 方法5: 双指数平滑（Holt方法）
+from statsmodels.tsa.holtwinters import ExponentialSmoothing
+model = ExponentialSmoothing(df['销售额'], trend='add', seasonal=None)
+holt_fit = model.fit(smoothing_level=0.3, smoothing_trend=0.1)
+df['Holt'] = holt_fit.fittedvalues
+
+print("\n【最近6期预测结果对比】")
+comparison = df[['日期', '销售额', 'SMA_3', 'WMA', 'SES', 'Holt']].tail(6)
+print(comparison.round(2).to_string(index=False))
+
+# 计算各方法的预测误差
+print("\n【各方法预测误差对比】")
+methods = ['SMA_3', 'WMA', 'SES', 'Holt']
+error_results = []
+for method in methods:
+    actual = df['销售额'].dropna()
+    forecast = df[method].dropna()
+    # 对齐数据
+    common_idx = actual.index.intersection(forecast.index)
+    actual = actual.loc[common_idx]
+    forecast = forecast.loc[common_idx]
+    
+    mae = np.mean(np.abs(actual - forecast))
+    mape = np.mean(np.abs((actual - forecast) / actual)) * 100
+    rmse = np.sqrt(np.mean((actual - forecast) ** 2))
+    
+    error_results.append({
+        '方法': method,
+        'MAE': f'{mae:.2f}',
+        'MAPE': f'{mape:.2f}%',
+        'RMSE': f'{rmse:.2f}'
+    })
+
+error_df = pd.DataFrame(error_results)
+print(error_df.to_string(index=False))
 
 # 预测下一期
-next_ma3 = df['销售额'].tail(3).mean()
-next_es = alpha * df['销售额'].iloc[-1] + (1-alpha) * df['ES'].iloc[-1]
-print(f"\n下期预测 - 移动平均: {next_ma3:.2f}")
-print(f"下期预测 - 指数平滑: {next_es:.2f}")
+print("\n【下期预测结果】")
+last_3 = df['销售额'].tail(3).values
+next_sma3 = np.mean(last_3)
+next_wma = sum(last_3 * np.array(weights))
+next_ses = alpha * df['销售额'].iloc[-1] + (1-alpha) * df['SES'].iloc[-1]
+next_holt = holt_fit.forecast(1).iloc[0]
+
+print(f"  简单移动平均: {next_sma3:.2f}")
+print(f"  加权移动平均: {next_wma:.2f}")
+print(f"  简单指数平滑: {next_ses:.2f}")
+print(f"  Holt双参数法: {next_holt:.2f}")
+print(f"  平均预测值: {(next_sma3 + next_wma + next_ses + next_holt)/4:.2f}")
+
+# 方法选择建议
+print("\n【方法选择建议】")
+print("  • 数据平稳无趋势: 使用简单移动平均或简单指数平滑")
+print("  • 有趋势无季节: 使用Holt双参数法")
+print("  • 有趋势有季节: 使用Holt-Winters三参数法")
+print("  • 复杂模式: 考虑ARIMA或机器学习方法")
                       </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-cyan-900 bg-opacity-20 rounded-lg border border-cyan-700">
+                      <h5 class="text-cyan-400 font-semibold mb-2">💡 方法选择指南</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>数据特征分析：</strong>先分析趋势、季节性、周期性特征</li>
+                        <li>• <strong>预测期限：</strong>短期预测用简单方法，长期预测用复杂模型</li>
+                        <li>• <strong>数据量：</strong>数据少用简单方法，数据多用复杂模型</li>
+                        <li>• <strong>模型对比：</strong>多种方法对比，选择误差最小的</li>
+                      </ul>
                     </div>
                   </div>
 
                   <!-- 预测模型构建与评估 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-cogs text-emerald-400"></i> 预测模型构建与评估
+                      <i class="fa fa-cogs text-emerald-400"></i> 预测模型构建与评估体系
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">评估指标包括：MAE（平均绝对误差）、MAPE（平均绝对百分比误差）、RMSE（均方根误差）等。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">预测模型的评估是确保预测质量的关键环节。常用的评估指标包括MAE（平均绝对误差）、MAPE（平均绝对百分比误差）、RMSE（均方根误差）、MSE（均方误差）等。建立完善的预测评估体系，可以持续监控预测质量，及时发现和纠正问题。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-red-400 font-semibold mb-1">📏 MAE - 平均绝对误差</h5>
+                        <p class="text-gray-400 text-sm">MAE = Σ|实际值-预测值|/n。直观易懂，对异常值不敏感。适用于误差大小直接相关的场景。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📊 MAPE - 平均绝对百分比误差</h5>
+                        <p class="text-gray-400 text-sm">MAPE = Σ|实际值-预测值|/实际值/n×100%。标准化指标，便于跨产品比较。最常用的预测评估指标。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">📉 RMSE - 均方根误差</h5>
+                        <p class="text-gray-400 text-sm">RMSE = √(Σ(实际值-预测值)²/n)。对大误差更敏感，惩罚预测偏差大的情况。适用于对大误差敏感的场景。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
                       <pre class="text-cyan-300">
 import pandas as pd
 import numpy as np
 
+print("=" * 60)
+print("📊 预测模型评估体系")
+print("=" * 60)
+
 # 预测评估指标计算
-actual = np.array([120, 135, 142, 128, 155, 168])
-forecast = np.array([115, 140, 138, 135, 148, 160])
+actual = np.array([120, 135, 142, 128, 155, 168, 145, 160, 175, 152])
+forecast = np.array([115, 140, 138, 135, 148, 160, 150, 155, 170, 158])
 
 # 计算各种误差指标
 errors = actual - forecast
 abs_errors = np.abs(errors)
 pct_errors = np.abs(errors / actual) * 100
+squared_errors = errors ** 2
 
-# MAE - 平均绝对误差
+# 详细误差分析
+print("\n【逐期误差分析】")
+error_detail = pd.DataFrame({
+    '期数': range(1, len(actual) + 1),
+    '实际值': actual,
+    '预测值': forecast,
+    '误差': errors,
+    '绝对误差': abs_errors,
+    '百分比误差%': pct_errors.round(2)
+})
+print(error_detail.to_string(index=False))
+
+# 计算综合指标
+n = len(actual)
 mae = np.mean(abs_errors)
-
-# MAPE - 平均绝对百分比误差
 mape = np.mean(pct_errors)
+rmse = np.sqrt(np.mean(squared_errors))
+mse = np.mean(squared_errors)
 
-# RMSE - 均方根误差
-rmse = np.sqrt(np.mean(errors ** 2))
+# 偏差分析
+bias = np.mean(errors)
+bias_pct = bias / np.mean(actual) * 100
 
-# MSE - 均方误差
-mse = np.mean(errors ** 2)
-
-print("=== 预测模型评估 ===")
-print(f"MAE: {mae:.2f}")
-print(f"MAPE: {mape:.2f}%")
-print(f"RMSE: {rmse:.2f}")
-print(f"MSE: {mse:.2f}")
+print("\n【综合评估指标】")
+print(f"  MAE (平均绝对误差): {mae:.2f}")
+print(f"  MAPE (平均绝对百分比误差): {mape:.2f}%")
+print(f"  RMSE (均方根误差): {rmse:.2f}")
+print(f"  MSE (均方误差): {mse:.2f}")
+print(f"  Bias (偏差): {bias:.2f} ({bias_pct:.2f}%)")
 
 # 预测准确率
 accuracy = 100 - mape
-print(f"\n预测准确率: {accuracy:.2f}%")
+print(f"\n  预测准确率: {accuracy:.2f}%")
 
-# 评估标准
-print("\n--- MAPE评估标准 ---")
-print("< 10%: 优秀")
-print("10-20%: 良好")
-print("20-50%: 一般")
-print("> 50%: 需要改进")
+# MAPE评估标准
+print("\n【MAPE评估标准】")
+mape_standards = [
+    ('< 10%', '优秀', '✅'),
+    ('10-20%', '良好', '✅'),
+    ('20-50%', '一般', '⚠️'),
+    ('> 50%', '需要改进', '❌')
+]
+for std, desc, icon in mape_standards:
+    print(f"  {icon} {std}: {desc}")
+
+# 预测偏差诊断
+print("\n【预测偏差诊断】")
+if abs(bias_pct) < 2:
+    bias_status = "无明显偏差"
+elif bias > 0:
+    bias_status = "系统性低估需求"
+else:
+    bias_status = "系统性高估需求"
+print(f"  偏差状态: {bias_status}")
+print(f"  偏差程度: {abs(bias_pct):.2f}%")
+
+# 预测稳定性分析
+print("\n【预测稳定性分析】")
+error_std = np.std(errors)
+error_cv = error_std / np.mean(actual) * 100
+print(f"  误差标准差: {error_std:.2f}")
+print(f"  误差变异系数: {error_cv:.2f}%")
+if error_cv < 10:
+    print(f"  稳定性评价: 预测稳定 ✅")
+elif error_cv < 20:
+    print(f"  稳定性评价: 预测较稳定 ⚠️")
+else:
+    print(f"  稳定性评价: 预测不稳定 ❌")
+
+# 改进建议
+print("\n【改进建议】")
+if mape > 20:
+    print("  1. 考虑引入更多预测变量或使用更复杂的模型")
+if abs(bias_pct) > 5:
+    print("  2. 检查是否存在系统性偏差，调整预测模型")
+if error_cv > 15:
+    print("  3. 预测波动较大，建议增加数据平滑处理")
+print("  4. 定期回顾预测结果，持续优化模型参数")
                       </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-emerald-900 bg-opacity-20 rounded-lg border border-emerald-700">
+                      <h5 class="text-emerald-400 font-semibold mb-2">💡 评估体系要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>多指标评估：</strong>同时使用MAE、MAPE、RMSE等多个指标</li>
+                        <li>• <strong>偏差分析：</strong>关注系统性偏差，及时调整模型</li>
+                        <li>• <strong>稳定性监控：</strong>监控预测误差的波动情况</li>
+                        <li>• <strong>持续改进：</strong>建立预测回顾机制，持续优化</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- 机器学习预测方法 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-brain text-purple-400"></i> 机器学习预测方法
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">随着数据量的增加和计算能力的提升，机器学习方法在需求预测中的应用越来越广泛。常用方法包括随机森林、XGBoost、LSTM神经网络等。机器学习方法能够处理复杂的非线性关系，融合多种特征，提高预测精度。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">🌲 随机森林</h5>
+                        <p class="text-gray-400 text-sm">集成学习方法，通过多棵决策树投票预测。优点是抗过拟合、可解释性强，适合处理非线性关系。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">🚀 XGBoost</h5>
+                        <p class="text-gray-400 text-sm">梯度提升算法，预测精度高。在Kaggle竞赛中表现优异，适合结构化数据的预测任务。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">🧠 LSTM神经网络</h5>
+                        <p class="text-gray-400 text-sm">长短期记忆网络，专门处理序列数据。能够学习长期依赖关系，适合复杂的时间序列预测。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                      <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+
+print("=" * 60)
+print("📊 机器学习预测方法示例")
+print("=" * 60)
+
+# 生成模拟数据
+np.random.seed(42)
+n_samples = 200
+
+# 创建特征
+data = pd.DataFrame({
+    '月份': list(range(1, 13)) * 16 + list(range(1, 9)),
+    '年份': [2022]*12*8 + [2023]*12*8 + [2024]*8,
+    '促销活动': np.random.choice([0, 1], n_samples, p=[0.7, 0.3]),
+    '价格指数': np.random.uniform(0.9, 1.1, n_samples),
+    '竞品价格': np.random.uniform(80, 120, n_samples),
+    '节假日': np.random.choice([0, 1], n_samples, p=[0.85, 0.15])
+})
+
+# 生成目标变量（需求量）
+base_demand = 500
+data['需求量'] = (base_demand + 
+                data['月份'].apply(lambda x: 50*np.sin(x*np.pi/6)) +  # 季节性
+                data['促销活动'] * 100 +  # 促销效应
+                (1 - data['价格指数']) * 200 +  # 价格效应
+                np.random.normal(0, 30, n_samples))  # 随机噪声
+
+# 特征工程
+data['季度'] = data['月份'].apply(lambda x: (x-1)//3 + 1)
+data['是否旺季'] = data['月份'].apply(lambda x: 1 if x in [6,7,8,11,12] else 0)
+
+# 准备训练数据
+features = ['月份', '促销活动', '价格指数', '竞品价格', '节假日', '季度', '是否旺季']
+X = data[features]
+y = data['需求量']
+
+# 划分训练集和测试集
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# 训练随机森林模型
+rf_model = RandomForestRegressor(n_estimators=100, max_depth=10, random_state=42)
+rf_model.fit(X_train, y_train)
+
+# 预测
+y_pred_train = rf_model.predict(X_train)
+y_pred_test = rf_model.predict(X_test)
+
+# 评估
+train_mae = mean_absolute_error(y_train, y_pred_train)
+test_mae = mean_absolute_error(y_test, y_pred_test)
+train_mape = np.mean(np.abs((y_train - y_pred_train) / y_train)) * 100
+test_mape = np.mean(np.abs((y_test - y_pred_test) / y_test)) * 100
+test_rmse = np.sqrt(mean_squared_error(y_test, y_pred_test))
+
+print("\n【模型性能评估】")
+print(f"  训练集 MAE: {train_mae:.2f}")
+print(f"  测试集 MAE: {test_mae:.2f}")
+print(f"  训练集 MAPE: {train_mape:.2f}%")
+print(f"  测试集 MAPE: {test_mape:.2f}%")
+print(f"  测试集 RMSE: {test_rmse:.2f}")
+
+# 特征重要性
+print("\n【特征重要性排名】")
+feature_importance = pd.DataFrame({
+    '特征': features,
+    '重要性': rf_model.feature_importances_
+}).sort_values('重要性', ascending=False)
+for i, (_, row) in enumerate(feature_importance.iterrows(), 1):
+    bar = "█" * int(row['重要性'] * 50)
+    print(f"  {i}. {row['特征']}: {bar} {row['重要性']:.3f}")
+
+# 预测示例
+print("\n【预测示例】")
+new_data = pd.DataFrame({
+    '月份': [6], '促销活动': [1], '价格指数': [0.95],
+    '竞品价格': [100], '节假日': [0], '季度': [2], '是否旺季': [1]
+})
+prediction = rf_model.predict(new_data[features])
+print(f"  6月份有促销活动时预测需求: {prediction[0]:.0f}单位")
+
+# 模型优化建议
+print("\n【模型优化建议】")
+print("  1. 增加更多历史特征（滞后特征、滚动统计特征）")
+print("  2. 添加外部特征（天气、经济指标、市场活动）")
+print("  3. 尝试其他模型（XGBoost、LightGBM）")
+print("  4. 进行超参数调优（网格搜索、贝叶斯优化）")
+                      </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-purple-900 bg-opacity-20 rounded-lg border border-purple-700">
+                      <h5 class="text-purple-400 font-semibold mb-2">💡 机器学习预测要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>特征工程：</strong>好的特征比复杂的模型更重要</li>
+                        <li>• <strong>防止过拟合：</strong>使用交叉验证、正则化等技术</li>
+                        <li>• <strong>模型解释：</strong>关注特征重要性，确保模型可解释</li>
+                        <li>• <strong>持续更新：</strong>定期用新数据重新训练模型</li>
+                      </ul>
                     </div>
                   </div>
 
                   <!-- 需求预测实战案例 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700 md:col-span-2">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-briefcase text-purple-400"></i> 需求预测实战案例
+                      <i class="fa fa-briefcase text-orange-400"></i> 需求预测实战案例：多产品预测系统
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">综合案例：使用多种方法对产品需求进行预测，并选择最优模型。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">综合案例：构建一个多产品需求预测系统，包括数据准备、模型选择、预测评估和结果应用。通过实际案例展示如何将预测方法应用于真实业务场景，实现预测驱动的供应链决策。</p>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
                       <pre class="text-cyan-300">
 import pandas as pd
 import numpy as np
 
-# 产品需求预测案例
+print("=" * 60)
+print("📊 多产品需求预测系统实战案例")
+print("=" * 60)
+
+# 模拟多产品历史数据
 np.random.seed(42)
-months = pd.date_range('2023-01', periods=18, freq='M')
-base_demand = 500
-trend = np.linspace(0, 100, 18)
-seasonal = 50 * np.sin(np.arange(18) * 2 * np.pi / 12)
-demand = base_demand + trend + seasonal + np.random.normal(0, 20, 18)
+products = ['产品A', '产品B', '产品C', '产品D', '产品E']
+months = pd.date_range('2022-01', periods=24, freq='M')
 
-df = pd.DataFrame({'月份': months, '实际需求': demand})
+# 生成各产品数据
+data_list = []
+for i, product in enumerate(products):
+    base = 300 + i * 100
+    trend = np.linspace(0, 50 + i * 20, 24)
+    seasonal = (30 + i * 10) * np.sin(np.arange(24) * np.pi / 6)
+    noise = np.random.normal(0, 15 + i * 5, 24)
+    demand = base + trend + seasonal + noise
+    
+    for j, month in enumerate(months):
+        data_list.append({
+            '产品': product,
+            '月份': month,
+            '需求量': max(0, demand[j]),
+            '类别': ['A类', 'B类', 'B类', 'C类', 'C类'][i]
+        })
 
-# 方法1: 简单移动平均
-df['SMA_预测'] = df['实际需求'].rolling(3).mean().shift(1)
+df = pd.DataFrame(data_list)
 
-# 方法2: 加权移动平均
-weights = [0.5, 0.3, 0.2]
-df['WMA_预测'] = df['实际需求'].rolling(3).apply(
-    lambda x: sum(x * weights), raw=True).shift(1)
+print("\n【数据概览】")
+print(f"  产品数量: {len(products)}")
+print(f"  数据周期: {len(months)}个月")
+print(f"  总记录数: {len(df)}")
 
-# 方法3: 指数平滑
-alpha = 0.4
-df['ES_预测'] = df['实际需求'].ewm(alpha=alpha).mean().shift(1)
+# 各产品预测
+print("\n" + "=" * 60)
+print("📈 各产品预测结果")
+print("=" * 60)
 
-# 计算各方法MAPE
-def calc_mape(actual, forecast):
-    mask = ~np.isnan(forecast)
-    return np.mean(np.abs((actual[mask] - forecast[mask]) / actual[mask])) * 100
+forecast_results = []
+for product in products:
+    product_data = df[df['产品'] == product].copy()
+    demand = product_data['需求量'].values
+    
+    # 使用多种方法预测
+    # 方法1: 移动平均
+    ma_forecast = np.mean(demand[-3:])
+    
+    # 方法2: 指数平滑
+    alpha = 0.3
+    es = demand[0]
+    for d in demand[1:]:
+        es = alpha * d + (1 - alpha) * es
+    es_forecast = es
+    
+    # 方法3: 线性趋势
+    x = np.arange(len(demand))
+    coef = np.polyfit(x, demand, 1)
+    trend_forecast = coef[0] * len(demand) + coef[1]
+    
+    # 计算历史预测误差（使用最近6期）
+    recent_actual = demand[-6:]
+    recent_ma_pred = [np.mean(demand[i-3:i]) for i in range(-6, 0)]
+    mape = np.mean(np.abs((recent_actual - recent_ma_pred) / recent_actual)) * 100
+    
+    # 选择最佳预测（这里简化为平均）
+    final_forecast = (ma_forecast + es_forecast + trend_forecast) / 3
+    
+    forecast_results.append({
+        '产品': product,
+        '类别': product_data['类别'].iloc[0],
+        'MA预测': ma_forecast,
+        'ES预测': es_forecast,
+        '趋势预测': trend_forecast,
+        '综合预测': final_forecast,
+        '历史MAPE': mape
+    })
 
-methods = ['SMA_预测', 'WMA_预测', 'ES_预测']
-results = []
-for method in methods:
-    mape = calc_mape(df['实际需求'].values, df[method].values)
-    results.append({'方法': method.replace('_预测', ''), 'MAPE': f'{mape:.2f}%'})
+forecast_df = pd.DataFrame(forecast_results)
+print("\n【预测结果汇总】")
+print(forecast_df.round(0).to_string(index=False))
 
-print("=== 预测方法比较 ===")
-print(pd.DataFrame(results))
-print("\n推荐使用MAPE最低的方法进行预测")
+# 预测应用：库存建议
+print("\n" + "=" * 60)
+print("📦 预测驱动的库存建议")
+print("=" * 60)
+
+for _, row in forecast_df.iterrows():
+    product = row['产品']
+    forecast = row['综合预测']
+    category = row['类别']
+    mape = row['历史MAPE']
+    
+    # 根据类别设定服务水平
+    service_level = {'A类': 0.98, 'B类': 0.95, 'C类': 0.90}[category]
+    
+    # 计算安全库存（简化）
+    safety_factor = {'A类': 2.05, 'B类': 1.65, 'C类': 1.28}[category]
+    std_demand = np.std(df[df['产品'] == product]['需求量'].values)
+    safety_stock = safety_factor * std_demand
+    
+    # 再订货点
+    lead_time = 7  # 假设提前期7天
+    daily_demand = forecast / 30
+    rop = daily_demand * lead_time + safety_stock
+    
+    print(f"\n{product} ({category}):")
+    print(f"  预测需求: {forecast:.0f}单位/月")
+    print(f"  服务水平: {service_level*100:.0f}%")
+    print(f"  安全库存: {safety_stock:.0f}单位")
+    print(f"  再订货点: {rop:.0f}单位")
+    print(f"  预测准确率: {100-mape:.1f}%")
+
+# 预测监控建议
+print("\n" + "=" * 60)
+print("📊 预测监控与改进建议")
+print("=" * 60)
+print("\n【监控指标】")
+print("  1. 预测偏差率: 监控系统性偏差")
+print("  2. MAPE趋势: 监控预测准确率变化")
+print("  3. 预测稳定性: 监控预测波动情况")
+
+print("\n【改进措施】")
+high_mape = forecast_df[forecast_df['历史MAPE'] > 20]
+if len(high_mape) > 0:
+    print(f"  ⚠️ 以下产品预测准确率较低，需要改进:")
+    for _, row in high_mape.iterrows():
+        print(f"     - {row['产品']}: MAPE={row['历史MAPE']:.1f}%")
+    print("  建议: 检查数据质量、尝试其他预测方法、增加特征变量")
+else:
+    print("  ✅ 所有产品预测准确率良好")
+
+print("\n【预测更新频率建议】")
+print("  • A类产品: 每周更新")
+print("  • B类产品: 每两周更新")
+print("  • C类产品: 每月更新")
                       </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-orange-900 bg-opacity-20 rounded-lg border border-orange-700">
+                      <h5 class="text-orange-400 font-semibold mb-2">💡 实战应用要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>分类管理：</strong>根据产品重要性采用不同预测策略</li>
+                        <li>• <strong>方法组合：</strong>多种方法组合预测，降低单一方法风险</li>
+                        <li>• <strong>闭环反馈：</strong>建立预测-执行-反馈的闭环机制</li>
+                        <li>• <strong>业务协同：</strong>预测结果与采购、生产、库存决策联动</li>
+                      </ul>
                     </div>
                   </div>
                 </div>
@@ -1041,33 +1870,58 @@ print("\n推荐使用MAPE最低的方法进行预测")
             <div id="inventory-optimization" class="knowledge-section hidden">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-cubes"></i> 模块3：库存优化（12学时）
+                  <i class="fa fa-cubes"></i> 模块3：库存优化分析（12学时）
                 </h3>
 
                 <div class="grid md:grid-cols-2 gap-6">
                   <!-- 库存管理基础 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-cube text-blue-400"></i> 库存管理基础
+                      <i class="fa fa-cube text-blue-400"></i> 库存管理基础与分类
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">库存类型：原材料、在制品、成品。库存管理目标是在保证服务水平的前提下最小化库存成本。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">库存管理是供应链管理的核心环节，直接影响企业的资金占用、服务水平和运营效率。库存类型包括原材料、在制品(WIP)和成品三大类。库存管理的核心目标是在保证服务水平的前提下，最小化总库存成本，实现成本与服务的最佳平衡。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📦 库存类型</h5>
+                        <p class="text-gray-400 text-sm">原材料库存：生产投入前的物料。在制品库存：生产过程中半成品。成品库存：待销售的最终产品。每种类型有不同的管理重点。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">🎯 管理目标</h5>
+                        <p class="text-gray-400 text-sm">降低库存成本、提高服务水平、减少资金占用、加快周转速度、防止缺货和积压。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">📊 ABC分类法</h5>
+                        <p class="text-gray-400 text-sm">A类：高价值（占80%销售额），重点管理。B类：中等价值（占15%销售额），适度管理。C类：低价值（占5%销售额），简化管理。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
                       <pre class="text-cyan-300">
 import pandas as pd
+import numpy as np
+
+print("=" * 60)
+print("📊 ABC库存分类分析系统")
+print("=" * 60)
 
 # 库存分类管理 - ABC分析
 inventory_items = pd.DataFrame({
-    '产品编号': ['P001', 'P002', 'P003', 'P004', 'P005', 'P006', 'P007', 'P008'],
-    '年销售额': [500000, 350000, 200000, 100000, 80000, 50000, 30000, 20000],
-    '库存数量': [1000, 800, 500, 400, 300, 200, 150, 100],
-    '单价': [100, 150, 80, 50, 40, 30, 20, 15]
+    '产品编号': ['P001', 'P002', 'P003', 'P004', 'P005', 'P006', 'P007', 'P008', 'P009', 'P010'],
+    '产品名称': ['核心产品A', '核心产品B', '主力产品C', '主力产品D', '常规产品E', 
+                '常规产品F', '常规产品G', '低频产品H', '低频产品I', '低频产品J'],
+    '年销售额': [800000, 600000, 400000, 300000, 200000, 150000, 100000, 80000, 50000, 30000],
+    '库存数量': [2000, 1500, 1000, 800, 600, 500, 400, 300, 200, 150],
+    '单价': [200, 180, 150, 120, 100, 80, 60, 50, 40, 30],
+    '年需求量': [4000, 3500, 2500, 2000, 1500, 1200, 1000, 800, 600, 400]
 })
 
 # 按销售额排序
-inventory_items = inventory_items.sort_values('年销售额', ascending=False)
+inventory_items = inventory_items.sort_values('年销售额', ascending=False).reset_index(drop=True)
 
 # 计算累计占比
-inventory_items['销售额占比'] = inventory_items['年销售额'] / inventory_items['年销售额'].sum() * 100
+total_sales = inventory_items['年销售额'].sum()
+inventory_items['销售额占比'] = inventory_items['年销售额'] / total_sales * 100
 inventory_items['累计占比'] = inventory_items['销售额占比'].cumsum()
 
 # ABC分类
@@ -1081,36 +1935,115 @@ def abc_classify(cum_pct):
 
 inventory_items['ABC分类'] = inventory_items['累计占比'].apply(abc_classify)
 
-print("=== ABC库存分类分析 ===")
-print(inventory_items[['产品编号', '年销售额', '累计占比', 'ABC分类']])
+print("\n【ABC分类结果】")
+print(inventory_items[['产品编号', '产品名称', '年销售额', '累计占比', 'ABC分类']].to_string(index=False))
 
 # 分类统计
+print("\n【分类汇总统计】")
 abc_summary = inventory_items.groupby('ABC分类').agg({
     '产品编号': 'count',
-    '年销售额': 'sum'
+    '年销售额': 'sum',
+    '库存数量': 'sum',
+    '年需求量': 'sum'
 }).rename(columns={'产品编号': '产品数量'})
-print("\n分类汇总:")
-print(abc_summary)
+abc_summary['销售额占比'] = abc_summary['年销售额'] / total_sales * 100
+abc_summary['库存周转率'] = abc_summary['年需求量'] / abc_summary['库存数量']
+print(abc_summary.round(2))
+
+# 管理策略建议
+print("\n【各类产品管理策略】")
+strategies = {
+    'A': {
+        '盘点频率': '每周盘点',
+        '预测方法': '高级预测模型',
+        '安全库存': '较高服务水平(98%)',
+        '补货策略': '连续盘点，小批量多频次',
+        '供应商管理': '战略合作，定期评估'
+    },
+    'B': {
+        '盘点频率': '每月盘点',
+        '预测方法': '常规预测方法',
+        '安全库存': '中等服务水平(95%)',
+        '补货策略': '定期盘点，中等批量',
+        '供应商管理': '合格供应商，季度评估'
+    },
+    'C': {
+        '盘点频率': '季度盘点',
+        '预测方法': '简单预测方法',
+        '安全库存': '较低服务水平(90%)',
+        '补货策略': '大批量低频次',
+        '供应商管理': '价格导向，简化管理'
+    }
+}
+
+for category, strategy in strategies.items():
+    print(f"\n{category}类产品策略:")
+    for key, value in strategy.items():
+        print(f"  • {key}: {value}")
                       </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-blue-900 bg-opacity-20 rounded-lg border border-blue-700">
+                      <h5 class="text-blue-400 font-semibold mb-2">💡 ABC分类要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>分类标准：</strong>通常按销售额或销售量进行分类</li>
+                        <li>• <strong>动态调整：</strong>定期重新评估分类，适应市场变化</li>
+                        <li>• <strong>差异化管理：</strong>不同类别采用不同管理策略</li>
+                        <li>• <strong>重点关注：</strong>将有限资源集中在A类产品上</li>
+                      </ul>
                     </div>
                   </div>
 
                   <!-- 库存成本分析 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-money text-emerald-400"></i> 库存成本分析
+                      <i class="fa fa-money text-emerald-400"></i> 库存成本分析与优化
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">库存成本包括：持有成本（仓储、资金占用、损耗）、订货成本、缺货成本。总成本优化是库存管理的核心。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">库存成本是库存管理的核心考量因素，主要包括持有成本、订货成本和缺货成本三大类。理解各类成本的构成和相互关系，是进行库存优化决策的基础。总成本最小化是库存管理的核心目标，需要在各类成本之间找到最佳平衡点。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-red-400 font-semibold mb-1">💰 持有成本</h5>
+                        <p class="text-gray-400 text-sm">资金占用成本、仓储成本、保险费用、损耗成本、贬值风险。通常占库存价值的15-35%。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📝 订货成本</h5>
+                        <p class="text-gray-400 text-sm">订单处理、运输、验收、入库等费用。与订货次数相关，与订货量关系不大。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">⚠️ 缺货成本</h5>
+                        <p class="text-gray-400 text-sm">销售损失、客户流失、紧急采购成本、生产中断损失。难以量化但影响巨大。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
                       <pre class="text-cyan-300">
 import pandas as pd
 import numpy as np
+
+print("=" * 60)
+print("📊 库存成本分析与EOQ模型")
+print("=" * 60)
 
 # 库存成本结构分析
 D = 10000  # 年需求量
 S = 500    # 每次订货成本
 H = 20     # 单位持有成本
 C = 100    # 单位采购成本
+I = 0.25   # 持有成本率（年）
+
+# 计算持有成本（更详细）
+holding_cost_detail = {
+    '资金占用': C * I * 0.6,  # 占持有成本的60%
+    '仓储费用': C * I * 0.2,  # 占持有成本的20%
+    '损耗贬值': C * I * 0.15, # 占持有成本的15%
+    '保险费用': C * I * 0.05  # 占持有成本的5%
+}
+
+print("\n【持有成本构成】")
+print(f"单位持有成本: {H}元/年")
+for item, cost in holding_cost_detail.items():
+    print(f"  {item}: {cost:.2f}元 ({cost/H*100:.0f}%)")
 
 # EOQ经济订货量计算
 eoq = np.sqrt(2 * D * S / H)
@@ -1121,45 +2054,105 @@ annual_order_cost = order_times * S
 average_inventory = eoq / 2
 annual_holding_cost = average_inventory * H
 total_cost = annual_order_cost + annual_holding_cost
+annual_purchase_cost = D * C
 
-print("=== EOQ模型分析 ===")
+print("\n【EOQ模型分析】")
 print(f"年需求量: {D}单位")
 print(f"每次订货成本: {S}元")
 print(f"单位持有成本: {H}元/年")
+print(f"单位采购成本: {C}元")
 print(f"\n经济订货量(EOQ): {eoq:.0f}单位")
 print(f"年订货次数: {order_times:.1f}次")
-print(f"年订货成本: {annual_order_cost:.0f}元")
-print(f"年持有成本: {annual_holding_cost:.0f}元")
-print(f"年总库存成本: {total_cost:.0f}元")
+print(f"订货周期: {365/order_times:.0f}天")
+print(f"\n【成本分析】")
+print(f"年订货成本: {annual_order_cost:,.0f}元")
+print(f"年持有成本: {annual_holding_cost:,.0f}元")
+print(f"年库存管理成本: {total_cost:,.0f}元")
+print(f"年采购成本: {annual_purchase_cost:,.0f}元")
+print(f"总成本: {annual_purchase_cost + total_cost:,.0f}元")
 
 # 不同订货量成本比较
-Q_values = [200, 400, 500, 600, 800, 1000]
-print("\n=== 不同订货量成本比较 ===")
+print("\n【不同订货量成本对比】")
+Q_values = [200, 400, 500, 600, 707, 800, 1000]
+cost_comparison = []
 for Q in Q_values:
-    tc = (D/Q)*S + (Q/2)*H
-    print(f"订货量{Q}: 总成本{tc:.0f}元")
+    order_cost = (D/Q) * S
+    hold_cost = (Q/2) * H
+    tc = order_cost + hold_cost
+    diff = (tc - total_cost) / total_cost * 100
+    cost_comparison.append({
+        '订货量': Q,
+        '订货成本': order_cost,
+        '持有成本': hold_cost,
+        '总成本': tc,
+        '成本差异%': diff
+    })
+    marker = "← EOQ最优" if Q == int(eoq) else ""
+    print(f"订货量{Q:4d}: 总成本{tc:,.0f}元 (差异{diff:+.1f}%) {marker}")
+
+# 敏感性分析
+print("\n【敏感性分析】")
+print("参数变化对EOQ的影响:")
+for pct in [-20, -10, 0, 10, 20]:
+    D_new = D * (1 + pct/100)
+    eoq_new = np.sqrt(2 * D_new * S / H)
+    eoq_change = (eoq_new - eoq) / eoq * 100
+    print(f"  需求量{pct:+d}%: EOQ变化{eoq_change:+.1f}%")
                       </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-emerald-900 bg-opacity-20 rounded-lg border border-emerald-700">
+                      <h5 class="text-emerald-400 font-semibold mb-2">💡 成本优化要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>成本权衡：</strong>订货成本与持有成本存在此消彼长的关系</li>
+                        <li>• <strong>EOQ适用条件：</strong>需求稳定、提前期固定、无数量折扣</li>
+                        <li>• <strong>实际应用：</strong>根据实际情况调整订货量，不必严格按EOQ</li>
+                        <li>• <strong>持续优化：</strong>定期评估成本参数，更新订货策略</li>
+                      </ul>
                     </div>
                   </div>
 
                   <!-- 库存优化模型 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-sliders text-yellow-400"></i> 库存优化模型
+                      <i class="fa fa-sliders text-yellow-400"></i> 库存优化模型与应用
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">常用模型：EOQ（经济订货量）、EPQ（经济生产量）、连续盘点模型、定期盘点模型等。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">库存优化模型是制定科学库存决策的工具。常用模型包括EOQ（经济订货量）、EPQ（经济生产量）、连续盘点模型、定期盘点模型等。选择合适的模型需要考虑需求特性、供应条件、管理能力等因素。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📊 连续盘点模型</h5>
+                        <p class="text-gray-400 text-sm">实时监控库存，当库存降至再订货点时触发订货。适合A类产品，服务水平高。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📅 定期盘点模型</h5>
+                        <p class="text-gray-400 text-sm">按固定周期检查库存并订货。适合B、C类产品，管理成本低。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">🔄 补货策略</h5>
+                        <p class="text-gray-400 text-sm">(Q,R)策略：固定订货量、可变订货点。(s,S)策略：订至目标库存水平。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
                       <pre class="text-cyan-300">
 import numpy as np
 import pandas as pd
 
+print("=" * 60)
+print("📊 多产品库存优化系统")
+print("=" * 60)
+
 # 多产品库存优化
 products = pd.DataFrame({
-    '产品': ['A', 'B', 'C', 'D'],
-    '年需求': [5000, 3000, 2000, 1000],
-    '订货成本': [400, 350, 300, 250],
-    '持有成本': [25, 30, 20, 15],
-    '单价': [80, 100, 60, 40]
+    '产品': ['产品A', '产品B', '产品C', '产品D', '产品E'],
+    '类别': ['A类', 'A类', 'B类', 'B类', 'C类'],
+    '年需求': [5000, 4000, 3000, 2000, 1000],
+    '订货成本': [400, 380, 350, 300, 250],
+    '持有成本': [25, 28, 22, 18, 15],
+    '单价': [80, 100, 60, 50, 40],
+    '需求标准差': [100, 80, 60, 40, 30],
+    '提前期_天': [7, 7, 10, 14, 14]
 })
 
 # 计算各产品EOQ
@@ -1170,135 +2163,1119 @@ products['年订货成本'] = products['年订货次数'] * products['订货成�
 products['年持有成本'] = products['平均库存'] * products['持有成本']
 products['年总成本'] = products['年订货成本'] + products['年持有成本']
 
-print("=== 多产品库存优化 ===")
-print(products[['产品', '年需求', 'EOQ', '年订货次数', '年总成本']].round(0))
+print("\n【EOQ计算结果】")
+print(products[['产品', '类别', '年需求', 'EOQ', '年订货次数', '年总成本']].round(0).to_string(index=False))
 
 # 库存投资分析
 products['库存投资'] = products['平均库存'] * products['单价']
 total_investment = products['库存投资'].sum()
-print(f"\n总库存投资: {total_investment:.0f}元")
+print(f"\n【库存投资分析】")
+print(f"总库存投资: {total_investment:,.0f}元")
+print(f"平均周转率: {products['年需求'].sum() / (products['平均库存'] * products['单价']).sum():.1f}次/年")
 
 # 服务水平与安全库存关系
-service_levels = [0.85, 0.90, 0.95, 0.99]
-z_values = [1.04, 1.28, 1.65, 2.33]  # 正态分布Z值
-sigma_d = 50  # 需求标准差
-L = 7/365  # 提前期（年）
+print("\n【服务水平与安全库存】")
+service_levels = {'A类': 0.98, 'B类': 0.95, 'C类': 0.90}
+z_values = {0.98: 2.05, 0.95: 1.65, 0.90: 1.28}
 
-print("\n=== 服务水平与安全库存 ===")
-for sl, z in zip(service_levels, z_values):
-    ss = z * sigma_d * np.sqrt(L * 365)
-    print(f"服务水平{sl*100:.0f}%: 安全库存{ss:.0f}单位")
+for _, row in products.iterrows():
+    sl = service_levels[row['类别']]
+    z = z_values[sl]
+    L = row['提前期_天'] / 365
+    sigma = row['需求标准差']
+    
+    # 安全库存计算
+    ss = z * sigma * np.sqrt(row['提前期_天'])
+    
+    # 再订货点
+    daily_demand = row['年需求'] / 365
+    rop = daily_demand * row['提前期_天'] + ss
+    
+    print(f"\n{row['产品']} ({row['类别']}):")
+    print(f"  服务水平: {sl*100:.0f}%")
+    print(f"  安全库存: {ss:.0f}单位")
+    print(f"  再订货点: {rop:.0f}单位")
+    print(f"  最大库存: {rop + row['EOQ']:.0f}单位")
+
+# 补货策略建议
+print("\n" + "=" * 60)
+print("📋 补货策略建议")
+print("=" * 60)
+for _, row in products.iterrows():
+    if row['类别'] == 'A类':
+        strategy = "连续盘点(Q,R)策略，实时监控"
+    elif row['类别'] == 'B类':
+        strategy = "定期盘点(s,S)策略，每周检查"
+    else:
+        strategy = "定期盘点策略，每月检查"
+    print(f"{row['产品']}: {strategy}")
                       </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-yellow-900 bg-opacity-20 rounded-lg border border-yellow-700">
+                      <h5 class="text-yellow-400 font-semibold mb-2">💡 模型选择要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>需求特性：</strong>稳定需求用EOQ，波动需求加安全库存</li>
+                        <li>• <strong>产品价值：</strong>高价值产品用连续盘点，低价值用定期盘点</li>
+                        <li>• <strong>管理成本：</strong>考虑盘点成本和管理复杂度</li>
+                        <li>• <strong>系统支持：</strong>确保有相应的信息系统支持</li>
+                      </ul>
                     </div>
                   </div>
 
                   <!-- 安全库存计算 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-shield text-red-400"></i> 安全库存计算
+                      <i class="fa fa-shield text-red-400"></i> 安全库存计算与优化
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">安全库存用于应对需求和供应的不确定性。计算需考虑服务水平、需求波动、提前期波动等因素。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">安全库存是应对需求和供应不确定性的缓冲库存。计算安全库存需要考虑服务水平目标、需求波动、提前期波动等因素。合理的安全库存能够在保证服务水平的同时，最小化库存投资。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-red-400 font-semibold mb-1">📊 服务水平</h5>
+                        <p class="text-gray-400 text-sm">常用指标：周期服务水平(CSL)、订单满足率(FR)。CSL表示一个周期内不缺货的概率，FR表示需求被满足的比例。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📈 需求不确定性</h5>
+                        <p class="text-gray-400 text-sm">需求标准差、需求分布形态、季节性波动。需求越不稳定，需要的安全库存越高。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">⏱️ 提前期不确定性</h5>
+                        <p class="text-gray-400 text-sm">提前期波动、供应可靠性。提前期越长越不稳定，需要的安全库存越高。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
                       <pre class="text-cyan-300">
 import numpy as np
 import pandas as pd
 from scipy import stats
 
+print("=" * 60)
+print("📊 安全库存计算与优化系统")
+print("=" * 60)
+
 # 安全库存计算参数
-avg_demand = 100  # 平均日需求
-std_demand = 20   # 需求标准差
-lead_time = 7     # 提前期（天）
-std_lead_time = 2 # 提前期标准差
-service_level = 0.95  # 目标服务水平
+params = {
+    'avg_demand': 100,      # 平均日需求
+    'std_demand': 20,       # 需求标准差
+    'lead_time': 7,         # 提前期（天）
+    'std_lead_time': 2,     # 提前期标准差
+    'review_period': 0      # 盘点周期（天），0表示连续盘点
+}
 
-# Z值（服务水平对应）
-z = stats.norm.ppf(service_level)
+print("\n【基础参数】")
+for key, value in params.items():
+    print(f"  {key}: {value}")
 
-# 方法1: 仅考虑需求不确定性
-ss_demand = z * std_demand * np.sqrt(lead_time)
+# 不同服务水平的安全库存计算
+print("\n【不同服务水平的安全库存】")
+service_levels = [0.80, 0.85, 0.90, 0.95, 0.98, 0.99]
 
-# 方法2: 同时考虑需求和提前期不确定性
-ss_combined = z * np.sqrt(lead_time * std_demand**2 + 
-                          avg_demand**2 * std_lead_time**2)
+ss_results = []
+for sl in service_levels:
+    z = stats.norm.ppf(sl)
+    
+    # 方法1: 仅考虑需求不确定性
+    ss_demand = z * params['std_demand'] * np.sqrt(params['lead_time'])
+    
+    # 方法2: 同时考虑需求和提前期不确定性
+    ss_combined = z * np.sqrt(
+        params['lead_time'] * params['std_demand']**2 + 
+        params['avg_demand']**2 * params['std_lead_time']**2
+    )
+    
+    # 再订货点
+    rop = params['avg_demand'] * params['lead_time'] + ss_combined
+    
+    # 库存投资（假设单价100元）
+    investment = ss_combined * 100
+    
+    ss_results.append({
+        '服务水平': f'{sl*100:.0f}%',
+        'Z值': z,
+        '安全库存(需求)': ss_demand,
+        '安全库存(综合)': ss_combined,
+        '再订货点': rop,
+        '库存投资': investment
+    })
 
-# 再订货点计算
-rop = avg_demand * lead_time + ss_combined
+ss_df = pd.DataFrame(ss_results)
+print(ss_df.round(0).to_string(index=False))
 
-print("=== 安全库存计算 ===")
-print(f"平均日需求: {avg_demand}单位")
-print(f"需求标准差: {std_demand}")
-print(f"提前期: {lead_time}天")
-print(f"目标服务水平: {service_level*100:.0f}%")
-print(f"Z值: {z:.2f}")
-print(f"\n安全库存(仅需求不确定性): {ss_demand:.0f}单位")
-print(f"安全库存(综合不确定性): {ss_combined:.0f}单位")
-print(f"再订货点: {rop:.0f}单位")
+# 安全库存敏感性分析
+print("\n【安全库存敏感性分析】")
+base_sl = 0.95
+base_z = stats.norm.ppf(base_sl)
+base_ss = base_z * np.sqrt(
+    params['lead_time'] * params['std_demand']**2 + 
+    params['avg_demand']**2 * params['std_lead_time']**2
+)
 
-# 不同服务水平对比
-print("\n=== 不同服务水平的安全库存 ===")
-for sl in [0.90, 0.95, 0.99]:
-    z_val = stats.norm.ppf(sl)
-    ss = z_val * np.sqrt(lead_time * std_demand**2 + avg_demand**2 * std_lead_time**2)
-    print(f"服务水平{sl*100:.0f}%: 安全库存{ss:.0f}单位, 再订货点{avg_demand*lead_time+ss:.0f}单位")
+print("\n需求波动影响:")
+for pct in [-50, -25, 0, 25, 50]:
+    new_std = params['std_demand'] * (1 + pct/100)
+    new_ss = base_z * np.sqrt(
+        params['lead_time'] * new_std**2 + 
+        params['avg_demand']**2 * params['std_lead_time']**2
+    )
+    change = (new_ss - base_ss) / base_ss * 100
+    print(f"  需求标准差{pct:+d}%: 安全库存变化{change:+.1f}%")
+
+print("\n提前期影响:")
+for days in [3, 5, 7, 10, 14]:
+    new_ss = base_z * np.sqrt(
+        days * params['std_demand']**2 + 
+        params['avg_demand']**2 * params['std_lead_time']**2
+    )
+    change = (new_ss - base_ss) / base_ss * 100
+    print(f"  提前期{days}天: 安全库存变化{change:+.1f}%")
+
+# 缺货成本与服务水平权衡
+print("\n【服务水平与成本权衡】")
+holding_cost_per_unit = 20  # 单位持有成本/年
+stockout_cost_per_unit = 150  # 单位缺货成本
+
+print(f"单位持有成本: {holding_cost_per_unit}元/年")
+print(f"单位缺货成本: {stockout_cost_per_unit}元")
+print("\n服务水平 | 安全库存 | 持有成本 | 预期缺货 | 缺货成本 | 总成本")
+print("-" * 65)
+
+for sl in [0.85, 0.90, 0.95, 0.98, 0.99]:
+    z = stats.norm.ppf(sl)
+    ss = z * np.sqrt(
+        params['lead_time'] * params['std_demand']**2 + 
+        params['avg_demand']**2 * params['std_lead_time']**2
+    )
+    
+    holding_cost = ss * holding_cost_per_unit
+    
+    # 预期缺货量计算（简化）
+    expected_stockout = (1 - sl) * params['avg_demand'] * 365 / params['lead_time']
+    stockout_cost = expected_stockout * stockout_cost_per_unit
+    
+    total = holding_cost + stockout_cost
+    
+    print(f"  {sl*100:.0f}%   |  {ss:5.0f}   |  {holding_cost:6.0f}  |  {expected_stockout:5.1f}   |  {stockout_cost:7.0f}  | {total:7.0f}")
                       </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-red-900 bg-opacity-20 rounded-lg border border-red-700">
+                      <h5 class="text-red-400 font-semibold mb-2">💡 安全库存优化要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>服务水平设定：</strong>根据产品重要性和缺货成本设定</li>
+                        <li>• <strong>数据质量：</strong>准确的需求和提前期数据是关键</li>
+                        <li>• <strong>动态调整：</strong>根据实际情况定期调整安全库存</li>
+                        <li>• <strong>成本权衡：</strong>在持有成本和缺货成本间找平衡</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- 补货策略 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700 md:col-span-2">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-refresh text-purple-400"></i> 补货策略与库存控制
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">补货策略决定了何时订货和订多少货。常用的补货策略包括(Q,R)策略、(s,S)策略、定期盘点策略等。选择合适的补货策略需要考虑产品特性、需求模式、管理成本等因素。科学的补货策略能够有效平衡服务水平与库存成本。</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📊 (Q,R)策略</h5>
+                        <p class="text-gray-400 text-sm">固定订货量Q，当库存降至再订货点R时订货。适合需求稳定、价值较高的产品。需要实时库存监控。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📈 (s,S)策略</h5>
+                        <p class="text-gray-400 text-sm">设定最小库存s和最大库存S，当库存降至s时订货至S。适合需求波动较大的产品。更灵活但计算复杂。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">📅 定期盘点策略</h5>
+                        <p class="text-gray-400 text-sm">按固定周期T检查库存并订货。适合价值较低、管理成本敏感的产品。不需要实时监控。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-purple-400 font-semibold mb-1">🔄 VMI策略</h5>
+                        <p class="text-gray-400 text-sm">供应商管理库存，由供应商负责补货决策。适合供应链协同紧密的场景。降低买方库存管理负担。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                      <pre class="text-cyan-300">
+import numpy as np
+import pandas as pd
+
+print("=" * 60)
+print("📊 补货策略模拟与比较")
+print("=" * 60)
+
+# 模拟参数
+np.random.seed(42)
+days = 90  # 模拟90天
+avg_demand = 50  # 平均日需求
+std_demand = 10  # 需求标准差
+lead_time = 5    # 提前期
+unit_cost = 100  # 单位成本
+holding_cost_rate = 0.25  # 持有成本率
+order_cost = 200  # 订货成本
+
+# 生成随机需求
+demand = np.maximum(0, np.random.normal(avg_demand, std_demand, days))
+
+# 策略1: (Q,R)策略
+print("\n【策略1: (Q,R)连续盘点策略】")
+# 计算EOQ和再订货点
+Q = int(np.sqrt(2 * avg_demand * 365 * order_cost / (unit_cost * holding_cost_rate)))
+z = 1.65  # 95%服务水平
+ss = z * std_demand * np.sqrt(lead_time)
+R = avg_demand * lead_time + ss
+
+print(f"订货量Q: {Q}单位")
+print(f"再订货点R: {R:.0f}单位")
+print(f"安全库存: {ss:.0f}单位")
+
+# 模拟(Q,R)策略
+inventory_qr = [Q + ss]  # 初始库存
+orders_qr = []
+stockouts_qr = 0
+
+for d in range(days):
+    # 检查是否有订货到达
+    for order in orders_qr[:]:
+        if order['arrival_day'] == d:
+            inventory_qr[-1] += order['quantity']
+            orders_qr.remove(order)
+    
+    # 满足需求
+    if inventory_qr[-1] >= demand[d]:
+        inventory_qr[-1] -= demand[d]
+    else:
+        stockouts_qr += 1
+        inventory_qr[-1] = 0
+    
+    # 检查是否需要订货
+    if inventory_qr[-1] <= R:
+        orders_qr.append({'quantity': Q, 'arrival_day': d + lead_time})
+    
+    inventory_qr.append(inventory_qr[-1])
+
+avg_inv_qr = np.mean(inventory_qr)
+print(f"平均库存: {avg_inv_qr:.0f}单位")
+print(f"缺货天数: {stockouts_qr}天")
+
+# 策略2: 定期盘点策略
+print("\n【策略2: 定期盘点策略（每周检查）】")
+T = 7  # 盘点周期
+s = avg_demand * (T + lead_time) + 1.65 * std_demand * np.sqrt(T + lead_time)  # 最小库存
+S = s + avg_demand * T  # 最大库存
+
+print(f"盘点周期: {T}天")
+print(f"最小库存s: {s:.0f}单位")
+print(f"最大库存S: {S:.0f}单位")
+
+# 模拟定期盘点
+inventory_periodic = [S]
+orders_periodic = []
+stockouts_periodic = 0
+
+for d in range(days):
+    # 检查订货到达
+    for order in orders_periodic[:]:
+        if order['arrival_day'] == d:
+            inventory_periodic[-1] += order['quantity']
+            orders_periodic.remove(order)
+    
+    # 满足需求
+    if inventory_periodic[-1] >= demand[d]:
+        inventory_periodic[-1] -= demand[d]
+    else:
+        stockouts_periodic += 1
+        inventory_periodic[-1] = 0
+    
+    # 定期检查订货
+    if d % T == 0:
+        if inventory_periodic[-1] < s:
+            order_qty = S - inventory_periodic[-1]
+            orders_periodic.append({'quantity': order_qty, 'arrival_day': d + lead_time})
+    
+    inventory_periodic.append(inventory_periodic[-1])
+
+avg_inv_periodic = np.mean(inventory_periodic)
+print(f"平均库存: {avg_inv_periodic:.0f}单位")
+print(f"缺货天数: {stockouts_periodic}天")
+
+# 策略比较
+print("\n【策略比较】")
+comparison = pd.DataFrame({
+    '指标': ['平均库存', '库存成本/天', '缺货天数', '服务水平'],
+    '(Q,R)策略': [f'{avg_inv_qr:.0f}单位', f'{avg_inv_qr * unit_cost * holding_cost_rate / 365:.0f}元',
+                f'{stockouts_qr}天', f'{(days-stockouts_qr)/days*100:.1f}%'],
+    '定期盘点': [f'{avg_inv_periodic:.0f}单位', f'{avg_inv_periodic * unit_cost * holding_cost_rate / 365:.0f}元',
+                f'{stockouts_periodic}天', f'{(days-stockouts_periodic)/days*100:.1f}%']
+})
+print(comparison.to_string(index=False))
+
+# 策略选择建议
+print("\n【策略选择建议】")
+print("• (Q,R)策略: 适合A类产品、需求稳定、实时监控能力强的场景")
+print("• 定期盘点: 适合B、C类产品、管理成本敏感、无需实时监控的场景")
+print("• (s,S)策略: 适合需求波动大、需要灵活应对的场景")
+print("• VMI策略: 适合供应链协同紧密、供应商能力强的场景")
+                      </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-purple-900 bg-opacity-20 rounded-lg border border-purple-700">
+                      <h5 class="text-purple-400 font-semibold mb-2">💡 补货策略选择指南</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>产品价值：</strong>高价值产品用连续盘点，低价值用定期盘点</li>
+                        <li>• <strong>需求特性：</strong>稳定需求用(Q,R)，波动需求用(s,S)</li>
+                        <li>• <strong>管理能力：</strong>考虑信息系统支持和管理成本</li>
+                        <li>• <strong>供应链协同：</strong>紧密协同可考虑VMI等高级策略</li>
+                      </ul>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- 模块4：物流网络分析 -->
-            <div id="logistics-network" class="knowledge-section hidden">
+            <!-- 模块4：供应商评估 -->
+            <div id="supplier-evaluation" class="knowledge-section hidden">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-truck"></i> 模块4：物流网络分析（12学时）
+                  <i class="fa fa-users"></i> 模块4：供应商评估（10学时）
+                </h3>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <!-- 供应商评估指标体系 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-tachometer text-cyan-400"></i> 供应商评估指标体系
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">供应商评估是供应链管理的关键环节，直接影响采购质量、成本和交付绩效。建立科学的评估指标体系是供应商管理的基础。评估指标应涵盖质量、成本、交付、服务、技术能力等多个维度，并根据采购物资的重要性和特点设置不同的权重。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📊 质量指标</h5>
+                        <p class="text-gray-400 text-sm">来料合格率、质量体系认证、质量改进能力、质量问题响应速度。权重通常占25-35%。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">💰 成本指标</h5>
+                        <p class="text-gray-400 text-sm">价格竞争力、成本下降能力、付款条件、总拥有成本。权重通常占20-30%。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">🚚 交付指标</h5>
+                        <p class="text-gray-400 text-sm">准时交货率、交货周期、订单满足率、紧急订单响应能力。权重通常占20-25%。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-purple-400 font-semibold mb-1">🤝 服务指标</h5>
+                        <p class="text-gray-400 text-sm">沟通响应速度、技术支持能力、问题解决能力、合作态度。权重通常占10-20%。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                      <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+
+print("=" * 60)
+print("📊 供应商综合评估指标体系")
+print("=" * 60)
+
+# 定义评估指标体系
+evaluation_framework = pd.DataFrame({
+    '维度': ['质量', '质量', '质量', '成本', '成本', '交付', '交付', '交付', '服务', '服务'],
+    '指标': ['来料合格率', '质量体系认证', '质量改进能力', '价格竞争力', '成本下降率',
+            '准时交货率', '交货周期', '订单满足率', '响应速度', '技术支持'],
+    '权重': [0.15, 0.05, 0.05, 0.15, 0.10, 0.15, 0.05, 0.10, 0.10, 0.10],
+    '评分标准': ['合格批次/总批次×100%', 'ISO认证等级评分', '年度改进项目数',
+               '与市场均价比较', '年度成本下降百分比', '准时批次/总批次×100%',
+               '标准交货天数', '满足订单/总订单×100%', '响应时间评分', '技术支持评分'],
+    '数据来源': ['质检记录', '认证证书', '供应商报告', '采购系统', '财务数据',
+               '物流系统', '采购系统', '订单系统', '沟通记录', '技术评估']
+})
+
+# 按维度汇总权重
+dimension_weights = evaluation_framework.groupby('维度')['权重'].sum()
+print("\n【评估维度权重分配】")
+for dim, weight in dimension_weights.items():
+    bar = "█" * int(weight * 50)
+    print(f"  {dim}: {bar} {weight*100:.0f}%")
+
+print("\n【详细指标列表】")
+print(evaluation_framework[['维度', '指标', '权重', '评分标准']].to_string(index=False))
+
+# 不同类型物料的权重调整
+print("\n【不同物料类型的权重调整】")
+material_weights = pd.DataFrame({
+    '物料类型': ['战略物料', '瓶颈物料', '杠杆物料', '常规物料'],
+    '质量权重': ['35%', '30%', '20%', '15%'],
+    '成本权重': ['20%', '25%', '35%', '40%'],
+    '交付权重': ['25%', '35%', '25%', '25%'],
+    '服务权重': ['20%', '10%', '20%', '20%'],
+    '评估重点': ['技术能力、长期合作', '供应稳定性、风险控制', 
+                '价格竞争力、成本优化', '标准化、简化管理']
+})
+print(material_weights.to_string(index=False))
+
+# 评估周期建议
+print("\n【评估周期建议】")
+evaluation_cycle = {
+    '战略供应商': '月度评估 + 年度综合评审',
+    '重要供应商': '季度评估 + 年度综合评审',
+    '一般供应商': '半年度评估 + 年度综合评审',
+    '新供应商': '月度评估（前6个月）+ 季度评估'
+}
+for supplier_type, cycle in evaluation_cycle.items():
+    print(f"  {supplier_type}: {cycle}")
+                      </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-cyan-900 bg-opacity-20 rounded-lg border border-cyan-700">
+                      <h5 class="text-cyan-400 font-semibold mb-2">💡 指标设计要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>SMART原则：</strong>指标要具体、可衡量、可达成、相关、有时限</li>
+                        <li>• <strong>平衡性：</strong>兼顾短期绩效和长期发展能力</li>
+                        <li>• <strong>差异化：</strong>根据物料类型和供应商级别调整权重</li>
+                        <li>• <strong>可操作性：</strong>数据来源可靠，评分标准明确</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- 供应商评分方法 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-calculator text-emerald-400"></i> 供应商评分方法与模型
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">供应商评分是将各维度指标综合成整体评价的过程。常用方法包括线性加权法、层次分析法(AHP)、TOPSIS法、模糊综合评价法等。选择合适的评分方法需要考虑评估目的、数据特点和决策需求。科学的评分方法能够客观反映供应商的综合能力。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📐 线性加权法</h5>
+                        <p class="text-gray-400 text-sm">最常用的方法，简单直观。总分 = Σ(指标得分 × 权重)。适合指标独立、线性关系的场景。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📊 AHP层次分析法</h5>
+                        <p class="text-gray-400 text-sm">通过两两比较确定权重，适合复杂决策。需要一致性检验，确保判断逻辑一致。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">🎯 TOPSIS法</h5>
+                        <p class="text-gray-400 text-sm">计算与理想解的距离，适合多方案排序。能够处理量纲不一致的问题。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                      <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+
+print("=" * 60)
+print("📊 供应商综合评分系统")
+print("=" * 60)
+
+# 供应商评分数据
+suppliers = pd.DataFrame({
+    '供应商': ['供应商A', '供应商B', '供应商C', '供应商D', '供应商E'],
+    '来料合格率': [98.5, 95.2, 99.1, 92.8, 96.5],
+    '价格竞争力': [88, 95, 82, 92, 90],
+    '准时交货率': [96.8, 92.5, 98.2, 88.5, 94.5],
+    '交货周期_天': [7, 10, 5, 14, 8],
+    '服务响应': [90, 85, 95, 80, 88],
+    '技术能力': [85, 90, 92, 78, 85]
+})
+
+# 定义权重
+weights = {
+    '来料合格率': 0.20,
+    '价格竞争力': 0.20,
+    '准时交货率': 0.20,
+    '交货周期_天': 0.15,
+    '服务响应': 0.15,
+    '技术能力': 0.10
+}
+
+# 数据标准化处理
+print("\n【原始数据】")
+print(suppliers.to_string(index=False))
+
+# 计算标准化得分（0-100分）
+suppliers_scored = suppliers.copy()
+
+# 正向指标（越高越好）
+for col in ['来料合格率', '价格竞争力', '准时交货率', '服务响应', '技术能力']:
+    max_val = suppliers[col].max()
+    min_val = suppliers[col].min()
+    suppliers_scored[col + '_得分'] = (suppliers[col] - min_val) / (max_val - min_val) * 100
+
+# 反向指标（越低越好）
+col = '交货周期_天'
+max_val = suppliers[col].max()
+min_val = suppliers[col].min()
+suppliers_scored[col + '_得分'] = (max_val - suppliers[col]) / (max_val - min_val) * 100
+
+# 计算加权总分
+score_cols = [col + '_得分' for col in weights.keys()]
+suppliers_scored['综合得分'] = sum(
+    suppliers_scored[col + '_得分'] * weight 
+    for col, weight in weights.items()
+)
+
+# 排名
+suppliers_scored['排名'] = suppliers_scored['综合得分'].rank(ascending=False).astype(int)
+suppliers_scored = suppliers_scored.sort_values('排名')
+
+print("\n【综合评分结果】")
+result = suppliers_scored[['供应商', '综合得分', '排名']].round(1)
+print(result.to_string(index=False))
+
+# 供应商分级
+def grade_supplier(score):
+    if score >= 85:
+        return 'A级（优秀）'
+    elif score >= 70:
+        return 'B级（良好）'
+    elif score >= 60:
+        return 'C级（合格）'
+    else:
+        return 'D级（需改进）'
+
+suppliers_scored['等级'] = suppliers_scored['综合得分'].apply(grade_supplier)
+
+print("\n【供应商分级结果】")
+for _, row in suppliers_scored.iterrows():
+    print(f"  {row['供应商']}: {row['综合得分']:.1f}分 - {row['等级']}")
+
+# 各维度雷达图数据
+print("\n【各供应商维度得分对比】")
+for _, row in suppliers_scored.iterrows():
+    print(f"\n{row['供应商']}:")
+    for col in ['来料合格率', '价格竞争力', '准时交货率', '服务响应', '技术能力']:
+        score = row[col + '_得分']
+        bar = "█" * int(score / 5)
+        print(f"  {col}: {bar} {score:.0f}分")
+                      </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-emerald-900 bg-opacity-20 rounded-lg border border-emerald-700">
+                      <h5 class="text-emerald-400 font-semibold mb-2">💡 评分方法要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>数据标准化：</strong>不同量纲的指标需要标准化处理</li>
+                        <li>• <strong>权重确定：</strong>结合专家意见和数据驱动方法</li>
+                        <li>• <strong>定期更新：</strong>根据业务变化调整指标和权重</li>
+                        <li>• <strong>结果应用：</strong>评分结果与采购决策挂钩</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- 供应商风险评估 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-exclamation-triangle text-red-400"></i> 供应商风险评估
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">供应商风险评估是识别、分析和应对供应商相关风险的过程。主要风险包括供应中断风险、质量风险、财务风险、合规风险等。建立完善的风险评估体系，能够帮助企业提前预警并采取防范措施，确保供应链的稳定性和连续性。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-red-400 font-semibold mb-1">⚠️ 供应中断风险</h5>
+                        <p class="text-gray-400 text-sm">产能不足、设备故障、原材料短缺、自然灾害等导致的供应中断。影响最大，需重点关注。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📉 财务风险</h5>
+                        <p class="text-gray-400 text-sm">供应商财务状况恶化、破产风险、资金链断裂。可能导致供应中断或质量问题。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">📋 合规风险</h5>
+                        <p class="text-gray-400 text-sm">环保合规、劳动法规、行业资质等合规问题。可能导致供应中断或声誉损失。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                      <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+
+print("=" * 60)
+print("📊 供应商风险评估系统")
+print("=" * 60)
+
+# 供应商风险评估数据
+supplier_risks = pd.DataFrame({
+    '供应商': ['供应商A', '供应商B', '供应商C', '供应商D', '供应商E'],
+    '供应占比_%': [45, 25, 15, 10, 5],
+    '替代难度': [5, 3, 4, 2, 1],  # 1-5分，5最难替代
+    '财务健康度': [85, 70, 90, 60, 75],
+    '质量稳定性': [95, 88, 98, 82, 90],
+    '交付可靠性': [92, 85, 96, 78, 88],
+    '合规风险': [1, 2, 1, 3, 2],  # 1-5分，5为高风险
+    '地理风险': [2, 3, 1, 4, 2]   # 1-5分，5为高风险
+})
+
+# 计算风险得分
+# 供应集中度风险（供应占比越高风险越大）
+supplier_risks['集中度风险'] = supplier_risks['供应占比_%'] / 100 * 100
+
+# 替代风险（越难替代风险越高）
+supplier_risks['替代风险'] = supplier_risks['替代难度'] * 20
+
+# 财务风险（财务健康度越低风险越高）
+supplier_risks['财务风险'] = (100 - supplier_risks['财务健康度'])
+
+# 质量风险
+supplier_risks['质量风险'] = (100 - supplier_risks['质量稳定性'])
+
+# 交付风险
+supplier_risks['交付风险'] = (100 - supplier_risks['交付可靠性'])
+
+# 合规风险
+supplier_risks['合规风险得分'] = supplier_risks['合规风险'] * 20
+
+# 地理风险
+supplier_risks['地理风险得分'] = supplier_risks['地理风险'] * 20
+
+# 综合风险得分（加权平均）
+risk_weights = {
+    '集中度风险': 0.20,
+    '替代风险': 0.15,
+    '财务风险': 0.20,
+    '质量风险': 0.15,
+    '交付风险': 0.10,
+    '合规风险得分': 0.10,
+    '地理风险得分': 0.10
+}
+
+supplier_risks['综合风险得分'] = sum(
+    supplier_risks[col] * weight for col, weight in risk_weights.items()
+)
+
+# 风险等级划分
+def risk_level(score):
+    if score >= 60:
+        return '高风险 ⚠️'
+    elif score >= 40:
+        return '中风险 ⚡'
+    else:
+        return '低风险 ✅'
+
+supplier_risks['风险等级'] = supplier_risks['综合风险得分'].apply(risk_level)
+
+# 排序显示
+supplier_risks_sorted = supplier_risks.sort_values('综合风险得分', ascending=False)
+
+print("\n【供应商风险评估结果】")
+print(supplier_risks_sorted[['供应商', '供应占比_%', '综合风险得分', '风险等级']].round(1).to_string(index=False))
+
+# 风险矩阵分析
+print("\n【风险矩阵分析】")
+print("影响程度 ↑")
+print("    高 │    ⚠️ A(高占比)              ")
+print("       │         ⚡ B                 ")
+print("    中 │              ⚡ C            ")
+print("       │         ⚡ E    ✅ D        ")
+print("    低 │                            ")
+print("       └─────────────────────────→ 发生概率")
+print("         低        中        高     ")
+
+# 风险应对建议
+print("\n【风险应对建议】")
+for _, row in supplier_risks_sorted.iterrows():
+    print(f"\n{row['供应商']} (风险得分: {row['综合风险得分']:.1f}):")
+    if row['供应占比_%'] > 30:
+        print("  ⚠️ 供应集中度过高，建议开发备选供应商")
+    if row['替代难度'] >= 4:
+        print("  ⚠️ 替代难度大，建议建立战略合作关系")
+    if row['财务健康度'] < 70:
+        print("  ⚠️ 财务状况需关注，建议定期监控")
+    if row['合规风险'] >= 3:
+        print("  ⚠️ 合规风险较高，建议进行现场审核")
+                      </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-red-900 bg-opacity-20 rounded-lg border border-red-700">
+                      <h5 class="text-red-400 font-semibold mb-2">💡 风险管理要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>定期评估：</strong>建立定期风险评估机制，及时发现问题</li>
+                        <li>• <strong>多源供应：</strong>避免过度依赖单一供应商</li>
+                        <li>• <strong>预警机制：</strong>建立风险预警指标和响应流程</li>
+                        <li>• <strong>应急预案：</strong>制定供应中断的应急预案</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- 供应商选择模型 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-check-circle text-yellow-400"></i> 供应商选择模型与决策
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">供应商选择是采购决策的核心环节，需要综合考虑成本、质量、交付、服务等多个因素。常用的选择模型包括线性加权模型、总拥有成本(TCO)模型、多目标优化模型等。科学的供应商选择能够优化采购绩效，降低供应链风险。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">💵 TCO总拥有成本</h5>
+                        <p class="text-gray-400 text-sm">考虑采购成本、使用成本、维护成本、处置成本的全生命周期成本。适合设备类采购。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">⚖️ 多目标优化</h5>
+                        <p class="text-gray-400 text-sm">在成本、质量、交付等多个目标间寻求最优平衡。适合复杂采购决策。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">📊 配额分配模型</h5>
+                        <p class="text-gray-400 text-sm">在多供应商间分配采购量，平衡风险和成本。适合常规物料的采购分配。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                      <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+
+print("=" * 60)
+print("📊 供应商选择与配额分配模型")
+print("=" * 60)
+
+# 供应商选择场景
+suppliers = pd.DataFrame({
+    '供应商': ['供应商A', '供应商B', '供应商C'],
+    '报价': [100, 105, 98],
+    '质量得分': [90, 95, 85],
+    '交货周期_天': [7, 5, 10],
+    '产能': [5000, 4000, 6000],
+    '最小订单量': [500, 300, 800],
+    '历史绩效': [92, 88, 85]
+})
+
+print("\n【供应商基本信息】")
+print(suppliers.to_string(index=False))
+
+# TCO计算示例
+print("\n【TCO总拥有成本分析】")
+tco_factors = pd.DataFrame({
+    '成本项目': ['采购价格', '运输成本', '检验成本', '质量损失成本', '库存持有成本'],
+    '供应商A': [100, 5, 2, 3, 4],
+    '供应商B': [105, 3, 1, 2, 3],
+    '供应商C': [98, 8, 3, 5, 6]
+})
+tco_factors['供应商A'] = tco_factors['供应商A'].astype(int)
+tco_factors['供应商B'] = tco_factors['供应商B'].astype(int)
+tco_factors['供应商C'] = tco_factors['供应商C'].astype(int)
+tco_factors['TCO'] = tco_factors[['供应商A', '供应商B', '供应商C']].sum(axis=1)
+
+print(tco_factors.to_string(index=False))
+
+tco_total = pd.DataFrame({
+    '供应商': ['供应商A', '供应商B', '供应商C'],
+    'TCO': [tco_factors['供应商A'].sum(), tco_factors['供应商B'].sum(), tco_factors['供应商C'].sum()]
+})
+print(f"\nTCO排序: {tco_total.sort_values('TCO')['供应商'].tolist()}")
+
+# 配额分配模型
+print("\n" + "=" * 60)
+print("📊 采购配额分配模型")
+print("=" * 60)
+
+total_demand = 10000  # 总需求量
+
+# 方法1: 按综合得分分配
+suppliers['综合得分'] = (
+    suppliers['质量得分'] * 0.30 +
+    (100 - suppliers['报价'] + suppliers['报价'].min()) * 0.25 +
+    suppliers['历史绩效'] * 0.25 +
+    (suppliers['交货周期_天'].max() - suppliers['交货周期_天']) / suppliers['交货周期_天'].max() * 100 * 0.20
+)
+
+suppliers['分配比例'] = suppliers['综合得分'] / suppliers['综合得分'].sum()
+suppliers['分配数量'] = (suppliers['分配比例'] * total_demand).astype(int)
+
+print("\n【方法1: 按综合得分分配】")
+for _, row in suppliers.iterrows():
+    print(f"  {row['供应商']}: {row['分配数量']}单位 ({row['分配比例']*100:.1f}%)")
+
+# 方法2: 考虑产能约束和最小订单量
+print("\n【方法2: 约束优化分配】")
+from scipy.optimize import linprog
+
+# 目标函数：最小化总成本
+c = suppliers['报价'].values
+
+# 约束条件
+# 1. 总需求满足
+# 2. 不超过产能
+# 3. 不低于最小订单量
+
+print(f"  总需求: {total_demand}单位")
+print(f"  总产能: {suppliers['产能'].sum()}单位")
+print(f"  最小订单量约束: {suppliers['最小订单量'].tolist()}")
+
+# 简化分配（考虑约束）
+allocation = []
+remaining = total_demand
+for i, row in suppliers.sort_values('报价').iterrows():
+    max_alloc = min(row['产能'], remaining)
+    min_alloc = row['最小订单量']
+    if remaining >= min_alloc:
+        alloc = min(max_alloc, remaining)
+        allocation.append({'供应商': row['供应商'], '分配': alloc})
+        remaining -= alloc
+
+print("\n【成本最优分配结果】")
+for a in allocation:
+    print(f"  {a['供应商']}: {a['分配']}单位")
+
+# 供应商组合策略建议
+print("\n【供应商组合策略建议】")
+print("  • 主供应商: 综合得分最高，分配60-70%份额")
+print("  • 备选供应商: 保持合作关系，分配20-30%份额")
+print("  • 新供应商: 培育阶段，分配10-20%份额")
+print("  • 定期评估调整配额，激励供应商持续改进")
+                      </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-yellow-900 bg-opacity-20 rounded-lg border border-yellow-700">
+                      <h5 class="text-yellow-400 font-semibold mb-2">💡 选择决策要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>多维度评估：</strong>不只看价格，综合考虑质量、交付、服务</li>
+                        <li>• <strong>长期视角：</strong>考虑供应商的发展潜力和合作意愿</li>
+                        <li>• <strong>风险分散：</strong>避免过度依赖单一供应商</li>
+                        <li>• <strong>动态调整：</strong>根据绩效表现定期调整配额</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- 供应商绩效监控 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700 md:col-span-2">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-line-chart text-purple-400"></i> 供应商绩效监控与改进
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">供应商绩效监控是持续改进供应商表现的重要手段。通过建立完善的绩效监控体系，定期跟踪关键指标，及时发现问题并推动改进。绩效监控应包括数据采集、指标计算、趋势分析、问题诊断和改进跟踪等环节。</p>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                      <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+
+print("=" * 60)
+print("📊 供应商绩效监控仪表板")
+print("=" * 60)
+
+# 模拟12个月的绩效数据
+np.random.seed(42)
+months = pd.date_range('2023-01', periods=12, freq='M')
+
+performance_data = []
+suppliers = ['供应商A', '供应商B', '供应商C']
+
+for supplier in suppliers:
+    base_quality = {'供应商A': 96, '供应商B': 92, '供应商C': 94}[supplier]
+    base_delivery = {'供应商A': 95, '供应商B': 88, '供应商C': 93}[supplier]
+    
+    for i, month in enumerate(months):
+        performance_data.append({
+            '供应商': supplier,
+            '月份': month,
+            '来料合格率': base_quality + np.random.uniform(-2, 2),
+            '准时交货率': base_delivery + np.random.uniform(-3, 3),
+            '投诉次数': np.random.randint(0, 3),
+            '响应时间_小时': np.random.uniform(2, 8)
+        })
+
+df = pd.DataFrame(performance_data)
+
+# 绩效趋势分析
+print("\n【各供应商绩效趋势】")
+for supplier in suppliers:
+    supplier_df = df[df['供应商'] == supplier]
+    print(f"\n{supplier}:")
+    print(f"  平均来料合格率: {supplier_df['来料合格率'].mean():.1f}%")
+    print(f"  平均准时交货率: {supplier_df['准时交货率'].mean():.1f}%")
+    print(f"  总投诉次数: {supplier_df['投诉次数'].sum()}")
+    print(f"  平均响应时间: {supplier_df['响应时间_小时'].mean():.1f}小时")
+    
+    # 趋势判断
+    quality_trend = supplier_df['来料合格率'].iloc[-3:].mean() - supplier_df['来料合格率'].iloc[:3].mean()
+    if quality_trend > 1:
+        print(f"  质量趋势: 📈 上升 (+{quality_trend:.1f}%)")
+    elif quality_trend < -1:
+        print(f"  质量趋势: 📉 下降 ({quality_trend:.1f}%)")
+    else:
+        print(f"  质量趋势: ➡️ 稳定")
+
+# 绩效预警
+print("\n【绩效预警】")
+warning_thresholds = {
+    '来料合格率': 95,
+    '准时交货率': 90,
+    '响应时间_小时': 6
+}
+
+for supplier in suppliers:
+    supplier_df = df[df['供应商'] == supplier]
+    warnings = []
+    
+    if supplier_df['来料合格率'].iloc[-1] < warning_thresholds['来料合格率']:
+        warnings.append(f"来料合格率低于{warning_thresholds['来料合格率']}%")
+    if supplier_df['准时交货率'].iloc[-1] < warning_thresholds['准时交货率']:
+        warnings.append(f"准时交货率低于{warning_thresholds['准时交货率']}%")
+    if supplier_df['响应时间_小时'].iloc[-1] > warning_thresholds['响应时间_小时']:
+        warnings.append(f"响应时间超过{warning_thresholds['响应时间_小时']}小时")
+    
+    if warnings:
+        print(f"\n⚠️ {supplier}:")
+        for w in warnings:
+            print(f"    - {w}")
+    else:
+        print(f"\n✅ {supplier}: 绩效正常")
+
+# 改进建议
+print("\n【改进建议】")
+for supplier in suppliers:
+    supplier_df = df[df['供应商'] == supplier]
+    print(f"\n{supplier}:")
+    
+    if supplier_df['来料合格率'].mean() < 95:
+        print("  • 建议加强来料检验，推动质量改进")
+    if supplier_df['准时交货率'].mean() < 90:
+        print("  • 建议优化交货计划，增加安全库存")
+    if supplier_df['投诉次数'].sum() > 5:
+        print("  • 建议召开质量会议，分析投诉根因")
+    if supplier_df['响应时间_小时'].mean() > 5:
+        print("  • 建议建立快速响应机制")
+
+# 绩效改进跟踪
+print("\n【绩效改进跟踪表】")
+improvement_tracking = pd.DataFrame({
+    '供应商': ['供应商A', '供应商B', '供应商C'],
+    '改进项目': ['质量稳定性提升', '交货准时率改进', '响应速度优化'],
+    '目标值': ['≥97%', '≥95%', '≤4小时'],
+    '当前值': ['96.2%', '91.5%', '4.8小时'],
+    '差距': ['0.8pp', '3.5pp', '0.8小时'],
+    '预计完成': ['2024-03', '2024-04', '2024-02'],
+    '状态': ['进行中', '进行中', '即将完成']
+})
+print(improvement_tracking.to_string(index=False))
+                      </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-purple-900 bg-opacity-20 rounded-lg border border-purple-700">
+                      <h5 class="text-purple-400 font-semibold mb-2">💡 绩效监控要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>实时监控：</strong>建立实时数据采集和监控机制</li>
+                        <li>• <strong>预警机制：</strong>设置预警阈值，及时发现问题</li>
+                        <li>• <strong>趋势分析：</strong>关注绩效趋势，预防潜在问题</li>
+                        <li>• <strong>闭环改进：</strong>发现问题后推动改进并跟踪效果</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 模块5：物流优化 -->
+            <div id="logistics-optimization" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-truck"></i> 模块5：物流优化（12学时）
                 </h3>
 
                 <div class="grid md:grid-cols-2 gap-6">
                   <!-- 物流网络设计 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-sitemap text-cyan-400"></i> 物流网络设计
+                      <i class="fa fa-sitemap text-cyan-400"></i> 物流网络设计与优化
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">物流网络设计包括确定设施数量、位置、规模和职责。目标是在服务水平约束下最小化总成本。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">物流网络设计是供应链战略决策的核心内容，决定了物流设施的数量、位置、规模和职责。优秀的物流网络设计能够在满足服务水平的前提下，最小化总物流成本。需要综合考虑运输成本、仓储成本、库存成本、设施成本等多个因素。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">🏭 设施选址</h5>
+                        <p class="text-gray-400 text-sm">确定工厂、配送中心、仓库的位置。常用方法：重心法、P-中值模型、覆盖模型。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📊 网络结构</h5>
+                        <p class="text-gray-400 text-sm">直发模式、中心仓模式、区域仓模式、前置仓模式。不同模式适合不同业务场景。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">⚖️ 成本权衡</h5>
+                        <p class="text-gray-400 text-sm">设施成本与运输成本的权衡。设施越多运输成本越低，但设施成本增加。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
                       <pre class="text-cyan-300">
 import pandas as pd
 import numpy as np
 
+print("=" * 60)
+print("📊 物流网络优化分析")
+print("=" * 60)
+
 # 物流网络成本分析
 facilities = pd.DataFrame({
-    '设施': ['工厂', 'RDC_东', 'RDC_西', 'RDC_南', 'RDC_北'],
-    '固定成本_万': [500, 80, 80, 80, 80],
-    '处理能力_万件': [100, 30, 30, 30, 30],
-    '当前处理量_万件': [100, 25, 20, 28, 27]
+    '设施': ['中央工厂', 'RDC_华东', 'RDC_华南', 'RDC_华北', 'RDC_西部'],
+    '固定成本_万': [500, 100, 100, 100, 80],
+    '处理能力_万件': [150, 40, 40, 40, 30],
+    '当前处理量_万件': [150, 35, 32, 38, 25],
+    '利用率_%': [100, 87.5, 80, 95, 83.3]
 })
 
-# 运输成本矩阵（简化示例）
-transport_cost = pd.DataFrame({
-    '起点': ['工厂', '工厂', '工厂', '工厂'],
-    '终点': ['RDC_东', 'RDC_西', 'RDC_南', 'RDC_北'],
-    '距离_km': [500, 800, 600, 700],
-    '运输量_万件': [25, 20, 28, 27],
-    '单位成本': [0.5, 0.5, 0.5, 0.5]
+print("\n【物流设施分析】")
+print(facilities.to_string(index=False))
+
+# 运输成本矩阵
+transport_data = pd.DataFrame({
+    '起点': ['中央工厂'] * 4,
+    '终点': ['RDC_华东', 'RDC_华南', 'RDC_华北', 'RDC_西部'],
+    '距离_km': [300, 800, 500, 1200],
+    '运输量_万件': [35, 32, 38, 25],
+    '单位运输成本': [0.08, 0.08, 0.08, 0.08]
 })
 
-transport_cost['运输成本_万'] = transport_cost['距离_km'] * \
-                               transport_cost['运输量_万件'] * \
-                               transport_cost['单位成本'] / 1000
+transport_data['运输成本_万'] = (transport_data['距离_km'] * 
+                               transport_data['运输量_万件'] * 
+                               transport_data['单位运输成本'])
 
-print("=== 物流网络设施分析 ===")
-print(facilities[['设施', '固定成本_万', '处理能力_万件', '当前处理量_万件']])
+print("\n【干线运输成本】")
+print(transport_data[['起点', '终点', '距离_km', '运输量_万件', '运输成本_万']].to_string(index=False))
 
-print("\n=== 运输成本分析 ===")
-print(transport_cost[['起点', '终点', '运输成本_万']])
-
+# 总成本分析
 total_fixed = facilities['固定成本_万'].sum()
-total_transport = transport_cost['运输成本_万'].sum()
-print(f"\n总固定成本: {total_fixed}万元")
-print(f"总运输成本: {total_transport:.1f}万元")
-print(f"总物流成本: {total_fixed + total_transport:.1f}万元")
+total_transport = transport_data['运输成本_万'].sum()
+total_cost = total_fixed + total_transport
+
+print(f"\n【总成本分析】")
+print(f"  固定成本: {total_fixed}万元")
+print(f"  干线运输成本: {total_transport:.1f}万元")
+print(f"  总物流成本: {total_cost:.1f}万元")
+
+# 网络优化场景分析
+print("\n【网络优化场景分析】")
+scenarios = pd.DataFrame({
+    '场景': ['当前网络', '增加RDC', '减少RDC', '直发模式'],
+    '设施数量': [5, 6, 4, 2],
+    '固定成本_万': [880, 980, 780, 580],
+    '运输成本_万': [194, 170, 230, 350],
+    '总成本_万': [1074, 1150, 1010, 930],
+    '平均交付时间_天': [2.5, 2.0, 3.0, 4.5]
+})
+print(scenarios.to_string(index=False))
+
+# 最优方案推荐
+print("\n【优化建议】")
+min_cost_scenario = scenarios.loc[scenarios['总成本_万'].idxmin()]
+print(f"  成本最优: {min_cost_scenario['场景']} (总成本{min_cost_scenario['总成本_万']}万元)")
+print(f"  但需考虑服务水平: 平均交付时间{min_cost_scenario['平均交付时间_天']}天")
+
+# 敏感性分析
+print("\n【敏感性分析】")
+print("  运输成本增加20%时:")
+for _, row in scenarios.iterrows():
+    new_total = row['固定成本_万'] + row['运输成本_万'] * 1.2
+    print(f"    {row['场景']}: {new_total:.0f}万元 (+{(new_total-row['总成本_万'])/row['总成本_万']*100:.1f}%)")
                       </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-cyan-900 bg-opacity-20 rounded-lg border border-cyan-700">
+                      <h5 class="text-cyan-400 font-semibold mb-2">💡 网络设计要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>服务优先：</strong>网络设计首先要满足服务水平要求</li>
+                        <li>• <strong>成本权衡：</strong>在设施成本和运输成本间找平衡</li>
+                        <li>• <strong>弹性设计：</strong>考虑需求波动和未来发展空间</li>
+                        <li>• <strong>定期评估：</strong>根据业务变化定期优化网络结构</li>
+                      </ul>
                     </div>
                   </div>
 
@@ -1307,20 +3284,44 @@ print(f"总物流成本: {total_fixed + total_transport:.1f}万元")
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-route text-emerald-400"></i> 运输路径优化
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">车辆路径问题(VRP)是物流优化的核心问题，目标是最小化运输距离或成本，同时满足容量和时间约束。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">运输路径优化是物流运营的核心环节，直接影响运输成本和交付效率。车辆路径问题(VRP)是最经典的优化问题，目标是在满足容量、时间窗等约束条件下，最小化运输距离或成本。常用的求解方法包括精确算法、启发式算法和元启发式算法。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">🚚 VRP问题</h5>
+                        <p class="text-gray-400 text-sm">车辆路径问题：确定车辆访问客户的顺序，满足容量约束，最小化总距离。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">⏰ 时间窗约束</h5>
+                        <p class="text-gray-400 text-sm">客户有指定的收货时间窗，需要在时间窗内送达。增加了问题的复杂度。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">🔧 求解方法</h5>
+                        <p class="text-gray-400 text-sm">精确算法（小规模）、节约法、最近邻法、遗传算法、模拟退火等。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
                       <pre class="text-cyan-300">
 import numpy as np
 import pandas as pd
 
-# 简化的车辆路径问题
-# 客户位置和需求
+print("=" * 60)
+print("📊 车辆路径优化（VRP）")
+print("=" * 60)
+
+# 客户数据
 customers = pd.DataFrame({
-    '客户': ['仓库', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6'],
-    'X坐标': [0, 10, 15, 20, 35, 30, 5],
-    'Y坐标': [0, 20, 25, 10, 15, 5, 30],
-    '需求量': [0, 20, 15, 25, 30, 18, 22]
+    '客户': ['仓库', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8'],
+    'X坐标': [0, 10, 15, 20, 35, 30, 5, 25, 40],
+    'Y坐标': [0, 20, 25, 10, 15, 5, 30, 35, 10],
+    '需求量': [0, 15, 18, 20, 25, 12, 16, 22, 14],
+    '时间窗_start': [0, 8, 9, 8, 10, 9, 8, 10, 11],
+    '时间窗_end': [18, 12, 13, 11, 14, 12, 11, 14, 15]
 })
+
+print("\n【客户信息】")
+print(customers[['客户', '需求量', '时间窗_start', '时间窗_end']].to_string(index=False))
 
 # 计算距离矩阵
 def calc_distance(p1, p2):
@@ -1335,59 +3336,115 @@ for i in range(n):
             (customers.iloc[j]['X坐标'], customers.iloc[j]['Y坐标'])
         )
 
-print("=== 距离矩阵（部分） ===")
-print(f"仓库到各客户距离: {dist_matrix[0, 1:].round(1)}")
+# 节约算法（Clarke-Wright）
+print("\n【节约算法求解】")
 
-# 最近邻启发式算法
-def nearest_neighbor(dist_matrix, demands, capacity):
+# 计算节约值
+savings = []
+for i in range(1, n):
+    for j in range(i+1, n):
+        saving = dist_matrix[0,i] + dist_matrix[0,j] - dist_matrix[i,j]
+        savings.append({
+            '客户对': f"C{i}-C{j}",
+            '节约值': saving
+        })
+
+savings_df = pd.DataFrame(savings).sort_values('节约值', ascending=False)
+print("\n节约值排序（前5）:")
+print(savings_df.head().to_string(index=False))
+
+# 最近邻启发式求解
+def nearest_neighbor_vrp(dist_matrix, demands, capacity):
     n = len(demands)
-    visited = [0]  # 从仓库出发
-    route = [0]
+    routes = []
     remaining = list(range(1, n))
-    current_load = 0
     
     while remaining:
-        current = route[-1]
-        nearest = min(remaining, key=lambda x: dist_matrix[current][x])
-        if current_load + demands[nearest] <= capacity:
+        route = [0]  # 从仓库出发
+        current_load = 0
+        
+        while remaining:
+            current = route[-1]
+            # 找最近的未访问客户
+            feasible = [c for c in remaining if current_load + demands[c] <= capacity]
+            if not feasible:
+                break
+            
+            nearest = min(feasible, key=lambda x: dist_matrix[current][x])
             route.append(nearest)
             current_load += demands[nearest]
             remaining.remove(nearest)
-        else:
-            route.append(0)  # 返回仓库
-            current_load = 0
+        
+        route.append(0)  # 返回仓库
+        routes.append(route)
     
-    route.append(0)  # 最终返回仓库
-    return route
+    return routes
 
-vehicle_capacity = 60
-route = nearest_neighbor(dist_matrix, customers['需求量'].values, vehicle_capacity)
-print(f"\n推荐路线: {' -> '.join([customers.iloc[i]['客户'] for i in route])}")
+vehicle_capacity = 50
+routes = nearest_neighbor_vrp(dist_matrix, customers['需求量'].values, vehicle_capacity)
+
+print("\n【优化路线方案】")
+total_distance = 0
+for i, route in enumerate(routes, 1):
+    route_distance = sum(dist_matrix[route[j], route[j+1]] for j in range(len(route)-1))
+    total_distance += route_distance
+    route_customers = [customers.iloc[c]['客户'] for c in route]
+    route_demand = sum(customers.iloc[c]['需求量'] for c in route if c != 0)
+    print(f"  路线{i}: {' → '.join(route_customers)}")
+    print(f"    载量: {route_demand}单位, 距离: {route_distance:.1f}km")
+
+print(f"\n  总距离: {total_distance:.1f}km")
+print(f"  使用车辆: {len(routes)}辆")
+
+# 优化效果对比
+print("\n【优化效果对比】")
+print(f"  优化前（单独配送）: {sum(dist_matrix[0,i]*2 for i in range(1,n)):.1f}km")
+print(f"  优化后（路径优化）: {total_distance:.1f}km")
+print(f"  节约距离: {sum(dist_matrix[0,i]*2 for i in range(1,n))-total_distance:.1f}km ({(sum(dist_matrix[0,i]*2 for i in range(1,n))-total_distance)/sum(dist_matrix[0,i]*2 for i in range(1,n))*100:.1f}%)")
                       </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-emerald-900 bg-opacity-20 rounded-lg border border-emerald-700">
+                      <h5 class="text-emerald-400 font-semibold mb-2">💡 路径优化要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>约束处理：</strong>充分考虑容量、时间窗等约束条件</li>
+                        <li>• <strong>实时调整：</strong>根据实际交通和订单变化动态调整</li>
+                        <li>• <strong>算法选择：</strong>大规模问题使用启发式算法</li>
+                        <li>• <strong>持续优化：</strong>定期评估路径效率，持续改进</li>
+                      </ul>
                     </div>
                   </div>
 
                   <!-- 配送中心选址 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-map-marker text-red-400"></i> 配送中心选址
+                      <i class="fa fa-map-marker text-red-400"></i> 配送中心选址分析
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">选址方法包括：重心法、P-中值模型、覆盖模型等。需考虑运输成本、设施成本、服务水平等因素。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">配送中心选址是物流网络设计的核心决策，直接影响物流成本和服务水平。选址需要考虑市场需求分布、交通条件、土地成本、劳动力成本、政策环境等多种因素。常用的选址方法包括重心法、P-中值模型、覆盖模型等。</p>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
                       <pre class="text-cyan-300">
 import numpy as np
 import pandas as pd
 
-# 重心法选址示例
+print("=" * 60)
+print("📊 配送中心选址分析")
+print("=" * 60)
+
+# 客户需求分布
 customers = pd.DataFrame({
-    '客户': ['C1', 'C2', 'C3', 'C4', 'C5'],
-    'X坐标': [10, 30, 50, 20, 40],
-    'Y坐标': [20, 40, 30, 10, 50],
-    '需求量': [100, 150, 200, 120, 180],
-    '运输费率': [1.0, 1.0, 1.0, 1.0, 1.0]
+    '客户': ['客户A', '客户B', '客户C', '客户D', '客户E', '客户F', '客户G', '客户H'],
+    'X坐标': [10, 30, 50, 20, 40, 60, 25, 45],
+    'Y坐标': [20, 40, 30, 10, 50, 20, 35, 15],
+    '需求量': [100, 150, 200, 120, 180, 140, 110, 160],
+    '运输费率': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 })
 
-# 重心法计算
+print("\n【客户需求分布】")
+print(customers[['客户', 'X坐标', 'Y坐标', '需求量']].to_string(index=False))
+
+# 方法1: 重心法
+print("\n【重心法选址】")
 total_weighted_x = (customers['X坐标'] * customers['需求量'] * customers['运输费率']).sum()
 total_weighted_y = (customers['Y坐标'] * customers['需求量'] * customers['运输费率']).sum()
 total_weight = (customers['需求量'] * customers['运输费率']).sum()
@@ -1395,435 +3452,773 @@ total_weight = (customers['需求量'] * customers['运输费率']).sum()
 center_x = total_weighted_x / total_weight
 center_y = total_weighted_y / total_weight
 
-print("=== 重心法选址分析 ===")
-print(f"建议配送中心位置: ({center_x:.1f}, {center_y:.1f})")
+print(f"  建议位置: ({center_x:.1f}, {center_y:.1f})")
 
-# 计算到各客户的距离和成本
+# 计算总运输成本
 customers['到中心距离'] = np.sqrt((customers['X坐标'] - center_x)**2 + 
                                   (customers['Y坐标'] - center_y)**2)
 customers['运输成本'] = customers['到中心距离'] * customers['需求量'] * customers['运输费率']
 
-print("\n各客户运输成本:")
-print(customers[['客户', '需求量', '到中心距离', '运输成本']].round(1))
-print(f"\n总运输成本: {customers['运输成本'].sum():.1f}")
+print(f"  总运输成本: {customers['运输成本'].sum():.1f}")
+
+# 方法2: 多设施选址（P-中值问题简化）
+print("\n【多设施选址分析】")
+
+# 候选地址
+candidates = pd.DataFrame({
+    '候选地址': ['地址1', '地址2', '地址3', '地址4'],
+    'X坐标': [20, 35, 45, 55],
+    'Y坐标': [25, 35, 20, 40],
+    '固定成本_万': [80, 100, 90, 85]
+})
+
+# 计算各候选地址到客户的距离
+for i, cand in candidates.iterrows():
+    col_name = f'到{cand["候选地址"]}距离'
+    candidates[col_name] = np.sqrt((customers['X坐标'] - cand['X坐标'])**2 + 
+                                   (customers['Y坐标'] - cand['Y坐标'])**2)
+
+# 简化：选择2个设施
+print("\n选择2个配送中心的组合分析:")
+from itertools import combinations
+
+best_combination = None
+best_cost = float('inf')
+
+for combo in combinations(range(len(candidates)), 2):
+    # 计算每个客户到最近设施的距离
+    total_transport = 0
+    for _, customer in customers.iterrows():
+        min_dist = min(
+            np.sqrt((customer['X坐标'] - candidates.iloc[i]['X坐标'])**2 + 
+                   (customer['Y坐标'] - candidates.iloc[i]['Y坐标'])**2)
+            for i in combo
+        )
+        total_transport += min_dist * customer['需求量']
+    
+    fixed_cost = sum(candidates.iloc[i]['固定成本_万'] for i in combo)
+    total_cost = total_transport * 0.01 + fixed_cost  # 假设单位运输成本0.01
+    
+    if total_cost < best_cost:
+        best_cost = total_cost
+        best_combination = combo
+
+print(f"  最优组合: {candidates.iloc[list(best_combination)]['候选地址'].tolist()}")
+print(f"  总成本: {best_cost:.1f}万元")
+
+# 选址因素评估
+print("\n【选址因素评估】")
+factors = pd.DataFrame({
+    '评估因素': ['交通便利性', '土地成本', '劳动力成本', '政策支持', '扩展空间', '基础设施'],
+    '权重': [0.25, 0.20, 0.15, 0.15, 0.15, 0.10],
+    '地址1得分': [85, 90, 80, 75, 70, 85],
+    '地址2得分': [90, 75, 85, 85, 85, 90],
+    '地址3得分': [80, 85, 90, 80, 75, 80],
+    '地址4得分': [75, 80, 75, 90, 90, 75]
+})
+
+factors['地址1加权'] = factors['权重'] * factors['地址1得分']
+factors['地址2加权'] = factors['权重'] * factors['地址2得分']
+factors['地址3加权'] = factors['权重'] * factors['地址3得分']
+factors['地址4加权'] = factors['权重'] * factors['地址4得分']
+
+print(factors[['评估因素', '权重', '地址1得分', '地址2得分']].to_string(index=False))
+
+print("\n综合得分:")
+for addr in ['地址1', '地址2', '地址3', '地址4']:
+    score = factors[f'{addr}加权'].sum()
+    print(f"  {addr}: {score:.1f}分")
                       </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-red-900 bg-opacity-20 rounded-lg border border-red-700">
+                      <h5 class="text-red-400 font-semibold mb-2">💡 选址决策要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>需求分析：</strong>准确预测未来需求分布</li>
+                        <li>• <strong>多因素评估：</strong>综合考虑成本、服务、风险等因素</li>
+                        <li>• <strong>场景分析：</strong>评估不同需求场景下的表现</li>
+                        <li>• <strong>弹性规划：</strong>预留扩展空间，适应未来变化</li>
+                      </ul>
                     </div>
                   </div>
 
                   <!-- 物流成本分析 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-calculator text-yellow-400"></i> 物流成本分析
+                      <i class="fa fa-calculator text-yellow-400"></i> 物流成本分析与优化
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">物流成本包括运输成本、仓储成本、库存持有成本、订单处理成本等。成本分析是优化决策的基础。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">物流成本分析是物流管理的重要基础，包括运输成本、仓储成本、库存持有成本、订单处理成本等。通过详细的成本分析，识别成本驱动因素，发现优化机会，制定有效的成本控制策略。物流成本通常占销售额的5-15%，优化空间较大。</p>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
                       <pre class="text-cyan-300">
 import pandas as pd
 import numpy as np
 
-# 物流成本结构分析
+print("=" * 60)
+print("📊 物流成本分析与优化")
+print("=" * 60)
+
+# 物流成本结构
 logistics_cost = pd.DataFrame({
-    '成本项目': ['运输成本', '仓储成本', '库存持有成本', '订单处理成本', '包装成本', '其他成本'],
-    '金额_万元': [500, 200, 150, 80, 60, 30],
-    '占比目标': [45, 20, 15, 10, 8, 2]
+    '成本项目': ['运输成本', '仓储成本', '库存持有成本', '订单处理成本', '包装成本', '逆向物流成本', '管理成本'],
+    '金额_万元': [450, 180, 120, 65, 45, 25, 35],
+    '占比目标_%': [50, 20, 12, 8, 5, 2, 3]
 })
 
-logistics_cost['实际占比'] = logistics_cost['金额_万元'] / logistics_cost['金额_万元'].sum() * 100
-logistics_cost['差异'] = logistics_cost['实际占比'] - logistics_cost['占比目标']
+logistics_cost['实际占比_%'] = logistics_cost['金额_万元'] / logistics_cost['金额_万元'].sum() * 100
+logistics_cost['差异_pp'] = logistics_cost['实际占比_%'] - logistics_cost['占比目标_%']
 
-print("=== 物流成本结构分析 ===")
-print(logistics_cost.round(1))
+print("\n【物流成本结构分析】")
+print(logistics_cost.round(1).to_string(index=False))
 
 total_cost = logistics_cost['金额_万元'].sum()
 print(f"\n总物流成本: {total_cost}万元")
 
 # 物流效率指标
-sales = 5000  # 年销售额
-cost_of_goods = 3000  # 销售成本
-orders = 10000  # 订单数
+print("\n【物流效率指标】")
+sales = 5000  # 年销售额万元
+orders = 50000  # 订单数
+shipments = 80000  # 发货批次
 
-logistics_ratio = total_cost / sales * 100
-cost_per_order = total_cost * 10000 / orders
-
-print(f"\n物流成本占销售额比例: {logistics_ratio:.1f}%")
-print(f"每订单物流成本: {cost_per_order:.1f}元")
-
-# 成本优化建议
-print("\n=== 成本优化建议 ===")
-high_var = logistics_cost[logistics_cost['差异'] > 2]
-for _, row in high_var.iterrows():
-    print(f"- {row['成本项目']}: 高于目标{row['差异']:.1f}个百分点，需重点关注")
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 模块5：供应链风险管理 -->
-            <div id="scm-risk" class="knowledge-section hidden">
-              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
-                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-exclamation-circle"></i> 模块5：供应链风险管理（8学时）
-                </h3>
-
-                <div class="grid md:grid-cols-2 gap-6">
-                  <!-- 供应链风险识别 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-search text-cyan-400"></i> 供应链风险识别
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">风险类型包括：供应风险、需求风险、运营风险、外部环境风险。识别是风险管理的第一步。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-import pandas as pd
-
-# 供应链风险清单
-risk_register = pd.DataFrame({
-    '风险类别': ['供应风险', '供应风险', '需求风险', '需求风险', '运营风险', '外部风险'],
-    '风险描述': ['供应商破产', '原材料价格波动', '需求剧烈波动', '客户流失', 
-                '生产设备故障', '自然灾害'],
-    '影响程度': [5, 3, 4, 4, 3, 5],
-    '发生概率': [2, 4, 3, 2, 3, 1],
-    '风险等级': ['高', '中', '高', '中', '中', '中']
-})
-
-# 计算风险得分
-risk_register['风险得分'] = risk_register['影响程度'] * risk_register['发生概率']
-
-print("=== 供应链风险登记表 ===")
-print(risk_register[['风险类别', '风险描述', '影响程度', '发生概率', '风险得分']])
-
-# 风险矩阵分析
-print("\n=== 风险优先级排序 ===")
-risk_priority = risk_register.sort_values('风险得分', ascending=False)
-for idx, row in risk_priority.iterrows():
-    print(f"{row['风险描述']}: 得分{row['风险得分']} ({row['风险等级']}风险)")
-                      </pre>
-                    </div>
-                  </div>
-
-                  <!-- 风险评估方法 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-bar-chart text-emerald-400"></i> 风险评估方法
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">常用方法：风险矩阵、FMEA失效模式分析、蒙特卡洛模拟、情景分析等。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-import pandas as pd
-import numpy as np
-
-# FMEA失效模式分析
-fmea = pd.DataFrame({
-    '失效模式': ['供应商交货延迟', '质量问题', '运输中断', '库存短缺'],
-    '严重度(S)': [7, 9, 6, 8],
-    '发生度(O)': [5, 3, 2, 4],
-    '检测度(D)': [4, 5, 3, 6]
-})
-
-# 计算RPN风险优先数
-fmea['RPN'] = fmea['严重度(S)'] * fmea['发生度(O)'] * fmea['检测度(D)']
-fmea = fmea.sort_values('RPN', ascending=False)
-
-print("=== FMEA分析结果 ===")
-print(fmea)
-
-# 风险矩阵可视化数据
-print("\n=== 风险矩阵分类 ===")
-for _, row in fmea.iterrows():
-    if row['RPN'] >= 150:
-        level = "高风险-需立即行动"
-    elif row['RPN'] >= 80:
-        level = "中风险-需改进措施"
-    else:
-        level = "低风险-持续监控"
-    print(f"{row['失效模式']}: RPN={row['RPN']} ({level})")
-                      </pre>
-                    </div>
-                  </div>
-
-                  <!-- 风险缓解策略 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-shield text-yellow-400"></i> 风险缓解策略
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">策略包括：风险规避、风险转移、风险缓解、风险接受。多源供应、安全库存、保险是常用手段。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-import pandas as pd
-import numpy as np
-
-# 多源供应策略分析
-suppliers = pd.DataFrame({
-    '供应商': ['供应商A', '供应商B', '供应商C'],
-    '报价': [100, 105, 98],
-    '质量评分': [90, 95, 85],
-    '交货准时率': [0.95, 0.98, 0.92],
-    '产能': [5000, 3000, 4000]
-})
-
-# 计算综合评分
-weights = {'价格': 0.3, '质量': 0.35, '交货': 0.35}
-
-suppliers['价格得分'] = (suppliers['报价'].min() / suppliers['报价']) * 100
-suppliers['质量得分'] = suppliers['质量评分']
-suppliers['交货得分'] = suppliers['交货准时率'] * 100
-
-suppliers['综合得分'] = (suppliers['价格得分'] * weights['价格'] + 
-                      suppliers['质量得分'] * weights['质量'] + 
-                      suppliers['交货得分'] * weights['交货'])
-
-print("=== 供应商综合评估 ===")
-print(suppliers[['供应商', '报价', '质量评分', '交货准时率', '综合得分']].round(1))
-
-# 分配策略
-total_demand = 8000
-suppliers['分配比例'] = suppliers['综合得分'] / suppliers['综合得分'].sum()
-suppliers['分配数量'] = (suppliers['分配比例'] * total_demand).round(0)
-
-print("\n=== 推荐采购分配 ===")
-for _, row in suppliers.iterrows():
-    print(f"{row['供应商']}: {row['分配数量']:.0f}单位 ({row['分配比例']*100:.1f}%)")
-                      </pre>
-                    </div>
-                  </div>
-
-                  <!-- 供应链弹性分析 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-refresh text-purple-400"></i> 供应链弹性分析
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">供应链弹性是指供应链在遭受干扰后恢复正常运营的能力。关键指标包括恢复时间、恢复成本等。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-import pandas as pd
-import numpy as np
-
-# 供应链弹性评估
-resilience_metrics = pd.DataFrame({
-    '指标': ['恢复时间(TTR)', '恢复成本', '产能恢复率', '客户影响度'],
-    '当前值': [14, 500, 85, 20],
-    '目标值': [7, 300, 95, 10],
-    '单位': ['天', '万元', '%', '%']
-})
-
-resilience_metrics['差距'] = resilience_metrics['当前值'] - resilience_metrics['目标值']
-resilience_metrics['达标状态'] = resilience_metrics.apply(
-    lambda x: '达标' if (x['指标'] in ['产能恢复率'] and x['当前值'] >= x['目标值']) 
-    or (x['指标'] not in ['产能恢复率'] and x['当前值'] <= x['目标值']) else '未达标', axis=1)
-
-print("=== 供应链弹性指标 ===")
-print(resilience_metrics[['指标', '当前值', '目标值', '单位', '达标状态']])
-
-# 弹性能力评估
-capabilities = {
-    '冗余能力': {'安全库存': 80, '备用供应商': 70, '备用产能': 60},
-    '灵活性': {'快速切换': 75, '需求响应': 85, '运输调整': 70},
-    '可见性': {'实时监控': 90, '信息共享': 85, '预警系统': 80}
+metrics = {
+    '物流成本占销售额比例': f"{total_cost/sales*100:.1f}%",
+    '每订单物流成本': f"{total_cost*10000/orders:.1f}元",
+    '每发货批次成本': f"{total_cost*10000/shipments:.1f}元",
+    '运输成本占比': f"{logistics_cost[logistics_cost['成本项目']=='运输成本']['金额_万元'].values[0]/total_cost*100:.1f}%"
 }
 
-print("\n=== 弹性能力评分 ===")
-for category, items in capabilities.items():
-    avg_score = np.mean(list(items.values()))
-    print(f"{category}: 平均得分 {avg_score:.0f}")
-    for item, score in items.items():
-        print(f"  - {item}: {score}")
+for metric, value in metrics.items():
+    print(f"  {metric}: {value}")
+
+# 运输成本细分
+print("\n【运输成本细分分析】")
+transport_detail = pd.DataFrame({
+    '运输类型': ['干线运输', '支线运输', '城市配送', '最后一公里'],
+    '成本_万元': [180, 120, 90, 60],
+    '占比_%': [40, 27, 20, 13],
+    '优化潜力_%': [10, 15, 20, 25]
+})
+
+transport_detail['可节约成本_万元'] = transport_detail['成本_万元'] * transport_detail['优化潜力_%'] / 100
+
+print(transport_detail.round(1).to_string(index=False))
+print(f"\n运输成本优化潜力: {transport_detail['可节约成本_万元'].sum():.1f}万元")
+
+# 成本优化方案
+print("\n【成本优化方案分析】")
+optimization_plans = pd.DataFrame({
+    '优化方案': ['路径优化', '运输方式优化', '仓储自动化', '包装优化', '订单合并'],
+    '实施成本_万': [20, 50, 200, 30, 10],
+    '年节约成本_万': [45, 80, 60, 25, 35],
+    '实施周期_月': [2, 3, 12, 4, 1],
+    '实施难度': ['低', '中', '高', '低', '低']
+})
+
+optimization_plans['投资回收期_月'] = optimization_plans['实施成本_万'] / optimization_plans['年节约成本_万'] * 12
+optimization_plans['ROI_%'] = (optimization_plans['年节约成本_万'] / optimization_plans['实施成本_万'] * 100).round(0)
+
+print(optimization_plans[['优化方案', '实施成本_万', '年节约成本_万', '投资回收期_月', 'ROI_%']].to_string(index=False))
+
+# 推荐方案
+print("\n【优化建议】")
+print("  短期（1-3个月）: 路径优化、订单合并 - 低成本快速见效")
+print("  中期（3-6个月）: 运输方式优化、包装优化 - 中等投入中等回报")
+print("  长期（6-12个月）: 仓储自动化 - 高投入长期回报")
+
+# 成本控制KPI
+print("\n【成本控制KPI】")
+cost_kpi = pd.DataFrame({
+    'KPI': ['物流成本率', '运输成本率', '仓储成本率', '库存周转天数', '订单处理成本'],
+    '当前值': ['9.2%', '4.5%', '1.8%', '45天', '13元/单'],
+    '目标值': ['8.0%', '4.0%', '1.5%', '35天', '10元/单'],
+    '行业标杆': ['6.0%', '3.0%', '1.2%', '25天', '8元/单']
+})
+print(cost_kpi.to_string(index=False))
                       </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-yellow-900 bg-opacity-20 rounded-lg border border-yellow-700">
+                      <h5 class="text-yellow-400 font-semibold mb-2">💡 成本优化要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>成本透明：</strong>建立完善的成本核算体系</li>
+                        <li>• <strong>重点突破：</strong>聚焦成本占比高的环节</li>
+                        <li>• <strong>综合优化：</strong>避免局部优化导致整体成本上升</li>
+                        <li>• <strong>持续改进：</strong>建立成本监控和持续改进机制</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- 综合物流优化案例 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700 md:col-span-2">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-briefcase text-orange-400"></i> 综合物流优化案例
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">综合案例：某电商企业物流网络优化项目，展示从问题诊断、方案设计到实施落地的完整过程。通过物流网络优化、运输路径优化、仓储效率提升等综合措施，实现物流成本降低20%的目标。</p>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                      <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+
+print("=" * 60)
+print("📊 综合物流优化案例：某电商企业")
+print("=" * 60)
+
+# 项目背景
+print("\n【项目背景】")
+print("  企业: 某B2C电商企业")
+print("  年销售额: 10亿元")
+print("  日订单量: 5000单")
+print("  覆盖区域: 华东、华南、华北")
+print("  核心问题: 物流成本高、配送时效差")
+
+# 现状诊断
+print("\n【现状诊断】")
+current_status = pd.DataFrame({
+    '指标': ['物流成本率', '平均配送时效', '库存周转天数', '订单准确率', '客户满意度'],
+    '当前值': ['12%', '3.5天', '60天', '95%', '78分'],
+    '行业平均': ['8%', '2.5天', '40天', '98%', '85分'],
+    '差距': ['+4pp', '+1天', '+20天', '-3pp', '-7分']
+})
+print(current_status.to_string(index=False))
+
+# 问题根因分析
+print("\n【问题根因分析】")
+root_causes = pd.DataFrame({
+    '问题': ['物流成本高', '配送时效差', '库存周转慢'],
+    '根本原因': [
+        '配送中心布局不合理、运输路径未优化',
+        '仓库处理效率低、配送网络覆盖不足',
+        '需求预测不准、安全库存设置过高'
+    ],
+    '影响程度': ['高', '高', '中']
+})
+for _, row in root_causes.iterrows():
+    print(f"\n  {row['问题']} ({row['影响程度']}影响):")
+    print(f"    根因: {row['根本原因']}")
+
+# 优化方案
+print("\n" + "=" * 60)
+print("【优化方案】")
+print("=" * 60)
+
+solutions = pd.DataFrame({
+    '方案': ['网络优化', '路径优化', '仓储优化', '库存优化'],
+    '具体措施': [
+        '新增2个区域仓，调整配送范围',
+        '实施智能路径规划，优化配送路线',
+        '引入自动化分拣，优化仓库布局',
+        '优化预测模型，动态调整安全库存'
+    ],
+    '投资_万': [500, 50, 300, 30],
+    '预期收益_万/年': [200, 150, 180, 100],
+    '实施周期': ['6个月', '2个月', '8个月', '3个月']
+})
+
+print("\n" + solutions.to_string(index=False))
+
+# 实施效果
+print("\n【实施效果（12个月后）】")
+results = pd.DataFrame({
+    '指标': ['物流成本率', '平均配送时效', '库存周转天数', '订单准确率', '客户满意度'],
+    '优化前': ['12%', '3.5天', '60天', '95%', '78分'],
+    '优化后': ['9%', '2.0天', '35天', '98.5%', '88分'],
+    '改善': ['-25%', '-43%', '-42%', '+3.5pp', '+10分']
+})
+print(results.to_string(index=False))
+
+# 投资回报分析
+print("\n【投资回报分析】")
+total_investment = solutions['投资_万'].sum()
+annual_savings = solutions['预期收益_万/年'].sum()
+payback_period = total_investment / annual_savings
+roi = (annual_savings / total_investment) * 100
+
+print(f"  总投资: {total_investment}万元")
+print(f"  年节约成本: {annual_savings}万元")
+print(f"  投资回收期: {payback_period:.1f}年")
+print(f"  年化ROI: {roi:.0f}%")
+
+# 经验总结
+print("\n【经验总结】")
+lessons = [
+    "1. 数据驱动决策：基于详实数据分析问题根因",
+    "2. 系统性优化：网络-运输-仓储-库存协同优化",
+    "3. 分阶段实施：先易后难，快速见效建立信心",
+    "4. 技术赋能：引入智能算法提升决策质量",
+    "5. 持续改进：建立KPI监控体系，持续优化"
+]
+for lesson in lessons:
+    print(f"  {lesson}")
+                      </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-orange-900 bg-opacity-20 rounded-lg border border-orange-700">
+                      <h5 class="text-orange-400 font-semibold mb-2">💡 案例启示</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>诊断先行：</strong>深入分析问题根因，避免盲目优化</li>
+                        <li>• <strong>系统思维：</strong>物流各环节相互关联，需要协同优化</li>
+                        <li>• <strong>数据驱动：</strong>用数据支撑决策，量化优化效果</li>
+                        <li>• <strong>持续改进：</strong>优化是持续过程，需要建立长效机制</li>
+                      </ul>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- 模块6：综合项目实战 -->
+            <!-- 模块6：综合案例分析 -->
             <div id="comprehensive-project" class="knowledge-section hidden">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-rocket"></i> 模块6：综合项目实战（8学时）
+                  <i class="fa fa-rocket"></i> 模块6：综合案例分析（8学时）
                 </h3>
 
                 <div class="grid md:grid-cols-2 gap-6">
-                  <!-- 项目选题与规划 -->
+                  <!-- 案例1：制造业供应链优化 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-tasks text-cyan-400"></i> 项目选题与规划
+                      <i class="fa fa-industry text-cyan-400"></i> 案例1：制造业供应链优化
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">项目选题应结合企业实际问题，明确研究目标、范围和方法。常用框架包括DMAIC、PDCA等。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-import pandas as pd
-from datetime import datetime, timedelta
-
-# 项目规划示例
-project_plan = pd.DataFrame({
-    '阶段': ['定义', '测量', '分析', '改进', '控制'],
-    '主要活动': ['确定项目目标、范围', '数据收集、现状分析', 
-                '根因分析、模型构建', '方案设计、实施', '效果验证、标准化'],
-    '开始日期': ['2024-01-01', '2024-01-15', '2024-02-01', '2024-03-01', '2024-04-01'],
-    '结束日期': ['2024-01-14', '2024-01-31', '2024-02-28', '2024-03-31', '2024-04-30'],
-    '负责人': ['项目经理', '数据分析师', '供应链工程师', '项目经理', '质量工程师']
-})
-
-print("=== 项目计划 ===")
-print(project_plan[['阶段', '主要活动', '负责人']])
-
-# 项目目标设定
-project_goals = pd.DataFrame({
-    '目标': ['库存周转率', '订单履行率', '供应链成本', '准时交付率'],
-    '当前值': [4.5, '88%', '15%', '92%'],
-    '目标值': [6.0, '95%', '12%', '98%'],
-    '改进幅度': ['33%', '7pp', '3pp', '6pp']
-})
-
-print("\n=== 项目目标 ===")
-print(project_goals)
-                      </pre>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">某汽车零部件制造企业面临库存周转慢、供应商交付不稳定、生产计划频繁调整等问题。通过需求预测优化、供应商管理改进、库存策略调整等综合措施，实现供应链绩效显著提升。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📋 问题诊断</h5>
+                        <p class="text-gray-400 text-sm">库存周转率仅4次/年、供应商准时率85%、预测准确率仅65%、生产计划变动率30%。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">🔧 解决方案</h5>
+                        <p class="text-gray-400 text-sm">需求预测系统升级、供应商绩效管理、VMI库存模式、产销协同机制。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">📊 实施效果</h5>
+                        <p class="text-gray-400 text-sm">库存周转率提升至6.5次、供应商准时率提升至96%、预测准确率提升至82%。</p>
+                      </div>
                     </div>
-                  </div>
-
-                  <!-- 供应链数据分析实践 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-database text-emerald-400"></i> 供应链数据分析实践
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">数据分析是项目实施的基础，包括数据收集、清洗、探索性分析和建模预测等步骤。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
                       <pre class="text-cyan-300">
 import pandas as pd
 import numpy as np
 
-# 模拟供应链数据
-np.random.seed(42)
-n_records = 100
+print("=" * 60)
+print("📊 案例1：汽车零部件企业供应链优化")
+print("=" * 60)
 
-supply_data = pd.DataFrame({
-    '订单ID': [f'ORD{i:04d}' for i in range(1, n_records+1)],
-    '产品类别': np.random.choice(['A', 'B', 'C', 'D'], n_records),
-    '订单日期': pd.date_range('2023-01-01', periods=n_records, freq='D'),
-    '订单数量': np.random.randint(10, 200, n_records),
-    '实际交付天数': np.random.randint(3, 15, n_records),
-    '计划交付天数': 7,
-    '单位成本': np.random.uniform(50, 200, n_records).round(2)
+# 企业背景
+print("\n【企业背景】")
+print("  行业: 汽车零部件制造")
+print("  年产值: 20亿元")
+print("  产品种类: 500+SKU")
+print("  供应商数量: 200+家")
+
+# 问题诊断
+print("\n【问题诊断】")
+problems = pd.DataFrame({
+    '问题领域': ['库存管理', '供应商管理', '需求预测', '生产计划'],
+    '具体问题': ['库存周转慢、呆滞库存多', '交付不稳定、质量问题频发',
+                '预测准确率低、波动大', '计划变动频繁、产能浪费'],
+    '影响程度': ['高', '高', '中', '中'],
+    '年损失_万': [800, 500, 300, 200]
 })
+print(problems.to_string(index=False))
+print(f"\n年总损失: {problems['年损失_万'].sum()}万元")
 
-# 数据质量检查
-print("=== 数据概览 ===")
-print(f"记录数: {len(supply_data)}")
-print(f"缺失值: {supply_data.isnull().sum().sum()}")
-print(f"重复记录: {supply_data.duplicated().sum()}")
+# 优化方案实施
+print("\n【优化方案实施】")
 
-# 计算KPI
-supply_data['交付偏差'] = supply_data['实际交付天数'] - supply_data['计划交付天数']
-supply_data['是否准时'] = supply_data['实际交付天数'] <= supply_data['计划交付天数']
+# 1. 需求预测优化
+print("\n1. 需求预测系统升级:")
+print("   - 引入机器学习预测模型")
+print("   - 整合销售、市场、历史数据")
+print("   - 建立滚动预测机制")
+print("   预测准确率: 65% → 82%")
 
-on_time_rate = supply_data['是否准时'].mean() * 100
-avg_delay = supply_data['交付偏差'].mean()
+# 2. 供应商管理
+print("\n2. 供应商绩效管理:")
+print("   - 建立供应商评分体系")
+print("   - 实施分级管理策略")
+print("   - 推动供应商能力提升")
+print("   准时交付率: 85% → 96%")
 
-print(f"\n准时交付率: {on_time_rate:.1f}%")
-print(f"平均交付延迟: {avg_delay:.1f}天")
-
-# 按产品类别分析
-category_analysis = supply_data.groupby('产品类别').agg({
-    '订单数量': ['mean', 'sum'],
-    '是否准时': 'mean',
-    '交付偏差': 'mean'
-}).round(2)
-print("\n=== 产品类别分析 ===")
-print(category_analysis)
-                      </pre>
-                    </div>
-                  </div>
-
-                  <!-- 优化方案设计 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-lightbulb-o text-yellow-400"></i> 优化方案设计
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">基于数据分析结果，设计优化方案并进行成本效益分析，确保方案可行性和投资回报。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-import pandas as pd
-import numpy as np
-
-# 优化方案成本效益分析
-improvement_options = pd.DataFrame({
-    '方案': ['增加安全库存', '多源供应', '信息系统升级', '流程优化'],
-    '实施成本_万': [50, 30, 100, 20],
-    '年运营成本增加_万': [20, 10, 15, 0],
-    '预期收益_万': [80, 60, 150, 40],
-    '实施周期_月': [1, 3, 6, 2],
-    '风险等级': ['低', '中', '中', '低']
-})
-
-# 计算投资回报
-improvement_options['年净收益_万'] = improvement_options['预期收益_万'] - \
-                                     improvement_options['年运营成本增加_万']
-improvement_options['投资回收期_年'] = improvement_options['实施成本_万'] / \
-                                      improvement_options['年净收益_万']
-improvement_options['ROI'] = (improvement_options['年净收益_万'] / \
-                              improvement_options['实施成本_万'] * 100).round(1)
-
-print("=== 优化方案分析 ===")
-print(improvement_options[['方案', '实施成本_万', '年净收益_万', '投资回收期_年', 'ROI']])
-
-# 推荐最优方案
-best_option = improvement_options.loc[improvement_options['ROI'].idxmax()]
-print(f"\n推荐方案: {best_option['方案']}")
-print(f"ROI: {best_option['ROI']}%")
-print(f"投资回收期: {best_option['投资回收期_年']:.1f}年")
-                      </pre>
-                    </div>
-                  </div>
-
-                  <!-- 项目展示与答辩 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-presentation text-purple-400"></i> 项目展示与答辩
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">项目成果展示应包括：问题定义、分析方法、关键发现、改进建议、实施计划和预期效果。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-import pandas as pd
-
-# 项目成果总结
-project_summary = {
-    '项目名称': '供应链效率优化项目',
-    '项目周期': '2024年1月-4月',
-    '核心问题': '库存周转率低、准时交付率不达标',
-    '分析方法': '数据分析、流程映射、根因分析',
-    '关键发现': [
-        '安全库存设置不合理',
-        '供应商交货周期波动大',
-        '信息传递效率低'
-    ],
-    '改进措施': [
-        '优化安全库存计算模型',
-        '建立供应商绩效管理机制',
-        '实施供应链可视化系统'
-    ]
-}
-
-print("=== 项目成果总结 ===")
-for key, value in project_summary.items():
-    if isinstance(value, list):
-        print(f"\n{key}:")
-        for item in value:
-            print(f"  • {item}")
-    else:
-        print(f"{key}: {value}")
+# 3. 库存优化
+print("\n3. 库存策略优化:")
+print("   - ABC分类精细化管理")
+print("   - 动态安全库存模型")
+print("   - VMI供应商管理库存")
+print("   库存周转率: 4次 → 6.5次")
 
 # 效果对比
-results_comparison = pd.DataFrame({
-    '指标': ['库存周转率', '准时交付率', '供应链成本占比'],
-    '改进前': ['4.5次/年', '88%', '15%'],
-    '改进后': ['5.8次/年', '94%', '13%'],
-    '改进幅度': ['+29%', '+6pp', '-2pp']
+print("\n【优化效果对比】")
+comparison = pd.DataFrame({
+    '指标': ['库存周转率', '预测准确率', '供应商准时率', '生产计划稳定性', '供应链总成本'],
+    '优化前': ['4次/年', '65%', '85%', '70%', '15%'],
+    '优化后': ['6.5次/年', '82%', '96%', '90%', '12%'],
+    '改善幅度': ['+62%', '+17pp', '+11pp', '+20pp', '-20%']
 })
+print(comparison.to_string(index=False))
 
-print("\n=== 改进效果对比 ===")
-print(results_comparison)
+# 投资回报
+print("\n【投资回报分析】")
+investment = {
+    '预测系统': 150,
+    '供应商管理': 50,
+    '库存管理系统': 100,
+    '培训与变革': 50
+}
+total_investment = sum(investment.values())
+annual_savings = problems['年损失_万'].sum() * 0.7  # 假设挽回70%损失
+payback = total_investment / annual_savings
+
+print(f"  总投资: {total_investment}万元")
+print(f"  年节约: {annual_savings}万元")
+print(f"  回收期: {payback:.1f}年")
                       </pre>
+                    </div>
+                  </div>
+
+                  <!-- 案例2：零售业供应链转型 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-shopping-cart text-emerald-400"></i> 案例2：零售业供应链转型
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">某连锁零售企业面临线上线下库存割裂、补货效率低、缺货率高等问题。通过全渠道库存整合、智能补货系统、配送网络优化等措施，实现供应链数字化转型。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-red-400 font-semibold mb-1">📋 问题诊断</h5>
+                        <p class="text-gray-400 text-sm">线上线下库存不共享、门店缺货率15%、补货周期长、物流成本占比高。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">🔧 解决方案</h5>
+                        <p class="text-gray-400 text-sm">全渠道库存共享、智能补货算法、前置仓布局、供应商协同平台。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">📊 实施效果</h5>
+                        <p class="text-gray-400 text-sm">缺货率降至3%、库存周转提升40%、物流成本降低25%、客户满意度提升15%。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                      <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+
+print("=" * 60)
+print("📊 案例2：连锁零售企业供应链转型")
+print("=" * 60)
+
+# 企业背景
+print("\n【企业背景】")
+print("  行业: 连锁零售")
+print("  门店数量: 500家")
+print("  年销售额: 50亿元")
+print("  SKU数量: 10000+")
+
+# 现状问题
+print("\n【现状问题分析】")
+issues = pd.DataFrame({
+    '问题': ['库存割裂', '缺货率高', '补货效率低', '物流成本高'],
+    '现状': ['线上线下独立库存', '门店缺货率15%', '补货周期3天', '物流成本占销售额8%'],
+    '影响': ['库存重复投资', '销售损失5%', '人力成本高', '利润率下降'],
+    '优先级': ['高', '高', '中', '中']
+})
+print(issues.to_string(index=False))
+
+# 转型方案
+print("\n【数字化转型方案】")
+
+# 1. 全渠道库存整合
+print("\n1. 全渠道库存整合:")
+print("   - 统一库存管理平台")
+print("   - 实时库存可视化")
+print("   - 跨渠道库存调拨")
+print("   库存共享率: 0% → 100%")
+
+# 2. 智能补货系统
+print("\n2. 智能补货系统:")
+print("   - AI需求预测")
+print("   - 自动补货建议")
+print("   - 动态安全库存")
+print("   补货效率提升: 300%")
+
+# 3. 配送网络优化
+print("\n3. 配送网络优化:")
+print("   - 前置仓布局")
+print("   - 路径优化算法")
+print("   - 共同配送模式")
+print("   物流成本下降: 25%")
+
+# 实施效果
+print("\n【转型效果】")
+results = pd.DataFrame({
+    '指标': ['门店缺货率', '库存周转天数', '补货响应时间', '物流成本率', '客户满意度'],
+    '转型前': ['15%', '45天', '3天', '8%', '75分'],
+    '转型后': ['3%', '27天', '0.5天', '6%', '90分'],
+    '改善': ['-80%', '-40%', '-83%', '-25%', '+20%']
+})
+print(results.to_string(index=False))
+
+# 关键成功因素
+print("\n【关键成功因素】")
+factors = [
+    "1. 高层支持：CEO亲自挂帅，确保资源投入",
+    "2. 技术赋能：选择合适的技术平台和合作伙伴",
+    "3. 组织变革：调整组织架构，建立协同机制",
+    "4. 人才培养：数字化人才引进和内部培养",
+    "5. 持续迭代：敏捷实施，快速迭代优化"
+]
+for f in factors:
+    print(f"  {f}")
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 案例3：电商供应链创新 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-globe text-yellow-400"></i> 案例3：电商供应链创新
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">某跨境电商企业面临海外仓库存管理难、国际物流成本高、清关时效不稳定等问题。通过海外仓网络优化、智能库存分配、物流渠道整合等创新措施，实现全球化供应链布局。</p>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                      <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+
+print("=" * 60)
+print("📊 案例3：跨境电商供应链创新")
+print("=" * 60)
+
+# 企业背景
+print("\n【企业背景】")
+print("  行业: 跨境电商")
+print("  年销售额: 30亿元")
+print("  目标市场: 北美、欧洲、东南亚")
+print("  SKU数量: 50000+")
+
+# 挑战分析
+print("\n【核心挑战】")
+challenges = pd.DataFrame({
+    '挑战': ['海外仓库存管理', '国际物流成本', '清关时效', '退货处理'],
+    '问题描述': ['库存周转慢、呆滞风险高', '物流成本占销售额25%', 
+                '清关时间不稳定', '退货率8%，处理成本高'],
+    '影响程度': ['高', '高', '中', '中']
+})
+print(challenges.to_string(index=False))
+
+# 创新方案
+print("\n【创新解决方案】")
+
+# 1. 海外仓网络优化
+print("\n1. 海外仓网络优化:")
+print("   - 多仓布局（美东/美西/欧洲）")
+print("   - 智能库存分配算法")
+print("   - 跨仓调拨机制")
+print("   库存周转率: 3次 → 6次/年")
+
+# 2. 物流渠道整合
+print("\n2. 物流渠道整合:")
+print("   - 多渠道比价系统")
+print("   - 智能路由选择")
+print("   - 头程海运+尾程快递")
+print("   物流成本下降: 30%")
+
+# 3. 预清关服务
+print("\n3. 预清关服务:")
+print("   - 电子清关申报")
+print("   - 合规商品数据库")
+print("   - 清关代理合作")
+print("   清关时效: 7天 → 2天")
+
+# 效果对比
+print("\n【创新效果】")
+innovation_results = pd.DataFrame({
+    '指标': ['物流成本率', '库存周转率', '平均配送时效', '客户满意度', '退货率'],
+    '创新前': ['25%', '3次/年', '15天', '70分', '8%'],
+    '创新后': ['17%', '6次/年', '7天', '88分', '5%'],
+    '改善': ['-32%', '+100%', '-53%', '+26%', '-38%']
+})
+print(innovation_results.to_string(index=False))
+
+# 经验总结
+print("\n【创新经验总结】")
+print("  1. 数据驱动：建立全链路数据监控体系")
+print("  2. 技术创新：AI预测、智能路由、自动化仓储")
+print("  3. 生态合作：与物流商、海外仓深度合作")
+print("  4. 合规先行：深入了解目标市场法规")
+print("  5. 敏捷迭代：小步快跑，持续优化")
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 案例4：供应链风险管理 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-shield text-red-400"></i> 案例4：供应链风险管理
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">某电子制造企业经历供应商火灾事故后，全面构建供应链风险管理体系。通过风险识别、评估、预警和应对机制的建立，提升供应链韧性和抗风险能力。</p>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                      <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+
+print("=" * 60)
+print("📊 案例4：供应链风险管理实践")
+print("=" * 60)
+
+# 风险事件回顾
+print("\n【风险事件回顾】")
+print("  事件: 核心供应商工厂火灾")
+print("  影响: 关键元器件供应中断3个月")
+print("  损失: 直接损失5000万元，间接损失超1亿元")
+print("  教训: 单一供应风险、缺乏应急预案")
+
+# 风险管理体系构建
+print("\n【风险管理体系构建】")
+
+# 1. 风险识别
+print("\n1. 风险识别与分类:")
+risk_categories = pd.DataFrame({
+    '风险类别': ['供应风险', '需求风险', '运营风险', '外部风险'],
+    '风险数量': [15, 8, 12, 10],
+    '高风险数量': [5, 2, 3, 4]
+})
+print(risk_categories.to_string(index=False))
+
+# 2. 风险评估
+print("\n2. 风险评估矩阵:")
+risk_matrix = pd.DataFrame({
+    '风险': ['核心供应商破产', '自然灾害', '原材料价格波动', '质量问题', '物流中断'],
+    '发生概率': [3, 2, 4, 3, 2],
+    '影响程度': [5, 5, 3, 4, 4],
+    '风险等级': ['高', '高', '中', '高', '中']
+})
+risk_matrix['风险得分'] = risk_matrix['发生概率'] * risk_matrix['影响程度']
+print(risk_matrix.sort_values('风险得分', ascending=False).to_string(index=False))
+
+# 3. 风险应对策略
+print("\n3. 风险应对策略:")
+strategies = pd.DataFrame({
+    '风险': ['核心供应商破产', '自然灾害', '原材料价格波动'],
+    '应对策略': ['多源供应+安全库存', '地理分散+保险', '长期合同+套期保值'],
+    '实施成本_万': [200, 100, 50],
+    '预期效果': ['风险降低80%', '恢复时间缩短50%', '成本波动减少60%']
+})
+print(strategies.to_string(index=False))
+
+# 风险管理效果
+print("\n【风险管理效果】")
+print("  风险事件发生率: 下降60%")
+print("  风险响应时间: 从7天缩短至1天")
+print("  供应链中断损失: 下降75%")
+print("  保险赔付覆盖: 从0提升至80%")
+
+# 关键启示
+print("\n【关键启示】")
+print("  1. 预防为主：风险发生前建立预防机制")
+print("  2. 多重保障：多源供应、安全库存、保险组合")
+print("  3. 快速响应：建立应急响应机制和预案")
+print("  4. 持续改进：定期评估和更新风险管理策略")
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 综合项目实战指南 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700 md:col-span-2">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-graduation-cap text-purple-400"></i> 综合项目实战指南
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">综合项目实战是课程的重要环节，学员需要运用所学知识，完成一个完整的供应链分析优化项目。项目应结合企业实际问题，按照DMAIC方法论，完成问题定义、数据分析、方案设计和实施规划。</p>
+                    
+                    <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                      <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+
+print("=" * 60)
+print("📊 综合项目实战指南")
+print("=" * 60)
+
+# 项目框架
+print("\n【项目框架：DMAIC方法论】")
+dmaic = pd.DataFrame({
+    '阶段': ['Define定义', 'Measure测量', 'Analyze分析', 'Improve改进', 'Control控制'],
+    '主要任务': ['明确问题、设定目标', '数据收集、现状分析', '根因分析、模型构建', 
+               '方案设计、实施推进', '效果验证、持续改进'],
+    '关键输出': ['项目章程', '基线数据、差距分析', '根因验证、优化模型', 
+               '改进方案、实施计划', '控制计划、标准化文件'],
+    '时间占比': ['10%', '20%', '30%', '30%', '10%']
+})
+print(dmaic.to_string(index=False))
+
+# 项目选题建议
+print("\n【项目选题建议】")
+topics = pd.DataFrame({
+    '选题方向': ['库存优化', '供应商管理', '物流优化', '需求预测', '供应链协同'],
+    '典型问题': ['库存周转慢、缺货率高', '交付不稳定、质量波动', 
+                '成本高、时效差', '预测准确率低', '信息不透明、响应慢'],
+    '预期收益': ['库存成本降低10-20%', '交付率提升5-10%', 
+                '物流成本降低10-15%', '预测准确率提升10-15%', '响应速度提升20-30%'],
+    '难度': ['中', '中', '中高', '高', '高']
+})
+print(topics.to_string(index=False))
+
+# 项目计划模板
+print("\n【项目计划模板】")
+project_plan = pd.DataFrame({
+    '阶段': ['第1-2周', '第3-4周', '第5-7周', '第8-10周', '第11-12周'],
+    '活动': ['问题定义与数据收集', '现状分析与差距诊断', '根因分析与方案设计', 
+            '方案实施与效果验证', '成果总结与汇报答辩'],
+    '交付物': ['项目章程、数据清单', '现状报告、问题清单', '分析报告、改进方案', 
+              '实施报告、效果数据', '项目报告、答辩PPT']
+})
+print(project_plan.to_string(index=False))
+
+# 评分标准
+print("\n【项目评分标准】")
+criteria = pd.DataFrame({
+    '评分项': ['问题定义', '数据分析', '方案设计', '实施效果', '报告答辩'],
+    '权重': ['15%', '25%', '30%', '20%', '10%'],
+    '评分要点': ['问题明确、目标清晰', '方法正确、分析深入', 
+                '方案可行、创新性强', '效果显著、可量化', '逻辑清晰、表达流畅']
+})
+print(criteria.to_string(index=False))
+
+# 成功要素
+print("\n【项目成功要素】")
+success_factors = [
+    "1. 数据质量：确保数据完整、准确、及时",
+    "2. 方法应用：正确选择和应用分析方法",
+    "3. 业务理解：深入理解业务背景和需求",
+    "4. 沟通协作：与业务部门保持良好沟通",
+    "5. 持续迭代：根据反馈不断优化方案"
+]
+for f in success_factors:
+    print(f"  {f}")
+
+# 常见问题与建议
+print("\n【常见问题与建议】")
+issues_advice = pd.DataFrame({
+    '常见问题': ['数据获取困难', '分析方法选择', '方案落地难', '效果不显著'],
+    '建议': ['提前沟通数据需求、建立数据清单', '参考案例、请教导师', 
+            '考虑实施成本、分阶段推进', '设定合理预期、持续跟踪']
+})
+print(issues_advice.to_string(index=False))
+                      </pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-purple-900 bg-opacity-20 rounded-lg border border-purple-700">
+                      <h5 class="text-purple-400 font-semibold mb-2">💡 项目实战要点</h5>
+                      <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• <strong>选题务实：</strong>选择企业实际问题，确保项目价值</li>
+                        <li>• <strong>数据驱动：</strong>用数据说话，量化分析问题和效果</li>
+                        <li>• <strong>方法科学：</strong>正确应用分析方法，确保结论可靠</li>
+                        <li>• <strong>方案可行：</strong>考虑实施条件，确保方案可落地</li>
+                        <li>• <strong>成果可视：</strong>清晰展示项目成果和价值</li>
+                      </ul>
                     </div>
                   </div>
                 </div>

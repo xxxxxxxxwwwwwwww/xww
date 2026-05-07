@@ -662,20 +662,20 @@ print(df)
           
           <!-- 导航栏 -->
           <div class="flex flex-wrap gap-3 mb-8 bg-dark-gray p-4 rounded-xl border border-gray-700">
-            <button class="knowledge-nav active px-4 py-2 rounded-lg font-semibold transition" data-target="module1-basics">模块1：数据库基础知识</button>
-            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module2-sql">模块2：SQL语言基础</button>
-            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module3-design">模块3：数据库设计</button>
-            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module4-management">模块4：数据库管理</button>
-            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module5-nosql">模块5：NoSQL数据库</button>
-            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module6-project">模块6：综合项目实战</button>
+            <button class="knowledge-nav active px-4 py-2 rounded-lg font-semibold transition" data-target="module1-basics">模块1：数据库基础概念</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module2-theory">模块2：关系数据库理论</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module3-sql">模块3：SQL语言</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module4-design">模块4：数据库设计</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module5-management">模块5：数据库管理</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module6-development">模块6：数据库应用开发</button>
           </div>
 
           <div class="space-y-8">
-            <!-- 模块1：数据库基础知识 -->
+            <!-- 模块1：数据库基础概念 -->
             <div id="module1-basics" class="knowledge-section">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-database"></i> 模块1：数据库基础知识（8学时）
+                  <i class="fa fa-database"></i> 模块1：数据库基础概念（8学时）
                 </h3>
                 
                 <div class="grid md:grid-cols-2 gap-6">
@@ -684,20 +684,86 @@ print(df)
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-book text-yellow-400"></i> 数据库基本概念
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">数据库（Database）是长期存储在计算机内、有组织、可共享的数据集合。数据库具有以下特点：数据结构化、数据共享性高、数据独立性强、数据由DBMS统一管理和控制。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">数据库（Database，简称DB）是长期存储在计算机内、有组织、可共享的大量数据的集合。数据库中的数据按一定的数据模型组织、描述和存储，具有较小的冗余度、较高的数据独立性和易扩展性，并可为各种用户共享。理解数据库的基本概念是学习数据库技术的基础。</p>
+                    
                     <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">📌 核心概念</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li><strong class="text-gray-300">数据（Data）</strong>：描述事物的符号记录</li>
-                          <li><strong class="text-gray-300">数据库（DB）</strong>：长期存储的数据集合</li>
-                          <li><strong class="text-gray-300">数据库管理系统（DBMS）</strong>：管理数据库的软件</li>
-                          <li><strong class="text-gray-300">数据库系统（DBS）</strong>：DB+DBMS+应用程序+用户</li>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">📌</span> 核心概念详解
+                        </h5>
+                        <ul class="text-gray-300 space-y-2">
+                          <li class="flex items-start gap-2">
+                            <span class="text-cyan-400 mt-1">•</span>
+                            <span><strong class="text-gray-200">数据（Data）</strong>：描述事物的符号记录，是数据库中存储的基本对象。数据不仅包括数字，还包括文本、图像、音频、视频等各种形式。</span>
+                          </li>
+                          <li class="flex items-start gap-2">
+                            <span class="text-cyan-400 mt-1">•</span>
+                            <span><strong class="text-gray-200">数据库（DB）</strong>：长期存储在计算机内、有组织、可共享的数据集合。数据库具有永久存储、有组织、可共享三个基本特点。</span>
+                          </li>
+                          <li class="flex items-start gap-2">
+                            <span class="text-cyan-400 mt-1">•</span>
+                            <span><strong class="text-gray-200">数据库管理系统（DBMS）</strong>：位于用户与操作系统之间的一层数据管理软件，用于科学地组织和存储数据、高效地获取和维护数据。</span>
+                          </li>
+                          <li class="flex items-start gap-2">
+                            <span class="text-cyan-400 mt-1">•</span>
+                            <span><strong class="text-gray-200">数据库系统（DBS）</strong>：在计算机系统中引入数据库后的系统，由数据库、数据库管理系统、应用程序和数据库管理员（DBA）组成的存储、管理、处理和维护数据的系统。</span>
+                          </li>
                         </ul>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-cyan-400 font-semibold mb-1">💡 数据库的发展历程</h5>
-                        <p class="text-gray-400">人工管理阶段 → 文件系统阶段 → 数据库系统阶段</p>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">💡</span> 数据库的主要特点
+                        </h5>
+                        <ul class="text-gray-300 space-y-1">
+                          <li>• <strong>数据结构化</strong>：数据库中的数据按一定的数据模型组织</li>
+                          <li>• <strong>数据共享性高</strong>：多用户、多应用可同时访问数据</li>
+                          <li>• <strong>数据独立性强</strong>：数据与程序分离，互不影响</li>
+                          <li>• <strong>数据由DBMS统一管理</strong>：提供安全性、完整性、并发控制</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 数据库发展历史 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-history text-blue-400"></i> 数据库发展历史
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">数据库技术是应数据管理任务的需要而产生的。数据管理是指对数据进行分类、组织、编码、存储、检索和维护，是数据处理的中心问题。随着计算机硬件和软件的发展，数据管理经历了人工管理、文件系统、数据库系统三个阶段。</p>
+                    
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-red-400 font-semibold mb-2">📅 第一阶段：人工管理阶段（1950年代）</h5>
+                        <p class="text-gray-300 mb-2">特点：数据不保存、不共享，数据与程序不独立。数据由程序直接管理，一组数据对应一个程序。</p>
+                        <ul class="text-gray-400 space-y-1">
+                          <li>• 数据不保存在计算机中</li>
+                          <li>• 没有专门的数据管理软件</li>
+                          <li>• 数据不共享，冗余度极大</li>
+                          <li>• 数据完全依赖于程序</li>
+                        </ul>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">📅 第二阶段：文件系统阶段（1960年代）</h5>
+                        <p class="text-gray-300 mb-2">特点：数据可长期保存，由文件系统管理，但数据独立性差，共享性差。</p>
+                        <ul class="text-gray-400 space-y-1">
+                          <li>• 数据以文件形式长期保存</li>
+                          <li>• 由文件系统管理数据</li>
+                          <li>• 数据共享性差，冗余度大</li>
+                          <li>• 数据独立性差</li>
+                        </ul>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">📅 第三阶段：数据库系统阶段（1970年代至今）</h5>
+                        <p class="text-gray-300 mb-2">特点：数据结构化，共享性高，独立性强，由DBMS统一管理。</p>
+                        <ul class="text-gray-400 space-y-1">
+                          <li>• 数据结构化，整体结构化</li>
+                          <li>• 数据共享性高，冗余度小</li>
+                          <li>• 数据独立性高</li>
+                          <li>• 数据由DBMS统一管理和控制</li>
+                        </ul>
                       </div>
                     </div>
                   </div>
@@ -705,21 +771,55 @@ print(df)
                   <!-- 数据模型 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-sitemap text-blue-400"></i> 数据模型
+                      <i class="fa fa-sitemap text-purple-400"></i> 数据模型
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">数据模型是数据库系统中用于描述数据结构和数据间联系的工具，是数据库设计的基础。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">数据模型是数据库系统的核心和基础，是对现实世界数据特征的抽象。数据模型应满足三方面要求：能比较真实地模拟现实世界、容易为人所理解、便于在计算机上实现。根据应用目的不同，数据模型分为概念模型、逻辑模型和物理模型三类。</p>
+                    
                     <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">📊 三层模型结构</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li><strong class="text-gray-300">概念模型</strong>：按用户观点建模（E-R图）</li>
-                          <li><strong class="text-gray-300">逻辑模型</strong>：按计算机观点建模（层次、网状、关系）</li>
-                          <li><strong class="text-gray-300">物理模型</strong>：数据在存储介质上的组织方式</li>
-                        </ul>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">📊</span> 三层模型结构
+                        </h5>
+                        <div class="space-y-2">
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-cyan-400 font-semibold">概念模型（信息模型）</p>
+                            <p class="text-gray-400">按用户观点对数据建模，主要用于数据库设计。常用E-R图表示，独立于具体DBMS。</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-yellow-400 font-semibold">逻辑模型</p>
+                            <p class="text-gray-400">按计算机观点对数据建模，包括层次模型、网状模型、关系模型等。直接与DBMS相关。</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-pink-400 font-semibold">物理模型</p>
+                            <p class="text-gray-400">描述数据在存储介质上的组织方式，涉及索引、存储结构等底层细节。</p>
+                          </div>
+                        </div>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-yellow-400 font-semibold mb-1">🔗 关系模型特点</h5>
-                        <p class="text-gray-400">建立在严格的数学概念基础上，概念单一，实体和联系都用关系表示，存取路径对用户透明。</p>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">🔗 主要逻辑模型对比</h5>
+                        <table class="w-full text-gray-300 text-xs">
+                          <tr class="border-b border-gray-600">
+                            <th class="text-left py-2 text-gray-200">模型</th>
+                            <th class="text-left py-2 text-gray-200">结构</th>
+                            <th class="text-left py-2 text-gray-200">特点</th>
+                          </tr>
+                          <tr class="border-b border-gray-700">
+                            <td class="py-2 text-cyan-400">层次模型</td>
+                            <td class="py-2">树形结构</td>
+                            <td class="py-2">结构简单，但无法表示多对多</td>
+                          </tr>
+                          <tr class="border-b border-gray-700">
+                            <td class="py-2 text-yellow-400">网状模型</td>
+                            <td class="py-2">图结构</td>
+                            <td class="py-2">可表示复杂关系，但结构复杂</td>
+                          </tr>
+                          <tr>
+                            <td class="py-2 text-emerald-400">关系模型</td>
+                            <td class="py-2">二维表</td>
+                            <td class="py-2">简单灵活，数学基础坚实</td>
+                          </tr>
+                        </table>
                       </div>
                     </div>
                   </div>
@@ -727,24 +827,45 @@ print(df)
                   <!-- 数据库系统结构 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-cubes text-purple-400"></i> 数据库系统结构
+                      <i class="fa fa-cubes text-orange-400"></i> 数据库系统结构
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">数据库系统采用三级模式结构，提供了数据的抽象和独立性。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">数据库系统采用三级模式结构，这是数据库管理系统内部的系统结构。三级模式结构提供了数据的抽象机制，实现了数据的独立性，使得用户能够逻辑地、抽象地处理数据，而不必关心数据在计算机中的具体表示和存储方式。</p>
+                    
                     <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">🏗️ 三级模式结构</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li><strong class="text-gray-300">外模式（用户模式）</strong>：用户的数据视图</li>
-                          <li><strong class="text-gray-300">模式（逻辑模式）</strong>：全体数据的逻辑结构</li>
-                          <li><strong class="text-gray-300">内模式（存储模式）</strong>：数据的物理存储方式</li>
-                        </ul>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🏗️</span> 三级模式结构详解
+                        </h5>
+                        <div class="space-y-2">
+                          <div class="p-2 bg-dark rounded border-l-2 border-cyan-400">
+                            <p class="text-cyan-400 font-semibold">外模式（用户模式）</p>
+                            <p class="text-gray-400">数据库用户能够看见和使用的局部数据的逻辑结构和特征的描述。每个用户只能看到外模式中定义的数据，是保证数据库安全性的一个有力措施。</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded border-l-2 border-yellow-400">
+                            <p class="text-yellow-400 font-semibold">模式（逻辑模式/概念模式）</p>
+                            <p class="text-gray-400">数据库中全体数据的逻辑结构和特征的描述，是所有用户的公共数据视图。一个数据库只有一个模式，它定义了数据的逻辑结构、数据之间的联系、数据的安全性要求等。</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded border-l-2 border-pink-400">
+                            <p class="text-pink-400 font-semibold">内模式（存储模式）</p>
+                            <p class="text-gray-400">数据物理结构和存储方式的描述，是数据在数据库内部的表示方式。一个数据库只有一个内模式，包括记录的存储方式、索引的组织方式、数据是否压缩等。</p>
+                          </div>
+                        </div>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-cyan-400 font-semibold mb-1">🔄 两级映像</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li><strong class="text-gray-300">外模式/模式映像</strong>：保证逻辑独立性</li>
-                          <li><strong class="text-gray-300">模式/内模式映像</strong>：保证物理独立性</li>
-                        </ul>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🔄</span> 两级映像与数据独立性
+                        </h5>
+                        <div class="space-y-2">
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-cyan-400 font-semibold">外模式/模式映像</p>
+                            <p class="text-gray-400">保证数据的<strong class="text-gray-300">逻辑独立性</strong>。当模式改变时，只需修改此映像，使外模式保持不变，应用程序也不用修改。</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-yellow-400 font-semibold">模式/内模式映像</p>
+                            <p class="text-gray-400">保证数据的<strong class="text-gray-300">物理独立性</strong>。当数据库的存储结构改变时，只需修改此映像，使模式保持不变，应用程序也不用修改。</p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -752,27 +873,95 @@ print(df)
                   <!-- 数据库管理系统 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-cogs text-orange-400"></i> 数据库管理系统
+                      <i class="fa fa-cogs text-red-400"></i> 数据库管理系统（DBMS）
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">DBMS是位于用户与操作系统之间的一层数据管理软件，为用户或应用程序提供访问数据库的方法。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">数据库管理系统是数据库系统的核心软件，位于用户与操作系统之间。DBMS的主要目标是使数据作为一种可管理的资源来处理，实现数据的集中管理、共享使用，减少数据冗余，保证数据的一致性和完整性。</p>
+                    
                     <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">⚙️ 主要功能</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>数据定义功能（DDL）</li>
-                          <li>数据操纵功能（DML）</li>
-                          <li>数据控制功能（DCL）</li>
-                          <li>数据库的建立和维护功能</li>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">⚙️</span> 主要功能
+                        </h5>
+                        <div class="grid grid-cols-2 gap-2">
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-cyan-400 font-semibold text-xs">数据定义（DDL）</p>
+                            <p class="text-gray-400 text-xs">定义数据库结构，包括模式、外模式、内模式的定义</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-yellow-400 font-semibold text-xs">数据操纵（DML）</p>
+                            <p class="text-gray-400 text-xs">实现对数据的增、删、改、查等基本操作</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-pink-400 font-semibold text-xs">数据控制（DCL）</p>
+                            <p class="text-gray-400 text-xs">数据安全性、完整性、并发控制、恢复</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-emerald-400 font-semibold text-xs">数据库维护</p>
+                            <p class="text-gray-400 text-xs">数据导入导出、重组、性能监控等</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🛡️</span> 数据控制功能详解
+                        </h5>
+                        <ul class="text-gray-300 space-y-1">
+                          <li>• <strong class="text-gray-200">数据安全性保护</strong>：防止不合法使用造成数据泄露和破坏</li>
+                          <li>• <strong class="text-gray-200">数据完整性检查</strong>：保证数据的正确性、有效性和相容性</li>
+                          <li>• <strong class="text-gray-200">并发控制</strong>：防止多用户并发访问时数据不一致</li>
+                          <li>• <strong class="text-gray-200">数据库恢复</strong>：系统故障后恢复到一致状态</li>
                         </ul>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-yellow-400 font-semibold mb-1">🛡️ 数据控制功能</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>数据安全性保护</li>
-                          <li>数据完整性检查</li>
-                          <li>并发控制</li>
-                          <li>数据库恢复</li>
-                        </ul>
+                    </div>
+                  </div>
+
+                  <!-- 主流数据库产品 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-server text-indigo-400"></i> 主流数据库产品
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">了解主流数据库产品有助于在实际项目中选择合适的数据库系统。不同的数据库产品在性能、功能、应用场景等方面各有特点。</p>
+                    
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">🏢 关系型数据库</h5>
+                        <div class="space-y-2">
+                          <div class="flex items-center gap-2 p-2 bg-dark rounded">
+                            <span class="text-blue-400 font-bold">Oracle</span>
+                            <span class="text-gray-400">- 企业级数据库，功能强大，支持大型应用</span>
+                          </div>
+                          <div class="flex items-center gap-2 p-2 bg-dark rounded">
+                            <span class="text-yellow-400 font-bold">MySQL</span>
+                            <span class="text-gray-400">- 开源数据库，Web应用首选，社区活跃</span>
+                          </div>
+                          <div class="flex items-center gap-2 p-2 bg-dark rounded">
+                            <span class="text-red-400 font-bold">SQL Server</span>
+                            <span class="text-gray-400">- 微软产品，与.NET生态集成良好</span>
+                          </div>
+                          <div class="flex items-center gap-2 p-2 bg-dark rounded">
+                            <span class="text-cyan-400 font-bold">PostgreSQL</span>
+                            <span class="text-gray-400">- 开源数据库，功能丰富，支持扩展</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">🚀 NoSQL数据库</h5>
+                        <div class="space-y-2">
+                          <div class="flex items-center gap-2 p-2 bg-dark rounded">
+                            <span class="text-emerald-400 font-bold">MongoDB</span>
+                            <span class="text-gray-400">- 文档数据库，灵活的数据模型</span>
+                          </div>
+                          <div class="flex items-center gap-2 p-2 bg-dark rounded">
+                            <span class="text-red-400 font-bold">Redis</span>
+                            <span class="text-gray-400">- 键值数据库，高性能缓存</span>
+                          </div>
+                          <div class="flex items-center gap-2 p-2 bg-dark rounded">
+                            <span class="text-blue-400 font-bold">Elasticsearch</span>
+                            <span class="text-gray-400">- 搜索引擎，全文检索</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -780,192 +969,113 @@ print(df)
               </div>
             </div>
 
-            <!-- 模块2：SQL语言基础 -->
-            <div id="module2-sql" class="knowledge-section hidden">
+            <!-- 模块2：关系数据库理论 -->
+            <div id="module2-theory" class="knowledge-section hidden">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-code"></i> 模块2：SQL语言基础（12学时）
+                  <i class="fa fa-sitemap"></i> 模块2：关系数据库理论（10学时）
                 </h3>
 
                 <div class="grid md:grid-cols-2 gap-6">
-                  <!-- SQL简介 -->
+                  <!-- 关系模型基本概念 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-info-circle text-cyan-400"></i> SQL简介
+                      <i class="fa fa-table text-cyan-400"></i> 关系模型基本概念
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">SQL（Structured Query Language）是结构化查询语言，是关系数据库的标准语言。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">关系模型是建立在严格的数学概念基础上的数据模型。在关系模型中，现实世界的实体以及实体间的各种联系均用关系来表示。关系模型由关系数据结构、关系操作集合和关系完整性约束三部分组成，是目前应用最广泛的数据模型。</p>
+                    
                     <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">📝 SQL语言分类</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li><strong class="text-gray-300">DDL</strong>：数据定义语言（CREATE, ALTER, DROP）</li>
-                          <li><strong class="text-gray-300">DML</strong>：数据操纵语言（SELECT, INSERT, UPDATE, DELETE）</li>
-                          <li><strong class="text-gray-300">DCL</strong>：数据控制语言（GRANT, REVOKE）</li>
-                          <li><strong class="text-gray-300">TCL</strong>：事务控制语言（COMMIT, ROLLBACK）</li>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">📊</span> 关系模型核心术语
+                        </h5>
+                        <ul class="text-gray-300 space-y-2">
+                          <li class="flex items-start gap-2">
+                            <span class="text-cyan-400 mt-1">•</span>
+                            <span><strong class="text-gray-200">关系（Relation）</strong>：一个关系对应通常说的一张表，每个关系有一个关系名。关系是笛卡尔积的有限子集。</span>
+                          </li>
+                          <li class="flex items-start gap-2">
+                            <span class="text-cyan-400 mt-1">•</span>
+                            <span><strong class="text-gray-200">元组（Tuple）</strong>：表中的一行即为一个元组，表示一个具体的实体或联系。</span>
+                          </li>
+                          <li class="flex items-start gap-2">
+                            <span class="text-cyan-400 mt-1">•</span>
+                            <span><strong class="text-gray-200">属性（Attribute）</strong>：表中的一列即为一个属性，每个属性有一个属性名。</span>
+                          </li>
+                          <li class="flex items-start gap-2">
+                            <span class="text-cyan-400 mt-1">•</span>
+                            <span><strong class="text-gray-200">码（Key）</strong>：唯一标识元组的属性或属性组，包括候选码、主码、外码等。</span>
+                          </li>
+                          <li class="flex items-start gap-2">
+                            <span class="text-cyan-400 mt-1">•</span>
+                            <span><strong class="text-gray-200">域（Domain）</strong>：属性的取值范围，是一组具有相同数据类型的值的集合。</span>
+                          </li>
                         </ul>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">🔗 关系的形式化定义</h5>
+                        <p class="text-gray-300 mb-2">设D1, D2, ..., Dn为域，则D1×D2×...×Dn的子集称为在域D1, D2, ..., Dn上的关系，表示为R(D1, D2, ..., Dn)，其中R为关系名，n为关系的目或度。</p>
+                        <div class="bg-dark p-2 rounded font-mono text-xs text-cyan-300">
+                          <p>关系 = 表</p>
+                          <p>元组 = 行</p>
+                          <p>属性 = 列</p>
+                          <p>域 = 列的取值范围</p>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <!-- 数据查询SELECT -->
+                  <!-- 关系代数 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-search text-emerald-400"></i> 数据查询（SELECT）
+                      <i class="fa fa-calculator text-yellow-400"></i> 关系代数
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">SELECT语句用于从数据库中检索数据，是最常用的SQL语句。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
--- 基本查询
-SELECT * FROM students;
-
--- 条件查询
-SELECT name, age FROM students 
-WHERE age > 18;
-
--- 排序查询
-SELECT * FROM students 
-ORDER BY age DESC;
-
--- 分组查询
-SELECT department, COUNT(*) as count
-FROM employees
-GROUP BY department
-HAVING COUNT(*) > 5;
-
--- 多表连接查询
-SELECT s.name, c.course_name
-FROM students s
-INNER JOIN courses c ON s.id = c.student_id;
-
--- 子查询
-SELECT * FROM employees
-WHERE salary > (SELECT AVG(salary) FROM employees);
-                      </pre>
-                    </div>
-                  </div>
-
-                  <!-- 数据插入、更新、删除 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-edit text-yellow-400"></i> 数据插入、更新、删除
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">DML语句用于对数据库中的数据进行增删改操作。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
--- 插入数据
-INSERT INTO students (name, age, email)
-VALUES ('张三', 20, 'zhangsan@example.com');
-
--- 批量插入
-INSERT INTO students (name, age)
-VALUES ('李四', 22), ('王五', 21);
-
--- 更新数据
-UPDATE students 
-SET age = 21, email = 'new@example.com'
-WHERE name = '张三';
-
--- 删除数据
-DELETE FROM students 
-WHERE age < 18;
-
--- 清空表（保留结构）
-TRUNCATE TABLE students;
-                      </pre>
-                    </div>
-                  </div>
-
-                  <!-- 数据定义语言DDL -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-wrench text-purple-400"></i> 数据定义语言（DDL）
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">DDL用于定义和修改数据库结构，包括表、索引、视图等对象的创建和删除。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
--- 创建数据库
-CREATE DATABASE school;
-
--- 创建表
-CREATE TABLE students (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
-    age INT CHECK (age >= 0),
-    email VARCHAR(100) UNIQUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- 修改表结构
-ALTER TABLE students ADD COLUMN phone VARCHAR(20);
-ALTER TABLE students DROP COLUMN phone;
-ALTER TABLE students MODIFY COLUMN name VARCHAR(100);
-
--- 创建索引
-CREATE INDEX idx_name ON students(name);
-
--- 删除表
-DROP TABLE IF EXISTS students;
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 模块3：数据库设计 -->
-            <div id="module3-design" class="knowledge-section hidden">
-              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
-                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-pencil-square-o"></i> 模块3：数据库设计（12学时）
-                </h3>
-
-                <div class="grid md:grid-cols-2 gap-6">
-                  <!-- 实体-关系模型 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-object-group text-blue-400"></i> 实体-关系模型（E-R模型）
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">E-R模型是概念模型的一种，用于描述现实世界的实体及其联系。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">关系代数是一种抽象的查询语言，它用对关系的运算来表达查询。关系代数的运算对象是关系，运算结果也是关系。关系代数运算分为传统集合运算和专门的关系运算两类。</p>
+                    
                     <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">📊 基本要素</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li><strong class="text-gray-300">实体（Entity）</strong>：客观存在并可相互区分的事物</li>
-                          <li><strong class="text-gray-300">属性（Attribute）</strong>：实体所具有的某一特性</li>
-                          <li><strong class="text-gray-300">联系（Relationship）</strong>：实体之间的关联</li>
-                        </ul>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">📐 传统集合运算</h5>
+                        <div class="space-y-2">
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-cyan-400 font-semibold">并（Union）：R ∪ S</p>
+                            <p class="text-gray-400 text-xs">返回R和S中所有元组，去除重复</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-yellow-400 font-semibold">差（Difference）：R - S</p>
+                            <p class="text-gray-400 text-xs">返回在R中但不在S中的元组</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-pink-400 font-semibold">交（Intersection）：R ∩ S</p>
+                            <p class="text-gray-400 text-xs">返回同时在R和S中的元组</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-emerald-400 font-semibold">笛卡尔积：R × S</p>
+                            <p class="text-gray-400 text-xs">返回R和S所有元组的组合</p>
+                          </div>
+                        </div>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-yellow-400 font-semibold mb-1">🔗 联系类型</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>一对一联系（1:1）</li>
-                          <li>一对多联系（1:N）</li>
-                          <li>多对多联系（M:N）</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- 数据库设计原则 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-lightbulb-o text-yellow-400"></i> 数据库设计原则
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">良好的数据库设计应遵循一定的原则，确保数据的完整性、一致性和高效性。</p>
-                    <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">✅ 设计原则</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>避免数据冗余</li>
-                          <li>保证数据一致性</li>
-                          <li>合理设置主键和外键</li>
-                          <li>选择合适的数据类型</li>
-                          <li>考虑查询性能优化</li>
-                        </ul>
-                      </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-cyan-400 font-semibold mb-1">📋 设计步骤</h5>
-                        <p class="text-gray-400">需求分析 → 概念设计 → 逻辑设计 → 物理设计 → 实施与维护</p>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">🔧 专门的关系运算</h5>
+                        <div class="space-y-2">
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-cyan-400 font-semibold">选择（Selection）：σ<sub>F</sub>(R)</p>
+                            <p class="text-gray-400 text-xs">从R中选择满足条件F的元组</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-yellow-400 font-semibold">投影（Projection）：π<sub>A</sub>(R)</p>
+                            <p class="text-gray-400 text-xs">从R中选择若干属性列组成新关系</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-pink-400 font-semibold">连接（Join）：R ⋈ S</p>
+                            <p class="text-gray-400 text-xs">从R和S的笛卡尔积中选择满足条件的元组</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-emerald-400 font-semibold">除（Division）：R ÷ S</p>
+                            <p class="text-gray-400 text-xs">返回R中与S中所有元组都匹配的元组</p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -975,20 +1085,719 @@ DROP TABLE IF EXISTS students;
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-check-square text-emerald-400"></i> 范式理论
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">范式是关系数据库规范化的标准，用于消除数据冗余和更新异常。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">范式是关系数据库规范化的标准，用于消除数据冗余和更新异常。满足最低要求的叫第一范式（1NF），在第一范式中满足进一步要求的为第二范式（2NF），其余以此类推。范式越高，规范化程度越高，但查询效率可能降低。</p>
+                    
                     <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">📐 常用范式</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li><strong class="text-gray-300">第一范式（1NF）</strong>：属性不可再分</li>
-                          <li><strong class="text-gray-300">第二范式（2NF）</strong>：消除非主属性对码的部分依赖</li>
-                          <li><strong class="text-gray-300">第三范式（3NF）</strong>：消除非主属性对码的传递依赖</li>
-                          <li><strong class="text-gray-300">BCNF</strong>：消除主属性对码的部分和传递依赖</li>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-red-400 font-semibold mb-2">📐 第一范式（1NF）</h5>
+                        <p class="text-gray-300 mb-2"><strong>定义</strong>：关系的每个属性都是不可再分的数据项。</p>
+                        <p class="text-gray-400"><strong>要求</strong>：每个列都是原子的，不能包含数组、集合等复合值。</p>
+                        <div class="bg-dark p-2 rounded mt-2 font-mono text-xs text-cyan-300">
+                          <p>例如：地址不能拆分为省、市、区（违反1NF）</p>
+                          <p>应拆分为：省份、城市、区县三个独立字段</p>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">📐 第二范式（2NF）</h5>
+                        <p class="text-gray-300 mb-2"><strong>定义</strong>：在1NF基础上，非主属性完全函数依赖于码。</p>
+                        <p class="text-gray-400"><strong>要求</strong>：消除非主属性对码的部分依赖。</p>
+                        <div class="bg-dark p-2 rounded mt-2 font-mono text-xs text-cyan-300">
+                          <p>例如：(学号,课程号)→成绩，(学号,课程号)→学生姓名</p>
+                          <p>学生姓名只依赖学号，存在部分依赖（违反2NF）</p>
+                          <p>应拆分为：学生表(学号,姓名)、成绩表(学号,课程号,成绩)</p>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">📐 第三范式（3NF）</h5>
+                        <p class="text-gray-300 mb-2"><strong>定义</strong>：在2NF基础上，非主属性不传递依赖于码。</p>
+                        <p class="text-gray-400"><strong>要求</strong>：消除非主属性对码的传递依赖。</p>
+                        <div class="bg-dark p-2 rounded mt-2 font-mono text-xs text-cyan-300">
+                          <p>例如：学号→系名→系主任</p>
+                          <p>系主任传递依赖于学号（违反3NF）</p>
+                          <p>应拆分为：学生表(学号,系名)、系表(系名,系主任)</p>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-2">📐 BCNF（Boyce-Codd范式）</h5>
+                        <p class="text-gray-300 mb-2"><strong>定义</strong>：在3NF基础上，主属性不部分依赖于码，也不传递依赖于码。</p>
+                        <p class="text-gray-400"><strong>要求</strong>：每个决定因素都包含候选码。</p>
+                        <div class="bg-dark p-2 rounded mt-2 font-mono text-xs text-cyan-300">
+                          <p>BCNF是修正的第三范式，扩充了3NF的定义</p>
+                          <p>比3NF更严格，消除了主属性对码的部分和传递依赖</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 函数依赖 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-link text-pink-400"></i> 函数依赖
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">函数依赖是关系模式中属性之间的一种约束关系，是规范化理论的依据。设R(U)是属性集U上的关系模式，X、Y是U的子集。若对于R(U)的任意一个可能的关系r，r中不可能存在两个元组在X上的属性值相等而在Y上的属性值不等，则称X函数确定Y，或Y函数依赖于X，记作X→Y。</p>
+                    
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">📊 函数依赖类型</h5>
+                        <div class="space-y-2">
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-cyan-400 font-semibold">完全函数依赖</p>
+                            <p class="text-gray-400 text-xs">Y完全依赖于X，不依赖X的任何真子集。记作X ⟶ Y</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-yellow-400 font-semibold">部分函数依赖</p>
+                            <p class="text-gray-400 text-xs">Y依赖于X，但也依赖于X的真子集。记作X ↛ Y</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-pink-400 font-semibold">传递函数依赖</p>
+                            <p class="text-gray-400 text-xs">X→Y，Y→Z，且Y不依赖于X，则X传递依赖于Z</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">🔧 Armstrong公理系统</h5>
+                        <div class="space-y-1 text-gray-300">
+                          <p>• <strong class="text-gray-200">自反律</strong>：若Y⊆X，则X→Y</p>
+                          <p>• <strong class="text-gray-200">增广律</strong>：若X→Y，则XZ→YZ</p>
+                          <p>• <strong class="text-gray-200">传递律</strong>：若X→Y且Y→Z，则X→Z</p>
+                        </div>
+                        <div class="mt-2 p-2 bg-dark rounded">
+                          <p class="text-emerald-400 font-semibold text-xs">导出规则：</p>
+                          <p class="text-gray-400 text-xs">合并规则、分解规则、伪传递规则</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 完整性约束 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-shield text-blue-400"></i> 完整性约束
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">完整性约束是保证数据库中数据正确性和相容性的机制。关系模型的完整性约束包括实体完整性、参照完整性和用户定义的完整性三类，前两者是关系模型必须满足的完整性约束条件。</p>
+                    
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🔐</span> 实体完整性
+                        </h5>
+                        <p class="text-gray-300 mb-2">若属性（或属性组）A是基本关系R的主属性，则A不能取空值。</p>
+                        <p class="text-gray-400 text-xs">主键是唯一标识实体的属性，空值意味着无法标识实体，违反了实体完整性。</p>
+                        <div class="bg-dark p-2 rounded mt-2 font-mono text-xs text-cyan-300">
+                          <p>CREATE TABLE students (</p>
+                          <p>  id INT PRIMARY KEY,  -- 主键不能为空</p>
+                          <p>  name VARCHAR(50)</p>
+                          <p>);</p>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🔗</span> 参照完整性
+                        </h5>
+                        <p class="text-gray-300 mb-2">若属性（或属性组）F是基本关系R的外码，它与基本关系S的主码K相对应，则对于R中每个元组在F上的值必须：</p>
+                        <ul class="text-gray-400 text-xs space-y-1">
+                          <li>• 或者取空值（NULL）</li>
+                          <li>• 或者等于S中某个元组的主码值</li>
+                        </ul>
+                        <div class="bg-dark p-2 rounded mt-2 font-mono text-xs text-cyan-300">
+                          <p>CREATE TABLE orders (</p>
+                          <p>  id INT PRIMARY KEY,</p>
+                          <p>  user_id INT,</p>
+                          <p>  FOREIGN KEY (user_id) REFERENCES users(id)</p>
+                          <p>);</p>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-pink-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">⚙️</span> 用户定义的完整性
+                        </h5>
+                        <p class="text-gray-300 mb-2">针对某一具体关系数据库的约束条件，反映具体应用领域的数据要求。</p>
+                        <div class="bg-dark p-2 rounded mt-2 font-mono text-xs text-cyan-300">
+                          <p>CREATE TABLE products (</p>
+                          <p>  id INT PRIMARY KEY,</p>
+                          <p>  price DECIMAL(10,2) CHECK (price > 0),</p>
+                          <p>  stock INT DEFAULT 0,</p>
+                          <p>  name VARCHAR(100) NOT NULL</p>
+                          <p>);</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 规范化过程 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-refresh text-purple-400"></i> 规范化过程
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">规范化是将一个低一级范式的关系模式通过模式分解转换为若干个高一级范式的关系模式的集合的过程。规范化实质上是概念的单一化，即一个关系描述一个概念。</p>
+                    
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">📊 规范化步骤</h5>
+                        <div class="space-y-2">
+                          <div class="flex items-center gap-2 p-2 bg-dark rounded">
+                            <span class="bg-red-500 text-white px-2 py-1 rounded text-xs">1NF</span>
+                            <span class="text-gray-300">消除非原子属性 → 属性不可再分</span>
+                          </div>
+                          <div class="flex items-center gap-2 p-2 bg-dark rounded">
+                            <span class="bg-yellow-500 text-white px-2 py-1 rounded text-xs">2NF</span>
+                            <span class="text-gray-300">消除部分依赖 → 完全函数依赖</span>
+                          </div>
+                          <div class="flex items-center gap-2 p-2 bg-dark rounded">
+                            <span class="bg-emerald-500 text-white px-2 py-1 rounded text-xs">3NF</span>
+                            <span class="text-gray-300">消除传递依赖 → 直接依赖</span>
+                          </div>
+                          <div class="flex items-center gap-2 p-2 bg-dark rounded">
+                            <span class="bg-blue-500 text-white px-2 py-1 rounded text-xs">BCNF</span>
+                            <span class="text-gray-300">消除主属性依赖 → 决定因素含码</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">⚠️ 规范化与性能权衡</h5>
+                        <ul class="text-gray-300 space-y-1">
+                          <li>• <strong class="text-gray-200">优点</strong>：减少数据冗余，消除更新异常</li>
+                          <li>• <strong class="text-gray-200">缺点</strong>：增加连接操作，可能降低查询效率</li>
+                          <li>• <strong class="text-gray-200">建议</strong>：一般达到3NF即可，根据实际需求权衡</li>
                         </ul>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-yellow-400 font-semibold mb-1">⚠️ 范式与反范式</h5>
-                        <p class="text-gray-400">过度规范化可能导致查询性能下降，实际设计中需要权衡范式化和性能。</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 模块3：SQL语言 -->
+            <div id="module3-sql" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-code"></i> 模块3：SQL语言（12学时）
+                </h3>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <!-- SQL概述 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-info-circle text-cyan-400"></i> SQL概述
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">SQL（Structured Query Language，结构化查询语言）是关系数据库的标准语言，是一种非过程化语言。SQL语言简洁、易学易用，功能强大，可以完成数据定义、数据操纵、数据控制等核心功能。SQL已成为国际标准，各大数据库厂商都支持SQL标准。</p>
+                    
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">📝</span> SQL语言分类
+                        </h5>
+                        <div class="space-y-2">
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-cyan-400 font-semibold">DDL（数据定义语言）</p>
+                            <p class="text-gray-400 text-xs">CREATE, ALTER, DROP, TRUNCATE - 定义和修改数据库结构</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-yellow-400 font-semibold">DML（数据操纵语言）</p>
+                            <p class="text-gray-400 text-xs">SELECT, INSERT, UPDATE, DELETE - 查询和修改数据</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-pink-400 font-semibold">DCL（数据控制语言）</p>
+                            <p class="text-gray-400 text-xs">GRANT, REVOKE - 控制数据访问权限</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-emerald-400 font-semibold">TCL（事务控制语言）</p>
+                            <p class="text-gray-400 text-xs">COMMIT, ROLLBACK, SAVEPOINT - 控制事务</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">💡 SQL语言特点</h5>
+                        <ul class="text-gray-300 space-y-1">
+                          <li>• <strong class="text-gray-200">非过程化</strong>：只需指定"做什么"，不需指定"怎么做"</li>
+                          <li>• <strong class="text-gray-200">面向集合</strong>：操作对象和结果都是元组的集合</li>
+                          <li>• <strong class="text-gray-200">统一性</strong>：独立和嵌入式两种使用方式语法一致</li>
+                          <li>• <strong class="text-gray-200">简洁性</strong>：语法简单，核心动词只有9个</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- DDL数据定义语言 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-wrench text-purple-400"></i> DDL数据定义语言
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">DDL用于定义和修改数据库结构，包括数据库、表、索引、视图等对象的创建、修改和删除。DDL操作会自动提交事务，影响数据库的结构而非数据内容。</p>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+-- ========== 数据库操作 ==========
+CREATE DATABASE school CHARACTER SET utf8mb4;
+DROP DATABASE IF EXISTS school;
+USE school;
+
+-- ========== 表操作 ==========
+-- 创建表
+CREATE TABLE students (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL COMMENT '学生姓名',
+    age INT CHECK (age >= 0 AND age <= 150),
+    email VARCHAR(100) UNIQUE,
+    gender ENUM('男', '女') DEFAULT '男',
+    department_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_name (name),
+    FOREIGN KEY (department_id) REFERENCES departments(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 修改表结构
+ALTER TABLE students ADD COLUMN phone VARCHAR(20);
+ALTER TABLE students DROP COLUMN phone;
+ALTER TABLE students MODIFY COLUMN name VARCHAR(100);
+ALTER TABLE students CHANGE COLUMN name student_name VARCHAR(100);
+ALTER TABLE students ADD INDEX idx_age (age);
+
+-- 删除表
+DROP TABLE IF EXISTS students;
+TRUNCATE TABLE students;  -- 清空表，保留结构
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- DML数据查询SELECT -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-search text-emerald-400"></i> DML数据查询（SELECT）
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">SELECT是SQL中最常用的语句，用于从数据库中检索数据。SELECT语句功能强大，支持条件过滤、排序、分组、聚合、连接、子查询等复杂操作。</p>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+-- ========== 基本查询 ==========
+SELECT * FROM students;
+SELECT name, age FROM students;
+SELECT DISTINCT department FROM students;
+
+-- ========== 条件查询 ==========
+SELECT * FROM students WHERE age > 18;
+SELECT * FROM students WHERE age BETWEEN 18 AND 25;
+SELECT * FROM students WHERE name LIKE '张%';
+SELECT * FROM students WHERE department IN ('计算机', '数学');
+SELECT * FROM students WHERE age > 18 AND gender = '女';
+
+-- ========== 排序与限制 ==========
+SELECT * FROM students ORDER BY age DESC, name ASC;
+SELECT * FROM students LIMIT 10 OFFSET 20;  -- 分页
+
+-- ========== 聚合函数 ==========
+SELECT COUNT(*) as total FROM students;
+SELECT AVG(age) as avg_age, MAX(age), MIN(age), SUM(credit);
+SELECT department, COUNT(*) as count 
+FROM students GROUP BY department HAVING count > 5;
+
+-- ========== 多表连接 ==========
+-- 内连接
+SELECT s.name, c.course_name
+FROM students s
+INNER JOIN enrollments e ON s.id = e.student_id
+INNER JOIN courses c ON e.course_id = c.id;
+
+-- 左外连接
+SELECT s.name, e.score
+FROM students s
+LEFT JOIN enrollments e ON s.id = e.student_id;
+
+-- 自连接
+SELECT e1.name, e2.name as manager
+FROM employees e1
+LEFT JOIN employees e2 ON e1.manager_id = e2.id;
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 子查询与高级查询 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-code-fork text-yellow-400"></i> 子查询与高级查询
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">子查询是嵌套在其他查询中的查询，可以在WHERE、FROM、SELECT等子句中使用。子查询使得复杂的查询逻辑更加清晰，是SQL高级应用的重要内容。</p>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+-- ========== 标量子查询 ==========
+SELECT * FROM employees
+WHERE salary > (SELECT AVG(salary) FROM employees);
+
+-- ========== IN子查询 ==========
+SELECT * FROM students
+WHERE department_id IN (SELECT id FROM departments WHERE name = '计算机');
+
+-- ========== EXISTS子查询 ==========
+SELECT * FROM students s
+WHERE EXISTS (SELECT 1 FROM enrollments e WHERE e.student_id = s.id);
+
+-- ========== FROM子句子查询（派生表）==========
+SELECT dept_name, avg_salary
+FROM (SELECT d.name as dept_name, AVG(e.salary) as avg_salary
+      FROM departments d
+      JOIN employees e ON d.id = e.department_id
+      GROUP BY d.id, d.name) AS dept_stats
+WHERE avg_salary > 10000;
+
+-- ========== 相关子查询 ==========
+SELECT s.name, s.score,
+       (SELECT AVG(score) FROM enrollments WHERE course_id = s.course_id) as avg_score
+FROM enrollments s;
+
+-- ========== UNION联合查询 ==========
+SELECT name FROM students
+UNION
+SELECT name FROM teachers;
+
+-- ========== CASE表达式 ==========
+SELECT name,
+       CASE 
+         WHEN score >= 90 THEN '优秀'
+         WHEN score >= 80 THEN '良好'
+         WHEN score >= 60 THEN '及格'
+         ELSE '不及格'
+       END as grade
+FROM enrollments;
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- DML数据操作 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-edit text-pink-400"></i> DML数据操作
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">DML包括INSERT、UPDATE、DELETE三种操作，用于对数据库中的数据进行增删改。这些操作会改变数据内容，需要配合事务使用以保证数据一致性。</p>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+-- ========== INSERT插入数据 ==========
+-- 单行插入
+INSERT INTO students (name, age, email)
+VALUES ('张三', 20, 'zhangsan@example.com');
+
+-- 多行插入
+INSERT INTO students (name, age) VALUES
+('李四', 22),
+('王五', 21),
+('赵六', 23);
+
+-- 从查询结果插入
+INSERT INTO students_backup
+SELECT * FROM students WHERE age > 20;
+
+-- ========== UPDATE更新数据 ==========
+-- 简单更新
+UPDATE students SET age = 21 WHERE name = '张三';
+
+-- 多字段更新
+UPDATE students 
+SET age = 21, email = 'new@example.com', updated_at = NOW()
+WHERE id = 1;
+
+-- 带子查询的更新
+UPDATE employees e
+SET salary = salary * 1.1
+WHERE department_id = (SELECT id FROM departments WHERE name = '研发');
+
+-- ========== DELETE删除数据 ==========
+-- 条件删除
+DELETE FROM students WHERE age < 18;
+
+-- 带子查询的删除
+DELETE FROM students
+WHERE department_id IN (SELECT id FROM departments WHERE status = 'closed');
+
+-- 清空表（DDL，更快，重置自增）
+TRUNCATE TABLE students;
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 索引与视图 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-bolt text-blue-400"></i> 索引与视图
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">索引是提高查询效率的重要手段，视图是虚拟表，可以简化复杂查询。合理使用索引和视图是数据库优化的重要手段。</p>
+                    
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">📊 索引操作</h5>
+                        <div class="bg-dark p-2 rounded font-mono text-xs text-cyan-300">
+                          <p>-- 创建普通索引</p>
+                          <p>CREATE INDEX idx_name ON students(name);</p>
+                          <p>-- 创建唯一索引</p>
+                          <p>CREATE UNIQUE INDEX idx_email ON students(email);</p>
+                          <p>-- 创建复合索引</p>
+                          <p>CREATE INDEX idx_dept_age ON students(department_id, age);</p>
+                          <p>-- 创建全文索引</p>
+                          <p>CREATE FULLTEXT INDEX idx_content ON articles(content);</p>
+                          <p>-- 删除索引</p>
+                          <p>DROP INDEX idx_name ON students;</p>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">👁️ 视图操作</h5>
+                        <div class="bg-dark p-2 rounded font-mono text-xs text-cyan-300">
+                          <p>-- 创建视图</p>
+                          <p>CREATE VIEW v_student_scores AS</p>
+                          <p>SELECT s.name, c.course_name, e.score</p>
+                          <p>FROM students s</p>
+                          <p>JOIN enrollments e ON s.id = e.student_id</p>
+                          <p>JOIN courses c ON e.course_id = c.id;</p>
+                          <p>-- 使用视图</p>
+                          <p>SELECT * FROM v_student_scores WHERE score > 80;</p>
+                          <p>-- 删除视图</p>
+                          <p>DROP VIEW IF EXISTS v_student_scores;</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 查询优化 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-tachometer text-red-400"></i> 查询优化技巧
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">SQL查询优化是数据库性能优化的核心。掌握查询优化技巧可以显著提高系统性能，减少资源消耗。</p>
+                    
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">⚡ 优化原则</h5>
+                        <ul class="text-gray-300 space-y-1">
+                          <li>• <strong class="text-gray-200">避免SELECT *</strong>：只查询需要的列</li>
+                          <li>• <strong class="text-gray-200">合理使用索引</strong>：WHERE、JOIN、ORDER BY字段建索引</li>
+                          <li>• <strong class="text-gray-200">避免在索引列上使用函数</strong>：会导致索引失效</li>
+                          <li>• <strong class="text-gray-200">避免隐式类型转换</strong>：保持类型一致</li>
+                          <li>• <strong class="text-gray-200">使用EXISTS代替IN</strong>：大数据量时更高效</li>
+                          <li>• <strong class="text-gray-200">使用LIMIT限制结果集</strong>：减少数据传输</li>
+                        </ul>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">📊 执行计划分析</h5>
+                        <div class="bg-dark p-2 rounded font-mono text-xs text-cyan-300">
+                          <p>-- 查看执行计划</p>
+                          <p>EXPLAIN SELECT * FROM students WHERE name = '张三';</p>
+                          <p>-- 查看详细执行计划</p>
+                          <p>EXPLAIN ANALYZE SELECT * FROM students s</p>
+                          <p>JOIN enrollments e ON s.id = e.student_id;</p>
+                        </div>
+                        <p class="text-gray-400 text-xs mt-2">重点关注：type（访问类型）、key（使用索引）、rows（扫描行数）、Extra（额外信息）</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 模块4：数据库设计 -->
+            <div id="module4-design" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-pencil-square-o"></i> 模块4：数据库设计（12学时）
+                </h3>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <!-- 数据库设计概述 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-sitemap text-cyan-400"></i> 数据库设计概述
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">数据库设计是指对于一个给定的应用环境，构造最优的数据库模式，建立数据库及其应用系统，使之能够有效地存储数据，满足各种用户的应用需求。数据库设计是数据库应用系统开发的核心环节，设计质量直接影响系统的性能和可维护性。</p>
+                    
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">📋</span> 设计步骤
+                        </h5>
+                        <div class="space-y-2">
+                          <div class="flex items-center gap-2 p-2 bg-dark rounded">
+                            <span class="bg-cyan-500 text-white px-2 py-1 rounded text-xs">1</span>
+                            <span class="text-gray-300"><strong>需求分析</strong>：收集用户需求，确定系统边界</span>
+                          </div>
+                          <div class="flex items-center gap-2 p-2 bg-dark rounded">
+                            <span class="bg-yellow-500 text-white px-2 py-1 rounded text-xs">2</span>
+                            <span class="text-gray-300"><strong>概念设计</strong>：设计E-R模型，描述实体和联系</span>
+                          </div>
+                          <div class="flex items-center gap-2 p-2 bg-dark rounded">
+                            <span class="bg-emerald-500 text-white px-2 py-1 rounded text-xs">3</span>
+                            <span class="text-gray-300"><strong>逻辑设计</strong>：将E-R图转换为关系模式</span>
+                          </div>
+                          <div class="flex items-center gap-2 p-2 bg-dark rounded">
+                            <span class="bg-pink-500 text-white px-2 py-1 rounded text-xs">4</span>
+                            <span class="text-gray-300"><strong>物理设计</strong>：选择存储结构和存取方法</span>
+                          </div>
+                          <div class="flex items-center gap-2 p-2 bg-dark rounded">
+                            <span class="bg-blue-500 text-white px-2 py-1 rounded text-xs">5</span>
+                            <span class="text-gray-300"><strong>实施与维护</strong>：创建数据库，测试和优化</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">💡 设计原则</h5>
+                        <ul class="text-gray-300 space-y-1">
+                          <li>• <strong class="text-gray-200">避免数据冗余</strong>：减少重复存储，节省空间</li>
+                          <li>• <strong class="text-gray-200">保证数据一致性</strong>：避免数据冲突和矛盾</li>
+                          <li>• <strong class="text-gray-200">合理设置约束</strong>：主键、外键、唯一约束等</li>
+                          <li>• <strong class="text-gray-200">考虑性能优化</strong>：索引、分区、分表等</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- E-R模型 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-object-group text-blue-400"></i> 实体-关系模型（E-R模型）
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">E-R模型是概念模型的一种，由Peter Chen于1976年提出。E-R模型用图形方式描述现实世界的实体及其联系，独立于具体的DBMS，是数据库概念设计的主要工具。E-R图简单直观，易于理解和交流。</p>
+                    
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">📊</span> 基本要素
+                        </h5>
+                        <div class="space-y-2">
+                          <div class="p-2 bg-dark rounded border-l-2 border-cyan-400">
+                            <p class="text-cyan-400 font-semibold">实体（Entity）</p>
+                            <p class="text-gray-400 text-xs">客观存在并可相互区分的事物。用矩形表示，如"学生"、"课程"。</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded border-l-2 border-yellow-400">
+                            <p class="text-yellow-400 font-semibold">属性（Attribute）</p>
+                            <p class="text-gray-400 text-xs">实体所具有的某一特性。用椭圆表示，如"学号"、"姓名"。</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded border-l-2 border-pink-400">
+                            <p class="text-pink-400 font-semibold">联系（Relationship）</p>
+                            <p class="text-gray-400 text-xs">实体之间的关联。用菱形表示，如"选课"、"授课"。</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">🔗 联系类型</h5>
+                        <div class="grid grid-cols-3 gap-2">
+                          <div class="p-2 bg-dark rounded text-center">
+                            <p class="text-cyan-400 font-semibold">1:1</p>
+                            <p class="text-gray-400 text-xs">一对一</p>
+                            <p class="text-gray-500 text-xs">如：夫妻关系</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded text-center">
+                            <p class="text-yellow-400 font-semibold">1:N</p>
+                            <p class="text-gray-400 text-xs">一对多</p>
+                            <p class="text-gray-500 text-xs">如：班级-学生</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded text-center">
+                            <p class="text-pink-400 font-semibold">M:N</p>
+                            <p class="text-gray-400 text-xs">多对多</p>
+                            <p class="text-gray-500 text-xs">如：学生-课程</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 概念设计 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-lightbulb-o text-yellow-400"></i> 概念设计
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">概念设计阶段的目标是产生反映用户信息需求的数据库概念结构，即概念模式。概念结构独立于数据库逻辑结构，独立于具体的DBMS，是各种数据模型的共同基础。</p>
+                    
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">📐 E-R图设计方法</h5>
+                        <ul class="text-gray-300 space-y-1">
+                          <li>• <strong class="text-gray-200">自顶向下</strong>：先定义全局概念结构，再逐步细化</li>
+                          <li>• <strong class="text-gray-200">自底向上</strong>：先定义局部概念结构，再集成全局</li>
+                          <li>• <strong class="text-gray-200">逐步扩张</strong>：先定义核心概念，再逐步扩展</li>
+                          <li>• <strong class="text-gray-200">混合策略</strong>：结合以上方法</li>
+                        </ul>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">🔧 E-R图绘制示例</h5>
+                        <div class="bg-dark p-2 rounded font-mono text-xs text-cyan-300">
+                          <p>【学生】--(选课)--【课程】</p>
+                          <p>    |              |</p>
+                          <p>  学号,姓名    课程号,课程名</p>
+                          <p>    |              |</p>
+                          <p>    +----成绩------+</p>
+                        </div>
+                        <p class="text-gray-400 text-xs mt-2">学生与课程是多对多关系，选课联系有成绩属性</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 逻辑设计 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-table text-emerald-400"></i> 逻辑设计
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">逻辑设计阶段将概念结构转换为某个DBMS所支持的数据模型，并对其进行优化。对于关系数据库，主要是将E-R图转换为关系模式，并进行规范化处理。</p>
+                    
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">📊 E-R图转关系模式规则</h5>
+                        <div class="space-y-2">
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-cyan-400 font-semibold text-xs">实体转换</p>
+                            <p class="text-gray-400 text-xs">每个实体转换为一个关系模式，实体的属性即为关系的属性，实体的码即为关系的码。</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-yellow-400 font-semibold text-xs">1:1联系转换</p>
+                            <p class="text-gray-400 text-xs">可以合并到任一实体中，或单独建立一个关系。</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-pink-400 font-semibold text-xs">1:N联系转换</p>
+                            <p class="text-gray-400 text-xs">将"1"端的主码加入到"N"端作为外码。</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-emerald-400 font-semibold text-xs">M:N联系转换</p>
+                            <p class="text-gray-400 text-xs">建立一个新的关系，包含两端实体的主码和联系属性。</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 物理设计 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-server text-purple-400"></i> 物理设计
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">物理设计阶段为逻辑数据模型选取一个最适合应用环境的物理结构，包括存储结构和存取方法。物理设计依赖于给定的DBMS和硬件环境，目标是提高数据库的性能。</p>
+                    
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">💾 存储结构设计</h5>
+                        <ul class="text-gray-300 space-y-1">
+                          <li>• <strong class="text-gray-200">确定数据存放位置</strong>：热数据、冷数据分离</li>
+                          <li>• <strong class="text-gray-200">确定系统配置</strong>：内存、缓冲区大小等</li>
+                          <li>• <strong class="text-gray-200">选择存储引擎</strong>：InnoDB、MyISAM等</li>
+                        </ul>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">⚡ 存取方法设计</h5>
+                        <ul class="text-gray-300 space-y-1">
+                          <li>• <strong class="text-gray-200">索引设计</strong>：B+树索引、哈希索引、全文索引</li>
+                          <li>• <strong class="text-gray-200">聚簇设计</strong>：按物理顺序存储数据</li>
+                          <li>• <strong class="text-gray-200">分区设计</strong>：水平分区、垂直分区</li>
+                        </ul>
                       </div>
                     </div>
                   </div>
@@ -996,40 +1805,46 @@ DROP TABLE IF EXISTS students;
                   <!-- 数据库设计实践 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-code text-purple-400"></i> 数据库设计实践
+                      <i class="fa fa-code text-pink-400"></i> 数据库设计实践
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">通过实际案例学习数据库设计的完整流程。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">通过实际案例学习数据库设计的完整流程。以学生选课系统为例，展示从需求分析到物理设计的全过程。</p>
+                    
                     <div class="bg-dark p-3 rounded font-mono text-sm">
                       <pre class="text-cyan-300">
--- 学生选课系统数据库设计示例
+-- ========== 学生选课系统数据库设计 ==========
 
 -- 学生表
 CREATE TABLE students (
-    student_id VARCHAR(20) PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    gender CHAR(1),
-    birth_date DATE,
-    department_id INT
-);
+    student_id VARCHAR(20) PRIMARY KEY COMMENT '学号',
+    name VARCHAR(50) NOT NULL COMMENT '姓名',
+    gender ENUM('男', '女') DEFAULT '男' COMMENT '性别',
+    birth_date DATE COMMENT '出生日期',
+    department_id INT COMMENT '院系ID',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_name (name),
+    INDEX idx_department (department_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 课程表
 CREATE TABLE courses (
-    course_id VARCHAR(20) PRIMARY KEY,
-    course_name VARCHAR(100) NOT NULL,
-    credit DECIMAL(3,1),
-    teacher_id INT
-);
+    course_id VARCHAR(20) PRIMARY KEY COMMENT '课程号',
+    course_name VARCHAR(100) NOT NULL COMMENT '课程名',
+    credit DECIMAL(3,1) NOT NULL COMMENT '学分',
+    teacher_id INT COMMENT '教师ID',
+    INDEX idx_teacher (teacher_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 选课表（多对多关系的中间表）
+-- 选课表（多对多关系中间表）
 CREATE TABLE enrollments (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    student_id VARCHAR(20),
-    course_id VARCHAR(20),
-    score DECIMAL(5,2),
-    enroll_date DATE,
+    student_id VARCHAR(20) NOT NULL,
+    course_id VARCHAR(20) NOT NULL,
+    score DECIMAL(5,2) COMMENT '成绩',
+    enroll_date DATE DEFAULT (CURRENT_DATE),
+    UNIQUE KEY uk_student_course (student_id, course_id),
     FOREIGN KEY (student_id) REFERENCES students(student_id),
     FOREIGN KEY (course_id) REFERENCES courses(course_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
                       </pre>
                     </div>
                   </div>
@@ -1037,112 +1852,252 @@ CREATE TABLE enrollments (
               </div>
             </div>
 
-            <!-- 模块4：数据库管理 -->
-            <div id="module4-management" class="knowledge-section hidden">
+            <!-- 模块5：数据库管理 -->
+            <div id="module5-management" class="knowledge-section hidden">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-shield"></i> 模块4：数据库管理（12学时）
+                  <i class="fa fa-shield"></i> 模块5：数据库管理（12学时）
                 </h3>
 
                 <div class="grid md:grid-cols-2 gap-6">
-                  <!-- 用户权限管理 -->
+                  <!-- 事务管理 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-users text-blue-400"></i> 用户权限管理
+                      <i class="fa fa-exchange text-cyan-400"></i> 事务管理
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">数据库用户权限管理确保只有授权用户才能访问和操作数据。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
--- 创建用户
-CREATE USER 'admin'@'localhost' 
-IDENTIFIED BY 'password123';
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">事务是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。事务是数据库恢复和并发控制的基本单位。事务具有ACID四个特性：原子性、一致性、隔离性、持久性。</p>
+                    
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🔐</span> ACID特性
+                        </h5>
+                        <div class="space-y-2">
+                          <div class="p-2 bg-dark rounded border-l-2 border-cyan-400">
+                            <p class="text-cyan-400 font-semibold">原子性（Atomicity）</p>
+                            <p class="text-gray-400 text-xs">事务中的操作要么全部完成，要么全部不完成，不会结束在中间某个环节。</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded border-l-2 border-yellow-400">
+                            <p class="text-yellow-400 font-semibold">一致性（Consistency）</p>
+                            <p class="text-gray-400 text-xs">事务必须使数据库从一个一致性状态变换到另一个一致性状态。</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded border-l-2 border-pink-400">
+                            <p class="text-pink-400 font-semibold">隔离性（Isolation）</p>
+                            <p class="text-gray-400 text-xs">一个事务的执行不能被其他事务干扰，各并发事务之间相互隔离。</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded border-l-2 border-emerald-400">
+                            <p class="text-emerald-400 font-semibold">持久性（Durability）</p>
+                            <p class="text-gray-400 text-xs">一个事务一旦提交，它对数据库中数据的改变就是永久性的。</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">📊 事务控制语句</h5>
+                        <div class="bg-dark p-2 rounded font-mono text-xs text-cyan-300">
+                          <p>-- 开始事务</p>
+                          <p>START TRANSACTION;</p>
+                          <p>BEGIN;</p>
+                          <p>-- 提交事务</p>
+                          <p>COMMIT;</p>
+                          <p>-- 回滚事务</p>
+                          <p>ROLLBACK;</p>
+                          <p>-- 设置保存点</p>
+                          <p>SAVEPOINT savepoint_name;</p>
+                          <p>-- 回滚到保存点</p>
+                          <p>ROLLBACK TO savepoint_name;</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
--- 授予权限
-GRANT ALL PRIVILEGES ON *.* 
-TO 'admin'@'localhost';
+                  <!-- 并发控制 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-users text-yellow-400"></i> 并发控制
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">当多个用户并发访问数据库时，可能会产生多个事务同时存取同一数据的情况。如果不加以控制，可能会存取和存储不正确的数据，破坏数据库的一致性。并发控制的主要技术是封锁。</p>
+                    
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">🔒 封锁类型</h5>
+                        <div class="space-y-2">
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-cyan-400 font-semibold">共享锁（S锁，Shared Lock）</p>
+                            <p class="text-gray-400 text-xs">用于读操作，多个事务可同时获得同一数据对象的S锁。</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-yellow-400 font-semibold">排他锁（X锁，Exclusive Lock）</p>
+                            <p class="text-gray-400 text-xs">用于写操作，一个事务获得X锁后，其他事务不能再获得任何锁。</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">⚠️ 并发问题</h5>
+                        <ul class="text-gray-300 space-y-1">
+                          <li>• <strong class="text-gray-200">丢失修改</strong>：两事务同时修改同一数据，一个覆盖另一个</li>
+                          <li>• <strong class="text-gray-200">不可重复读</strong>：同一事务两次读取同一数据结果不同</li>
+                          <li>• <strong class="text-gray-200">读"脏"数据</strong>：读取了未提交事务修改的数据</li>
+                          <li>• <strong class="text-gray-200">幻读</strong>：同一查询返回不同行数</li>
+                        </ul>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-pink-400 font-semibold mb-2">📊 隔离级别</h5>
+                        <div class="space-y-1 text-xs">
+                          <div class="flex justify-between p-1 bg-dark rounded">
+                            <span class="text-cyan-400">READ UNCOMMITTED</span>
+                            <span class="text-gray-400">可能脏读</span>
+                          </div>
+                          <div class="flex justify-between p-1 bg-dark rounded">
+                            <span class="text-yellow-400">READ COMMITTED</span>
+                            <span class="text-gray-400">避免脏读</span>
+                          </div>
+                          <div class="flex justify-between p-1 bg-dark rounded">
+                            <span class="text-pink-400">REPEATABLE READ</span>
+                            <span class="text-gray-400">避免不可重复读</span>
+                          </div>
+                          <div class="flex justify-between p-1 bg-dark rounded">
+                            <span class="text-emerald-400">SERIALIZABLE</span>
+                            <span class="text-gray-400">避免幻读</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
--- 授予特定权限
-GRANT SELECT, INSERT, UPDATE 
-ON school.students TO 'teacher'@'localhost';
-
--- 查看用户权限
-SHOW GRANTS FOR 'admin'@'localhost';
-
--- 撤销权限
-REVOKE DELETE ON school.* 
-FROM 'teacher'@'localhost';
-
--- 删除用户
-DROP USER 'admin'@'localhost';
-
--- 刷新权限
-FLUSH PRIVILEGES;
-                      </pre>
+                  <!-- 数据库恢复 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-refresh text-emerald-400"></i> 数据库恢复技术
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">数据库恢复是指将数据库从错误状态恢复到某一已知的正确状态（一致性状态）。恢复技术是衡量系统优劣的重要指标，常用的恢复技术有日志文件、数据转储等。</p>
+                    
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">📋 恢复技术</h5>
+                        <div class="space-y-2">
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-cyan-400 font-semibold">日志文件（Log File）</p>
+                            <p class="text-gray-400 text-xs">记录事务对数据库的更新操作，包括事务ID、操作类型、更新前后数据等。</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-yellow-400 font-semibold">数据转储（Dump）</p>
+                            <p class="text-gray-400 text-xs">定期将数据库复制到磁带或另一个磁盘上，包括静态转储和动态转储。</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-pink-400 font-semibold">检查点（Checkpoint）</p>
+                            <p class="text-gray-400 text-xs">定期在日志文件中设置检查点，恢复时只需从最近的检查点开始。</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">🔧 恢复策略</h5>
+                        <ul class="text-gray-300 space-y-1">
+                          <li>• <strong class="text-gray-200">事务故障恢复</strong>：撤销（UNDO）未完成事务</li>
+                          <li>• <strong class="text-gray-200">系统故障恢复</strong>：重做（REDO）已提交事务，撤销未完成事务</li>
+                          <li>• <strong class="text-gray-200">介质故障恢复</strong>：重装数据库备份，重做日志</li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
 
                   <!-- 数据备份与恢复 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-floppy-o text-emerald-400"></i> 数据备份与恢复
+                      <i class="fa fa-floppy-o text-blue-400"></i> 数据备份与恢复
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">数据备份是防止数据丢失的重要手段，恢复是备份的逆过程。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">数据备份是防止数据丢失的重要手段，是数据库管理员的日常工作之一。合理的备份策略可以在数据丢失时快速恢复数据，保证业务连续性。</p>
+                    
                     <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">💾 备份类型</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li><strong class="text-gray-300">完全备份</strong>：备份整个数据库</li>
-                          <li><strong class="text-gray-300">增量备份</strong>：只备份自上次备份后的变化</li>
-                          <li><strong class="text-gray-300">差异备份</strong>：备份自上次完全备份后的变化</li>
-                        </ul>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">💾 备份类型</h5>
+                        <div class="space-y-2">
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-cyan-400 font-semibold">完全备份</p>
+                            <p class="text-gray-400 text-xs">备份整个数据库，恢复时只需一个备份文件，但备份时间长、占用空间大。</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-yellow-400 font-semibold">增量备份</p>
+                            <p class="text-gray-400 text-xs">只备份自上次备份后变化的数据，备份速度快，但恢复时需要多个备份文件。</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-pink-400 font-semibold">差异备份</p>
+                            <p class="text-gray-400 text-xs">备份自上次完全备份后变化的数据，介于完全备份和增量备份之间。</p>
+                          </div>
+                        </div>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded font-mono text-xs">
-                        <pre class="text-cyan-300">
--- 使用mysqldump备份
-mysqldump -u root -p school > backup.sql
-
--- 备份特定表
-mysqldump -u root -p school students > students.sql
-
--- 恢复数据
-mysql -u root -p school < backup.sql
-                        </pre>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">🔧 MySQL备份命令</h5>
+                        <div class="bg-dark p-2 rounded font-mono text-xs text-cyan-300">
+                          <p># 完全备份</p>
+                          <p>mysqldump -u root -p school > backup.sql</p>
+                          <p># 备份特定表</p>
+                          <p>mysqldump -u root -p school students > students.sql</p>
+                          <p># 恢复数据</p>
+                          <p>mysql -u root -p school < backup.sql</p>
+                          <p># 二进制日志备份</p>
+                          <p>mysqlbinlog mysql-bin.000001 | mysql -u root -p</p>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <!-- 数据库性能优化 -->
+                  <!-- 用户权限管理 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-tachometer text-yellow-400"></i> 数据库性能优化
+                      <i class="fa fa-user-secret text-purple-400"></i> 用户权限管理
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">数据库性能优化是提高系统响应速度和处理能力的关键。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">数据库安全性是指保护数据库以防止不合法使用所造成的数据泄露、更改或破坏。用户权限管理是数据库安全性的重要组成部分，通过用户认证和权限控制来保护数据安全。</p>
+                    
                     <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">⚡ 优化策略</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>合理使用索引</li>
-                          <li>优化SQL查询语句</li>
-                          <li>数据库表结构优化</li>
-                          <li>配置参数调优</li>
-                          <li>读写分离与分库分表</li>
-                        </ul>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">🔐 权限类型</h5>
+                        <div class="grid grid-cols-2 gap-2">
+                          <div class="p-2 bg-dark rounded text-center">
+                            <p class="text-cyan-400 font-semibold text-xs">ALL PRIVILEGES</p>
+                            <p class="text-gray-400 text-xs">所有权限</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded text-center">
+                            <p class="text-yellow-400 font-semibold text-xs">SELECT</p>
+                            <p class="text-gray-400 text-xs">查询权限</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded text-center">
+                            <p class="text-pink-400 font-semibold text-xs">INSERT</p>
+                            <p class="text-gray-400 text-xs">插入权限</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded text-center">
+                            <p class="text-emerald-400 font-semibold text-xs">UPDATE</p>
+                            <p class="text-gray-400 text-xs">更新权限</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded text-center">
+                            <p class="text-blue-400 font-semibold text-xs">DELETE</p>
+                            <p class="text-gray-400 text-xs">删除权限</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded text-center">
+                            <p class="text-purple-400 font-semibold text-xs">CREATE</p>
+                            <p class="text-gray-400 text-xs">创建权限</p>
+                          </div>
+                        </div>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded font-mono text-xs">
-                        <pre class="text-cyan-300">
--- 查看执行计划
-EXPLAIN SELECT * FROM students 
-WHERE name = '张三';
-
--- 创建索引优化查询
-CREATE INDEX idx_name ON students(name);
-
--- 分析表
-ANALYZE TABLE students;
-
--- 优化表
-OPTIMIZE TABLE students;
-                        </pre>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">🔧 权限管理语句</h5>
+                        <div class="bg-dark p-2 rounded font-mono text-xs text-cyan-300">
+                          <p>-- 创建用户</p>
+                          <p>CREATE USER 'admin'@'localhost' IDENTIFIED BY 'password';</p>
+                          <p>-- 授予权限</p>
+                          <p>GRANT SELECT, INSERT ON school.* TO 'admin'@'localhost';</p>
+                          <p>-- 查看权限</p>
+                          <p>SHOW GRANTS FOR 'admin'@'localhost';</p>
+                          <p>-- 撤销权限</p>
+                          <p>REVOKE INSERT ON school.* FROM 'admin'@'localhost';</p>
+                          <p>-- 删除用户</p>
+                          <p>DROP USER 'admin'@'localhost';</p>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1152,21 +2107,30 @@ OPTIMIZE TABLE students;
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-lock text-red-400"></i> 数据库安全
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">数据库安全涉及数据保护、访问控制、审计等多个方面。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">数据库安全涉及数据保护、访问控制、审计等多个方面。随着数据泄露事件频发，数据库安全越来越受到重视。常见的安全威胁包括SQL注入、权限滥用、数据泄露等。</p>
+                    
                     <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">🔒 安全措施</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>身份认证与访问控制</li>
-                          <li>数据加密（传输加密、存储加密）</li>
-                          <li>SQL注入防护</li>
-                          <li>审计日志</li>
-                          <li>定期安全评估</li>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">🔒 安全措施</h5>
+                        <ul class="text-gray-300 space-y-1">
+                          <li>• <strong class="text-gray-200">身份认证</strong>：验证用户身份，如用户名密码、证书认证</li>
+                          <li>• <strong class="text-gray-200">访问控制</strong>：限制用户对数据的访问权限</li>
+                          <li>• <strong class="text-gray-200">数据加密</strong>：传输加密（SSL/TLS）、存储加密</li>
+                          <li>• <strong class="text-gray-200">审计日志</strong>：记录用户操作，便于追溯</li>
+                          <li>• <strong class="text-gray-200">SQL注入防护</strong>：使用参数化查询</li>
                         </ul>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-yellow-400 font-semibold mb-1">🛡️ SQL注入防护</h5>
-                        <p class="text-gray-400">使用参数化查询、预编译语句、输入验证等方式防止SQL注入攻击。</p>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">🛡️ SQL注入防护</h5>
+                        <div class="bg-dark p-2 rounded font-mono text-xs text-cyan-300">
+                          <p>-- 错误方式（存在注入风险）</p>
+                          <p>SELECT * FROM users WHERE name = '" + input + "'";</p>
+                          <p>-- 正确方式（参数化查询）</p>
+                          <p>PREPARE stmt FROM 'SELECT * FROM users WHERE name = ?';</p>
+                          <p>SET @name = '张三';</p>
+                          <p>EXECUTE stmt USING @name;</p>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1174,289 +2138,300 @@ OPTIMIZE TABLE students;
               </div>
             </div>
 
-            <!-- 模块5：NoSQL数据库 -->
-            <div id="module5-nosql" class="knowledge-section hidden">
+            <!-- 模块6：数据库应用开发 -->
+            <div id="module6-development" class="knowledge-section hidden">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-cloud"></i> 模块5：NoSQL数据库（8学时）
+                  <i class="fa fa-code"></i> 模块6：数据库应用开发（10学时）
                 </h3>
 
                 <div class="grid md:grid-cols-2 gap-6">
-                  <!-- NoSQL数据库简介 -->
+                  <!-- 数据库连接技术 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-info-circle text-cyan-400"></i> NoSQL数据库简介
+                      <i class="fa fa-plug text-cyan-400"></i> 数据库连接技术
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">NoSQL（Not Only SQL）数据库是非关系型数据库，适用于大规模数据存储和处理。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">数据库连接是应用程序与数据库交互的基础。不同的编程语言提供了不同的数据库连接方式，但基本原理相似：建立连接、执行SQL、处理结果、关闭连接。理解连接池、连接参数配置等概念对开发高性能应用至关重要。</p>
+                    
                     <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">📊 NoSQL类型</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li><strong class="text-gray-300">键值存储</strong>：Redis, Memcached</li>
-                          <li><strong class="text-gray-300">文档数据库</strong>：MongoDB, CouchDB</li>
-                          <li><strong class="text-gray-300">列族数据库</strong>：HBase, Cassandra</li>
-                          <li><strong class="text-gray-300">图数据库</strong>：Neo4j, JanusGraph</li>
-                        </ul>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">🔌</span> 常用连接方式
+                        </h5>
+                        <div class="space-y-2">
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-cyan-400 font-semibold">JDBC（Java）</p>
+                            <p class="text-gray-400 text-xs">Java标准数据库连接接口，所有Java数据库连接的基础</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-yellow-400 font-semibold">ODBC</p>
+                            <p class="text-gray-400 text-xs">开放数据库连接，跨平台数据库访问标准</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-pink-400 font-semibold">ADO.NET</p>
+                            <p class="text-gray-400 text-xs">.NET框架的数据访问技术</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-emerald-400 font-semibold">数据库驱动</p>
+                            <p class="text-gray-400 text-xs">各语言特定的数据库驱动，如Python的mysql-connector</p>
+                          </div>
+                        </div>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-yellow-400 font-semibold mb-1">✨ NoSQL特点</h5>
-                        <p class="text-gray-400">灵活的数据模型、水平扩展能力、高性能、高可用性、最终一致性。</p>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">🔧 Python连接示例</h5>
+                        <div class="bg-dark p-2 rounded font-mono text-xs text-cyan-300">
+                          <p>import mysql.connector</p>
+                          <p></p>
+                          <p># 建立连接</p>
+                          <p>conn = mysql.connector.connect(</p>
+                          <p>    host='localhost',</p>
+                          <p>    port=3306,</p>
+                          <p>    user='root',</p>
+                          <p>    password='password',</p>
+                          <p>    database='school',</p>
+                          <p>    charset='utf8mb4'</p>
+                          <p>)</p>
+                          <p></p>
+                          <p>cursor = conn.cursor(dictionary=True)</p>
+                          <p>cursor.execute("SELECT * FROM students")</p>
+                          <p>results = cursor.fetchall()</p>
+                          <p></p>
+                          <p>cursor.close()</p>
+                          <p>conn.close()</p>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <!-- MongoDB基础 -->
+                  <!-- 连接池技术 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-leaf text-emerald-400"></i> MongoDB基础
+                      <i class="fa fa-swimming-pool text-blue-400"></i> 连接池技术
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">MongoDB是流行的文档数据库，使用BSON格式存储数据，支持丰富的查询语言。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-// 插入文档
-db.students.insertOne({
-    name: "张三",
-    age: 20,
-    courses: ["数学", "英语"]
-});
-
-// 查询文档
-db.students.find({ age: { $gt: 18 } });
-
-// 更新文档
-db.students.updateOne(
-    { name: "张三" },
-    { $set: { age: 21 } }
-);
-
-// 删除文档
-db.students.deleteOne({ name: "张三" });
-
-// 聚合查询
-db.students.aggregate([
-    { $match: { age: { $gte: 18 } } },
-    { $group: { _id: "$department", count: { $sum: 1 } } }
-]);
-                      </pre>
-                    </div>
-                  </div>
-
-                  <!-- Redis基础 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-bolt text-red-400"></i> Redis基础
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">Redis是高性能的键值存储数据库，支持多种数据结构，常用于缓存和会话管理。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-# 字符串操作
-SET user:1 "张三"
-GET user:1
-SETEX session:abc 3600 "user_data"
-
-# 哈希操作
-HSET user:1 name "张三" age 20
-HGET user:1 name
-HGETALL user:1
-
-# 列表操作
-LPUSH queue:tasks "task1"
-RPOP queue:tasks
-
-# 集合操作
-SADD tags:article "数据库" "SQL"
-SMEMBERS tags:article
-
-# 有序集合
-ZADD leaderboard 100 "player1"
-ZREVRANGE leaderboard 0 9 WITHSCORES
-                      </pre>
-                    </div>
-                  </div>
-
-                  <!-- SQL与NoSQL对比 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-balance-scale text-purple-400"></i> SQL与NoSQL对比
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">SQL和NoSQL各有优势，选择合适的数据库类型取决于应用场景。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">数据库连接是昂贵的资源，每次建立连接都需要TCP握手、身份验证等开销。连接池通过预先创建一定数量的连接并重复使用，显著提高应用性能。连接池管理连接的创建、分配、回收和销毁，是高并发应用的必备技术。</p>
+                    
                     <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">📊 对比分析</h5>
-                        <table class="w-full text-gray-400">
-                          <tr class="border-b border-gray-600">
-                            <th class="text-left py-2 text-gray-300">特性</th>
-                            <th class="text-left py-2 text-gray-300">SQL</th>
-                            <th class="text-left py-2 text-gray-300">NoSQL</th>
-                          </tr>
-                          <tr class="border-b border-gray-700">
-                            <td class="py-2">数据模型</td>
-                            <td class="py-2">关系表</td>
-                            <td class="py-2">文档/键值等</td>
-                          </tr>
-                          <tr class="border-b border-gray-700">
-                            <td class="py-2">扩展方式</td>
-                            <td class="py-2">垂直扩展</td>
-                            <td class="py-2">水平扩展</td>
-                          </tr>
-                          <tr class="border-b border-gray-700">
-                            <td class="py-2">事务支持</td>
-                            <td class="py-2">ACID</td>
-                            <td class="py-2">BASE</td>
-                          </tr>
-                          <tr>
-                            <td class="py-2">适用场景</td>
-                            <td class="py-2">复杂查询</td>
-                            <td class="py-2">大数据量</td>
-                          </tr>
-                        </table>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">📊 连接池核心参数</h5>
+                        <ul class="text-gray-300 space-y-1">
+                          <li>• <strong class="text-gray-200">最小连接数</strong>：池中保持的最少连接数</li>
+                          <li>• <strong class="text-gray-200">最大连接数</strong>：池中允许的最大连接数</li>
+                          <li>• <strong class="text-gray-200">连接超时</strong>：获取连接的最大等待时间</li>
+                          <li>• <strong class="text-gray-200">空闲超时</strong>：连接空闲多久后被回收</li>
+                          <li>• <strong class="text-gray-200">最大生命周期</strong>：连接的最大存活时间</li>
+                        </ul>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">🔧 常用连接池</h5>
+                        <div class="grid grid-cols-2 gap-2">
+                          <div class="p-2 bg-dark rounded text-center">
+                            <p class="text-cyan-400 font-semibold text-xs">HikariCP</p>
+                            <p class="text-gray-400 text-xs">Java高性能连接池</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded text-center">
+                            <p class="text-yellow-400 font-semibold text-xs">Druid</p>
+                            <p class="text-gray-400 text-xs">阿里开源连接池</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded text-center">
+                            <p class="text-pink-400 font-semibold text-xs">DBCP</p>
+                            <p class="text-gray-400 text-xs">Apache连接池</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded text-center">
+                            <p class="text-emerald-400 font-semibold text-xs">SQLAlchemy</p>
+                            <p class="text-gray-400 text-xs">Python连接池</p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
 
-            <!-- 模块6：综合项目实战 -->
-            <div id="module6-project" class="knowledge-section hidden">
-              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
-                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-rocket"></i> 模块6：综合项目实战（8学时）
-                </h3>
-
-                <div class="grid md:grid-cols-2 gap-6">
-                  <!-- 项目选题与规划 -->
+                  <!-- ORM框架 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-lightbulb-o text-yellow-400"></i> 项目选题与规划
+                      <i class="fa fa-cube text-emerald-400"></i> ORM框架
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">项目选题应结合实际应用场景，具有完整的数据管理需求。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">ORM（Object-Relational Mapping，对象关系映射）是一种将面向对象编程语言中的对象与关系数据库中的表进行映射的技术。ORM框架让开发者可以用面向对象的方式操作数据库，无需手写SQL，提高开发效率和代码可维护性。</p>
+                    
                     <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">📋 推荐项目方向</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>学生信息管理系统</li>
-                          <li>电商订单管理系统</li>
-                          <li>图书借阅管理系统</li>
-                          <li>员工考勤管理系统</li>
-                          <li>在线论坛系统</li>
-                        </ul>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">📦</span> 主流ORM框架
+                        </h5>
+                        <div class="space-y-2">
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-cyan-400 font-semibold">Hibernate / JPA（Java）</p>
+                            <p class="text-gray-400 text-xs">Java领域最成熟的ORM框架，JPA是Java EE标准</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-yellow-400 font-semibold">MyBatis（Java）</p>
+                            <p class="text-gray-400 text-xs">半自动ORM，SQL灵活可控，国内广泛使用</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-pink-400 font-semibold">SQLAlchemy（Python）</p>
+                            <p class="text-gray-400 text-xs">Python功能最强大的ORM框架</p>
+                          </div>
+                          <div class="p-2 bg-dark rounded">
+                            <p class="text-emerald-400 font-semibold">Entity Framework（.NET）</p>
+                            <p class="text-gray-400 text-xs">微软官方ORM框架</p>
+                          </div>
+                        </div>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-cyan-400 font-semibold mb-1">📝 项目规划要点</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>明确功能需求</li>
-                          <li>确定技术栈</li>
-                          <li>制定开发计划</li>
-                          <li>分配团队任务</li>
-                        </ul>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">🔧 SQLAlchemy示例</h5>
+                        <div class="bg-dark p-2 rounded font-mono text-xs text-cyan-300">
+                          <p>from sqlalchemy import create_engine, Column, Integer, String</p>
+                          <p>from sqlalchemy.ext.declarative import declarative_base</p>
+                          <p>from sqlalchemy.orm import sessionmaker</p>
+                          <p></p>
+                          <p>Base = declarative_base()</p>
+                          <p></p>
+                          <p>class Student(Base):</p>
+                          <p>    __tablename__ = 'students'</p>
+                          <p>    id = Column(Integer, primary_key=True)</p>
+                          <p>    name = Column(String(50))</p>
+                          <p>    age = Column(Integer)</p>
+                          <p></p>
+                          <p># 使用ORM操作</p>
+                          <p>student = Student(name='张三', age=20)</p>
+                          <p>session.add(student)</p>
+                          <p>session.commit()</p>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <!-- 数据库设计与实现 -->
+                  <!-- 参数化查询与安全 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-database text-blue-400"></i> 数据库设计与实现
+                      <i class="fa fa-shield text-red-400"></i> 参数化查询与安全
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">根据需求分析结果，完成数据库的概念设计、逻辑设计和物理设计。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
--- 以电商系统为例
-
--- 用户表
-CREATE TABLE users (
-    user_id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    email VARCHAR(100) UNIQUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- 商品表
-CREATE TABLE products (
-    product_id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(200) NOT NULL,
-    price DECIMAL(10,2) NOT NULL,
-    stock INT DEFAULT 0,
-    category_id INT
-);
-
--- 订单表
-CREATE TABLE orders (
-    order_id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    total_amount DECIMAL(10,2),
-    status VARCHAR(20),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
-);
-                      </pre>
-                    </div>
-                  </div>
-
-                  <!-- 应用开发与集成 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-code text-emerald-400"></i> 应用开发与集成
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">使用编程语言连接数据库，实现数据的增删改查功能。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-# Python连接MySQL示例
-import mysql.connector
-
-# 建立连接
-conn = mysql.connector.connect(
-    host='localhost',
-    user='root',
-    password='password',
-    database='ecommerce'
-)
-
-cursor = conn.cursor()
-
-# 查询数据
-cursor.execute("SELECT * FROM products")
-products = cursor.fetchall()
-
-# 插入数据
-sql = "INSERT INTO users (username, email) VALUES (%s, %s)"
-cursor.execute(sql, ('zhangsan', 'zhang@example.com'))
-conn.commit()
-
-# 关闭连接
-cursor.close()
-conn.close()
-                      </pre>
-                    </div>
-                  </div>
-
-                  <!-- 项目展示与答辩 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-presentation text-purple-400"></i> 项目展示与答辩
-                    </h4>
-                    <p class="text-gray-400 mb-4 text-sm">项目展示需要清晰展示项目的设计思路、技术实现和创新点。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">SQL注入是最常见的数据库安全漏洞之一，攻击者通过构造恶意输入来执行非预期的SQL语句。参数化查询（预编译语句）是防止SQL注入的最有效方法，它将SQL语句和数据分离，确保用户输入不会被解释为SQL代码。</p>
+                    
                     <div class="space-y-3 text-sm">
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-emerald-400 font-semibold mb-1">📊 展示内容要点</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>项目背景与需求分析</li>
-                          <li>数据库设计方案（E-R图、表结构）</li>
-                          <li>系统功能演示</li>
-                          <li>技术难点与解决方案</li>
-                          <li>项目总结与改进方向</li>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-red-400 font-semibold mb-2">⚠️ SQL注入示例</h5>
+                        <div class="bg-dark p-2 rounded font-mono text-xs text-red-300">
+                          <p># 危险！存在SQL注入漏洞</p>
+                          <p>username = "admin' OR '1'='1"</p>
+                          <p>sql = f"SELECT * FROM users WHERE name='{username}'"</p>
+                          <p># 实际执行：SELECT * FROM users WHERE name='admin' OR '1'='1'</p>
+                          <p># 结果：返回所有用户数据！</p>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">✅ 参数化查询</h5>
+                        <div class="bg-dark p-2 rounded font-mono text-xs text-cyan-300">
+                          <p># 安全！使用参数化查询</p>
+                          <p>username = "admin' OR '1'='1"</p>
+                          <p>sql = "SELECT * FROM users WHERE name = %s"</p>
+                          <p>cursor.execute(sql, (username,))</p>
+                          <p># 用户输入作为数据处理，不会被执行</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 性能优化 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-tachometer text-yellow-400"></i> 数据库性能优化
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">数据库性能优化是应用开发中的重要环节。优化需要从多个层面入手：SQL语句优化、索引设计、数据库配置、应用层缓存等。掌握性能优化技术可以显著提升系统响应速度和并发处理能力。</p>
+                    
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span class="text-lg">⚡</span> 优化策略
+                        </h5>
+                        <ul class="text-gray-300 space-y-1">
+                          <li>• <strong class="text-gray-200">SQL优化</strong>：避免SELECT *，使用合适的索引</li>
+                          <li>• <strong class="text-gray-200">批量操作</strong>：批量插入、批量更新减少交互次数</li>
+                          <li>• <strong class="text-gray-200">延迟加载</strong>：按需加载数据，减少不必要查询</li>
+                          <li>• <strong class="text-gray-200">缓存策略</strong>：使用Redis等缓存热点数据</li>
+                          <li>• <strong class="text-gray-200">读写分离</strong>：主库写入，从库读取</li>
+                          <li>• <strong class="text-gray-200">分库分表</strong>：水平拆分处理大数据量</li>
                         </ul>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded">
-                        <h5 class="text-yellow-400 font-semibold mb-1">🎯 答辩评分标准</h5>
-                        <ul class="text-gray-400 list-disc list-inside space-y-1">
-                          <li>数据库设计合理性（30%）</li>
-                          <li>功能实现完整性（30%）</li>
-                          <li>代码质量与规范（20%）</li>
-                          <li>展示与答辩表现（20%）</li>
-                        </ul>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">🔧 批量操作示例</h5>
+                        <div class="bg-dark p-2 rounded font-mono text-xs text-cyan-300">
+                          <p># 批量插入（高效）</p>
+                          <p>data = [('张三', 20), ('李四', 22), ('王五', 21)]</p>
+                          <p>sql = "INSERT INTO students (name, age) VALUES (%s, %s)"</p>
+                          <p>cursor.executemany(sql, data)</p>
+                          <p>conn.commit()</p>
+                          <p></p>
+                          <p># 单条插入（低效）</p>
+                          <p>for name, age in data:</p>
+                          <p>    cursor.execute("INSERT INTO students VALUES (%s, %s)", (name, age))</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 实战案例 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-rocket text-purple-400"></i> 实战案例：学生管理系统
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">通过一个完整的学生管理系统案例，演示数据库应用开发的全过程，包括数据库设计、连接配置、CRUD操作、事务处理等核心功能。</p>
+                    
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">📊 数据库设计</h5>
+                        <div class="bg-dark p-2 rounded font-mono text-xs text-cyan-300">
+                          <p>-- 学生表</p>
+                          <p>CREATE TABLE students (</p>
+                          <p>    id INT PRIMARY KEY AUTO_INCREMENT,</p>
+                          <p>    name VARCHAR(50) NOT NULL,</p>
+                          <p>    age INT,</p>
+                          <p>    department_id INT,</p>
+                          <p>    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP</p>
+                          <p>);</p>
+                          <p></p>
+                          <p>-- 课程表</p>
+                          <p>CREATE TABLE courses (</p>
+                          <p>    id INT PRIMARY KEY AUTO_INCREMENT,</p>
+                          <p>    name VARCHAR(100) NOT NULL,</p>
+                          <p>    credit DECIMAL(3,1)</p>
+                          <p>);</p>
+                          <p></p>
+                          <p>-- 选课表</p>
+                          <p>CREATE TABLE enrollments (</p>
+                          <p>    student_id INT,</p>
+                          <p>    course_id INT,</p>
+                          <p>    score DECIMAL(5,2),</p>
+                          <p>    PRIMARY KEY (student_id, course_id)</p>
+                          <p>);</p>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-2">🔧 Python实现</h5>
+                        <div class="bg-dark p-2 rounded font-mono text-xs text-cyan-300">
+                          <p>class StudentManager:</p>
+                          <p>    def __init__(self, db_config):</p>
+                          <p>        self.conn = mysql.connector.connect(**db_config)</p>
+                          <p>    </p>
+                          <p>    def add_student(self, name, age, dept_id):</p>
+                          <p>        sql = "INSERT INTO students (name, age, department_id) VALUES (%s, %s, %s)"</p>
+                          <p>        cursor = self.conn.cursor()</p>
+                          <p>        cursor.execute(sql, (name, age, dept_id))</p>
+                          <p>        self.conn.commit()</p>
+                          <p>        return cursor.lastrowid</p>
+                          <p>    </p>
+                          <p>    def get_students(self, page=1, size=10):</p>
+                          <p>        offset = (page - 1) * size</p>
+                          <p>        sql = "SELECT * FROM students LIMIT %s OFFSET %s"</p>
+                          <p>        cursor = self.conn.cursor(dictionary=True)</p>
+                          <p>        cursor.execute(sql, (size, offset))</p>
+                          <p>        return cursor.fetchall()</p>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1474,237 +2449,371 @@ conn.close()
     const problems = [
       {
         id: 1,
-        title: "问题1：缺失值处理",
-        description: `编写一个程序，使用Pandas处理DataFrame中的缺失值。
-
-<strong>输入：</strong>
-一个包含缺失值的DataFrame
-
-<strong>输出：</strong>
-处理后的DataFrame，其中缺失值已被适当处理
+        title: "问题1：数据库设计",
+        description: `设计一个简单的图书管理系统的数据库，包含图书、读者、借阅记录三个实体。
 
 <strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>识别并统计缺失值</li>
-  <li>使用合适的方法填充缺失值（如均值、中位数或众数）</li>
-  <li>返回处理后的DataFrame</li>
+  <li>设计E-R图，描述实体及其联系</li>
+  <li>将E-R图转换为关系模式</li>
+  <li>确定主码和外码</li>
+  <li>写出创建表的SQL语句</li>
 </ul>`,
-        difficulty: "easy",
-        time: "15分钟",
-        code: `# 请编写代码
-import pandas as pd
-import numpy as np
+        difficulty: "medium",
+        time: "30分钟",
+        code: `-- 请编写创建表的SQL语句
+-- 图书表：books（book_id, title, author, isbn, stock）
+-- 读者表：readers（reader_id, name, phone, register_date）
+-- 借阅记录表：borrowings（borrowing_id, reader_id, book_id, borrow_date, return_date）
 
-# 创建示例数据
-data = {
-    'A': [1, 2, np.nan, 4, 5],
-    'B': [np.nan, 2, 3, 4, np.nan],
-    'C': ['x', 'y', 'z', np.nan, 'x']
-}
-df = pd.DataFrame(data)
+CREATE TABLE books (
+    -- 请补充完整
+);
 
-# 识别缺失值
-print("缺失值统计:")
-print(df.isnull().sum())
+CREATE TABLE readers (
+    -- 请补充完整
+);
 
-# 处理缺失值
-df['A'] = df['A'].fillna(df['A'].mean())
-df['B'] = df['B'].fillna(df['B'].median())
-df['C'] = df['C'].fillna(df['C'].mode()[0])
-
-print("\n处理后的数据:")
-print(df)`,
-        analysis: `
-<h4>解题思路</h4>
-<p>1. 使用Pandas的isnull()和sum()方法识别并统计缺失值</p>
-<p>2. 根据数据类型选择合适的填充方法：数值型数据使用均值或中位数，分类型数据使用众数</p>
-<p>3. 使用fillna()方法填充缺失值</p>
-<h4>代码示例</h4>
-<div class="bg-dark p-3 rounded-lg font-mono text-sm">
-  <pre class="text-cyan-300">
-import pandas as pd
-import numpy as np
-
-# 创建示例数据
-data = {
-    'A': [1, 2, np.nan, 4, 5],
-    'B': [np.nan, 2, 3, 4, np.nan],
-    'C': ['x', 'y', 'z', np.nan, 'x']
-}
-df = pd.DataFrame(data)
-
-# 识别缺失值
-print("缺失值统计:")
-print(df.isnull().sum())
-
-# 处理缺失值
-df['A'] = df['A'].fillna(df['A'].mean())
-df['B'] = df['B'].fillna(df['B'].median())
-df['C'] = df['C'].fillna(df['C'].mode()[0])
-
-print("\n处理后的数据:")
-print(df)
-  </pre>
-</div>
-<h4>知识点</h4>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-preprocessing')">数据预处理</a></li>
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('pandas-basics')">Pandas基础</a></li>
-  <li>缺失值处理方法</li>
-</ul>`
+CREATE TABLE borrowings (
+    -- 请补充完整
+);`,
+        hint: "注意外码约束的设置，借阅记录表需要关联读者和图书两个表。"
       },
       {
         id: 2,
-        title: "问题2：异常值检测",
-        description: `编写一个程序，使用IQR方法检测数据中的异常值。
-
-<strong>输入：</strong>
-一个包含可能异常值的数据集
-
-<strong>输出：</strong>
-检测到的异常值
+        title: "问题2：SQL查询",
+        description: `基于问题1的图书管理系统，编写SQL查询语句完成以下任务。
 
 <strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>计算四分位数和IQR</li>
-  <li>定义异常值边界</li>
-  <li>检测并返回异常值</li>
+  <li>查询库存少于5本的图书</li>
+  <li>查询借阅次数最多的前3本图书</li>
+  <li>查询当前有借阅记录的读者信息</li>
+  <li>查询某读者借阅的所有图书信息</li>
 </ul>`,
         difficulty: "medium",
-        time: "20分钟",
-        code: `# 请编写代码
-import pandas as pd
-import numpy as np
+        time: "25分钟",
+        code: `-- 1. 查询库存少于5本的图书
+SELECT * FROM books WHERE stock < 5;
 
-# 创建示例数据
-data = pd.Series([1, 2, 3, 4, 100])
+-- 2. 查询借阅次数最多的前3本图书
+-- 请补充SQL语句
 
-# 计算四分位数
-Q1 = data.quantile(0.25)
-Q3 = data.quantile(0.75)
-IQR = Q3 - Q1
+-- 3. 查询当前有借阅记录的读者信息（return_date为NULL表示未归还）
+-- 请补充SQL语句
 
-# 定义异常值边界
-lower_bound = Q1 - 1.5 * IQR
-upper_bound = Q3 + 1.5 * IQR
-
-# 检测异常值
-outliers = data[(data < lower_bound) | (data > upper_bound)]
-print("异常值:", outliers)`,
-        analysis: `
-<h4>解题思路</h4>
-<p>1. 计算数据的第一四分位数(Q1)和第三四分位数(Q3)</p>
-<p>2. 计算四分位距(IQR) = Q3 - Q1</p>
-<p>3. 定义异常值边界：下界 = Q1 - 1.5 * IQR，上界 = Q3 + 1.5 * IQR</p>
-<p>4. 检测并返回超出边界的值作为异常值</p>
-<h4>代码示例</h4>
-<div class="bg-dark p-3 rounded-lg font-mono text-sm">
-  <pre class="text-cyan-300">
-import pandas as pd
-import numpy as np
-
-# 创建示例数据
-data = pd.Series([1, 2, 3, 4, 100])
-
-# 计算四分位数
-Q1 = data.quantile(0.25)
-Q3 = data.quantile(0.75)
-IQR = Q3 - Q1
-
-# 定义异常值边界
-lower_bound = Q1 - 1.5 * IQR
-upper_bound = Q3 + 1.5 * IQR
-
-# 检测异常值
-outliers = data[(data < lower_bound) | (data > upper_bound)]
-print("异常值:", outliers)
-  </pre>
-</div>
-<h4>知识点</h4>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-preprocessing')">数据预处理</a></li>
-  <li>异常值检测方法</li>
-  <li>统计量计算</li>
-</ul>`
+-- 4. 查询读者ID为1的读者借阅的所有图书信息
+-- 请补充SQL语句`,
+        hint: "使用JOIN连接多个表，使用GROUP BY和ORDER BY进行分组和排序。"
       },
       {
         id: 3,
-        title: "问题3：数据标准化",
-        description: `编写一个程序，对数据进行标准化处理。
+        title: "问题3：事务处理",
+        description: `实现图书借阅的事务处理，确保数据一致性。
 
-<strong>输入：</strong>
-一个包含数值型数据的DataFrame
+<strong>场景：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>读者借书时，需要同时完成：插入借阅记录、减少图书库存</li>
+  <li>如果库存不足，借阅失败</li>
+  <li>如果插入借阅记录失败，库存不变</li>
+</ul>
 
-<strong>输出：</strong>
-标准化处理后的数据
+<strong>要求：</strong>
+使用事务确保操作的原子性。`,
+        difficulty: "hard",
+        time: "20分钟",
+        code: `-- 实现图书借阅的事务处理
+-- 假设读者ID为1，图书ID为101
+
+START TRANSACTION;
+
+-- 1. 检查库存是否充足
+-- 请补充SQL语句
+
+-- 2. 如果库存充足，插入借阅记录
+-- 请补充SQL语句
+
+-- 3. 减少图书库存
+-- 请补充SQL语句
+
+-- 4. 提交事务
+COMMIT;
+
+-- 如果任何步骤失败，回滚事务
+-- ROLLBACK;`,
+        hint: "使用SELECT ... FOR UPDATE锁定记录，防止并发问题。"
+      },
+      {
+        id: 4,
+        title: "问题4：范式分析",
+        description: `分析以下关系模式，判断其满足的范式级别，并进行规范化。
+
+<strong>关系模式：</strong> 学生选课（学号，姓名，系名，系主任，课程号，课程名，成绩）
+
+<strong>函数依赖：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>学号 → 姓名，系名</li>
+  <li>系名 → 系主任</li>
+  <li>课程号 → 课程名</li>
+  <li>(学号, 课程号) → 成绩</li>
+</ul>
+
+<strong>要求：</strong>
+<ol class="list-decimal list-inside space-y-1 mt-2">
+  <li>判断该关系模式的候选码</li>
+  <li>分析存在哪些函数依赖问题</li>
+  <li>将其规范化到3NF</li>
+</ol>`,
+        difficulty: "hard",
+        time: "30分钟",
+        code: `-- 1. 候选码分析
+-- 候选码是：(学号, 课程号)
+
+-- 2. 存在的问题分析
+-- 请分析存在的部分函数依赖和传递函数依赖
+
+-- 3. 规范化到3NF
+-- 请写出分解后的关系模式
+
+-- 学生表
+CREATE TABLE students (
+    -- 请补充
+);
+
+-- 系表
+CREATE TABLE departments (
+    -- 请补充
+);
+
+-- 课程表
+CREATE TABLE courses (
+    -- 请补充
+);
+
+-- 选课表
+CREATE TABLE enrollments (
+    -- 请补充
+);`,
+        hint: "存在部分函数依赖（姓名、系名只依赖学号）和传递函数依赖（系名→系主任）。"
+      },
+      {
+        id: 5,
+        title: "问题5：Python数据库操作",
+        description: `使用Python连接MySQL数据库，实现学生信息的增删改查功能。
 
 <strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>使用StandardScaler进行标准化</li>
-  <li>返回标准化后的数据</li>
+  <li>使用参数化查询防止SQL注入</li>
+  <li>实现分页查询功能</li>
+  <li>使用事务处理数据更新</li>
 </ul>`,
         difficulty: "medium",
-        time: "15分钟",
-        code: `# 请编写代码
-import pandas as pd
-import numpy as np
-from sklearn.preprocessing import StandardScaler
+        time: "30分钟",
+        code: `import mysql.connector
+from mysql.connector import Error
 
-# 创建示例数据
-data = {
-    'A': [1, 2, 3, 4, 5],
-    'B': [10, 20, 30, 40, 50],
-    'C': [100, 200, 300, 400, 500]
-}
-df = pd.DataFrame(data)
+class StudentDAO:
+    def __init__(self, host, user, password, database):
+        """初始化数据库连接"""
+        # 请补充代码
+        pass
+    
+    def add_student(self, name, age, department):
+        """添加学生，使用参数化查询"""
+        # 请补充代码
+        pass
+    
+    def get_students(self, page=1, page_size=10):
+        """分页查询学生列表"""
+        # 请补充代码
+        pass
+    
+    def update_student(self, student_id, name, age, department):
+        """更新学生信息，使用事务"""
+        # 请补充代码
+        pass
+    
+    def delete_student(self, student_id):
+        """删除学生"""
+        # 请补充代码
+        pass
+    
+    def close(self):
+        """关闭数据库连接"""
+        # 请补充代码
+        pass
 
-# 初始化标准化器
-scaler = StandardScaler()
+# 测试代码
+if __name__ == "__main__":
+    dao = StudentDAO("localhost", "root", "password", "school")
+    # 测试各项功能
+    dao.close()`,
+        hint: "使用cursor.execute(sql, params)进行参数化查询，使用conn.commit()提交事务。"
+      }
+    ];
 
-# 进行标准化
-scaled_data = scaler.fit_transform(df)
+    // 选择题数据
+    const choiceQuestions = [
+      {
+        id: 'c1',
+        chapter: 1,
+        title: "选择题1：数据库基本概念",
+        question: "数据库管理系统（DBMS）的主要功能不包括以下哪项？",
+        options: [
+          { label: 'A', text: '数据定义功能' },
+          { label: 'B', text: '数据操纵功能' },
+          { label: 'C', text: '数据编译功能' },
+          { label: 'D', text: '数据控制功能' }
+        ],
+        answer: 'C',
+        analysis: "DBMS的主要功能包括：数据定义功能（DDL）、数据操纵功能（DML）、数据控制功能（DCL）和数据库的建立和维护功能。数据编译功能不是DBMS的功能。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c2',
+        chapter: 1,
+        title: "选择题2：数据模型",
+        question: "以下哪种数据模型用二维表结构表示实体之间的联系？",
+        options: [
+          { label: 'A', text: '层次模型' },
+          { label: 'B', text: '网状模型' },
+          { label: 'C', text: '关系模型' },
+          { label: 'D', text: '面向对象模型' }
+        ],
+        answer: 'C',
+        analysis: "关系模型用二维表结构来表示实体之间的联系，是目前应用最广泛的数据模型。层次模型使用树形结构，网状模型使用图结构。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c3',
+        chapter: 2,
+        title: "选择题3：关系代数",
+        question: "关系代数中，从两个关系的笛卡尔积中选取属性间满足一定条件的元组的操作是：",
+        options: [
+          { label: 'A', text: '选择' },
+          { label: 'B', text: '投影' },
+          { label: 'C', text: '连接' },
+          { label: 'D', text: '并' }
+        ],
+        answer: 'C',
+        analysis: "连接操作是从两个关系的笛卡尔积中选取属性间满足一定条件的元组。选择是从一个关系中选取满足条件的元组，投影是从一个关系中选取若干属性列。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c4',
+        chapter: 2,
+        title: "选择题4：范式",
+        question: "若关系模式R属于2NF，则R中不存在：",
+        options: [
+          { label: 'A', text: '非主属性对码的部分函数依赖' },
+          { label: 'B', text: '非主属性对码的传递函数依赖' },
+          { label: 'C', text: '主属性对码的部分函数依赖' },
+          { label: 'D', text: '多值依赖' }
+        ],
+        answer: 'A',
+        analysis: "第二范式（2NF）要求消除非主属性对码的部分函数依赖。第三范式（3NF）要求消除非主属性对码的传递函数依赖。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c5',
+        chapter: 3,
+        title: "选择题5：SQL语句",
+        question: "SQL语言中，用于修改表结构的语句是：",
+        options: [
+          { label: 'A', text: 'MODIFY TABLE' },
+          { label: 'B', text: 'CHANGE TABLE' },
+          { label: 'C', text: 'ALTER TABLE' },
+          { label: 'D', text: 'UPDATE TABLE' }
+        ],
+        answer: 'C',
+        analysis: "ALTER TABLE用于修改表结构，如添加列、删除列、修改列类型等。UPDATE用于修改数据，不是修改表结构。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c6',
+        chapter: 3,
+        title: "选择题6：事务特性",
+        question: "事务的ACID特性中，'I'代表的是：",
+        options: [
+          { label: 'A', text: '完整性（Integrity）' },
+          { label: 'B', text: '隔离性（Isolation）' },
+          { label: 'C', text: '独立性（Independence）' },
+          { label: 'D', text: '继承性（Inheritance）' }
+        ],
+        answer: 'B',
+        analysis: "ACID特性：原子性（Atomicity）、一致性（Consistency）、隔离性（Isolation）、持久性（Durability）。隔离性是指一个事务的执行不能被其他事务干扰。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c7',
+        chapter: 4,
+        title: "选择题7：E-R模型",
+        question: "在E-R图中，用来表示实体之间联系的图形是：",
+        options: [
+          { label: 'A', text: '矩形' },
+          { label: 'B', text: '椭圆形' },
+          { label: 'C', text: '菱形' },
+          { label: 'D', text: '三角形' }
+        ],
+        answer: 'C',
+        analysis: "在E-R图中，矩形表示实体，椭圆形表示属性，菱形表示联系，线段连接各元素。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c8',
+        chapter: 5,
+        title: "选择题8：并发控制",
+        question: "解决并发操作带来的'丢失修改'问题，通常采用：",
+        options: [
+          { label: 'A', text: '恢复技术' },
+          { label: 'B', text: '封锁技术' },
+          { label: 'C', text: '存取控制' },
+          { label: 'D', text: '协议控制' }
+        ],
+        answer: 'B',
+        analysis: "封锁技术是并发控制的主要手段，通过给数据加锁来防止多个事务同时修改同一数据，从而避免丢失修改等并发问题。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c9',
+        chapter: 5,
+        title: "选择题9：数据库恢复",
+        question: "数据库恢复的基础是利用：",
+        options: [
+          { label: 'A', text: '数据字典' },
+          { label: 'B', text: '日志文件' },
+          { label: 'C', text: '索引文件' },
+          { label: 'D', text: '备份文件' }
+        ],
+        answer: 'B',
+        analysis: "日志文件记录了事务对数据库的所有更新操作，是数据库恢复的基础。恢复时利用日志文件进行重做（REDO）和撤销（UNDO）操作。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c10',
+        chapter: 6,
+        title: "选择题10：数据库安全",
+        question: "防止SQL注入攻击的最有效方法是：",
+        options: [
+          { label: 'A', text: '使用存储过程' },
+          { label: 'B', text: '参数化查询' },
+          { label: 'C', text: '输入验证' },
+          { label: 'D', text: '使用视图' }
+        ],
+        answer: 'B',
+        analysis: "参数化查询（预编译语句）是防止SQL注入的最有效方法，它将SQL语句和数据分离，确保用户输入不会被解释为SQL代码。",
+        difficulty: "medium"
+      }
+    ];
 
-# 转换为DataFrame
-scaled_df = pd.DataFrame(scaled_data, columns=df.columns)
+    // 全局变量
+    let currentProblem = 1;
+    let pyodide = null;
+    let editor = null;
+    let timerInterval = null;
+    let seconds = 0;
 
-print("标准化后的数据:")
-print(scaled_df)
-print("\n均值:", scaled_df.mean().round(4))
-print("标准差:", scaled_df.std().round(4))`,
-        analysis: `
-<h4>解题思路</h4>
-<p>1. 使用sklearn的StandardScaler类进行数据标准化</p>
-<p>2. fit_transform()方法同时完成拟合和转换</p>
-<p>3. 将标准化后的数据转换回DataFrame格式</p>
-<h4>代码示例</h4>
-<div class="bg-dark p-3 rounded-lg font-mono text-sm">
-  <pre class="text-cyan-300">
-import pandas as pd
-import numpy as np
-from sklearn.preprocessing import StandardScaler
-
-# 创建示例数据
-data = {
-    'A': [1, 2, 3, 4, 5],
-    'B': [10, 20, 30, 40, 50],
-    'C': [100, 200, 300, 400, 500]
-}
-df = pd.DataFrame(data)
-
-# 初始化标准化器
-scaler = StandardScaler()
-
-# 进行标准化
-scaled_data = scaler.fit_transform(df)
-
-# 转换为DataFrame
-scaled_df = pd.DataFrame(scaled_data, columns=df.columns)
-
-print("标准化后的数据:")
-print(scaled_df)
-print("\n均值:", scaled_df.mean().round(4))
-print("标准差:", scaled_df.std().round(4))
-  </pre>
+    // 初始化函数
 </div>
 <h4>知识点</h4>
 <ul class="list-disc list-inside space-y-1 mt-2">
