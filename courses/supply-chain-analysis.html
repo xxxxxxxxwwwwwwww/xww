@@ -513,18 +513,18 @@
             <!-- 题目描述 -->
             <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
               <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
-              <h3 class="text-xl font-bold text-gray-200" id="problem-title">问题1：缺失值处理</h3>
-              <div class="flex items-center gap-4 flex-wrap">
-                <div class="flex items-center gap-2">
-                  <i class="fa fa-clock-o text-cyan-400"></i>
-                  <span id="timer" class="text-gray-200 font-mono">00:00</span>
+                <h3 class="text-xl font-bold text-gray-200" id="problem-title">问题1：缺失值处理</h3>
+                <div class="flex items-center gap-4 flex-wrap">
+                  <div class="flex items-center gap-2">
+                    <i class="fa fa-clock-o text-cyan-400"></i>
+                    <span id="timer" class="text-gray-200 font-mono">00:00</span>
+                  </div>
+                  <span class="difficulty-tag difficulty-easy" id="difficulty-tag">简单</span>
+                  <button class="text-gray-400 hover:text-yellow-400 transition-colors" onclick="toggleFavorite(1)" id="favorite-btn">
+                    <i class="fa fa-star-o"></i>
+                  </button>
                 </div>
-                <span class="difficulty-tag difficulty-easy" id="difficulty-tag">简单</span>
-                <button class="text-gray-400 hover:text-yellow-400 transition-colors" onclick="toggleFavorite(1)" id="favorite-btn">
-                  <i class="fa fa-star-o"></i>
-                </button>
               </div>
-            </div>
               <div class="problem-description" id="problem-description">
                 <p>编写一个程序，使用Pandas处理DataFrame中的缺失值。</p>
                 <p><strong>输入：</strong></p>
