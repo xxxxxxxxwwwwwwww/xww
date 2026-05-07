@@ -120,7 +120,7 @@
                 ],
                 answer: 'B',
                 explanation: '供应链的三大核心要素是信息流、物流和资金流。信息流包括订单信息、需求预测等；物流包括原材料、在制品、成品的流动；资金流包括货款支付、信用交易等。',
-                score: 20
+                score: 10
             },
             {
                 id: 2,
@@ -133,7 +133,7 @@
                 ],
                 answer: 'C',
                 explanation: '当α接近1时，预测更加重视近期数据，对变化更加敏感，响应速度变快。当α接近0时，预测更加平滑，重视历史趋势，响应变慢。',
-                score: 20
+                score: 10
             },
             {
                 id: 3,
@@ -146,7 +146,7 @@
                 ],
                 answer: 'B',
                 explanation: '根据EOQ公式：EOQ = √(2DS/H)，当年需求量D增加一倍时，EOQ变为√(2×2D×S/H) = √2 × √(2DS/H)，即增加√2倍（约1.414倍）。这是平方根关系。',
-                score: 20
+                score: 10
             },
             {
                 id: 4,
@@ -159,7 +159,7 @@
                 ],
                 answer: 'B',
                 explanation: 'VRPTW (Vehicle Routing Problem with Time Windows) 是带时间窗约束的车辆路径问题，要求车辆在客户指定的时间范围内到达。CVRP是带容量约束的VRP，VRPPD是带取送货的VRP。',
-                score: 20
+                score: 10
             },
             {
                 id: 5,
@@ -172,7 +172,72 @@
                 ],
                 answer: 'C',
                 explanation: '供应链韧性的四个维度是：敏捷性（快速响应能力）、冗余性（备用资源储备）、柔性（适应变化能力）、可视性（信息透明程度）。经济性不是韧性维度。',
-                score: 20
+                score: 10
+            },
+            {
+                id: 6,
+                question: "安全库存的计算主要考虑哪些因素？",
+                options: [
+                    { label: 'A', text: '仅考虑需求量' },
+                    { label: 'B', text: '需求波动和供应提前期' },
+                    { label: 'C', text: '仅考虑供应提前期' },
+                    { label: 'D', text: '仅考虑成本' }
+                ],
+                answer: 'B',
+                explanation: '安全库存主要用于应对需求波动和供应不确定性。公式通常为：安全库存 = Z × √(需求方差 × 提前期² + 提前期方差 × 需求²)。',
+                score: 10
+            },
+            {
+                id: 7,
+                question: "ABC分类法中，A类物资通常占库存总价值的比例是？",
+                options: [
+                    { label: 'A', text: '约5%-10%' },
+                    { label: 'B', text: '约60%-70%' },
+                    { label: 'C', text: '约80%-90%' },
+                    { label: 'D', text: '约30%-40%' }
+                ],
+                answer: 'C',
+                explanation: 'ABC分类法中：A类物资通常占库存数量的5%-10%，但占总价值的70%-80%；B类占20%-30%；C类占60%-70%。重点管理A类物资。',
+                score: 10
+            },
+            {
+                id: 8,
+                question: "牛鞭效应是指什么现象？",
+                options: [
+                    { label: 'A', text: '订单量随供应链上游递增的现象' },
+                    { label: 'B', text: '需求信息从消费者到供应商逐级放大的现象' },
+                    { label: 'C', text: '库存水平随时间波动的现象' },
+                    { label: 'D', text: '运输时间逐级增加的现象' }
+                ],
+                answer: 'B',
+                explanation: '牛鞭效应（Bullwhip Effect）是指需求信息从终端消费者向上游供应商传递时，由于信息扭曲和博弈行为，导致订单波动逐级放大的现象。',
+                score: 10
+            },
+            {
+                id: 9,
+                question: "供应链协同规划、预测和补货（CPFR）的核心目标是？",
+                options: [
+                    { label: 'A', text: '降低生产成本' },
+                    { label: 'B', text: '减少供应链各环节的预测偏差和库存成本' },
+                    { label: 'C', text: '提高产品质量' },
+                    { label: 'D', text: '加快产品研发' }
+                ],
+                answer: 'B',
+                explanation: 'CPFR（Collaborative Planning, Forecasting and Replenishment）通过供应链伙伴间的协同规划、预测和补货，减少信息不对称导致的预测偏差和库存成本。',
+                score: 10
+            },
+            {
+                id: 10,
+                question: "在供应链绩效评价中，现金周转期（CCC）越短说明什么？",
+                options: [
+                    { label: 'A', text: '企业盈利能力越强' },
+                    { label: 'B', text: '企业资金利用效率越高' },
+                    { label: 'C', text: '企业市场份额越大' },
+                    { label: 'D', text: '企业员工效率越高' }
+                ],
+                answer: 'B',
+                explanation: '现金周转期（Cash Conversion Cycle）= 应收账款周转期 + 存货周转期 - 应付账款周转期。CCC越短，说明企业从支付货款到收回货款的时间越短，资金利用效率越高。',
+                score: 10
             }
         ];
 

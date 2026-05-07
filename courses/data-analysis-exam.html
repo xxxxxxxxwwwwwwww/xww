@@ -965,6 +965,81 @@ print(kmeans.cluster_centers_)`,
         analysis: "F1分数是精确率和召回率的调和平均值，综合考虑了这两个指标。",
         score: 10,
         type: 'choice'
+      },
+      {
+        id: 'ec6',
+        title: "选择题6：数据标准化",
+        question: "Min-Max标准化会将数据映射到哪个区间？",
+        options: [
+          { label: 'A', text: '0到100' },
+          { label: 'B', text: '-1到1' },
+          { label: 'C', text: '0到1' },
+          { label: 'D', text: '任意区间' }
+        ],
+        answer: 'C',
+        analysis: "Min-Max标准化公式为：X' = (X - Xmin) / (Xmax - Xmin)，将数据映射到[0, 1]区间。",
+        score: 10,
+        type: 'choice'
+      },
+      {
+        id: 'ec7',
+        title: "选择题7：异常值检测",
+        question: "使用IQR方法时，通常认为超出多少倍的IQR的值是异常值？",
+        options: [
+          { label: 'A', text: '0.5倍' },
+          { label: 'B', text: '1倍' },
+          { label: 'C', text: '1.5倍' },
+          { label: 'D', text: '3倍' }
+        ],
+        answer: 'C',
+        analysis: "IQR（四分位距）= Q3 - Q1，异常值通常定义为小于Q1 - 1.5×IQR或大于Q3 + 1.5×IQR的值。",
+        score: 10,
+        type: 'choice'
+      },
+      {
+        id: 'ec8',
+        title: "选择题8：数据透视表",
+        question: "在Pandas中，创建透视表使用哪个函数？",
+        options: [
+          { label: 'A', text: 'df.groupby()' },
+          { label: 'B', text: 'df.pivot_table()' },
+          { label: 'C', text: 'df.transpose()' },
+          { label: 'D', text: 'df.reshape()' }
+        ],
+        answer: 'B',
+        analysis: "pivot_table()函数可以创建数据透视表，支持聚合、分组和重塑数据。",
+        score: 10,
+        type: 'choice'
+      },
+      {
+        id: 'ec9',
+        title: "选择题9：回归分析",
+        question: "R²决定系数的取值范围是？",
+        options: [
+          { label: 'A', text: '0到1' },
+          { label: 'B', text: '-1到1' },
+          { label: 'C', text: '0到100' },
+          { label: 'D', text: '任意实数' }
+        ],
+        answer: 'A',
+        analysis: "R²决定系数表示模型解释的方差比例，取值范围是0到1，值越接近1表示模型拟合越好。",
+        score: 10,
+        type: 'choice'
+      },
+      {
+        id: 'ec10',
+        title: "选择题10：时间序列",
+        question: "在时间序列分析中，平稳性是指什么？",
+        options: [
+          { label: 'A', text: '数据的值不随时间变化' },
+          { label: 'B', text: '均值和方差不随时间变化，自协方差与时间间隔有关' },
+          { label: 'C', text: '数据呈线性增长趋势' },
+          { label: 'D', text: '数据具有周期性' }
+        ],
+        answer: 'B',
+        analysis: "平稳性分为严平稳和宽平稳。宽平稳要求均值、方差恒定，自协方差只与时间间隔有关。",
+        score: 10,
+        type: 'choice'
       }
     ];
 
