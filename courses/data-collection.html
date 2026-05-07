@@ -7549,19 +7549,30 @@ print(f"预测值: {new_prediction[0]:.4f}")
         return;
       }
       
+      let currentOutput = '';
+      const appendOutput = (text, type = 'normal') => {
+        currentOutput += text;
+        outputDiv.innerHTML = currentOutput.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      };
+      
       outputDiv.textContent = '运行中...';
       executionTimeDiv.textContent = '执行时间：计算中...';
       
       try {
         const startTime = performance.now();
         
-        // 运行代码
-        const result = await pyodide.runPythonAsync(code);
+        // 运行代码，重定向stdout和stderr
+        await pyodide.runPythonAsync(code, {
+          stdout: (text) => appendOutput(text),
+          stderr: (text) => appendOutput(text, 'error')
+        });
         
         const endTime = performance.now();
         const executionTime = (endTime - startTime).toFixed(2);
         
-        outputDiv.textContent = result || '代码执行成功，无输出';
+        if (!currentOutput) {
+          outputDiv.textContent = '代码执行成功，无输出';
+        }
         executionTimeDiv.textContent = `执行时间：${executionTime}ms`;
       } catch (error) {
         outputDiv.textContent = `错误：${error.message}`;
