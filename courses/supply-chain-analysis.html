@@ -545,6 +545,9 @@
               <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
                 <h3 class="text-lg font-semibold text-gray-200">代码编辑器</h3>
                 <div class="flex gap-2">
+                  <button class="btn-secondary text-sm" onclick="toggleCodeEditor()" id="toggle-code-btn" title="折叠代码编辑器">
+                    <i class="fa fa-chevron-up" id="toggle-code-icon"></i>
+                  </button>
                   <button id="resetCode" class="btn-secondary text-sm">
                     <i class="fa fa-refresh"></i> 重置
                   </button>
@@ -553,9 +556,11 @@
                   </button>
                 </div>
               </div>
-              <div id="codeEditor" class="code-editor"></div>
-              <div id="pyodide-status" class="mt-2 text-sm text-yellow-400">
-                <i class="fa fa-spinner fa-spin"></i> 正在加载Python解释器...
+              <div id="code-editor-container">
+                <div id="codeEditor" class="code-editor"></div>
+                <div id="pyodide-status" class="mt-2 text-sm text-yellow-400">
+                  <i class="fa fa-spinner fa-spin"></i> 正在加载Python解释器...
+                </div>
               </div>
             </div>
             
@@ -5029,6 +5034,25 @@ print(f"预测值: {new_prediction[0]:.4f}")
     let editor = null;
     let timerInterval = null;
     let seconds = 0;
+    let isCodeEditorCollapsed = false;
+
+    // 切换代码编辑器折叠状态
+    function toggleCodeEditor() {
+      const container = document.getElementById('code-editor-container');
+      const icon = document.getElementById('toggle-code-icon');
+      
+      if (isCodeEditorCollapsed) {
+        container.style.display = 'block';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+        isCodeEditorCollapsed = false;
+      } else {
+        container.style.display = 'none';
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+        isCodeEditorCollapsed = true;
+      }
+    }
 
     // 初始化函数
     document.addEventListener('DOMContentLoaded', function() {
@@ -5344,7 +5368,7 @@ print(f"预测值: {new_prediction[0]:.4f}")
       `;
 
       // 隐藏代码编辑器和运行结果区域
-      document.getElementById('codeEditor').parentElement.parentElement.style.display = 'none';
+      document.getElementById('code-editor-container').style.display = 'none';
       document.getElementById('code-output').parentElement.parentElement.style.display = 'none';
       
       // 更新答案解析区域
@@ -5484,7 +5508,13 @@ print(f"预测值: {new_prediction[0]:.4f}")
       currentProblem = problemId;
       
       // 显示代码编辑器和运行结果区域
-      document.getElementById('codeEditor').parentElement.parentElement.style.display = 'block';
+      const codeContainer = document.getElementById('code-editor-container');
+      codeContainer.style.display = 'block';
+      if (isCodeEditorCollapsed) {
+        isCodeEditorCollapsed = false;
+        document.getElementById('toggle-code-icon').classList.remove('fa-chevron-down');
+        document.getElementById('toggle-code-icon').classList.add('fa-chevron-up');
+      }
       document.getElementById('code-output').parentElement.parentElement.style.display = 'block';
       
       // 更新问题信息
