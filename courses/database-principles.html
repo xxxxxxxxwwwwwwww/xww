@@ -3638,6 +3638,9 @@ print(f"预测值: {new_prediction[0]:.4f}")
       currentChoiceQuestion = choiceQuestions.find(q => q.id === questionId);
       if (!currentChoiceQuestion) return;
 
+      // 自动切换到题库标签页
+      showTab('question-bank');
+      
       selectedAnswer = answeredQuestions[questionId] || null;
       
       // 更新题目信息
