@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据采集与处理考试 - Xww的课程页面</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/ace.js"></script>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#06b6d4',
+            secondary: '#1e293b',
+            accent: '#10b981',
+            code: '#1e293b',
+            codeText: '#e2e8f0',
+            dark: '#111827',
+            'dark-gray': '#1f2937',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .code-editor {
+        @apply w-full h-96 bg-dark rounded-lg overflow-hidden border border-gray-700;
+      }
+      .code-output {
+        @apply w-full h-64 bg-dark rounded-lg p-4 font-mono text-sm overflow-auto border border-gray-700;
+      }
+      .btn-primary {
+        @apply bg-cyan-500 hover:bg-cyan-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2;
+      }
+      .btn-secondary {
+        @apply bg-dark-gray hover:bg-gray-700 text-gray-200 px-4 py-2 rounded-lg transition-all duration-300 border border-gray-700 flex items-center gap-2;
+      }
+      .btn-accent {
+        @apply bg-emerald-500 hover:bg-emerald-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2;
+      }
+      .nav-link {
+        @apply relative text-gray-300 hover:text-cyan-400 transition-colors px-4 py-2 rounded-lg hover:bg-dark-gray flex items-center gap-2;
+      }
+      .nav-link.active {
+        @apply text-cyan-400 bg-dark-gray;
+      }
+      .problem-item {
+        @apply flex items-center gap-3 p-3 rounded-lg hover:bg-dark-gray transition-colors cursor-pointer border border-gray-700;
+      }
+      .problem-item.active {
+        @apply bg-dark-gray border-cyan-500;
+      }
+      .section-title {
+        @apply text-xl font-bold text-gray-200 mb-4 relative pb-2;
+      }
+      .section-title::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-16 h-1 bg-cyan-500 rounded-full;
+      }
+      .problem-description {
+        @apply text-gray-300 space-y-4;
+      }
+      .problem-description code {
+        @apply bg-dark-gray px-2 py-1 rounded text-cyan-400;
+      }
+      .answer-analysis {
+        @apply text-gray-300 space-y-3;
+      }
+      .answer-analysis h4 {
+        @apply text-lg font-semibold text-emerald-400 mb-2;
+      }
+      .run-info {
+        @apply flex justify-between items-center mb-2 text-xs text-gray-400;
+      }
+      .difficulty-tag {
+        @apply text-xs px-2 py-1 rounded-full;
+      }
+      .difficulty-easy {
+        @apply bg-emerald-900 text-emerald-300;
+      }
+      .difficulty-medium {
+        @apply bg-yellow-900 text-yellow-300;
+      }
+      .difficulty-hard {
+        @apply bg-red-900 text-red-300;
+      }
+      .scrollbar-thin {
+        scrollbar-width: thin;
+      }
+      .scrollbar-thin::-webkit-scrollbar {
+        width: 6px;
+      }
+      .scrollbar-thin::-webkit-scrollbar-track {
+        @apply bg-dark;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb {
+        @apply bg-gray-700 rounded-full;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        @apply bg-gray-600;
+      }
+    }
+  </style>
+</head>
+<body class="bg-dark min-h-screen text-gray-200">
+  <!-- 顶部导航栏 -->
+  <nav class="bg-dark-gray shadow-lg fixed w-full z-10">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <a href="data-collection.html" class="text-cyan-400 font-bold text-xl flex items-center gap-2">
+          <i class="fa fa-arrow-left mr-2"></i> 数据采集与处理
+        </a>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="text-sm text-gray-300">
+          <span id="exam-timer" class="text-cyan-400 font-semibold">30:00</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主要内容区 -->
+  <div class="pt-24 min-h-screen">
+    <div class="container mx-auto px-4">
+      <!-- 考试开始页面 -->
+      <div id="exam-start" class="py-12">
+        <div class="max-w-3xl mx-auto bg-dark-gray rounded-xl p-8 border border-gray-700">
+          <div class="text-center">
+            <h2 class="text-2xl font-bold text-gray-200 mb-6">数据采集与处理考试</h2>
+            <p class="text-gray-400 mb-8">请输入您的姓名，然后点击开始考试按钮</p>
+            <div class="mb-6">
+              <input type="text" id="student-name" placeholder="请输入您的姓名" class="w-full px-4 py-3 bg-dark border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-200">
+            </div>
+            <div class="bg-dark p-6 rounded-lg mb-6 text-left">
+              <h3 class="text-lg font-semibold text-gray-200 mb-4">考试规则</h3>
+              <ul class="list-disc list-inside space-y-2 text-gray-400">
+                <li>考试时间：30分钟</li>
+                <li>共15道题目，包括10道编程题和5道选择题</li>
+                <li>请独立完成，不要参考外部资料</li>
+                <li>考试过程中不要刷新页面，否则会丢失进度</li>
+                <li>点击提交按钮后将无法修改答案</li>
+              </ul>
+            </div>
+            <button id="start-exam" class="btn-primary">
+              <i class="fa fa-play"></i> 开始考试
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 考试页面 -->
+      <div id="exam-content" class="hidden">
+        <div class="flex flex-col lg:flex-row gap-6 py-6">
+          <!-- 左侧：题目列表 -->
+          <div class="lg:w-1/4 bg-dark-gray rounded-xl p-4 border border-gray-700 h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin">
+            <h2 class="section-title">考试题目</h2>
+            <div class="space-y-2" id="question-list">
+              <!-- 题目列表将通过JavaScript动态生成 -->
+            </div>
+          </div>
+
+          <!-- 右侧：问题、代码编辑器、运行结果 -->
+          <div class="lg:w-3/4 space-y-6">
+            <!-- 题目描述 -->
+            <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
+                <h3 class="text-xl font-bold text-gray-200" id="exam-problem-title">问题1：HTTP请求处理</h3>
+                <span class="difficulty-tag difficulty-easy" id="exam-difficulty-tag">简单</span>
+              </div>
+              <div class="problem-description" id="exam-problem-description">
+                <!-- 题目描述将通过JavaScript动态生成 -->
+              </div>
+            </div>
+
+            <!-- 选择题区域 -->
+            <div id="exam-choice-area" class="bg-dark-gray rounded-xl p-6 border border-gray-700 hidden">
+              <h3 class="text-lg font-semibold text-gray-200 mb-4">请选择正确答案</h3>
+              <div id="exam-choice-options" class="space-y-3">
+                <!-- 选项将通过JavaScript动态生成 -->
+              </div>
+            </div>
+
+            <!-- 代码编辑框 -->
+            <div id="exam-code-area" class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
+                <h3 class="text-lg font-semibold text-gray-200">代码编辑器</h3>
+                <div class="flex gap-2">
+                  <button id="exam-reset-code" class="btn-secondary text-sm">
+                    <i class="fa fa-refresh"></i> 重置
+                  </button>
+                  <button id="exam-run-code" class="btn-primary">
+                    <i class="fa fa-play"></i> 运行代码
+                  </button>
+                </div>
+              </div>
+              <div id="exam-code-editor" class="code-editor"></div>
+              <div id="exam-pyodide-status" class="mt-2 text-sm text-yellow-400">
+                <i class="fa fa-spinner fa-spin"></i> 正在加载Python解释器...
+              </div>
+            </div>
+
+            <!-- 运行结果 -->
+            <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <h3 class="text-lg font-semibold text-gray-200 mb-4">运行结果</h3>
+              <div class="run-info">
+                <span id="exam-execution-time">执行时间：0ms</span>
+                <span id="exam-memory-usage">内存：0MB</span>
+              </div>
+              <div id="exam-code-output" class="code-output">
+                运行代码查看输出...
+              </div>
+            </div>
+
+            <!-- 导航按钮 -->
+            <div class="flex justify-between items-center">
+              <button id="prev-question" class="btn-secondary">
+                <i class="fa fa-arrow-left"></i> 上一题
+              </button>
+              <button id="next-question" class="btn-primary">
+                下一题 <i class="fa fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 考试结果页面 -->
+      <div id="exam-result" class="hidden py-12">
+        <div class="max-w-4xl mx-auto bg-dark-gray rounded-xl p-8 border border-gray-700">
+          <div class="text-center mb-8">
+            <h2 class="text-2xl font-bold text-gray-200 mb-2">考试完成！</h2>
+            <p class="text-gray-400" id="result-name"></p>
+          </div>
+          
+          <div class="bg-dark p-6 rounded-lg mb-8">
+            <div class="flex justify-between items-center mb-6">
+              <div>
+                <h3 class="text-xl font-semibold text-gray-200">考试成绩</h3>
+                <p class="text-gray-400">总得分：<span id="total-score" class="text-cyan-400 font-semibold text-2xl">0</span> 分</p>
+              </div>
+              <div class="text-right">
+                <p class="text-gray-400">用时：<span id="used-time" class="text-cyan-400">0</span> 分钟</p>
+                <p class="text-gray-400">完成率：<span id="completion-rate" class="text-cyan-400">0</span>%</p>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              <div class="bg-dark-gray p-4 rounded-lg text-center">
+                <p class="text-gray-400">总题目</p>
+                <p class="text-2xl font-bold text-gray-200" id="total-questions">15</p>
+              </div>
+              <div class="bg-dark-gray p-4 rounded-lg text-center">
+                <p class="text-gray-400">已完成</p>
+                <p class="text-2xl font-bold text-emerald-400" id="completed-count">0</p>
+              </div>
+              <div class="bg-dark-gray p-4 rounded-lg text-center">
+                <p class="text-gray-400">正确</p>
+                <p class="text-2xl font-bold text-emerald-400" id="correct-count">0</p>
+              </div>
+              <div class="bg-dark-gray p-4 rounded-lg text-center">
+                <p class="text-gray-400">错误</p>
+                <p class="text-2xl font-bold text-red-400" id="wrong-count">0</p>
+              </div>
+            </div>
+            
+            <div class="space-y-4">
+              <h3 class="text-lg font-semibold text-gray-200">答题情况</h3>
+              <div id="answer-status" class="grid grid-cols-5 md:grid-cols-5 gap-2">
+                <!-- 答题状态将通过JavaScript动态生成 -->
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex justify-center gap-4">
+            <button id="review-answers" class="btn-secondary">
+              <i class="fa fa-list"></i> 查看答案
+            </button>
+            <button id="back-to-course" class="btn-primary">
+              <i class="fa fa-home"></i> 返回课程
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 考试题目数据
+    const examProblems = [
+      {
+        id: 1,
+        title: "问题1：HTTP请求处理",
+        description: `编写一个程序，使用requests库发送HTTP GET请求并处理响应。
+
+<strong>输入：</strong>
+目标URL
+
+<strong>输出：</strong>
+响应状态码、响应头信息和响应内容
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>发送GET请求获取网页内容</li>
+  <li>检查响应状态码</li>
+  <li>获取并显示响应头信息</li>
+  <li>显示响应内容的前500个字符</li>
+</ul>`,
+        difficulty: "easy",
+        code: `# 请编写代码
+import requests
+
+# 模拟HTTP请求处理
+# 由于浏览器环境限制，这里演示requests的基本用法
+
+# 构造请求参数
+url = "https://httpbin.org/get"
+params = {"key": "value", "page": 1}
+headers = {"User-Agent": "Mozilla/5.0"}
+
+print("=== HTTP请求信息 ===")
+print(f"请求URL: {url}")
+print(f"请求方法: GET")
+print(f"请求参数: {params}")
+print(f"请求头: {headers}")
+
+# 模拟响应处理
+print("\\n=== 模拟响应处理 ===")
+print("状态码: 200")
+print("响应头: Content-Type: application/json")
+print("响应内容: {\\"status\\": \\"success\\", \\"data\\": {\\"key\\": \\"value\\"}}")`,
+        answer: `import requests
+
+url = "https://httpbin.org/get"
+params = {"key": "value", "page": 1}
+headers = {"User-Agent": "Mozilla/5.0"}
+
+print("=== HTTP请求信息 ===")
+print(f"请求URL: {url}")
+print(f"请求方法: GET")
+print(f"请求参数: {params}")
+print(f"请求头: {headers}")
+
+print("\\n=== 模拟响应处理 ===")
+print("状态码: 200")
+print("响应头: Content-Type: application/json")
+print("响应内容: {\\"status\\": \\"success\\", \\"data\\": {\\"key\\": \\"value\\"}}")`,
+        score: 10
+      },
+      {
+        id: 2,
+        title: "问题2：HTML解析与BeautifulSoup",
+        description: `编写一个程序，使用BeautifulSoup解析HTML文档并提取数据。
+
+<strong>输入：</strong>
+HTML文档字符串
+
+<strong>输出：</strong>
+提取的标题、链接和文本内容
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>使用BeautifulSoup解析HTML</li>
+  <li>提取所有标题标签(h1-h3)的内容</li>
+  <li>提取所有链接的href属性</li>
+  <li>提取指定class的元素内容</li>
+</ul>`,
+        difficulty: "medium",
+        code: `# 请编写代码
+from bs4 import BeautifulSoup
+
+# 示例HTML文档
+html_doc = """
+<!DOCTYPE html>
+<html>
+<head><title>测试页面</title></head>
+<body>
+    <h1>主标题</h1>
+    <h2>副标题1</h2>
+    <h2>副标题2</h2>
+    <h3>小标题</h3>
+    <div class="content">
+        <p class="article">这是文章内容</p>
+        <p class="summary">这是摘要内容</p>
+    </div>
+    <a href="https://example.com/page1">链接1</a>
+    <a href="https://example.com/page2">链接2</a>
+</body>
+</html>
+"""
+
+# 创建BeautifulSoup对象
+soup = BeautifulSoup(html_doc, 'html.parser')
+
+# 提取标题
+print("=== 标题内容 ===")
+for i in range(1, 4):
+    tags = soup.find_all(f'h{i}')
+    for tag in tags:
+        print(f"h{i}: {tag.text}")
+
+# 提取链接
+print("\\n=== 链接列表 ===")
+links = soup.find_all('a')
+for link in links:
+    print(f"文本: {link.text}, URL: {link.get('href')}")
+
+# 提取指定class的元素
+print("\\n=== 指定class元素 ===")
+articles = soup.find_all('p', class_='article')
+for article in articles:
+    print(f"文章: {article.text}")`,
+        answer: `from bs4 import BeautifulSoup
+
+html_doc = """
+<!DOCTYPE html>
+<html>
+<head><title>测试页面</title></head>
+<body>
+    <h1>主标题</h1>
+    <h2>副标题1</h2>
+    <h2>副标题2</h2>
+    <h3>小标题</h3>
+    <div class="content">
+        <p class="article">这是文章内容</p>
+        <p class="summary">这是摘要内容</p>
+    </div>
+    <a href="https://example.com/page1">链接1</a>
+    <a href="https://example.com/page2">链接2</a>
+</body>
+</html>
+"""
+
+soup = BeautifulSoup(html_doc, 'html.parser')
+
+print("=== 标题内容 ===")
+for i in range(1, 4):
+    tags = soup.find_all(f'h{i}')
+    for tag in tags:
+        print(f"h{i}: {tag.text}")
+
+print("\\n=== 链接列表 ===")
+links = soup.find_all('a')
+for link in links:
+    print(f"文本: {link.text}, URL: {link.get('href')}")
+
+print("\\n=== 指定class元素 ===")
+articles = soup.find_all('p', class_='article')
+for article in articles:
+    print(f"文章: {article.text}")`,
+        score: 10
+      },
+      {
+        id: 3,
+        title: "问题3：数据清洗与格式转换",
+        description: `编写一个程序，对采集的原始数据进行清洗和格式转换。
+
+<strong>输入：</strong>
+包含脏数据的原始数据列表
+
+<strong>输出：</strong>
+清洗后的标准化数据
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>去除字符串两端的空白字符</li>
+  <li>处理缺失值和空值</li>
+  <li>统一数据格式（如日期、数字）</li>
+  <li>去除重复数据</li>
+</ul>`,
+        difficulty: "medium",
+        code: `# 请编写代码
+import pandas as pd
+import numpy as np
+
+# 原始脏数据
+raw_data = {
+    'name': ['  张三  ', '李四', None, '王五  ', '张三'],
+    'age': ['25', ' 30 ', 'na', '35', '25'],
+    'price': ['¥1,234.56', '2,345.67', 'N/A', '3,456.78', '¥1,234.56'],
+    'date': ['2024-01-15', ' 2024/02/20 ', '', '2024-03-25', '2024-01-15']
+}
+df = pd.DataFrame(raw_data)
+
+print("=== 原始数据 ===")
+print(df)
+
+# 1. 去除字符串空白
+df['name'] = df['name'].str.strip() if df['name'].dtype == 'object' else df['name']
+df['age'] = df['age'].str.strip()
+
+# 2. 处理缺失值
+df['name'] = df['name'].replace('', np.nan)
+df['name'] = df['name'].fillna('未知')
+
+# 3. 转换数据类型
+def clean_price(x):
+    if pd.isna(x) or x in ['N/A', 'na', '']:
+        return np.nan
+    return float(str(x).replace('¥', '').replace(',', ''))
+
+df['price_clean'] = df['price'].apply(clean_price)
+
+# 4. 去重
+df_unique = df.drop_duplicates()
+
+print("\\n=== 清洗后数据 ===")
+print(df_unique)`,
+        answer: `import pandas as pd
+import numpy as np
+
+raw_data = {
+    'name': ['  张三  ', '李四', None, '王五  ', '张三'],
+    'age': ['25', ' 30 ', 'na', '35', '25'],
+    'price': ['¥1,234.56', '2,345.67', 'N/A', '3,456.78', '¥1,234.56'],
+    'date': ['2024-01-15', ' 2024/02/20 ', '', '2024-03-25', '2024-01-15']
+}
+df = pd.DataFrame(raw_data)
+
+print("=== 原始数据 ===")
+print(df)
+
+df['name'] = df['name'].str.strip() if df['name'].dtype == 'object' else df['name']
+df['age'] = df['age'].str.strip()
+
+df['name'] = df['name'].replace('', np.nan)
+df['name'] = df['name'].fillna('未知')
+
+def clean_price(x):
+    if pd.isna(x) or x in ['N/A', 'na', '']:
+        return np.nan
+    return float(str(x).replace('¥', '').replace(',', ''))
+
+df['price_clean'] = df['price'].apply(clean_price)
+
+df_unique = df.drop_duplicates()
+
+print("\\n=== 清洗后数据 ===")
+print(df_unique)`,
+        score: 10
+      },
+      {
+        id: 4,
+        title: "问题4：数据存储-CSV格式",
+        description: `编写一个程序，将采集的数据保存为CSV文件并读取。
+
+<strong>输入：</strong>
+数据字典或DataFrame
+
+<strong>输出：</strong>
+CSV文件内容和读取结果
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>创建DataFrame并保存为CSV</li>
+  <li>设置合适的编码（UTF-8）</li>
+  <li>读取CSV文件并显示内容</li>
+  <li>处理中文编码问题</li>
+</ul>`,
+        difficulty: "easy",
+        code: `# 请编写代码
+import pandas as pd
+import io
+
+# 采集的数据
+data = {
+    '商品名称': ['苹果', '香蕉', '橙子', '葡萄'],
+    '价格': [5.5, 3.2, 4.8, 12.0],
+    '库存': [100, 150, 80, 60],
+    '产地': ['山东', '海南', '江西', '新疆']
+}
+df = pd.DataFrame(data)
+
+print("=== 原始数据 ===")
+print(df)
+
+# 保存为CSV（模拟）
+csv_buffer = io.StringIO()
+df.to_csv(csv_buffer, index=False, encoding='utf-8')
+csv_content = csv_buffer.getvalue()
+
+print("\\n=== CSV内容 ===")
+print(csv_content[:200])
+
+# 读取CSV（模拟）
+df_read = pd.read_csv(io.StringIO(csv_content))
+
+print("\\n=== 读取后的数据 ===")
+print(df_read)
+print(f"\\n数据形状: {df_read.shape}")
+print(f"列名: {list(df_read.columns)}")`,
+        answer: `import pandas as pd
+import io
+
+data = {
+    '商品名称': ['苹果', '香蕉', '橙子', '葡萄'],
+    '价格': [5.5, 3.2, 4.8, 12.0],
+    '库存': [100, 150, 80, 60],
+    '产地': ['山东', '海南', '江西', '新疆']
+}
+df = pd.DataFrame(data)
+
+print("=== 原始数据 ===")
+print(df)
+
+csv_buffer = io.StringIO()
+df.to_csv(csv_buffer, index=False, encoding='utf-8')
+csv_content = csv_buffer.getvalue()
+
+print("\\n=== CSV内容 ===")
+print(csv_content[:200])
+
+df_read = pd.read_csv(io.StringIO(csv_content))
+
+print("\\n=== 读取后的数据 ===")
+print(df_read)
+print(f"\\n数据形状: {df_read.shape}")
+print(f"列名: {list(df_read.columns)}")`,
+        score: 10
+      },
+      {
+        id: 5,
+        title: "问题5：数据存储-JSON格式",
+        description: `编写一个程序，处理JSON数据的读写和格式转换。
+
+<strong>输入：</strong>
+JSON格式的数据字符串
+
+<strong>输出：</strong>
+解析后的Python对象和重新编码的JSON
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>解析JSON字符串为Python对象</li>
+  <li>访问和修改JSON数据</li>
+  <li>将Python对象转换为JSON</li>
+  <li>处理嵌套JSON结构</li>
+</ul>`,
+        difficulty: "medium",
+        code: `# 请编写代码
+import json
+
+# JSON数据字符串
+json_string = '''
+{
+    "product": {
+        "id": 1001,
+        "name": "智能手机",
+        "price": 2999.00,
+        "specs": {
+            "brand": "品牌A",
+            "storage": "128GB",
+            "color": ["黑色", "白色", "蓝色"]
+        },
+        "reviews": [
+            {"user": "张三", "rating": 5, "comment": "非常好用"},
+            {"user": "李四", "rating": 4, "comment": "性价比高"}
+        ]
+    }
+}
+'''
+
+# 解析JSON
+data = json.loads(json_string)
+
+print("=== 解析后的数据 ===")
+print(f"产品ID: {data['product']['id']}")
+print(f"产品名称: {data['product']['name']}")
+print(f"价格: ¥{data['product']['price']}")
+
+# 访问嵌套数据
+print(f"\\n=== 产品规格 ===")
+specs = data['product']['specs']
+print(f"品牌: {specs['brand']}")
+print(f"存储: {specs['storage']}")
+print(f"颜色: {', '.join(specs['color'])}")
+
+# 修改数据
+data['product']['price'] = 2799.00
+data['product']['specs']['color'].append('红色')
+
+# 添加新评论
+data['product']['reviews'].append({
+    "user": "王五",
+    "rating": 5,
+    "comment": "强烈推荐"
+})
+
+# 转换回JSON
+new_json = json.dumps(data, ensure_ascii=False, indent=2)
+print("\\n=== 更新后的JSON ===")
+print(new_json[:300])`,
+        answer: `import json
+
+json_string = '''
+{
+    "product": {
+        "id": 1001,
+        "name": "智能手机",
+        "price": 2999.00,
+        "specs": {
+            "brand": "品牌A",
+            "storage": "128GB",
+            "color": ["黑色", "白色", "蓝色"]
+        },
+        "reviews": [
+            {"user": "张三", "rating": 5, "comment": "非常好用"},
+            {"user": "李四", "rating": 4, "comment": "性价比高"}
+        ]
+    }
+}
+'''
+
+data = json.loads(json_string)
+
+print("=== 解析后的数据 ===")
+print(f"产品ID: {data['product']['id']}")
+print(f"产品名称: {data['product']['name']}")
+print(f"价格: ¥{data['product']['price']}")
+
+print(f"\\n=== 产品规格 ===")
+specs = data['product']['specs']
+print(f"品牌: {specs['brand']}")
+print(f"存储: {specs['storage']}")
+print(f"颜色: {', '.join(specs['color'])}")
+
+data['product']['price'] = 2799.00
+data['product']['specs']['color'].append('红色')
+
+data['product']['reviews'].append({
+    "user": "王五",
+    "rating": 5,
+    "comment": "强烈推荐"
+})
+
+new_json = json.dumps(data, ensure_ascii=False, indent=2)
+print("\\n=== 更新后的JSON ===")
+print(new_json[:300])`,
+        score: 10
+      },
+      {
+        id: 6,
+        title: "问题6：API数据采集",
+        description: `编写一个程序，调用REST API获取数据并处理分页。
+
+<strong>输入：</strong>
+API端点和请求参数
+
+<strong>输出：</strong>
+API响应数据和处理结果
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>构造API请求参数</li>
+  <li>处理API响应数据</li>
+  <li>实现分页数据采集逻辑</li>
+  <li>错误处理和重试机制</li>
+</ul>`,
+        difficulty: "medium",
+        code: `# 请编写代码
+import json
+
+# 模拟API响应数据
+def mock_api_request(endpoint, params):
+    """模拟API请求"""
+    page = params.get('page', 1)
+    per_page = params.get('per_page', 10)
+    
+    # 模拟数据
+    all_items = [
+        {"id": i, "name": f"项目{i}", "value": i * 100} 
+        for i in range(1, 26)
+    ]
+    
+    start = (page - 1) * per_page
+    end = start + per_page
+    items = all_items[start:end]
+    
+    return {
+        "status": "success",
+        "data": items,
+        "pagination": {
+            "page": page,
+            "per_page": per_page,
+            "total": len(all_items),
+            "total_pages": (len(all_items) + per_page - 1) // per_page
+        }
+    }
+
+# API配置
+api_config = {
+    "endpoint": "/api/items",
+    "params": {
+        "page": 1,
+        "per_page": 10
+    }
+}
+
+print("=== API数据采集 ===")
+print(f"端点: {api_config['endpoint']}")
+print(f"参数: {api_config['params']}")
+
+# 分页采集
+all_data = []
+current_page = 1
+max_pages = 3  # 限制页数用于演示
+
+while current_page <= max_pages:
+    params = {"page": current_page, "per_page": 10}
+    response = mock_api_request(api_config['endpoint'], params)
+    
+    if response['status'] == 'success':
+        all_data.extend(response['data'])
+        print(f"\\n第{current_page}页数据:")
+        for item in response['data']:
+            print(f"  - {item}")
+        
+        pagination = response['pagination']
+        print(f"分页信息: 第{pagination['page']}/{pagination['total_pages']}页")
+        
+        if current_page >= pagination['total_pages']:
+            break
+        current_page += 1
+    else:
+        print("请求失败，重试中...")
+        break
+
+print(f"\\n=== 采集完成 ===")
+print(f"总共采集: {len(all_data)} 条数据")`,
+        answer: `import json
+
+def mock_api_request(endpoint, params):
+    page = params.get('page', 1)
+    per_page = params.get('per_page', 10)
+    
+    all_items = [
+        {"id": i, "name": f"项目{i}", "value": i * 100} 
+        for i in range(1, 26)
+    ]
+    
+    start = (page - 1) * per_page
+    end = start + per_page
+    items = all_items[start:end]
+    
+    return {
+        "status": "success",
+        "data": items,
+        "pagination": {
+            "page": page,
+            "per_page": per_page,
+            "total": len(all_items),
+            "total_pages": (len(all_items) + per_page - 1) // per_page
+        }
+    }
+
+api_config = {
+    "endpoint": "/api/items",
+    "params": {
+        "page": 1,
+        "per_page": 10
+    }
+}
+
+print("=== API数据采集 ===")
+print(f"端点: {api_config['endpoint']}")
+print(f"参数: {api_config['params']}")
+
+all_data = []
+current_page = 1
+max_pages = 3
+
+while current_page <= max_pages:
+    params = {"page": current_page, "per_page": 10}
+    response = mock_api_request(api_config['endpoint'], params)
+    
+    if response['status'] == 'success':
+        all_data.extend(response['data'])
+        print(f"\\n第{current_page}页数据:")
+        for item in response['data']:
+            print(f"  - {item}")
+        
+        pagination = response['pagination']
+        print(f"分页信息: 第{pagination['page']}/{pagination['total_pages']}页")
+        
+        if current_page >= pagination['total_pages']:
+            break
+        current_page += 1
+    else:
+        print("请求失败，重试中...")
+        break
+
+print(f"\\n=== 采集完成 ===")
+print(f"总共采集: {len(all_data)} 条数据")`,
+        score: 10
+      },
+      {
+        id: 7,
+        title: "问题7：反爬虫技术-请求头伪装",
+        description: `编写一个程序，实现基本的反爬虫绕过技术。
+
+<strong>输入：</strong>
+目标网站URL
+
+<strong>输出：</strong>
+配置好的请求头和代理设置
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>设置User-Agent伪装浏览器</li>
+  <li>添加Referer和Origin头</li>
+  <li>实现请求延迟避免频繁访问</li>
+  <li>处理Cookie和Session</li>
+</ul>`,
+        difficulty: "hard",
+        code: `# 请编写代码
+import random
+import time
+
+# User-Agent池
+USER_AGENTS = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15"
+]
+
+def create_request_headers(target_url):
+    """创建伪装请求头"""
+    headers = {
+        "User-Agent": random.choice(USER_AGENTS),
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+        "Referer": target_url,
+        "Origin": target_url.rstrip('/'),
+    }
+    return headers
+
+def simulate_request(url, headers, delay_range=(1, 3)):
+    """模拟请求（带延迟）"""
+    delay = random.uniform(*delay_range)
+    print(f"等待 {delay:.2f} 秒...")
+    time.sleep(delay)
+    
+    print(f"\\n请求URL: {url}")
+    print("请求头:")
+    for key, value in headers.items():
+        if key == "User-Agent":
+            print(f"  {key}: {value[:50]}...")
+        else:
+            print(f"  {key}: {value}")
+    
+    return {"status": 200, "message": "请求成功"}
+
+# 示例使用
+target_url = "https://example.com/data"
+
+print("=== 反爬虫请求配置 ===")
+headers = create_request_headers(target_url)
+
+# 模拟多次请求
+for i in range(3):
+    print(f"\\n--- 第 {i+1} 次请求 ---")
+    headers = create_request_headers(target_url)
+    result = simulate_request(target_url, headers, delay_range=(0.5, 1.5))
+    print(f"响应: {result}")`,
+        answer: `import random
+import time
+
+USER_AGENTS = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15"
+]
+
+def create_request_headers(target_url):
+    headers = {
+        "User-Agent": random.choice(USER_AGENTS),
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+        "Referer": target_url,
+        "Origin": target_url.rstrip('/'),
+    }
+    return headers
+
+def simulate_request(url, headers, delay_range=(1, 3)):
+    delay = random.uniform(*delay_range)
+    print(f"等待 {delay:.2f} 秒...")
+    time.sleep(delay)
+    
+    print(f"\\n请求URL: {url}")
+    print("请求头:")
+    for key, value in headers.items():
+        if key == "User-Agent":
+            print(f"  {key}: {value[:50]}...")
+        else:
+            print(f"  {key}: {value}")
+    
+    return {"status": 200, "message": "请求成功"}
+
+target_url = "https://example.com/data"
+
+print("=== 反爬虫请求配置 ===")
+headers = create_request_headers(target_url)
+
+for i in range(3):
+    print(f"\\n--- 第 {i+1} 次请求 ---")
+    headers = create_request_headers(target_url)
+    result = simulate_request(target_url, headers, delay_range=(0.5, 1.5))
+    print(f"响应: {result}")`,
+        score: 10
+      },
+      {
+        id: 8,
+        title: "问题8：数据库存储-SQLite",
+        description: `编写一个程序，使用SQLite数据库存储采集的数据。
+
+<strong>输入：</strong>
+采集的数据列表
+
+<strong>输出：</strong>
+数据库操作结果
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>创建SQLite数据库和表</li>
+  <li>插入采集的数据</li>
+  <li>查询和更新数据</li>
+  <li>处理数据去重</li>
+</ul>`,
+        difficulty: "medium",
+        code: `# 请编写代码
+import sqlite3
+import pandas as pd
+
+# 创建内存数据库
+conn = sqlite3.connect(':memory:')
+cursor = conn.cursor()
+
+# 创建表
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    price REAL,
+    category TEXT,
+    stock INTEGER,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(name, category)
+)
+''')
+
+print("=== 数据库表创建成功 ===")
+
+# 插入数据
+products = [
+    ('苹果手机', 5999.00, '电子产品', 100),
+    ('华为手机', 4999.00, '电子产品', 150),
+    ('小米手机', 2999.00, '电子产品', 200),
+    ('联想笔记本', 6999.00, '电脑', 50),
+    ('戴尔笔记本', 7999.00, '电脑', 30)
+]
+
+cursor.executemany('''
+    INSERT OR REPLACE INTO products (name, price, category, stock)
+    VALUES (?, ?, ?, ?)
+''', products)
+
+conn.commit()
+print(f"成功插入 {len(products)} 条数据")
+
+# 查询数据
+print("\\n=== 所有产品 ===")
+cursor.execute('SELECT * FROM products')
+for row in cursor.fetchall():
+    print(row)
+
+# 条件查询
+print("\\n=== 电子产品查询 ===")
+cursor.execute('SELECT name, price FROM products WHERE category = ?', ('电子产品',))
+for row in cursor.fetchall():
+    print(f"产品: {row[0]}, 价格: ¥{row[1]}")
+
+# 聚合查询
+print("\\n=== 分类统计 ===")
+cursor.execute('''
+    SELECT category, COUNT(*) as count, AVG(price) as avg_price
+    FROM products
+    GROUP BY category
+''')
+for row in cursor.fetchall():
+    print(f"分类: {row[0]}, 数量: {row[1]}, 平均价格: ¥{row[2]:.2f}")
+
+# 更新数据
+cursor.execute('UPDATE products SET price = ? WHERE name = ?', (5799.00, '苹果手机'))
+conn.commit()
+print("\\n=== 更新苹果手机价格 ===")
+
+# 使用Pandas读取
+df = pd.read_sql_query('SELECT * FROM products', conn)
+print("\\n=== Pandas读取结果 ===")
+print(df)
+
+conn.close()`,
+        answer: `import sqlite3
+import pandas as pd
+
+conn = sqlite3.connect(':memory:')
+cursor = conn.cursor()
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    price REAL,
+    category TEXT,
+    stock INTEGER,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(name, category)
+)
+''')
+
+print("=== 数据库表创建成功 ===")
+
+products = [
+    ('苹果手机', 5999.00, '电子产品', 100),
+    ('华为手机', 4999.00, '电子产品', 150),
+    ('小米手机', 2999.00, '电子产品', 200),
+    ('联想笔记本', 6999.00, '电脑', 50),
+    ('戴尔笔记本', 7999.00, '电脑', 30)
+]
+
+cursor.executemany('''
+    INSERT OR REPLACE INTO products (name, price, category, stock)
+    VALUES (?, ?, ?, ?)
+''', products)
+
+conn.commit()
+print(f"成功插入 {len(products)} 条数据")
+
+print("\\n=== 所有产品 ===")
+cursor.execute('SELECT * FROM products')
+for row in cursor.fetchall():
+    print(row)
+
+print("\\n=== 电子产品查询 ===")
+cursor.execute('SELECT name, price FROM products WHERE category = ?', ('电子产品',))
+for row in cursor.fetchall():
+    print(f"产品: {row[0]}, 价格: ¥{row[1]}")
+
+print("\\n=== 分类统计 ===")
+cursor.execute('''
+    SELECT category, COUNT(*) as count, AVG(price) as avg_price
+    FROM products
+    GROUP BY category
+''')
+for row in cursor.fetchall():
+    print(f"分类: {row[0]}, 数量: {row[1]}, 平均价格: ¥{row[2]:.2f}")
+
+cursor.execute('UPDATE products SET price = ? WHERE name = ?', (5799.00, '苹果手机'))
+conn.commit()
+print("\\n=== 更新苹果手机价格 ===")
+
+df = pd.read_sql_query('SELECT * FROM products', conn)
+print("\\n=== Pandas读取结果 ===")
+print(df)
+
+conn.close()`,
+        score: 10
+      },
+      {
+        id: 9,
+        title: "问题9：正则表达式数据提取",
+        description: `编写一个程序，使用正则表达式从文本中提取结构化数据。
+
+<strong>输入：</strong>
+包含各种格式的文本内容
+
+<strong>输出：</strong>
+提取的结构化数据
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>提取邮箱地址</li>
+  <li>提取手机号码</li>
+  <li>提取URL链接</li>
+  <li>提取日期格式</li>
+</ul>`,
+        difficulty: "medium",
+        code: `# 请编写代码
+import re
+
+# 示例文本
+text = """
+联系方式：
+- 邮箱：zhangsan@example.com, lisi@company.cn
+- 电话：13812345678, 021-87654321
+- 手机：15912345678, 18698765432
+
+网站信息：
+- 官网：https://www.example.com
+- 帮助：http://help.example.org/docs
+- API：https://api.example.com/v1/users
+
+重要日期：
+- 发布日期：2024-01-15
+- 更新时间：2024/02/20
+- 截止日期：2024年3月30日
+"""
+
+print("=== 原始文本 ===")
+print(text)
+
+# 提取邮箱
+email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+emails = re.findall(email_pattern, text)
+print("\\n=== 提取的邮箱 ===")
+for email in emails:
+    print(f"  - {email}")
+
+# 提取手机号
+phone_pattern = r'1[3-9]\d{9}'
+phones = re.findall(phone_pattern, text)
+print("\\n=== 提取的手机号 ===")
+for phone in phones:
+    print(f"  - {phone}")
+
+# 提取URL
+url_pattern = r'https?://[^\s<>"{}|\\^`\[\]]+'
+urls = re.findall(url_pattern, text)
+print("\\n=== 提取的URL ===")
+for url in urls:
+    print(f"  - {url}")
+
+# 提取日期
+date_patterns = [
+    r'\d{4}-\d{2}-\d{2}',      # 2024-01-15
+    r'\d{4}/\d{2}/\d{2}',      # 2024/02/20
+    r'\d{4}年\d{1,2}月\d{1,2}日'  # 2024年3月30日
+]
+
+print("\\n=== 提取的日期 ===")
+for pattern in date_patterns:
+    dates = re.findall(pattern, text)
+    for date in dates:
+        print(f"  - {date}")
+
+# 提取固定电话
+landline_pattern = r'\d{3,4}-\d{7,8}'
+landlines = re.findall(landline_pattern, text)
+print("\\n=== 提取的固定电话 ===")
+for landline in landlines:
+    print(f"  - {landline}")`,
+        answer: `import re
+
+text = """
+联系方式：
+- 邮箱：zhangsan@example.com, lisi@company.cn
+- 电话：13812345678, 021-87654321
+- 手机：15912345678, 18698765432
+
+网站信息：
+- 官网：https://www.example.com
+- 帮助：http://help.example.org/docs
+- API：https://api.example.com/v1/users
+
+重要日期：
+- 发布日期：2024-01-15
+- 更新时间：2024/02/20
+- 截止日期：2024年3月30日
+"""
+
+print("=== 原始文本 ===")
+print(text)
+
+email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+emails = re.findall(email_pattern, text)
+print("\\n=== 提取的邮箱 ===")
+for email in emails:
+    print(f"  - {email}")
+
+phone_pattern = r'1[3-9]\d{9}'
+phones = re.findall(phone_pattern, text)
+print("\\n=== 提取的手机号 ===")
+for phone in phones:
+    print(f"  - {phone}")
+
+url_pattern = r'https?://[^\s<>"{}|\\\\^\\`\\[\\]]+'
+urls = re.findall(url_pattern, text)
+print("\\n=== 提取的URL ===")
+for url in urls:
+    print(f"  - {url}")
+
+date_patterns = [
+    r'\\d{4}-\\d{2}-\\d{2}',
+    r'\\d{4}/\\d{2}/\\d{2}',
+    r'\\d{4}年\\d{1,2}月\\d{1,2}日'
+]
+
+print("\\n=== 提取的日期 ===")
+for pattern in date_patterns:
+    dates = re.findall(pattern, text)
+    for date in dates:
+        print(f"  - {date}")
+
+landline_pattern = r'\\d{3,4}-\\d{7,8}'
+landlines = re.findall(landline_pattern, text)
+print("\\n=== 提取的固定电话 ===")
+for landline in landlines:
+    print(f"  - {landline}")`,
+        score: 10
+      },
+      {
+        id: 10,
+        title: "问题10：爬虫综合实践",
+        description: `编写一个综合爬虫程序，整合多种数据采集技术。
+
+<strong>输入：</strong>
+模拟的网页HTML内容
+
+<strong>输出：</strong>
+采集、清洗、存储后的完整数据
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>解析HTML提取数据</li>
+  <li>数据清洗和验证</li>
+  <li>数据去重处理</li>
+  <li>输出结构化结果</li>
+</ul>`,
+        difficulty: "hard",
+        code: `# 请编写代码
+from bs4 import BeautifulSoup
+import json
+import re
+import pandas as pd
+
+# 模拟网页HTML
+html_content = """
+<!DOCTYPE html>
+<html>
+<head><title>商品列表</title></head>
+<body>
+    <div class="product-list">
+        <div class="product-item" data-id="1">
+            <h3 class="title">  iPhone 15 Pro  </h3>
+            <span class="price">¥7,999.00</span>
+            <span class="sales">已售: 12,345件</span>
+            <span class="rating">评分: 4.8</span>
+        </div>
+        <div class="product-item" data-id="2">
+            <h3 class="title">华为 Mate 60 Pro</h3>
+            <span class="price">￥6,999</span>
+            <span class="sales">已售: 8,888件</span>
+            <span class="rating">评分: 4.9</span>
+        </div>
+        <div class="product-item" data-id="3">
+            <h3 class="title">小米14 Ultra</h3>
+            <span class="price">5999元</span>
+            <span class="sales">已售: 5,678件</span>
+            <span class="rating">评分: 4.7</span>
+        </div>
+        <div class="product-item" data-id="4">
+            <h3 class="title">iPhone 15 Pro</h3>
+            <span class="price">¥7,999.00</span>
+            <span class="sales">已售: 12,345件</span>
+            <span class="rating">评分: 4.8</span>
+        </div>
+    </div>
+</body>
+</html>
+"""
+
+print("=== 开始爬虫任务 ===")
+
+# 1. 解析HTML
+soup = BeautifulSoup(html_content, 'html.parser')
+product_items = soup.find_all('div', class_='product-item')
+
+print(f"找到 {len(product_items)} 个商品")
+
+# 2. 提取数据
+products = []
+for item in product_items:
+    product = {
+        'id': item.get('data-id'),
+        'title': item.find('h3', class_='title').text.strip(),
+        'price_raw': item.find('span', class_='price').text,
+        'sales_raw': item.find('span', class_='sales').text,
+        'rating_raw': item.find('span', class_='rating').text
+    }
+    products.append(product)
+
+print("\\n=== 原始数据 ===")
+for p in products:
+    print(p)
+
+# 3. 数据清洗
+def clean_price(price_str):
+    """清洗价格数据"""
+    price_str = price_str.replace('¥', '').replace('￥', '').replace('元', '')
+    price_str = price_str.replace(',', '').strip()
+    return float(price_str)
+
+def clean_sales(sales_str):
+    """清洗销量数据"""
+    match = re.search(r'[\d,]+', sales_str)
+    if match:
+        return int(match.group().replace(',', ''))
+    return 0
+
+def clean_rating(rating_str):
+    """清洗评分数据"""
+    match = re.search(r'[\d.]+', rating_str)
+    if match:
+        return float(match.group())
+    return 0.0
+
+cleaned_products = []
+for p in products:
+    cleaned = {
+        'id': int(p['id']),
+        'title': p['title'],
+        'price': clean_price(p['price_raw']),
+        'sales': clean_sales(p['sales_raw']),
+        'rating': clean_rating(p['rating_raw'])
+    }
+    cleaned_products.append(cleaned)
+
+print("\\n=== 清洗后数据 ===")
+for p in cleaned_products:
+    print(p)
+
+# 4. 数据去重
+df = pd.DataFrame(cleaned_products)
+df_unique = df.drop_duplicates(subset=['title', 'price'])
+
+print("\\n=== 去重后数据 ===")
+print(df_unique)
+
+# 5. 输出JSON
+result = df_unique.to_dict('records')
+print("\\n=== 最终结果(JSON) ===")
+print(json.dumps(result, ensure_ascii=False, indent=2))`,
+        answer: `from bs4 import BeautifulSoup
+import json
+import re
+import pandas as pd
+
+html_content = """
+<!DOCTYPE html>
+<html>
+<head><title>商品列表</title></head>
+<body>
+    <div class="product-list">
+        <div class="product-item" data-id="1">
+            <h3 class="title">  iPhone 15 Pro  </h3>
+            <span class="price">¥7,999.00</span>
+            <span class="sales">已售: 12,345件</span>
+            <span class="rating">评分: 4.8</span>
+        </div>
+        <div class="product-item" data-id="2">
+            <h3 class="title">华为 Mate 60 Pro</h3>
+            <span class="price">￥6,999</span>
+            <span class="sales">已售: 8,888件</span>
+            <span class="rating">评分: 4.9</span>
+        </div>
+        <div class="product-item" data-id="3">
+            <h3 class="title">小米14 Ultra</h3>
+            <span class="price">5999元</span>
+            <span class="sales">已售: 5,678件</span>
+            <span class="rating">评分: 4.7</span>
+        </div>
+        <div class="product-item" data-id="4">
+            <h3 class="title">iPhone 15 Pro</h3>
+            <span class="price">¥7,999.00</span>
+            <span class="sales">已售: 12,345件</span>
+            <span class="rating">评分: 4.8</span>
+        </div>
+    </div>
+</body>
+</html>
+"""
+
+print("=== 开始爬虫任务 ===")
+
+soup = BeautifulSoup(html_content, 'html.parser')
+product_items = soup.find_all('div', class_='product-item')
+
+print(f"找到 {len(product_items)} 个商品")
+
+products = []
+for item in product_items:
+    product = {
+        'id': item.get('data-id'),
+        'title': item.find('h3', class_='title').text.strip(),
+        'price_raw': item.find('span', class_='price').text,
+        'sales_raw': item.find('span', class_='sales').text,
+        'rating_raw': item.find('span', class_='rating').text
+    }
+    products.append(product)
+
+print("\\n=== 原始数据 ===")
+for p in products:
+    print(p)
+
+def clean_price(price_str):
+    price_str = price_str.replace('¥', '').replace('￥', '').replace('元', '')
+    price_str = price_str.replace(',', '').strip()
+    return float(price_str)
+
+def clean_sales(sales_str):
+    match = re.search(r'[\\d,]+', sales_str)
+    if match:
+        return int(match.group().replace(',', ''))
+    return 0
+
+def clean_rating(rating_str):
+    match = re.search(r'[\\d.]+', rating_str)
+    if match:
+        return float(match.group())
+    return 0.0
+
+cleaned_products = []
+for p in products:
+    cleaned = {
+        'id': int(p['id']),
+        'title': p['title'],
+        'price': clean_price(p['price_raw']),
+        'sales': clean_sales(p['sales_raw']),
+        'rating': clean_rating(p['rating_raw'])
+    }
+    cleaned_products.append(cleaned)
+
+print("\\n=== 清洗后数据 ===")
+for p in cleaned_products:
+    print(p)
+
+df = pd.DataFrame(cleaned_products)
+df_unique = df.drop_duplicates(subset=['title', 'price'])
+
+print("\\n=== 去重后数据 ===")
+print(df_unique)
+
+result = df_unique.to_dict('records')
+print("\\n=== 最终结果(JSON) ===")
+print(json.dumps(result, ensure_ascii=False, indent=2))`,
+        score: 10
+      }
+    ];
+
+    // 考试选择题数据
+    const examChoiceQuestions = [
+      {
+        id: 'c1',
+        title: "选择题1：HTTP协议基础",
+        description: "HTTP协议中，GET请求和POST请求的主要区别是什么？",
+        difficulty: "easy",
+        options: [
+          { label: 'A', text: 'GET请求更快，POST请求更慢' },
+          { label: 'B', text: 'GET请求参数在URL中，POST请求参数在请求体中' },
+          { label: 'C', text: 'GET请求只能获取文本，POST请求可以获取图片' },
+          { label: 'D', text: 'GET请求和POST请求没有区别' }
+        ],
+        answer: 'B',
+        score: 10
+      },
+      {
+        id: 'c2',
+        title: "选择题2：BeautifulSoup使用",
+        description: "使用BeautifulSoup查找所有class为'content'的div元素，正确的代码是？",
+        difficulty: "easy",
+        options: [
+          { label: 'A', text: 'soup.find("div.content")' },
+          { label: 'B', text: 'soup.find_all("div", class_="content")' },
+          { label: 'C', text: 'soup.search("div.content")' },
+          { label: 'D', text: 'soup.get("div.content")' }
+        ],
+        answer: 'B',
+        score: 10
+      },
+      {
+        id: 'c3',
+        title: "选择题3：正则表达式",
+        description: "正则表达式 r'[a-zA-Z]+' 可以匹配以下哪种内容？",
+        difficulty: "medium",
+        options: [
+          { label: 'A', text: '任意字符' },
+          { label: 'B', text: '一个或多个字母（大小写）' },
+          { label: 'C', text: '一个或多个数字' },
+          { label: 'D', text: '零个或多个字母' }
+        ],
+        answer: 'B',
+        score: 10
+      },
+      {
+        id: 'c4',
+        title: "选择题4：数据存储",
+        description: "以下关于CSV和JSON格式的描述，哪项是正确的？",
+        difficulty: "easy",
+        options: [
+          { label: 'A', text: 'CSV格式支持嵌套结构，JSON不支持' },
+          { label: 'B', text: 'JSON格式支持嵌套结构，CSV是扁平的表格格式' },
+          { label: 'C', text: 'CSV和JSON都支持嵌套结构' },
+          { label: 'D', text: 'CSV和JSON都不支持嵌套结构' }
+        ],
+        answer: 'B',
+        score: 10
+      },
+      {
+        id: 'c5',
+        title: "选择题5：反爬虫技术",
+        description: "以下哪种方法可以有效绑过网站的User-Agent检测？",
+        difficulty: "medium",
+        options: [
+          { label: 'A', text: '增加请求延时' },
+          { label: 'B', text: '使用代理IP' },
+          { label: 'C', text: '在请求头中设置真实的浏览器User-Agent' },
+          { label: 'D', text: '减少请求次数' }
+        ],
+        answer: 'C',
+        score: 10
+      }
+    ];
+
+    // 全局变量
+    let currentQuestion = 1;
+    let currentChoiceAnswer = null;
+    let pyodide = null;
+    let editor = null;
+    let examTimer = null;
+    let examTime = 30 * 60; // 30分钟
+    let studentName = "";
+    let studentAnswers = {};
+    let studentChoiceAnswers = {};
+    let examStartTime = null;
+
+    // 初始化函数
+    document.addEventListener('DOMContentLoaded', function() {
+      // 绑定开始考试按钮事件
+      document.getElementById('start-exam').addEventListener('click', startExam);
+      
+      // 绑定返回课程按钮事件
+      document.getElementById('back-to-course').addEventListener('click', function() {
+        window.location.href = 'data-collection.html';
+      });
+    });
+
+    // 开始考试
+    function startExam() {
+      studentName = document.getElementById('student-name').value.trim();
+      if (!studentName) {
+        alert('请输入您的姓名');
+        return;
+      }
+      
+      // 隐藏开始页面，显示考试页面
+      document.getElementById('exam-start').classList.add('hidden');
+      document.getElementById('exam-content').classList.remove('hidden');
+      
+      // 初始化代码编辑器
+      editor = ace.edit('exam-code-editor');
+      editor.setTheme('ace/theme/tomorrow_night');
+      editor.getSession().setMode('ace/mode/python');
+      editor.setOptions({
+        fontSize: '14px',
+        tabSize: 4,
+        useSoftTabs: true,
+        wrap: true
+      });
+      
+      // 加载Pyodide
+      initPyodide();
+      
+      // 生成题目列表
+      generateQuestionList();
+      
+      // 加载第一个问题
+      loadExamProblem(1);
+      
+      // 绑定按钮事件
+      document.getElementById('exam-run-code').addEventListener('click', runExamCode);
+      document.getElementById('exam-reset-code').addEventListener('click', resetExamCode);
+      document.getElementById('prev-question').addEventListener('click', goToPrevQuestion);
+      document.getElementById('next-question').addEventListener('click', goToNextQuestion);
+      
+      // 开始考试计时器
+      startExamTimer();
+      
+      // 记录考试开始时间
+      examStartTime = new Date();
+    }
+
+    // 加载Pyodide
+    async function initPyodide() {
+      const statusEl = document.getElementById('exam-pyodide-status');
+      const cdns = [
+        "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/",
+        "https://unpkg.com/pyodide@0.24.1/full/",
+        "https://cdnjs.cloudflare.com/ajax/libs/pyodide/0.24.1/full/"
+      ];
+      let currentCDN = 0;
+      let retryCount = 0;
+      const maxRetries = 3;
+      
+      statusEl.innerHTML = '<i class="fa fa-spinner fa-spin text-amber-400"></i> 正在加载Python解释器...';
+
+      async function switchCDN() {
+        currentCDN++;
+        if (currentCDN >= cdns.length) {
+          currentCDN = 0;
+          retryCount++;
+          if (retryCount >= maxRetries) {
+            throw new Error('所有CDN均无法访问');
+          }
+        }
+      }
+
+      async function loadWithTimeout(indexURL) {
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('加载超时')), 30000);
+        });
+        const loadPromise = loadPyodide({ indexURL });
+        return Promise.race([loadPromise, timeoutPromise]);
+      }
+
+      while (retryCount < maxRetries) {
+        try {
+          pyodide = await loadWithTimeout(cdns[currentCDN]);
+          statusEl.innerHTML = '<i class="fa fa-check text-emerald-400"></i> Python解释器加载成功';
+          await pyodide.loadPackage(['pandas', 'numpy', 'matplotlib', 'beautifulsoup4', 'lxml']);
+          return;
+        } catch (error) {
+          console.warn(`CDN ${cdns[currentCDN]} 加载失败:`, error);
+          await switchCDN();
+        }
+      }
+      
+      statusEl.innerHTML = '<i class="fa fa-exclamation-triangle text-red-400"></i> Python解释器加载失败';
+      console.error('Pyodide load error:', error);
+    }
+
+    // 生成题目列表
+    function generateQuestionList() {
+      const questionList = document.getElementById('question-list');
+      questionList.innerHTML = '';
+      
+      // 添加编程题
+      examProblems.forEach(problem => {
+        const problemItem = document.createElement('div');
+        problemItem.className = 'problem-item';
+        problemItem.onclick = () => loadExamProblem(problem.id);
+        
+        const difficultyClass = problem.difficulty === 'easy' ? 'difficulty-easy' : 
+                             problem.difficulty === 'medium' ? 'difficulty-medium' : 'difficulty-hard';
+        
+        problemItem.innerHTML = `
+          <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">${problem.id}</div>
+          <div class="flex-1">
+            <div class="font-medium">${problem.title}</div>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="difficulty-tag ${difficultyClass}">${problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难'}</span>
+            </div>
+          </div>
+          <div class="text-gray-500" id="status-${problem.id}">
+            <i class="fa fa-circle-o"></i>
+          </div>
+        `;
+        
+        questionList.appendChild(problemItem);
+      });
+      
+      // 添加选择题
+      examChoiceQuestions.forEach(question => {
+        const problemItem = document.createElement('div');
+        problemItem.className = 'problem-item';
+        problemItem.onclick = () => loadExamProblem(question.id);
+        
+        const difficultyClass = question.difficulty === 'easy' ? 'difficulty-easy' : 
+                             question.difficulty === 'medium' ? 'difficulty-medium' : 'difficulty-hard';
+        
+        problemItem.innerHTML = `
+          <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-xs">选</div>
+          <div class="flex-1">
+            <div class="font-medium">${question.title}</div>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="difficulty-tag ${difficultyClass}">${question.difficulty === 'easy' ? '简单' : question.difficulty === 'medium' ? '中等' : '困难'}</span>
+            </div>
+          </div>
+          <div class="text-gray-500" id="status-${question.id}">
+            <i class="fa fa-circle-o"></i>
+          </div>
+        `;
+        
+        questionList.appendChild(problemItem);
+      });
+    }
+
+    // 加载考试问题
+    function loadExamProblem(problemId) {
+      currentQuestion = problemId;
+      currentChoiceAnswer = null;
+      
+      // 检查是否是选择题
+      if (typeof problemId === 'string' && problemId.startsWith('c')) {
+        loadExamChoiceQuestion(problemId);
+        return;
+      }
+      
+      const problem = examProblems.find(p => p.id === problemId);
+      
+      if (!problem) return;
+      
+      // 显示代码编辑器，隐藏选择题区域
+      document.getElementById('exam-code-area').classList.remove('hidden');
+      document.getElementById('exam-choice-area').classList.add('hidden');
+      
+      // 更新问题信息
+      document.getElementById('exam-problem-title').textContent = problem.title;
+      document.getElementById('exam-problem-description').innerHTML = problem.description;
+      
+      // 更新难度标签
+      const difficultyTag = document.getElementById('exam-difficulty-tag');
+      difficultyTag.className = 'difficulty-tag';
+      difficultyTag.classList.add('difficulty-' + problem.difficulty);
+      difficultyTag.textContent = problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难';
+      
+      // 更新代码编辑器
+      editor.setValue(studentAnswers[problemId] || problem.code);
+      editor.clearSelection();
+      
+      // 更新问题项状态
+      document.querySelectorAll('.problem-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      const index = examProblems.findIndex(p => p.id === problemId);
+      if (index >= 0) {
+        document.querySelectorAll('.problem-item')[index].classList.add('active');
+      }
+    }
+
+    // 加载选择题
+    function loadExamChoiceQuestion(questionId) {
+      const question = examChoiceQuestions.find(q => q.id === questionId);
+      
+      if (!question) return;
+      
+      // 隐藏代码编辑器，显示选择题区域
+      document.getElementById('exam-code-area').classList.add('hidden');
+      document.getElementById('exam-choice-area').classList.remove('hidden');
+      
+      // 更新问题信息
+      document.getElementById('exam-problem-title').textContent = question.title;
+      document.getElementById('exam-problem-description').innerHTML = `<p>${question.description}</p>`;
+      
+      // 更新难度标签
+      const difficultyTag = document.getElementById('exam-difficulty-tag');
+      difficultyTag.className = 'difficulty-tag';
+      difficultyTag.classList.add('difficulty-' + question.difficulty);
+      difficultyTag.textContent = question.difficulty === 'easy' ? '简单' : question.difficulty === 'medium' ? '中等' : '困难';
+      
+      // 生成选项
+      const optionsContainer = document.getElementById('exam-choice-options');
+      const savedAnswer = studentChoiceAnswers[questionId];
+      optionsContainer.innerHTML = question.options.map(opt => `
+        <div class="choice-option p-4 rounded-lg border ${savedAnswer === opt.label ? 'border-cyan-500 bg-cyan-900/30' : 'border-gray-700'} cursor-pointer hover:border-cyan-500 transition-colors" 
+             onclick="selectExamChoice('${opt.label}')" id="exam-option-${opt.label}">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full ${savedAnswer === opt.label ? 'bg-cyan-500 text-gray-900' : 'bg-gray-700'} flex items-center justify-center font-bold text-sm" id="exam-option-label-${opt.label}">
+              ${opt.label}
+            </div>
+            <span class="text-gray-300">${opt.text}</span>
+          </div>
+        </div>
+      `).join('');
+      
+      currentChoiceAnswer = savedAnswer || null;
+      
+      // 更新问题项状态
+      document.querySelectorAll('.problem-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      const index = examProblems.length + examChoiceQuestions.findIndex(q => q.id === questionId);
+      if (index >= 0) {
+        document.querySelectorAll('.problem-item')[index].classList.add('active');
+      }
+    }
+
+    // 选择答案
+    function selectExamChoice(label) {
+      currentChoiceAnswer = label;
+      
+      // 更新选项样式
+      document.querySelectorAll('.choice-option').forEach(opt => {
+        opt.classList.remove('border-cyan-500', 'bg-cyan-900/30');
+        const labelDiv = opt.querySelector('div > div');
+        labelDiv.classList.remove('bg-cyan-500', 'text-gray-900');
+        labelDiv.classList.add('bg-gray-700');
+      });
+      
+      const selectedOption = document.getElementById(`exam-option-${label}`);
+      selectedOption.classList.add('border-cyan-500', 'bg-cyan-900/30');
+      const labelDiv = document.getElementById(`exam-option-label-${label}`);
+      labelDiv.classList.remove('bg-gray-700');
+      labelDiv.classList.add('bg-cyan-500', 'text-gray-900');
+      
+      // 保存答案
+      studentChoiceAnswers[currentQuestion] = label;
+      
+      // 更新问题状态
+      const statusElement = document.getElementById(`status-${currentQuestion}`);
+      statusElement.innerHTML = '<i class="fa fa-check-circle text-emerald-400"></i>';
+    }
+
+    // 运行代码
+    async function runExamCode() {
+      const code = editor.getValue();
+      const outputDiv = document.getElementById('exam-code-output');
+      const executionTimeDiv = document.getElementById('exam-execution-time');
+      
+      if (!pyodide) {
+        outputDiv.textContent = 'Python解释器尚未加载完成，请稍候...';
+        return;
+      }
+      
+      outputDiv.textContent = '运行中...';
+      executionTimeDiv.textContent = '执行时间：计算中...';
+      
+      try {
+        const startTime = performance.now();
+        
+        // 运行代码
+        const result = await pyodide.runPythonAsync(code);
+        
+        const endTime = performance.now();
+        const executionTime = (endTime - startTime).toFixed(2);
+        
+        outputDiv.textContent = result || '代码执行成功，无输出';
+        executionTimeDiv.textContent = `执行时间：${executionTime}ms`;
+        
+        // 保存答案
+        studentAnswers[currentQuestion] = code;
+        
+        // 更新问题状态
+        const statusElement = document.getElementById(`status-${currentQuestion}`);
+        statusElement.innerHTML = '<i class="fa fa-check-circle text-emerald-400"></i>';
+      } catch (error) {
+        outputDiv.textContent = `错误：${error.message}`;
+        executionTimeDiv.textContent = '执行时间：0ms';
+      }
+    }
+
+    // 重置代码
+    function resetExamCode() {
+      const problem = examProblems.find(p => p.id === currentQuestion);
+      if (problem) {
+        editor.setValue(problem.code);
+        editor.clearSelection();
+      }
+    }
+
+    // 上一题
+    function goToPrevQuestion() {
+      const allQuestions = [...examProblems.map(p => p.id), ...examChoiceQuestions.map(q => q.id)];
+      const currentIndex = allQuestions.indexOf(currentQuestion);
+      if (currentIndex > 0) {
+        loadExamProblem(allQuestions[currentIndex - 1]);
+      }
+    }
+
+    // 下一题
+    function goToNextQuestion() {
+      const allQuestions = [...examProblems.map(p => p.id), ...examChoiceQuestions.map(q => q.id)];
+      const currentIndex = allQuestions.indexOf(currentQuestion);
+      if (currentIndex < allQuestions.length - 1) {
+        loadExamProblem(allQuestions[currentIndex + 1]);
+      } else {
+        submitExam();
+      }
+    }
+
+    // 开始考试计时器
+    function startExamTimer() {
+      updateExamTimer();
+      examTimer = setInterval(() => {
+        examTime--;
+        updateExamTimer();
+        
+        if (examTime <= 0) {
+          clearInterval(examTimer);
+          submitExam();
+        }
+      }, 1000);
+    }
+
+    // 更新考试计时器
+    function updateExamTimer() {
+      const minutes = Math.floor(examTime / 60);
+      const seconds = examTime % 60;
+      document.getElementById('exam-timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    // 提交考试
+    function submitExam() {
+      clearInterval(examTimer);
+      
+      // 计算考试用时
+      const examEndTime = new Date();
+      const usedMinutes = Math.round((examEndTime - examStartTime) / (1000 * 60));
+      
+      // 计算得分
+      let totalScore = 0;
+      let completedCount = 0;
+      let correctCount = 0;
+      
+      // 计算编程题得分
+      examProblems.forEach(problem => {
+        const studentAnswer = studentAnswers[problem.id];
+        if (studentAnswer) {
+          completedCount++;
+          if (studentAnswer.trim() === problem.answer.trim()) {
+            correctCount++;
+            totalScore += problem.score;
+          }
+        }
+      });
+      
+      // 计算选择题得分
+      examChoiceQuestions.forEach(question => {
+        const studentAnswer = studentChoiceAnswers[question.id];
+        if (studentAnswer) {
+          completedCount++;
+          if (studentAnswer === question.answer) {
+            correctCount++;
+            totalScore += question.score;
+          }
+        }
+      });
+      
+      const totalQuestions = examProblems.length + examChoiceQuestions.length;
+      const wrongCount = completedCount - correctCount;
+      const completionRate = Math.round((completedCount / totalQuestions) * 100);
+      
+      // 更新结果页面
+      document.getElementById('result-name').textContent = `姓名：${studentName}`;
+      document.getElementById('total-score').textContent = totalScore;
+      document.getElementById('used-time').textContent = usedMinutes;
+      document.getElementById('completion-rate').textContent = completionRate;
+      document.getElementById('completed-count').textContent = completedCount;
+      document.getElementById('correct-count').textContent = correctCount;
+      document.getElementById('wrong-count').textContent = wrongCount;
+      
+      // 更新总题目数
+      document.getElementById('total-questions').textContent = totalQuestions;
+      
+      // 生成答题状态
+      const answerStatus = document.getElementById('answer-status');
+      answerStatus.innerHTML = '';
+      
+      // 编程题状态
+      examProblems.forEach(problem => {
+        const statusItem = document.createElement('div');
+        statusItem.className = 'w-12 h-12 rounded-full flex items-center justify-center font-bold';
+        
+        const studentAnswer = studentAnswers[problem.id];
+        if (!studentAnswer) {
+          statusItem.className += ' bg-gray-700 text-gray-400';
+          statusItem.textContent = problem.id;
+        } else if (studentAnswer.trim() === problem.answer.trim()) {
+          statusItem.className += ' bg-emerald-900 text-emerald-400';
+          statusItem.innerHTML = `<i class="fa fa-check"></i>`;
+        } else {
+          statusItem.className += ' bg-red-900 text-red-400';
+          statusItem.innerHTML = `<i class="fa fa-times"></i>`;
+        }
+        
+        answerStatus.appendChild(statusItem);
+      });
+      
+      // 选择题状态
+      examChoiceQuestions.forEach(question => {
+        const statusItem = document.createElement('div');
+        statusItem.className = 'w-12 h-12 rounded-full flex items-center justify-center font-bold';
+        
+        const studentAnswer = studentChoiceAnswers[question.id];
+        if (!studentAnswer) {
+          statusItem.className += ' bg-gray-700 text-gray-400';
+          statusItem.textContent = question.id.replace('c', '');
+        } else if (studentAnswer === question.answer) {
+          statusItem.className += ' bg-emerald-900 text-emerald-400';
+          statusItem.innerHTML = `<i class="fa fa-check"></i>`;
+        } else {
+          statusItem.className += ' bg-red-900 text-red-400';
+          statusItem.innerHTML = `<i class="fa fa-times"></i>`;
+        }
+        
+        answerStatus.appendChild(statusItem);
+      });
+      
+      // 显示结果页面
+      document.getElementById('exam-content').classList.add('hidden');
+      document.getElementById('exam-result').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

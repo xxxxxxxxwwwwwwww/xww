@@ -6,17 +6,24 @@
   <title>数据库原理与应用 - Xww的课程页面</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/ace.js"></script>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            primary: '#165DFF',
-            secondary: '#F5F7FA',
-            accent: '#FF7D00',
+            primary: '#06b6d4',
+            secondary: '#1e293b',
+            accent: '#10b981',
+            code: '#1e293b',
+            codeText: '#e2e8f0',
+            dark: '#111827',
+            'dark-gray': '#1f2937',
           },
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
           },
         },
       }
@@ -27,374 +34,2704 @@
       .content-auto {
         content-visibility: auto;
       }
-      .card-hover {
-        @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+      .code-editor {
+        @apply w-full h-96 bg-dark rounded-lg overflow-hidden border border-gray-700;
+      }
+      .code-output {
+        @apply w-full h-64 bg-dark rounded-lg p-4 font-mono text-sm overflow-auto border border-gray-700;
+      }
+      .btn-primary {
+        @apply bg-cyan-500 hover:bg-cyan-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2;
+      }
+      .btn-secondary {
+        @apply bg-dark-gray hover:bg-gray-700 text-gray-200 px-4 py-2 rounded-lg transition-all duration-300 border border-gray-700 flex items-center gap-2;
+      }
+      .btn-accent {
+        @apply bg-emerald-500 hover:bg-emerald-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2;
+      }
+      .nav-link {
+        @apply relative text-gray-300 hover:text-cyan-400 transition-colors px-4 py-2 rounded-lg hover:bg-dark-gray flex items-center gap-2;
+      }
+      .nav-link.active {
+        @apply text-cyan-400 bg-dark-gray;
+      }
+      .nav-link::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300;
+      }
+      .nav-link:hover::after {
+        @apply w-full;
+      }
+      .problem-item {
+        @apply flex items-center gap-3 p-3 rounded-lg hover:bg-dark-gray transition-colors cursor-pointer border border-gray-700;
+      }
+      .problem-item.active {
+        @apply bg-dark-gray border-cyan-500;
+      }
+      .problem-item.solved {
+        @apply border-emerald-500;
+      }
+      .problem-item.attempted {
+        @apply border-yellow-500;
+      }
+      .section-title {
+        @apply text-xl font-bold text-gray-200 mb-4 relative pb-2;
+      }
+      .section-title::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-16 h-1 bg-cyan-500 rounded-full;
+      }
+      .topic-title {
+        @apply text-lg font-semibold text-gray-300 mb-3 flex items-center gap-2 cursor-pointer;
+      }
+      .topic-title:hover {
+        @apply text-cyan-400;
+      }
+      .problem-description {
+        @apply text-gray-300 space-y-4;
+      }
+      .problem-description code {
+        @apply bg-dark-gray px-2 py-1 rounded text-cyan-400;
+      }
+      .answer-analysis {
+        @apply text-gray-300 space-y-3;
+      }
+      .answer-analysis h4 {
+        @apply text-lg font-semibold text-emerald-400 mb-2;
+      }
+      .run-info {
+        @apply flex justify-between items-center mb-2 text-xs text-gray-400;
+      }
+      .difficulty-tag {
+        @apply text-xs px-2 py-1 rounded-full;
+      }
+      .difficulty-easy {
+        @apply bg-emerald-900 text-emerald-300;
+      }
+      .difficulty-medium {
+        @apply bg-yellow-900 text-yellow-300;
+      }
+      .difficulty-hard {
+        @apply bg-red-900 text-red-300;
+      }
+      .chapter-item {
+        @apply mb-6;
+      }
+      .chapter-content {
+        @apply space-y-2 ml-4 transition-all duration-300;
+      }
+      .chapter-content.collapsed {
+        @apply hidden;
+      }
+      .scrollbar-thin {
+        scrollbar-width: thin;
+      }
+      .scrollbar-thin::-webkit-scrollbar {
+        width: 6px;
+      }
+      .scrollbar-thin::-webkit-scrollbar-track {
+        @apply bg-dark;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb {
+        @apply bg-gray-700 rounded-full;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        @apply bg-gray-600;
+      }
+      .knowledge-nav.active {
+        @apply bg-cyan-500 text-gray-900;
+      }
+      .knowledge-nav:not(.active) {
+        @apply bg-gray-600 text-gray-200 hover:bg-gray-500;
+      }
+      .choice-option {
+        @apply flex items-center gap-3 p-4 rounded-lg border border-gray-700 cursor-pointer transition-all duration-200 hover:border-cyan-500 hover:bg-dark-gray;
+      }
+      .choice-option.selected {
+        @apply border-cyan-500 bg-cyan-900 bg-opacity-30;
+      }
+      .choice-option.correct {
+        @apply border-emerald-500 bg-emerald-900 bg-opacity-30;
+      }
+      .choice-option.wrong {
+        @apply border-red-500 bg-red-900 bg-opacity-30;
+      }
+      .choice-option.disabled {
+        @apply cursor-not-allowed opacity-70;
+      }
+      .choice-label {
+        @apply w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold text-sm;
+      }
+      .choice-option.selected .choice-label {
+        @apply bg-cyan-500 text-gray-900;
+      }
+      .choice-option.correct .choice-label {
+        @apply bg-emerald-500 text-gray-900;
+      }
+      .choice-option.wrong .choice-label {
+        @apply bg-red-500 text-gray-900;
       }
     }
   </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-  <!-- 导航栏 -->
-  <nav class="bg-white shadow-sm fixed w-full z-10">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <div class="text-primary font-bold text-xl">
-        <a href="../index.html" class="hover:text-primary/80 transition-colors">
+<body class="bg-dark min-h-screen text-gray-200">
+  <!-- 顶部导航栏 -->
+  <nav class="bg-dark-gray shadow-lg fixed w-full z-10">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center flex-wrap gap-4">
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="text-cyan-400 font-bold text-xl flex items-center gap-2">
           <i class="fa fa-arrow-left mr-2"></i> Xww的课程页面
         </a>
       </div>
-      <div class="hidden md:flex space-x-6">
-        <a href="../index.html#home" class="text-gray-700 hover:text-primary transition-colors">首页</a>
-        <a href="../index.html#courses" class="text-gray-700 hover:text-primary transition-colors">课程</a>
-        <a href="../index.html#about" class="text-gray-700 hover:text-primary transition-colors">关于我</a>
+      <div class="flex items-center gap-2 flex-wrap">
+        <a href="#" class="nav-link active" onclick="showTab('question-bank')">
+          <i class="fa fa-list"></i> 题库
+        </a>
+        <a href="#" class="nav-link" onclick="showTab('wrong-questions')">
+          <i class="fa fa-times-circle"></i> 错题
+        </a>
+        <a href="#" class="nav-link" onclick="showTab('favorites')">
+          <i class="fa fa-star"></i> 收藏
+        </a>
+        <a href="#" class="nav-link" onclick="showTab('knowledge')">
+          <i class="fa fa-book"></i> 知识点
+        </a>
+        <a href="database-principles-exam.html" class="nav-link">
+          <i class="fa fa-pencil-square-o"></i> 考试
+        </a>
       </div>
-      <button class="md:hidden text-gray-700">
-        <i class="fa fa-bars text-xl"></i>
-      </button>
+      <div class="flex items-center gap-4">
+        <div class="text-sm text-gray-300">
+          完成进度: <span id="overall-progress" class="text-cyan-400 font-semibold">0%</span>
+        </div>
+        <div class="w-48 bg-gray-700 rounded-full h-2.5">
+          <div id="progress-bar" class="bg-cyan-500 h-2.5 rounded-full" style="width: 0%"></div>
+        </div>
+      </div>
     </div>
   </nav>
 
-  <!-- 课程标题区 -->
-  <section class="pt-24 pb-12 bg-gradient-to-b from-primary/10 to-white">
+  <!-- 主要内容区 -->
+  <div class="pt-24 min-h-screen">
     <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
-        <div class="flex items-center gap-4 mb-4">
-          <div class="w-16 h-16 rounded-lg bg-primary flex items-center justify-center">
-            <i class="fa fa-database text-white text-2xl"></i>
+      <!-- 题库标签页 -->
+      <div id="question-bank" class="tab-content">
+        <div class="flex flex-col lg:flex-row gap-6 py-6">
+          <!-- 左侧：题目列表/章节目录 -->
+          <div class="lg:w-1/4 bg-dark-gray rounded-xl p-4 border border-gray-700 h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin">
+            <h2 class="section-title">数据分析技术题库</h2>
+            
+            <!-- 章节列表 -->
+            <div class="space-y-6">
+              <!-- 章节1：数据预处理 -->
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter1')">
+                  <i class="fa fa-chevron-down text-gray-400 transition-transform duration-300" id="chapter1-icon"></i>
+                  数据预处理
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/6</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
+                </h3>
+                <div class="chapter-content" id="chapter1-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
+                  <div class="problem-item active" onclick="loadProgrammingProblem(1)">
+                    <div class="w-8 h-8 rounded-full bg-cyan-500 flex items-center justify-center text-gray-900 font-bold">1</div>
+                    <div class="flex-1">
+                      <div class="font-medium">缺失值处理</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-gray-400">15分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(2)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">2</div>
+                    <div class="flex-1">
+                      <div class="font-medium">异常值检测</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(3)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">3</div>
+                    <div class="flex-1">
+                      <div class="font-medium">数据标准化</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">15分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c1')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">A</div>
+                    <div class="flex-1">
+                      <div class="font-medium">缺失值处理方法</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c2')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">B</div>
+                    <div class="flex-1">
+                      <div class="font-medium">异常值检测</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c3')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">C</div>
+                    <div class="flex-1">
+                      <div class="font-medium">数据标准化</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 章节2：探索性数据分析 -->
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter2')">
+                  <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter2-icon"></i>
+                  探索性数据分析
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/4</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
+                </h3>
+                <div class="chapter-content collapsed" id="chapter2-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(4)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">4</div>
+                    <div class="flex-1">
+                      <div class="font-medium">描述性统计分析</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-gray-400">10分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(5)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">5</div>
+                    <div class="flex-1">
+                      <div class="font-medium">数据可视化</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">25分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c4')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">D</div>
+                    <div class="flex-1">
+                      <div class="font-medium">描述性统计</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c5')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">E</div>
+                    <div class="flex-1">
+                      <div class="font-medium">相关性分析</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 章节3：统计分析 -->
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter3')">
+                  <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter3-icon"></i>
+                  统计分析
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/4</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
+                </h3>
+                <div class="chapter-content collapsed" id="chapter3-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(6)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">6</div>
+                    <div class="flex-1">
+                      <div class="font-medium">假设检验</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(7)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">7</div>
+                    <div class="flex-1">
+                      <div class="font-medium">回归分析</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-hard">困难</span>
+                        <span class="text-xs text-gray-400">30分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c6')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">F</div>
+                    <div class="flex-1">
+                      <div class="font-medium">假设检验</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c7')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">G</div>
+                    <div class="flex-1">
+                      <div class="font-medium">方差分析</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 章节4：Pandas基础 -->
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter4')">
+                  <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter4-icon"></i>
+                  Pandas基础
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/1</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
+                </h3>
+                <div class="chapter-content collapsed" id="chapter4-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c8')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">H</div>
+                    <div class="flex-1">
+                      <div class="font-medium">Pandas DataFrame</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 章节5：数据可视化 -->
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter5')">
+                  <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter5-icon"></i>
+                  数据可视化
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/1</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
+                </h3>
+                <div class="chapter-content collapsed" id="chapter5-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c9')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">I</div>
+                    <div class="flex-1">
+                      <div class="font-medium">数据可视化</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 章节6：机器学习基础 -->
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter6')">
+                  <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter6-icon"></i>
+                  机器学习基础
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/3</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
+                </h3>
+                <div class="chapter-content collapsed" id="chapter6-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c10')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">J</div>
+                    <div class="flex-1">
+                      <div class="font-medium">机器学习</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c11')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">K</div>
+                    <div class="flex-1">
+                      <div class="font-medium">聚类算法</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c12')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">L</div>
+                    <div class="flex-1">
+                      <div class="font-medium">模型评估</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div>
-            <h1 class="text-3xl font-bold text-gray-800">数据库原理与应用</h1>
-            <p class="text-gray-600 mt-1">高职大二第一学期 | 56学时</p>
+          
+          <!-- 右侧：问题、代码编辑器、运行结果、答案解析 -->
+          <div class="lg:w-3/4 space-y-6">
+            <!-- 题目描述 -->
+            <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
+              <h3 class="text-xl font-bold text-gray-200" id="problem-title">问题1：缺失值处理</h3>
+              <div class="flex items-center gap-4 flex-wrap">
+                <div class="flex items-center gap-2">
+                  <i class="fa fa-clock-o text-cyan-400"></i>
+                  <span id="timer" class="text-gray-200 font-mono">00:00</span>
+                </div>
+                <span class="difficulty-tag difficulty-easy" id="difficulty-tag">简单</span>
+                <button class="text-gray-400 hover:text-yellow-400 transition-colors" onclick="toggleFavorite(1)" id="favorite-btn">
+                  <i class="fa fa-star-o"></i>
+                </button>
+              </div>
+            </div>
+              <div class="problem-description" id="problem-description">
+                <p>编写一个程序，使用Pandas处理DataFrame中的缺失值。</p>
+                <p><strong>输入：</strong></p>
+                <p>一个包含缺失值的DataFrame</p>
+                <p><strong>输出：</strong></p>
+                <p>处理后的DataFrame，其中缺失值已被适当处理</p>
+                <p><strong>要求：</strong></p>
+                <ul class="list-disc list-inside space-y-1 mt-2">
+                  <li>识别并统计缺失值</li>
+                  <li>使用合适的方法填充缺失值（如均值、中位数或众数）</li>
+                  <li>返回处理后的DataFrame</li>
+                </ul>
+              </div>
+            </div>
+            
+            <!-- 代码编辑框 -->
+            <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
+                <h3 class="text-lg font-semibold text-gray-200">代码编辑器</h3>
+                <div class="flex gap-2">
+                  <button id="resetCode" class="btn-secondary text-sm">
+                    <i class="fa fa-refresh"></i> 重置
+                  </button>
+                  <button id="runCode" class="btn-primary">
+                    <i class="fa fa-play"></i> 运行代码
+                  </button>
+                </div>
+              </div>
+              <div id="codeEditor" class="code-editor"></div>
+              <div id="pyodide-status" class="mt-2 text-sm text-yellow-400">
+                <i class="fa fa-spinner fa-spin"></i> 正在加载Python解释器...
+              </div>
+            </div>
+            
+            <!-- 运行结果和答案解析 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- 运行结果 -->
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">运行结果</h3>
+                <div class="run-info">
+                  <span id="execution-time">执行时间：0ms</span>
+                  <span id="memory-usage">内存：0MB</span>
+                </div>
+                <div id="code-output" class="code-output">
+                  运行代码查看输出...
+                </div>
+              </div>
+              
+              <!-- 答案解析 -->
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">答案解析</h3>
+                <div class="answer-analysis" id="answer-analysis">
+                  <h4>解题思路</h4>
+                  <p>1. 使用Pandas的isnull()和sum()方法识别并统计缺失值</p>
+                  <p>2. 根据数据类型选择合适的填充方法：数值型数据使用均值或中位数，分类型数据使用众数</p>
+                  <p>3. 使用fillna()方法填充缺失值</p>
+                  <h4>代码示例</h4>
+                  <div class="bg-dark p-3 rounded-lg font-mono text-sm">
+                    <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+
+# 创建示例数据
+data = {
+    'A': [1, 2, np.nan, 4, 5],
+    'B': [np.nan, 2, 3, 4, np.nan],
+    'C': ['x', 'y', 'z', np.nan, 'x']
+}
+df = pd.DataFrame(data)
+
+# 识别缺失值
+print("缺失值统计:")
+print(df.isnull().sum())
+
+# 处理缺失值
+df['A'] = df['A'].fillna(df['A'].mean())
+df['B'] = df['B'].fillna(df['B'].median())
+df['C'] = df['C'].fillna(df['C'].mode()[0])
+
+print("\n处理后的数据:")
+print(df)
+                    </pre>
+                  </div>
+                  <h4>知识点</h4>
+                <ul class="list-disc list-inside space-y-1 mt-2">
+                  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-preprocessing')">数据预处理</a></li>
+                  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('pandas-basics')">Pandas基础</a></li>
+                  <li>缺失值处理方法</li>
+                </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 错题标签页 -->
+      <div id="wrong-questions" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">错题本</h2>
+          <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+            <div class="text-center py-12">
+              <i class="fa fa-times-circle text-4xl text-red-500 mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无错题</h3>
+              <p class="text-gray-400">当你在练习中答错题目时，它们会自动添加到这里</p>
+              <button class="btn-primary mt-6" onclick="showTab('question-bank')">
+                <i class="fa fa-list"></i> 开始练习
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 收藏标签页 -->
+      <div id="favorites" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">收藏题目</h2>
+          <div class="bg-dark-gray rounded-xl p-6 border border-gray-700" id="favorites-container">
+            <div class="text-center py-12">
+              <i class="fa fa-star-o text-4xl text-yellow-500 mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无收藏</h3>
+              <p class="text-gray-400">在题库中点击题目旁边的星标图标来收藏题目</p>
+              <button class="btn-primary mt-6" onclick="showTab('question-bank')">
+                <i class="fa fa-list"></i> 浏览题库
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 知识点标签页 -->
+      <div id="knowledge" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">📚 知识点学习</h2>
+          
+          <!-- 导航栏 -->
+          <div class="flex flex-wrap gap-3 mb-8 bg-dark-gray p-4 rounded-xl border border-gray-700">
+            <button class="knowledge-nav active px-4 py-2 rounded-lg font-semibold transition" data-target="module1-basics">模块1：数据库基础知识</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module2-sql">模块2：SQL语言基础</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module3-design">模块3：数据库设计</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module4-management">模块4：数据库管理</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module5-nosql">模块5：NoSQL数据库</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module6-project">模块6：综合项目实战</button>
+          </div>
+
+          <div class="space-y-8">
+            <!-- 模块1：数据库基础知识 -->
+            <div id="module1-basics" class="knowledge-section">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-database"></i> 模块1：数据库基础知识（8学时）
+                </h3>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                  <!-- 数据库基本概念 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-book text-yellow-400"></i> 数据库基本概念
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">数据库（Database）是长期存储在计算机内、有组织、可共享的数据集合。数据库具有以下特点：数据结构化、数据共享性高、数据独立性强、数据由DBMS统一管理和控制。</p>
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📌 核心概念</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li><strong class="text-gray-300">数据（Data）</strong>：描述事物的符号记录</li>
+                          <li><strong class="text-gray-300">数据库（DB）</strong>：长期存储的数据集合</li>
+                          <li><strong class="text-gray-300">数据库管理系统（DBMS）</strong>：管理数据库的软件</li>
+                          <li><strong class="text-gray-300">数据库系统（DBS）</strong>：DB+DBMS+应用程序+用户</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-cyan-400 font-semibold mb-1">💡 数据库的发展历程</h5>
+                        <p class="text-gray-400">人工管理阶段 → 文件系统阶段 → 数据库系统阶段</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 数据模型 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-sitemap text-blue-400"></i> 数据模型
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">数据模型是数据库系统中用于描述数据结构和数据间联系的工具，是数据库设计的基础。</p>
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📊 三层模型结构</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li><strong class="text-gray-300">概念模型</strong>：按用户观点建模（E-R图）</li>
+                          <li><strong class="text-gray-300">逻辑模型</strong>：按计算机观点建模（层次、网状、关系）</li>
+                          <li><strong class="text-gray-300">物理模型</strong>：数据在存储介质上的组织方式</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-yellow-400 font-semibold mb-1">🔗 关系模型特点</h5>
+                        <p class="text-gray-400">建立在严格的数学概念基础上，概念单一，实体和联系都用关系表示，存取路径对用户透明。</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 数据库系统结构 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-cubes text-purple-400"></i> 数据库系统结构
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">数据库系统采用三级模式结构，提供了数据的抽象和独立性。</p>
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-emerald-400 font-semibold mb-1">🏗️ 三级模式结构</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li><strong class="text-gray-300">外模式（用户模式）</strong>：用户的数据视图</li>
+                          <li><strong class="text-gray-300">模式（逻辑模式）</strong>：全体数据的逻辑结构</li>
+                          <li><strong class="text-gray-300">内模式（存储模式）</strong>：数据的物理存储方式</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-cyan-400 font-semibold mb-1">🔄 两级映像</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li><strong class="text-gray-300">外模式/模式映像</strong>：保证逻辑独立性</li>
+                          <li><strong class="text-gray-300">模式/内模式映像</strong>：保证物理独立性</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 数据库管理系统 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-cogs text-orange-400"></i> 数据库管理系统
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">DBMS是位于用户与操作系统之间的一层数据管理软件，为用户或应用程序提供访问数据库的方法。</p>
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-emerald-400 font-semibold mb-1">⚙️ 主要功能</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li>数据定义功能（DDL）</li>
+                          <li>数据操纵功能（DML）</li>
+                          <li>数据控制功能（DCL）</li>
+                          <li>数据库的建立和维护功能</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-yellow-400 font-semibold mb-1">🛡️ 数据控制功能</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li>数据安全性保护</li>
+                          <li>数据完整性检查</li>
+                          <li>并发控制</li>
+                          <li>数据库恢复</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 模块2：SQL语言基础 -->
+            <div id="module2-sql" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-code"></i> 模块2：SQL语言基础（12学时）
+                </h3>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <!-- SQL简介 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-info-circle text-cyan-400"></i> SQL简介
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">SQL（Structured Query Language）是结构化查询语言，是关系数据库的标准语言。</p>
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📝 SQL语言分类</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li><strong class="text-gray-300">DDL</strong>：数据定义语言（CREATE, ALTER, DROP）</li>
+                          <li><strong class="text-gray-300">DML</strong>：数据操纵语言（SELECT, INSERT, UPDATE, DELETE）</li>
+                          <li><strong class="text-gray-300">DCL</strong>：数据控制语言（GRANT, REVOKE）</li>
+                          <li><strong class="text-gray-300">TCL</strong>：事务控制语言（COMMIT, ROLLBACK）</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 数据查询SELECT -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-search text-emerald-400"></i> 数据查询（SELECT）
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">SELECT语句用于从数据库中检索数据，是最常用的SQL语句。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+-- 基本查询
+SELECT * FROM students;
+
+-- 条件查询
+SELECT name, age FROM students 
+WHERE age > 18;
+
+-- 排序查询
+SELECT * FROM students 
+ORDER BY age DESC;
+
+-- 分组查询
+SELECT department, COUNT(*) as count
+FROM employees
+GROUP BY department
+HAVING COUNT(*) > 5;
+
+-- 多表连接查询
+SELECT s.name, c.course_name
+FROM students s
+INNER JOIN courses c ON s.id = c.student_id;
+
+-- 子查询
+SELECT * FROM employees
+WHERE salary > (SELECT AVG(salary) FROM employees);
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 数据插入、更新、删除 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-edit text-yellow-400"></i> 数据插入、更新、删除
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">DML语句用于对数据库中的数据进行增删改操作。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+-- 插入数据
+INSERT INTO students (name, age, email)
+VALUES ('张三', 20, 'zhangsan@example.com');
+
+-- 批量插入
+INSERT INTO students (name, age)
+VALUES ('李四', 22), ('王五', 21);
+
+-- 更新数据
+UPDATE students 
+SET age = 21, email = 'new@example.com'
+WHERE name = '张三';
+
+-- 删除数据
+DELETE FROM students 
+WHERE age < 18;
+
+-- 清空表（保留结构）
+TRUNCATE TABLE students;
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 数据定义语言DDL -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-wrench text-purple-400"></i> 数据定义语言（DDL）
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">DDL用于定义和修改数据库结构，包括表、索引、视图等对象的创建和删除。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+-- 创建数据库
+CREATE DATABASE school;
+
+-- 创建表
+CREATE TABLE students (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    age INT CHECK (age >= 0),
+    email VARCHAR(100) UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 修改表结构
+ALTER TABLE students ADD COLUMN phone VARCHAR(20);
+ALTER TABLE students DROP COLUMN phone;
+ALTER TABLE students MODIFY COLUMN name VARCHAR(100);
+
+-- 创建索引
+CREATE INDEX idx_name ON students(name);
+
+-- 删除表
+DROP TABLE IF EXISTS students;
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 模块3：数据库设计 -->
+            <div id="module3-design" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-pencil-square-o"></i> 模块3：数据库设计（12学时）
+                </h3>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <!-- 实体-关系模型 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-object-group text-blue-400"></i> 实体-关系模型（E-R模型）
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">E-R模型是概念模型的一种，用于描述现实世界的实体及其联系。</p>
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📊 基本要素</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li><strong class="text-gray-300">实体（Entity）</strong>：客观存在并可相互区分的事物</li>
+                          <li><strong class="text-gray-300">属性（Attribute）</strong>：实体所具有的某一特性</li>
+                          <li><strong class="text-gray-300">联系（Relationship）</strong>：实体之间的关联</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-yellow-400 font-semibold mb-1">🔗 联系类型</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li>一对一联系（1:1）</li>
+                          <li>一对多联系（1:N）</li>
+                          <li>多对多联系（M:N）</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 数据库设计原则 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-lightbulb-o text-yellow-400"></i> 数据库设计原则
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">良好的数据库设计应遵循一定的原则，确保数据的完整性、一致性和高效性。</p>
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-emerald-400 font-semibold mb-1">✅ 设计原则</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li>避免数据冗余</li>
+                          <li>保证数据一致性</li>
+                          <li>合理设置主键和外键</li>
+                          <li>选择合适的数据类型</li>
+                          <li>考虑查询性能优化</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-cyan-400 font-semibold mb-1">📋 设计步骤</h5>
+                        <p class="text-gray-400">需求分析 → 概念设计 → 逻辑设计 → 物理设计 → 实施与维护</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 范式理论 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-check-square text-emerald-400"></i> 范式理论
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">范式是关系数据库规范化的标准，用于消除数据冗余和更新异常。</p>
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📐 常用范式</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li><strong class="text-gray-300">第一范式（1NF）</strong>：属性不可再分</li>
+                          <li><strong class="text-gray-300">第二范式（2NF）</strong>：消除非主属性对码的部分依赖</li>
+                          <li><strong class="text-gray-300">第三范式（3NF）</strong>：消除非主属性对码的传递依赖</li>
+                          <li><strong class="text-gray-300">BCNF</strong>：消除主属性对码的部分和传递依赖</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-yellow-400 font-semibold mb-1">⚠️ 范式与反范式</h5>
+                        <p class="text-gray-400">过度规范化可能导致查询性能下降，实际设计中需要权衡范式化和性能。</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 数据库设计实践 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-code text-purple-400"></i> 数据库设计实践
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">通过实际案例学习数据库设计的完整流程。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+-- 学生选课系统数据库设计示例
+
+-- 学生表
+CREATE TABLE students (
+    student_id VARCHAR(20) PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    gender CHAR(1),
+    birth_date DATE,
+    department_id INT
+);
+
+-- 课程表
+CREATE TABLE courses (
+    course_id VARCHAR(20) PRIMARY KEY,
+    course_name VARCHAR(100) NOT NULL,
+    credit DECIMAL(3,1),
+    teacher_id INT
+);
+
+-- 选课表（多对多关系的中间表）
+CREATE TABLE enrollments (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    student_id VARCHAR(20),
+    course_id VARCHAR(20),
+    score DECIMAL(5,2),
+    enroll_date DATE,
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 模块4：数据库管理 -->
+            <div id="module4-management" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-shield"></i> 模块4：数据库管理（12学时）
+                </h3>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <!-- 用户权限管理 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-users text-blue-400"></i> 用户权限管理
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">数据库用户权限管理确保只有授权用户才能访问和操作数据。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+-- 创建用户
+CREATE USER 'admin'@'localhost' 
+IDENTIFIED BY 'password123';
+
+-- 授予权限
+GRANT ALL PRIVILEGES ON *.* 
+TO 'admin'@'localhost';
+
+-- 授予特定权限
+GRANT SELECT, INSERT, UPDATE 
+ON school.students TO 'teacher'@'localhost';
+
+-- 查看用户权限
+SHOW GRANTS FOR 'admin'@'localhost';
+
+-- 撤销权限
+REVOKE DELETE ON school.* 
+FROM 'teacher'@'localhost';
+
+-- 删除用户
+DROP USER 'admin'@'localhost';
+
+-- 刷新权限
+FLUSH PRIVILEGES;
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 数据备份与恢复 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-floppy-o text-emerald-400"></i> 数据备份与恢复
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">数据备份是防止数据丢失的重要手段，恢复是备份的逆过程。</p>
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-emerald-400 font-semibold mb-1">💾 备份类型</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li><strong class="text-gray-300">完全备份</strong>：备份整个数据库</li>
+                          <li><strong class="text-gray-300">增量备份</strong>：只备份自上次备份后的变化</li>
+                          <li><strong class="text-gray-300">差异备份</strong>：备份自上次完全备份后的变化</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded font-mono text-xs">
+                        <pre class="text-cyan-300">
+-- 使用mysqldump备份
+mysqldump -u root -p school > backup.sql
+
+-- 备份特定表
+mysqldump -u root -p school students > students.sql
+
+-- 恢复数据
+mysql -u root -p school < backup.sql
+                        </pre>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 数据库性能优化 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-tachometer text-yellow-400"></i> 数据库性能优化
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">数据库性能优化是提高系统响应速度和处理能力的关键。</p>
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-emerald-400 font-semibold mb-1">⚡ 优化策略</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li>合理使用索引</li>
+                          <li>优化SQL查询语句</li>
+                          <li>数据库表结构优化</li>
+                          <li>配置参数调优</li>
+                          <li>读写分离与分库分表</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded font-mono text-xs">
+                        <pre class="text-cyan-300">
+-- 查看执行计划
+EXPLAIN SELECT * FROM students 
+WHERE name = '张三';
+
+-- 创建索引优化查询
+CREATE INDEX idx_name ON students(name);
+
+-- 分析表
+ANALYZE TABLE students;
+
+-- 优化表
+OPTIMIZE TABLE students;
+                        </pre>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 数据库安全 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-lock text-red-400"></i> 数据库安全
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">数据库安全涉及数据保护、访问控制、审计等多个方面。</p>
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-emerald-400 font-semibold mb-1">🔒 安全措施</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li>身份认证与访问控制</li>
+                          <li>数据加密（传输加密、存储加密）</li>
+                          <li>SQL注入防护</li>
+                          <li>审计日志</li>
+                          <li>定期安全评估</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-yellow-400 font-semibold mb-1">🛡️ SQL注入防护</h5>
+                        <p class="text-gray-400">使用参数化查询、预编译语句、输入验证等方式防止SQL注入攻击。</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 模块5：NoSQL数据库 -->
+            <div id="module5-nosql" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-cloud"></i> 模块5：NoSQL数据库（8学时）
+                </h3>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <!-- NoSQL数据库简介 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-info-circle text-cyan-400"></i> NoSQL数据库简介
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">NoSQL（Not Only SQL）数据库是非关系型数据库，适用于大规模数据存储和处理。</p>
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📊 NoSQL类型</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li><strong class="text-gray-300">键值存储</strong>：Redis, Memcached</li>
+                          <li><strong class="text-gray-300">文档数据库</strong>：MongoDB, CouchDB</li>
+                          <li><strong class="text-gray-300">列族数据库</strong>：HBase, Cassandra</li>
+                          <li><strong class="text-gray-300">图数据库</strong>：Neo4j, JanusGraph</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-yellow-400 font-semibold mb-1">✨ NoSQL特点</h5>
+                        <p class="text-gray-400">灵活的数据模型、水平扩展能力、高性能、高可用性、最终一致性。</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- MongoDB基础 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-leaf text-emerald-400"></i> MongoDB基础
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">MongoDB是流行的文档数据库，使用BSON格式存储数据，支持丰富的查询语言。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+// 插入文档
+db.students.insertOne({
+    name: "张三",
+    age: 20,
+    courses: ["数学", "英语"]
+});
+
+// 查询文档
+db.students.find({ age: { $gt: 18 } });
+
+// 更新文档
+db.students.updateOne(
+    { name: "张三" },
+    { $set: { age: 21 } }
+);
+
+// 删除文档
+db.students.deleteOne({ name: "张三" });
+
+// 聚合查询
+db.students.aggregate([
+    { $match: { age: { $gte: 18 } } },
+    { $group: { _id: "$department", count: { $sum: 1 } } }
+]);
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- Redis基础 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-bolt text-red-400"></i> Redis基础
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">Redis是高性能的键值存储数据库，支持多种数据结构，常用于缓存和会话管理。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 字符串操作
+SET user:1 "张三"
+GET user:1
+SETEX session:abc 3600 "user_data"
+
+# 哈希操作
+HSET user:1 name "张三" age 20
+HGET user:1 name
+HGETALL user:1
+
+# 列表操作
+LPUSH queue:tasks "task1"
+RPOP queue:tasks
+
+# 集合操作
+SADD tags:article "数据库" "SQL"
+SMEMBERS tags:article
+
+# 有序集合
+ZADD leaderboard 100 "player1"
+ZREVRANGE leaderboard 0 9 WITHSCORES
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- SQL与NoSQL对比 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-balance-scale text-purple-400"></i> SQL与NoSQL对比
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">SQL和NoSQL各有优势，选择合适的数据库类型取决于应用场景。</p>
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📊 对比分析</h5>
+                        <table class="w-full text-gray-400">
+                          <tr class="border-b border-gray-600">
+                            <th class="text-left py-2 text-gray-300">特性</th>
+                            <th class="text-left py-2 text-gray-300">SQL</th>
+                            <th class="text-left py-2 text-gray-300">NoSQL</th>
+                          </tr>
+                          <tr class="border-b border-gray-700">
+                            <td class="py-2">数据模型</td>
+                            <td class="py-2">关系表</td>
+                            <td class="py-2">文档/键值等</td>
+                          </tr>
+                          <tr class="border-b border-gray-700">
+                            <td class="py-2">扩展方式</td>
+                            <td class="py-2">垂直扩展</td>
+                            <td class="py-2">水平扩展</td>
+                          </tr>
+                          <tr class="border-b border-gray-700">
+                            <td class="py-2">事务支持</td>
+                            <td class="py-2">ACID</td>
+                            <td class="py-2">BASE</td>
+                          </tr>
+                          <tr>
+                            <td class="py-2">适用场景</td>
+                            <td class="py-2">复杂查询</td>
+                            <td class="py-2">大数据量</td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 模块6：综合项目实战 -->
+            <div id="module6-project" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-rocket"></i> 模块6：综合项目实战（8学时）
+                </h3>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <!-- 项目选题与规划 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-lightbulb-o text-yellow-400"></i> 项目选题与规划
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">项目选题应结合实际应用场景，具有完整的数据管理需求。</p>
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📋 推荐项目方向</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li>学生信息管理系统</li>
+                          <li>电商订单管理系统</li>
+                          <li>图书借阅管理系统</li>
+                          <li>员工考勤管理系统</li>
+                          <li>在线论坛系统</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-cyan-400 font-semibold mb-1">📝 项目规划要点</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li>明确功能需求</li>
+                          <li>确定技术栈</li>
+                          <li>制定开发计划</li>
+                          <li>分配团队任务</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 数据库设计与实现 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-database text-blue-400"></i> 数据库设计与实现
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">根据需求分析结果，完成数据库的概念设计、逻辑设计和物理设计。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+-- 以电商系统为例
+
+-- 用户表
+CREATE TABLE users (
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 商品表
+CREATE TABLE products (
+    product_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(200) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    stock INT DEFAULT 0,
+    category_id INT
+);
+
+-- 订单表
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    total_amount DECIMAL(10,2),
+    status VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 应用开发与集成 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-code text-emerald-400"></i> 应用开发与集成
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">使用编程语言连接数据库，实现数据的增删改查功能。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# Python连接MySQL示例
+import mysql.connector
+
+# 建立连接
+conn = mysql.connector.connect(
+    host='localhost',
+    user='root',
+    password='password',
+    database='ecommerce'
+)
+
+cursor = conn.cursor()
+
+# 查询数据
+cursor.execute("SELECT * FROM products")
+products = cursor.fetchall()
+
+# 插入数据
+sql = "INSERT INTO users (username, email) VALUES (%s, %s)"
+cursor.execute(sql, ('zhangsan', 'zhang@example.com'))
+conn.commit()
+
+# 关闭连接
+cursor.close()
+conn.close()
+                      </pre>
+                    </div>
+                  </div>
+
+                  <!-- 项目展示与答辩 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-presentation text-purple-400"></i> 项目展示与答辩
+                    </h4>
+                    <p class="text-gray-400 mb-4 text-sm">项目展示需要清晰展示项目的设计思路、技术实现和创新点。</p>
+                    <div class="space-y-3 text-sm">
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📊 展示内容要点</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li>项目背景与需求分析</li>
+                          <li>数据库设计方案（E-R图、表结构）</li>
+                          <li>系统功能演示</li>
+                          <li>技术难点与解决方案</li>
+                          <li>项目总结与改进方向</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded">
+                        <h5 class="text-yellow-400 font-semibold mb-1">🎯 答辩评分标准</h5>
+                        <ul class="text-gray-400 list-disc list-inside space-y-1">
+                          <li>数据库设计合理性（30%）</li>
+                          <li>功能实现完整性（30%）</li>
+                          <li>代码质量与规范（20%）</li>
+                          <li>展示与答辩表现（20%）</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- 课程信息区 -->
-  <section class="py-12">
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- 左侧内容 -->
-        <div class="lg:col-span-2 space-y-8">
-          <!-- 课程简介 -->
-          <div class="bg-white rounded-xl shadow-sm p-6">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">
-              <i class="fa fa-info-circle text-primary mr-2"></i>课程简介
-            </h2>
-            <p class="text-gray-600 leading-relaxed">
-              《数据库原理与应用》是商务数据分析与应用专业的核心课程，主要面向高职大二第一学期学生。本课程在学生已掌握Python基础的基础上，学习数据库的基本原理和SQL语言。
-            </p>
-            <p class="text-gray-600 leading-relaxed mt-4">
-              课程注重理论与实践相结合，通过大量的SQL练习和数据库设计实践，培养学生的数据库设计和管理能力，为后续的数据分析课程打下坚实的基础。
-            </p>
+  <script>
+    // 问题数据
+    const problems = [
+      {
+        id: 1,
+        title: "问题1：缺失值处理",
+        description: `编写一个程序，使用Pandas处理DataFrame中的缺失值。
+
+<strong>输入：</strong>
+一个包含缺失值的DataFrame
+
+<strong>输出：</strong>
+处理后的DataFrame，其中缺失值已被适当处理
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>识别并统计缺失值</li>
+  <li>使用合适的方法填充缺失值（如均值、中位数或众数）</li>
+  <li>返回处理后的DataFrame</li>
+</ul>`,
+        difficulty: "easy",
+        time: "15分钟",
+        code: `# 请编写代码
+import pandas as pd
+import numpy as np
+
+# 创建示例数据
+data = {
+    'A': [1, 2, np.nan, 4, 5],
+    'B': [np.nan, 2, 3, 4, np.nan],
+    'C': ['x', 'y', 'z', np.nan, 'x']
+}
+df = pd.DataFrame(data)
+
+# 识别缺失值
+print("缺失值统计:")
+print(df.isnull().sum())
+
+# 处理缺失值
+df['A'] = df['A'].fillna(df['A'].mean())
+df['B'] = df['B'].fillna(df['B'].median())
+df['C'] = df['C'].fillna(df['C'].mode()[0])
+
+print("\n处理后的数据:")
+print(df)`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 使用Pandas的isnull()和sum()方法识别并统计缺失值</p>
+<p>2. 根据数据类型选择合适的填充方法：数值型数据使用均值或中位数，分类型数据使用众数</p>
+<p>3. 使用fillna()方法填充缺失值</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+
+# 创建示例数据
+data = {
+    'A': [1, 2, np.nan, 4, 5],
+    'B': [np.nan, 2, 3, 4, np.nan],
+    'C': ['x', 'y', 'z', np.nan, 'x']
+}
+df = pd.DataFrame(data)
+
+# 识别缺失值
+print("缺失值统计:")
+print(df.isnull().sum())
+
+# 处理缺失值
+df['A'] = df['A'].fillna(df['A'].mean())
+df['B'] = df['B'].fillna(df['B'].median())
+df['C'] = df['C'].fillna(df['C'].mode()[0])
+
+print("\n处理后的数据:")
+print(df)
+  </pre>
+</div>
+<h4>知识点</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-preprocessing')">数据预处理</a></li>
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('pandas-basics')">Pandas基础</a></li>
+  <li>缺失值处理方法</li>
+</ul>`
+      },
+      {
+        id: 2,
+        title: "问题2：异常值检测",
+        description: `编写一个程序，使用IQR方法检测数据中的异常值。
+
+<strong>输入：</strong>
+一个包含可能异常值的数据集
+
+<strong>输出：</strong>
+检测到的异常值
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>计算四分位数和IQR</li>
+  <li>定义异常值边界</li>
+  <li>检测并返回异常值</li>
+</ul>`,
+        difficulty: "medium",
+        time: "20分钟",
+        code: `# 请编写代码
+import pandas as pd
+import numpy as np
+
+# 创建示例数据
+data = pd.Series([1, 2, 3, 4, 100])
+
+# 计算四分位数
+Q1 = data.quantile(0.25)
+Q3 = data.quantile(0.75)
+IQR = Q3 - Q1
+
+# 定义异常值边界
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+# 检测异常值
+outliers = data[(data < lower_bound) | (data > upper_bound)]
+print("异常值:", outliers)`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 计算数据的第一四分位数(Q1)和第三四分位数(Q3)</p>
+<p>2. 计算四分位距(IQR) = Q3 - Q1</p>
+<p>3. 定义异常值边界：下界 = Q1 - 1.5 * IQR，上界 = Q3 + 1.5 * IQR</p>
+<p>4. 检测并返回超出边界的值作为异常值</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+
+# 创建示例数据
+data = pd.Series([1, 2, 3, 4, 100])
+
+# 计算四分位数
+Q1 = data.quantile(0.25)
+Q3 = data.quantile(0.75)
+IQR = Q3 - Q1
+
+# 定义异常值边界
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+# 检测异常值
+outliers = data[(data < lower_bound) | (data > upper_bound)]
+print("异常值:", outliers)
+  </pre>
+</div>
+<h4>知识点</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-preprocessing')">数据预处理</a></li>
+  <li>异常值检测方法</li>
+  <li>统计量计算</li>
+</ul>`
+      },
+      {
+        id: 3,
+        title: "问题3：数据标准化",
+        description: `编写一个程序，对数据进行标准化处理。
+
+<strong>输入：</strong>
+一个包含数值型数据的DataFrame
+
+<strong>输出：</strong>
+标准化处理后的数据
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>使用StandardScaler进行标准化</li>
+  <li>返回标准化后的数据</li>
+</ul>`,
+        difficulty: "medium",
+        time: "15分钟",
+        code: `# 请编写代码
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+
+# 创建示例数据
+data = {
+    'A': [1, 2, 3, 4, 5],
+    'B': [10, 20, 30, 40, 50],
+    'C': [100, 200, 300, 400, 500]
+}
+df = pd.DataFrame(data)
+
+# 初始化标准化器
+scaler = StandardScaler()
+
+# 进行标准化
+scaled_data = scaler.fit_transform(df)
+
+# 转换为DataFrame
+scaled_df = pd.DataFrame(scaled_data, columns=df.columns)
+
+print("标准化后的数据:")
+print(scaled_df)
+print("\n均值:", scaled_df.mean().round(4))
+print("标准差:", scaled_df.std().round(4))`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 使用sklearn的StandardScaler类进行数据标准化</p>
+<p>2. fit_transform()方法同时完成拟合和转换</p>
+<p>3. 将标准化后的数据转换回DataFrame格式</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+
+# 创建示例数据
+data = {
+    'A': [1, 2, 3, 4, 5],
+    'B': [10, 20, 30, 40, 50],
+    'C': [100, 200, 300, 400, 500]
+}
+df = pd.DataFrame(data)
+
+# 初始化标准化器
+scaler = StandardScaler()
+
+# 进行标准化
+scaled_data = scaler.fit_transform(df)
+
+# 转换为DataFrame
+scaled_df = pd.DataFrame(scaled_data, columns=df.columns)
+
+print("标准化后的数据:")
+print(scaled_df)
+print("\n均值:", scaled_df.mean().round(4))
+print("标准差:", scaled_df.std().round(4))
+  </pre>
+</div>
+<h4>知识点</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-preprocessing')">数据预处理</a></li>
+  <li>特征缩放</li>
+  <li>sklearn库使用</li>
+</ul>`
+      },
+      {
+        id: 4,
+        title: "问题4：描述性统计分析",
+        description: `编写一个程序，对数据进行描述性统计分析。
+
+<strong>输入：</strong>
+一个包含数值型数据的DataFrame
+
+<strong>输出：</strong>
+数据的基本统计信息
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>计算基本统计量（均值、中位数、标准差等）</li>
+  <li>计算相关性矩阵</li>
+  <li>可视化数据分布</li>
+</ul>`,
+        difficulty: "easy",
+        time: "10分钟",
+        code: `# 请编写代码
+import pandas as pd
+import numpy as np
+
+# 创建示例数据
+df = pd.DataFrame({
+    '年龄': [20, 25, 30, 35, 40],
+    '收入': [5000, 6000, 8000, 10000, 12000],
+    '评分': [4.5, 4.2, 3.8, 4.0, 4.7]
+})
+
+# 基本统计信息
+print("基本统计信息:")
+print(df.describe())
+
+# 中位数
+print("\n中位数:")
+print(df.median())
+
+# 众数
+print("\n众数:")
+print(df.mode())
+
+# 相关性
+print("\n相关性矩阵:")
+print(df.corr())`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 使用DataFrame的describe()方法获取基本统计信息</p>
+<p>2. 使用median()方法计算中位数</p>
+<p>3. 使用mode()方法计算众数</p>
+<p>4. 使用corr()方法计算相关性矩阵</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+
+# 创建示例数据
+df = pd.DataFrame({
+    '年龄': [20, 25, 30, 35, 40],
+    '收入': [5000, 6000, 8000, 10000, 12000],
+    '评分': [4.5, 4.2, 3.8, 4.0, 4.7]
+})
+
+# 基本统计信息
+print("基本统计信息:")
+print(df.describe())
+
+# 中位数
+print("\n中位数:")
+print(df.median())
+
+# 众数
+print("\n众数:")
+print(df.mode())
+
+# 相关性
+print("\n相关性矩阵:")
+print(df.corr())
+  </pre>
+</div>
+<h4>知识点</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('eda')">探索性数据分析</a></li>
+  <li>描述性统计</li>
+  <li>相关性分析</li>
+</ul>`
+      },
+      {
+        id: 5,
+        title: "问题5：数据可视化",
+        description: `编写一个程序，使用Matplotlib和Seaborn进行数据可视化。
+
+<strong>输入：</strong>
+一个包含数据的DataFrame
+
+<strong>输出：</strong>
+多种类型的可视化图表
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>绘制直方图</li>
+  <li>绘制箱线图</li>
+  <li>绘制散点图</li>
+</ul>`,
+        difficulty: "medium",
+        time: "25分钟",
+        code: `# 请编写代码
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# 加载示例数据
+df = sns.load_dataset('iris')
+
+# 直方图
+plt.figure(figsize=(10, 6))
+sns.histplot(df['sepal_length'], bins=20, kde=True)
+plt.title('花萼长度分布')
+plt.xlabel('花萼长度')
+plt.ylabel('频率')
+plt.show()
+
+# 箱线图
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='species', y='sepal_length', data=df)
+plt.title('不同物种的花萼长度分布')
+plt.xlabel('物种')
+plt.ylabel('花萼长度')
+plt.show()
+
+# 散点图
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x='sepal_length', y='sepal_width', hue='species', data=df)
+plt.title('花萼长度与宽度关系')
+plt.xlabel('花萼长度')
+plt.ylabel('花萼宽度')
+plt.show()`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 使用Seaborn加载示例数据集</p>
+<p>2. 使用sns.histplot()绘制直方图，展示数据分布</p>
+<p>3. 使用sns.boxplot()绘制箱线图，展示不同类别的数据分布</p>
+<p>4. 使用sns.scatterplot()绘制散点图，展示变量间的关系</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# 加载示例数据
+df = sns.load_dataset('iris')
+
+# 直方图
+plt.figure(figsize=(10, 6))
+sns.histplot(df['sepal_length'], bins=20, kde=True)
+plt.title('花萼长度分布')
+plt.xlabel('花萼长度')
+plt.ylabel('频率')
+plt.show()
+
+# 箱线图
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='species', y='sepal_length', data=df)
+plt.title('不同物种的花萼长度分布')
+plt.xlabel('物种')
+plt.ylabel('花萼长度')
+plt.show()
+
+# 散点图
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x='sepal_length', y='sepal_width', hue='species', data=df)
+plt.title('花萼长度与宽度关系')
+plt.xlabel('花萼长度')
+plt.ylabel('花萼宽度')
+plt.show()
+  </pre>
+</div>
+<h4>知识点</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-visualization')">数据可视化</a></li>
+  <li>Matplotlib使用</li>
+  <li>Seaborn使用</li>
+</ul>`
+      },
+      {
+        id: 6,
+        title: "问题6：假设检验",
+        description: `编写一个程序，进行独立样本t检验。
+
+<strong>输入：</strong>
+两组样本数据
+
+<strong>输出：</strong>
+t检验结果
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>计算t统计量和p值</li>
+  <li>根据p值判断是否拒绝原假设</li>
+</ul>`,
+        difficulty: "medium",
+        time: "20分钟",
+        code: `# 请编写代码
+from scipy import stats
+import numpy as np
+
+# 生成两组样本数据
+group1 = np.random.normal(100, 10, 50)
+group2 = np.random.normal(105, 10, 50)
+
+# 独立样本t检验
+t_stat, p_value = stats.ttest_ind(group1, group2)
+
+print(f"t统计量: {t_stat:.4f}")
+print(f"p值: {p_value:.4f}")
+
+# 判断结果
+if p_value < 0.05:
+    print("拒绝原假设，两组数据存在显著差异")
+else:
+    print("不拒绝原假设，两组数据无显著差异")`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 使用numpy生成两组样本数据</p>
+<p>2. 使用scipy.stats.ttest_ind()进行独立样本t检验</p>
+<p>3. 根据p值判断是否拒绝原假设（通常以0.05为显著性水平）</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">
+from scipy import stats
+import numpy as np
+
+# 生成两组样本数据
+group1 = np.random.normal(100, 10, 50)
+group2 = np.random.normal(105, 10, 50)
+
+# 独立样本t检验
+t_stat, p_value = stats.ttest_ind(group1, group2)
+
+print(f"t统计量: {t_stat:.4f}")
+print(f"p值: {p_value:.4f}")
+
+# 判断结果
+if p_value < 0.05:
+    print("拒绝原假设，两组数据存在显著差异")
+else:
+    print("不拒绝原假设，两组数据无显著差异")
+  </pre>
+</div>
+<h4>知识点</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('statistical-analysis')">统计分析</a></li>
+  <li>假设检验</li>
+  <li>t检验</li>
+</ul>`
+      },
+      {
+        id: 7,
+        title: "问题7：回归分析",
+        description: `编写一个程序，进行线性回归分析。
+
+<strong>输入：</strong>
+自变量和因变量数据
+
+<strong>输出：</strong>
+回归模型参数和预测结果
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>拟合线性回归模型</li>
+  <li>计算模型参数（斜率、截距）</li>
+  <li>计算R²值</li>
+  <li>进行预测</li>
+</ul>`,
+        difficulty: "hard",
+        time: "30分钟",
+        code: `# 请编写代码
+import numpy as np
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+
+# 创建示例数据
+X = np.array([1, 2, 3, 4, 5]).reshape(-1, 1)
+y = np.array([2, 4, 5, 4, 5])
+
+# 拟合线性回归模型
+model = LinearRegression()
+model.fit(X, y)
+
+# 预测
+predictions = model.predict(X)
+
+# 模型参数
+print(f"斜率: {model.coef_[0]:.4f}")
+print(f"截距: {model.intercept_:.4f}")
+print(f"R²: {model.score(X, y):.4f}")
+
+# 可视化
+plt.scatter(X, y, color='blue')
+plt.plot(X, predictions, color='red')
+plt.title('线性回归')
+plt.xlabel('X')
+plt.ylabel('y')
+plt.show()
+
+# 预测新数据
+new_X = np.array([6]).reshape(-1, 1)
+new_prediction = model.predict(new_X)
+print(f"预测值: {new_prediction[0]:.4f}")`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 使用numpy创建自变量和因变量数据</p>
+<p>2. 使用sklearn的LinearRegression类拟合线性回归模型</p>
+<p>3. 提取模型参数（斜率、截距）</p>
+<p>4. 使用score()方法计算R²值</p>
+<p>5. 使用predict()方法进行预测</p>
+<p>6. 可视化数据和回归直线</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">
+import numpy as np
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+
+# 创建示例数据
+X = np.array([1, 2, 3, 4, 5]).reshape(-1, 1)
+y = np.array([2, 4, 5, 4, 5])
+
+# 拟合线性回归模型
+model = LinearRegression()
+model.fit(X, y)
+
+# 预测
+predictions = model.predict(X)
+
+# 模型参数
+print(f"斜率: {model.coef_[0]:.4f}")
+print(f"截距: {model.intercept_:.4f}")
+print(f"R²: {model.score(X, y):.4f}")
+
+# 可视化
+plt.scatter(X, y, color='blue')
+plt.plot(X, predictions, color='red')
+plt.title('线性回归')
+plt.xlabel('X')
+plt.ylabel('y')
+plt.show()
+
+# 预测新数据
+new_X = np.array([6]).reshape(-1, 1)
+new_prediction = model.predict(new_X)
+print(f"预测值: {new_prediction[0]:.4f}")
+  </pre>
+</div>
+<h4>知识点</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('statistical-analysis')">统计分析</a></li>
+  <li>线性回归</li>
+  <li>sklearn库使用</li>
+</ul>`
+      }
+    ];
+
+    // 选择题数据
+    const choiceQuestions = [
+      {
+        id: 'c1',
+        chapter: 1,
+        title: "选择题1：缺失值处理方法",
+        question: "在Pandas中，以下哪个方法可以用来检测DataFrame中的缺失值？",
+        options: [
+          { label: 'A', text: 'df.isna() 或 df.isnull()' },
+          { label: 'B', text: 'df.missing()' },
+          { label: 'C', text: 'df.check_null()' },
+          { label: 'D', text: 'df.find_na()' }
+        ],
+        answer: 'A',
+        analysis: "在Pandas中，isna()和isnull()是等价的，都可以用来检测缺失值。它们返回一个布尔类型的DataFrame，True表示该位置是缺失值。missing()、check_null()和find_na()都不是Pandas的标准方法。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c2',
+        chapter: 1,
+        title: "选择题2：异常值检测",
+        question: "使用IQR方法检测异常值时，通常将超出以下范围的值定义为异常值：",
+        options: [
+          { label: 'A', text: 'Q1 - 1.5*IQR 到 Q3 + 1.5*IQR 之外' },
+          { label: 'B', text: '均值 ± 2倍标准差 之外' },
+          { label: 'C', text: 'Q1 - IQR 到 Q3 + IQR 之外' },
+          { label: 'D', text: '最小值到最大值之外' }
+        ],
+        answer: 'A',
+        analysis: "IQR（四分位距）方法中，异常值通常定义为小于 Q1 - 1.5*IQR 或大于 Q3 + 1.5*IQR 的值。这是统计学中常用的异常值检测方法，基于数据的四分位数来定义边界。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c3',
+        chapter: 1,
+        title: "选择题3：数据标准化",
+        question: "StandardScaler进行Z-score标准化后，数据的分布特征是：",
+        options: [
+          { label: 'A', text: '均值=0，标准差=1' },
+          { label: 'B', text: '均值=1，标准差=0' },
+          { label: 'C', text: '最小值=0，最大值=1' },
+          { label: 'D', text: '中位数=0，方差=1' }
+        ],
+        answer: 'A',
+        analysis: "StandardScaler使用Z-score标准化方法，将数据转换为均值为0、标准差为1的分布。公式为：(x - μ) / σ，其中μ是均值，σ是标准差。选项C描述的是Min-Max标准化的结果。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c4',
+        chapter: 2,
+        title: "选择题4：描述性统计",
+        question: "以下哪个统计量不受极端值（异常值）的影响？",
+        options: [
+          { label: 'A', text: '均值' },
+          { label: 'B', text: '标准差' },
+          { label: 'C', text: '中位数' },
+          { label: 'D', text: '方差' }
+        ],
+        answer: 'C',
+        analysis: "中位数是将数据排序后位于中间位置的值，它不受极端值的影响，是一种稳健的集中趋势度量。而均值、标准差和方差的计算都会受到极端值的影响。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c5',
+        chapter: 2,
+        title: "选择题5：相关性分析",
+        question: "Pearson相关系数的取值范围是：",
+        options: [
+          { label: 'A', text: '0到1' },
+          { label: 'B', text: '-1到1' },
+          { label: 'C', text: '0到100' },
+          { label: 'D', text: '-∞到+∞' }
+        ],
+        answer: 'B',
+        analysis: "Pearson相关系数衡量两个变量之间的线性相关程度，取值范围是-1到1。-1表示完全负相关，0表示无线性相关，1表示完全正相关。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c6',
+        chapter: 3,
+        title: "选择题6：假设检验",
+        question: "在假设检验中，当p值小于显著性水平α（通常为0.05）时，我们应该：",
+        options: [
+          { label: 'A', text: '接受原假设' },
+          { label: 'B', text: '拒绝原假设' },
+          { label: 'C', text: '无法做出判断' },
+          { label: 'D', text: '需要更多数据' }
+        ],
+        answer: 'B',
+        analysis: "在假设检验中，p值表示在原假设为真的情况下，观察到当前或更极端结果的概率。当p值小于显著性水平α时，我们拒绝原假设，认为结果具有统计显著性。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c7',
+        chapter: 3,
+        title: "选择题7：方差分析",
+        question: "单因素方差分析（ANOVA）主要用于检验：",
+        options: [
+          { label: 'A', text: '两个样本均值是否相等' },
+          { label: 'B', text: '多个样本均值是否存在显著差异' },
+          { label: 'C', text: '两个变量是否相关' },
+          { label: 'D', text: '数据是否符合正态分布' }
+        ],
+        answer: 'B',
+        analysis: "单因素方差分析（ANOVA）用于比较三个或更多组的均值是否存在显著差异。它通过分析组间方差和组内方差来判断各组均值是否相等。选项A是t检验的功能，选项C是相关性分析，选项D是正态性检验。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c8',
+        chapter: 4,
+        title: "选择题8：Pandas DataFrame",
+        question: "在Pandas中，df.loc和df.iloc的主要区别是：",
+        options: [
+          { label: 'A', text: 'loc基于标签索引，iloc基于位置索引' },
+          { label: 'B', text: 'loc更快，iloc更慢' },
+          { label: 'C', text: 'loc只能选择行，iloc只能选择列' },
+          { label: 'D', text: '它们功能完全相同' }
+        ],
+        answer: 'A',
+        analysis: "df.loc是基于标签（label-based）的索引方法，使用行标签和列标签进行选择；df.iloc是基于位置（integer-location based）的索引方法，使用整数位置进行选择。例如，df.loc[0, 'A']选择标签为0的行的'A'列，而df.iloc[0, 0]选择第一行第一列。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c9',
+        chapter: 5,
+        title: "选择题9：数据可视化",
+        question: "以下哪种图表最适合展示数据的分布情况和识别异常值？",
+        options: [
+          { label: 'A', text: '饼图' },
+          { label: 'B', text: '柱状图' },
+          { label: 'C', text: '箱线图' },
+          { label: 'D', text: '折线图' }
+        ],
+        answer: 'C',
+        analysis: "箱线图（Box Plot）可以同时展示数据的中位数、四分位数、最大值、最小值以及异常值，是识别数据分布和异常值的最佳选择。饼图适合展示占比，柱状图适合比较类别，折线图适合展示趋势。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c10',
+        chapter: 6,
+        title: "选择题10：机器学习",
+        question: "在分类问题中，以下哪个指标综合考虑了精确率和召回率？",
+        options: [
+          { label: 'A', text: '准确率（Accuracy）' },
+          { label: 'B', text: 'F1分数' },
+          { label: 'C', text: 'AUC' },
+          { label: 'D', text: '均方误差（MSE）' }
+        ],
+        answer: 'B',
+        analysis: "F1分数是精确率和召回率的调和平均值，综合考虑了这两个指标。公式为：F1 = 2 * (Precision * Recall) / (Precision + Recall)。准确率只考虑正确预测的比例，AUC是ROC曲线下面积，MSE是回归问题的评估指标。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c11',
+        chapter: 6,
+        title: "选择题11：聚类算法",
+        question: "K-means聚类算法中，确定最佳K值常用的方法是：",
+        options: [
+          { label: 'A', text: '皮尔逊相关系数' },
+          { label: 'B', text: '肘部法（Elbow Method）' },
+          { label: 'C', text: 't检验' },
+          { label: 'D', text: '卡方检验' }
+        ],
+        answer: 'B',
+        analysis: "肘部法（Elbow Method）是确定K-means最佳聚类数的常用方法。通过绘制不同K值对应的惯性（inertia，样本到最近聚类中心的距离平方和）曲线，找到曲线出现'肘部'转折的点作为最佳K值。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c12',
+        chapter: 6,
+        title: "选择题12：模型评估",
+        question: "交叉验证的主要目的是：",
+        options: [
+          { label: 'A', text: '增加训练数据量' },
+          { label: 'B', text: '更准确地评估模型性能并防止过拟合' },
+          { label: 'C', text: '加快模型训练速度' },
+          { label: 'D', text: '减少特征数量' }
+        ],
+        answer: 'B',
+        analysis: "交叉验证（Cross-Validation）通过将数据分成多个子集，轮流使用其中一部分作为验证集，其余作为训练集，从而更准确地评估模型性能。它可以有效防止过拟合，并提供更可靠的模型性能估计。",
+        difficulty: "medium"
+      }
+    ];
+
+    // 全局变量
+    let currentProblem = 1;
+    let pyodide = null;
+    let editor = null;
+    let timerInterval = null;
+    let seconds = 0;
+
+    // 初始化函数
+    document.addEventListener('DOMContentLoaded', function() {
+      // 初始化代码编辑器
+      editor = ace.edit('codeEditor');
+      editor.setTheme('ace/theme/tomorrow_night');
+      editor.getSession().setMode('ace/mode/python');
+      editor.setOptions({
+        fontSize: '14px',
+        tabSize: 4,
+        useSoftTabs: true,
+        wrap: true
+      });
+
+      // 加载Pyodide
+      initPyodide();
+
+      // 加载第一个问题
+      loadProblem(1);
+
+      // 绑定按钮事件
+      document.getElementById('runCode').addEventListener('click', runCode);
+      document.getElementById('resetCode').addEventListener('click', resetCode);
+
+      // 绑定知识点导航事件
+      document.querySelectorAll('.knowledge-nav').forEach((button, index) => {
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // 更新按钮状态
+          document.querySelectorAll('.knowledge-nav').forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          
+          // 获取目标模块ID
+          const target = this.getAttribute('data-target');
+          
+          // 隐藏所有模块
+          document.querySelectorAll('.knowledge-section').forEach(section => {
+            section.classList.add('hidden');
+          });
+          
+          // 显示目标模块
+          const targetElement = document.getElementById(target);
+          if (targetElement) {
+            targetElement.classList.remove('hidden');
+          }
+        });
+      });
+    });
+
+    // 加载Pyodide
+    async function initPyodide() {
+      const statusEl = document.getElementById('pyodide-status');
+      const cdns = [
+        "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/",
+        "https://unpkg.com/pyodide@0.24.1/full/",
+        "https://cdnjs.cloudflare.com/ajax/libs/pyodide/0.24.1/full/"
+      ];
+      let currentCDN = 0;
+      let retryCount = 0;
+      const maxRetries = 3;
+      
+      statusEl.innerHTML = '<i class="fa fa-spinner fa-spin text-amber-400"></i> 正在加载Python解释器...';
+
+      async function switchCDN() {
+        currentCDN++;
+        if (currentCDN >= cdns.length) {
+          currentCDN = 0;
+          retryCount++;
+          if (retryCount >= maxRetries) {
+            throw new Error('所有CDN均无法访问');
+          }
+        }
+      }
+
+      async function loadWithTimeout(indexURL) {
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('加载超时')), 30000);
+        });
+        const loadPromise = loadPyodide({ indexURL });
+        return Promise.race([loadPromise, timeoutPromise]);
+      }
+
+      while (retryCount < maxRetries) {
+        try {
+          pyodide = await loadWithTimeout(cdns[currentCDN]);
+          statusEl.innerHTML = '<i class="fa fa-check text-emerald-400"></i> Python解释器加载成功';
+          await pyodide.loadPackage(['pandas', 'numpy', 'matplotlib', 'scipy', 'scikit-learn', 'seaborn']);
+          return;
+        } catch (error) {
+          console.warn(`CDN ${cdns[currentCDN]} 加载失败:`, error);
+          await switchCDN();
+        }
+      }
+      
+      statusEl.innerHTML = '<i class="fa fa-exclamation-triangle text-red-400"></i> Python解释器加载失败';
+      console.error('Pyodide load error:', error);
+    }
+
+    // 切换标签页
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.add('hidden');
+      });
+      document.getElementById(tabId).classList.remove('hidden');
+      
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        // 找到对应的导航链接并激活
+        if(link.getAttribute('onclick') && link.getAttribute('onclick').includes("'" + tabId + "'")) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    // 切换章节
+    function toggleChapter(chapterId) {
+      const content = document.getElementById(chapterId + '-content');
+      const icon = document.getElementById(chapterId + '-icon');
+      
+      if (content.classList.contains('collapsed')) {
+        content.classList.remove('collapsed');
+        icon.classList.remove('fa-chevron-right');
+        icon.classList.add('fa-chevron-down');
+      } else {
+        content.classList.add('collapsed');
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-right');
+      }
+    }
+
+    // 加载问题
+    function loadProblem(problemId) {
+      currentProblem = problemId;
+      const problem = problems.find(p => p.id === problemId);
+      
+      if (!problem) return;
+      
+      // 更新问题信息
+      document.getElementById('problem-title').textContent = problem.title;
+      document.getElementById('problem-description').innerHTML = problem.description;
+      
+      // 更新难度标签
+      const difficultyTag = document.getElementById('difficulty-tag');
+      difficultyTag.className = 'difficulty-tag';
+      difficultyTag.classList.add('difficulty-' + problem.difficulty);
+      
+      // 更新代码编辑器
+      editor.setValue(problem.code);
+      editor.clearSelection();
+      
+      // 更新答案解析
+      document.getElementById('answer-analysis').innerHTML = problem.analysis;
+      
+      // 重置计时器
+      resetTimer();
+      
+      // 更新问题项状态
+      document.querySelectorAll('.problem-item').forEach(item => {
+        item.classList.remove('active');
+      });
+    }
+
+    // 运行代码
+    async function runCode() {
+      const code = editor.getValue();
+      const outputDiv = document.getElementById('code-output');
+      const executionTimeDiv = document.getElementById('execution-time');
+      
+      if (!pyodide) {
+        outputDiv.textContent = 'Python解释器尚未加载完成，请稍候...';
+        return;
+      }
+      
+      outputDiv.textContent = '运行中...';
+      executionTimeDiv.textContent = '执行时间：计算中...';
+      
+      try {
+        const startTime = performance.now();
+        
+        // 运行代码
+        const result = await pyodide.runPythonAsync(code);
+        
+        const endTime = performance.now();
+        const executionTime = (endTime - startTime).toFixed(2);
+        
+        outputDiv.textContent = result || '代码执行成功，无输出';
+        executionTimeDiv.textContent = `执行时间：${executionTime}ms`;
+      } catch (error) {
+        outputDiv.textContent = `错误：${error.message}`;
+        executionTimeDiv.textContent = '执行时间：0ms';
+      }
+    }
+
+    // 重置代码
+    function resetCode() {
+      const problem = problems.find(p => p.id === currentProblem);
+      if (problem) {
+        editor.setValue(problem.code);
+        editor.clearSelection();
+      }
+    }
+
+    // 切换收藏状态
+    function toggleFavorite(problemId) {
+      const btn = document.getElementById('favorite-btn');
+      if (btn.innerHTML.includes('fa-star-o')) {
+        btn.innerHTML = '<i class="fa fa-star text-yellow-400"></i>';
+      } else {
+        btn.innerHTML = '<i class="fa fa-star-o"></i>';
+      }
+    }
+
+    // 重置计时器
+    function resetTimer() {
+      clearInterval(timerInterval);
+      seconds = 0;
+      updateTimer();
+      timerInterval = setInterval(() => {
+        seconds++;
+        updateTimer();
+      }, 1000);
+    }
+
+    // 更新计时器
+    function updateTimer() {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    // 滚动到指定知识点
+    function scrollToKnowledge(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // 选择题相关变量和函数
+    let currentChoiceQuestion = null;
+    let selectedAnswer = null;
+    let answeredQuestions = {};
+
+    // 加载选择题
+    function loadChoiceQuestion(questionId) {
+      currentChoiceQuestion = choiceQuestions.find(q => q.id === questionId);
+      if (!currentChoiceQuestion) return;
+
+      selectedAnswer = answeredQuestions[questionId] || null;
+      
+      // 更新题目信息
+      document.getElementById('problem-title').textContent = currentChoiceQuestion.title;
+      
+      // 更新难度标签
+      const difficultyTag = document.getElementById('difficulty-tag');
+      difficultyTag.className = 'difficulty-tag';
+      difficultyTag.classList.add('difficulty-' + currentChoiceQuestion.difficulty);
+      difficultyTag.textContent = currentChoiceQuestion.difficulty === 'easy' ? '简单' : currentChoiceQuestion.difficulty === 'medium' ? '中等' : '困难';
+      
+      // 构建选择题HTML
+      let optionsHtml = currentChoiceQuestion.options.map(opt => {
+        let optionClass = 'choice-option';
+        if (selectedAnswer === opt.label) {
+          optionClass += ' selected';
+        }
+        if (answeredQuestions[questionId]) {
+          optionClass += ' disabled';
+          if (opt.label === currentChoiceQuestion.answer) {
+            optionClass += ' correct';
+          } else if (opt.label === selectedAnswer && selectedAnswer !== currentChoiceQuestion.answer) {
+            optionClass += ' wrong';
+          }
+        }
+        return `
+          <div class="${optionClass}" onclick="selectChoice('${opt.label}')" data-label="${opt.label}">
+            <div class="choice-label">${opt.label}</div>
+            <div class="flex-1 text-gray-200">${opt.text}</div>
           </div>
+        `;
+      }).join('');
 
-          <!-- 先修课程 -->
-          <div class="bg-white rounded-xl shadow-sm p-6">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">
-              <i class="fa fa-book text-primary mr-2"></i>先修课程
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
-                  <i class="fa fa-code text-primary"></i>
-                </div>
-                <div>
-                  <h3 class="font-medium text-gray-800">Python基础</h3>
-                  <p class="text-sm text-gray-600">掌握Python基本语法</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 课程大纲 -->
-          <div class="bg-white rounded-xl shadow-sm p-6">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">
-              <i class="fa fa-list text-primary mr-2"></i>课程大纲
-            </h2>
-            <div class="space-y-4">
-              <!-- 模块1 -->
-              <div class="border-l-4 border-primary pl-4">
-                <h3 class="text-lg font-semibold text-gray-800">模块1：数据库基础知识</h3>
-                <p class="text-gray-600 mt-1">学时：8学时</p>
-                <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-                  <li>数据库基本概念</li>
-                  <li>数据模型</li>
-                  <li>数据库系统结构</li>
-                  <li>数据库管理系统</li>
-                </ul>
-              </div>
-
-              <!-- 模块2 -->
-              <div class="border-l-4 border-primary pl-4">
-                <h3 class="text-lg font-semibold text-gray-800">模块2：SQL语言基础</h3>
-                <p class="text-gray-600 mt-1">学时：12学时</p>
-                <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-                  <li>SQL简介</li>
-                  <li>数据查询（SELECT）</li>
-                  <li>数据插入、更新、删除</li>
-                  <li>数据定义语言（DDL）</li>
-                </ul>
-              </div>
-
-              <!-- 模块3 -->
-              <div class="border-l-4 border-primary pl-4">
-                <h3 class="text-lg font-semibold text-gray-800">模块3：数据库设计</h3>
-                <p class="text-gray-600 mt-1">学时：12学时</p>
-                <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-                  <li>实体-关系模型</li>
-                  <li>数据库设计原则</li>
-                  <li>范式理论</li>
-                  <li>数据库设计实践</li>
-                </ul>
-              </div>
-
-              <!-- 模块4 -->
-              <div class="border-l-4 border-primary pl-4">
-                <h3 class="text-lg font-semibold text-gray-800">模块4：数据库管理</h3>
-                <p class="text-gray-600 mt-1">学时：12学时</p>
-                <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-                  <li>用户权限管理</li>
-                  <li>数据备份与恢复</li>
-                  <li>数据库性能优化</li>
-                  <li>数据库安全</li>
-                </ul>
-              </div>
-
-              <!-- 模块5 -->
-              <div class="border-l-4 border-primary pl-4">
-                <h3 class="text-lg font-semibold text-gray-800">模块5：NoSQL数据库</h3>
-                <p class="text-gray-600 mt-1">学时：8学时</p>
-                <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-                  <li>NoSQL数据库简介</li>
-                  <li>MongoDB基础</li>
-                  <li>Redis基础</li>
-                  <li>SQL与NoSQL对比</li>
-                </ul>
-              </div>
-
-              <!-- 模块6 -->
-              <div class="border-l-4 border-primary pl-4">
-                <h3 class="text-lg font-semibold text-gray-800">模块6：综合项目实战</h3>
-                <p class="text-gray-600 mt-1">学时：8学时</p>
-                <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
-                  <li>项目选题与规划</li>
-                  <li>数据库设计与实现</li>
-                  <li>应用开发与集成</li>
-                  <li>项目展示与答辩</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- 学习资源 -->
-          <div class="bg-white rounded-xl shadow-sm p-6">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">
-              <i class="fa fa-folder-open text-primary mr-2"></i>学习资源
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="border border-gray-200 rounded-lg p-4 hover:border-primary transition-colors">
-                <div class="flex items-center gap-3">
-                  <i class="fa fa-book text-primary text-2xl"></i>
-                  <div>
-                    <h3 class="font-medium text-gray-800">推荐教材</h3>
-                    <p class="text-sm text-gray-600">《数据库系统概论》</p>
-                  </div>
-                </div>
-              </div>
-              <div class="border border-gray-200 rounded-lg p-4 hover:border-primary transition-colors">
-                <div class="flex items-center gap-3">
-                  <i class="fa fa-database text-primary text-2xl"></i>
-                  <div>
-                    <h3 class="font-medium text-gray-800">数据库系统</h3>
-                    <p class="text-sm text-gray-600">MySQL, PostgreSQL, MongoDB</p>
-                  </div>
-                </div>
-              </div>
-              <div class="border border-gray-200 rounded-lg p-4 hover:border-primary transition-colors">
-                <div class="flex items-center gap-3">
-                  <i class="fa fa-file-text-o text-primary text-2xl"></i>
-                  <div>
-                    <h3 class="font-medium text-gray-800">在线教程</h3>
-                    <p class="text-sm text-gray-600">W3Schools SQL教程</p>
-                  </div>
-                </div>
-              </div>
-              <div class="border border-gray-200 rounded-lg p-4 hover:border-primary transition-colors">
-                <div class="flex items-center gap-3">
-                  <i class="fa fa-globe text-primary text-2xl"></i>
-                  <div>
-                    <h3 class="font-medium text-gray-800">练习平台</h3>
-                    <p class="text-sm text-gray-600">LeetCode数据库题</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      document.getElementById('problem-description').innerHTML = `
+        <div class="mb-6">
+          <p class="text-lg text-gray-200">${currentChoiceQuestion.question}</p>
         </div>
-
-        <!-- 右侧内容 -->
-        <div class="space-y-6">
-          <!-- 课程信息卡 -->
-          <div class="bg-white rounded-xl shadow-sm p-6">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">课程信息</h3>
-            <div class="space-y-3">
-              <div class="flex justify-between">
-                <span class="text-gray-600">课程性质</span>
-                <span class="font-medium text-gray-800">专业核心课</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-600">总学时</span>
-                <span class="font-medium text-gray-800">56学时</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-600">学分</span>
-                <span class="font-medium text-gray-800">3.5学分</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-600">授课对象</span>
-                <span class="font-medium text-gray-800">大二第一学期</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-600">考核方式</span>
-                <span class="font-medium text-gray-800">考试+项目</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- 学习目标卡 -->
-          <div class="bg-white rounded-xl shadow-sm p-6">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">学习目标</h3>
-            <div class="space-y-3">
-              <div class="flex items-start gap-3">
-                <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mt-0.5 flex-shrink-0">
-                  <i class="fa fa-check text-green-600 text-xs"></i>
-                </div>
-                <p class="text-gray-600">掌握数据库的基本概念和原理</p>
-              </div>
-              <div class="flex items-start gap-3">
-                <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mt-0.5 flex-shrink-0">
-                  <i class="fa fa-check text-green-600 text-xs"></i>
-                </div>
-                <p class="text-gray-600">能够编写SQL查询和管理数据库</p>
-              </div>
-              <div class="flex items-start gap-3">
-                <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mt-0.5 flex-shrink-0">
-                  <i class="fa fa-check text-green-600 text-xs"></i>
-                </div>
-                <p class="text-gray-600">掌握数据库设计的基本方法</p>
-              </div>
-              <div class="flex items-start gap-3">
-                <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mt-0.5 flex-shrink-0">
-                  <i class="fa fa-check text-green-600 text-xs"></i>
-                </div>
-                <p class="text-gray-600">了解NoSQL数据库的基本概念</p>
-              </div>
-              <div class="flex items-start gap-3">
-                <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mt-0.5 flex-shrink-0">
-                  <i class="fa fa-check text-green-600 text-xs"></i>
-                </div>
-                <p class="text-gray-600">能够设计和实现数据库应用</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 考核方式卡 -->
-          <div class="bg-white rounded-xl shadow-sm p-6">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">考核方式</h3>
-            <div class="space-y-4">
-              <div>
-                <div class="flex justify-between mb-1">
-                  <span class="text-gray-600">平时成绩</span>
-                  <span class="font-medium text-gray-800">30%</span>
-                </div>
-                <div class="w-full bg-gray-200 rounded-full h-2">
-                  <div class="bg-primary h-2 rounded-full" style="width: 30%"></div>
-                </div>
-                <p class="text-xs text-gray-500 mt-1">包括出勤、作业、课堂表现</p>
-              </div>
-              <div>
-                <div class="flex justify-between mb-1">
-                  <span class="text-gray-600">项目实践</span>
-                  <span class="font-medium text-gray-800">40%</span>
-                </div>
-                <div class="w-full bg-gray-200 rounded-full h-2">
-                  <div class="bg-primary h-2 rounded-full" style="width: 40%"></div>
-                </div>
-                <p class="text-xs text-gray-500 mt-1">包括数据库设计和应用开发</p>
-              </div>
-              <div>
-                <div class="flex justify-between mb-1">
-                  <span class="text-gray-600">期末考试</span>
-                  <span class="font-medium text-gray-800">30%</span>
-                </div>
-                <div class="w-full bg-gray-200 rounded-full h-2">
-                  <div class="bg-primary h-2 rounded-full" style="width: 30%"></div>
-                </div>
-                <p class="text-xs text-gray-500 mt-1">包括理论知识和SQL技能</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 相关课程卡 -->
-          <div class="bg-white rounded-xl shadow-sm p-6">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">相关课程</h3>
-            <div class="space-y-3">
-              <a href="python-basics.html" class="block p-3 border border-gray-200 rounded-lg hover:border-primary hover:bg-gray-50 transition-colors">
-                <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-                    <i class="fa fa-code text-primary"></i>
-                  </div>
-                  <span class="text-gray-800">Python基础</span>
-                </div>
-              </a>
-              <a href="data-analysis-tech.html" class="block p-3 border border-gray-200 rounded-lg hover:border-primary hover:bg-gray-50 transition-colors">
-                <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-                    <i class="fa fa-bar-chart text-primary"></i>
-                  </div>
-                  <span class="text-gray-800">数据分析技术</span>
-                </div>
-              </a>
-              <a href="data-collection.html" class="block p-3 border border-gray-200 rounded-lg hover:border-primary hover:bg-gray-50 transition-colors">
-                <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-                    <i class="fa fa-database text-primary"></i>
-                  </div>
-                  <span class="text-gray-800">数据采集与处理</span>
-                </div>
-              </a>
-            </div>
-          </div>
+        <div class="space-y-3" id="choice-options">
+          ${optionsHtml}
         </div>
-      </div>
-    </div>
-  </section>
+        <div class="mt-6 flex gap-3">
+          <button class="btn-primary" onclick="submitChoice()" id="submit-choice-btn" ${answeredQuestions[questionId] ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>
+            <i class="fa fa-check"></i> 提交答案
+          </button>
+          <button class="btn-secondary" onclick="showChoiceAnalysis()" id="show-analysis-btn" ${!answeredQuestions[questionId] ? 'style="display:none"' : ''}>
+            <i class="fa fa-lightbulb-o"></i> 查看解析
+          </button>
+        </div>
+      `;
 
-  <!-- 页脚 -->
-  <footer class="bg-gray-800 text-white py-8">
-    <div class="container mx-auto px-4">
-      <div class="flex flex-col md:flex-row justify-between items-center">
-        <div class="mb-4 md:mb-0">
-          <h3 class="text-lg font-semibold">Xww的个人课程页面</h3>
-          <p class="text-gray-400 mt-1">广东科学技术职业学院 | 商务数据分析与应用专业</p>
+      // 隐藏代码编辑器和运行结果区域
+      document.getElementById('codeEditor').parentElement.parentElement.style.display = 'none';
+      document.getElementById('code-output').parentElement.parentElement.style.display = 'none';
+      
+      // 更新答案解析区域
+      updateChoiceAnalysis();
+      
+      // 重置计时器
+      resetTimer();
+      
+      // 更新问题项状态
+      document.querySelectorAll('.problem-item').forEach(item => {
+        item.classList.remove('active');
+      });
+    }
+
+    // 选择答案
+    function selectChoice(label) {
+      if (answeredQuestions[currentChoiceQuestion.id]) return;
+      
+      selectedAnswer = label;
+      
+      // 更新选项样式
+      document.querySelectorAll('.choice-option').forEach(opt => {
+        opt.classList.remove('selected');
+        if (opt.dataset.label === label) {
+          opt.classList.add('selected');
+        }
+      });
+    }
+
+    // 提交选择题答案
+    function submitChoice() {
+      if (!selectedAnswer) {
+        alert('请先选择一个答案');
+        return;
+      }
+      
+      answeredQuestions[currentChoiceQuestion.id] = selectedAnswer;
+      
+      // 更新选项样式
+      document.querySelectorAll('.choice-option').forEach(opt => {
+        opt.classList.add('disabled');
+        if (opt.dataset.label === currentChoiceQuestion.answer) {
+          opt.classList.add('correct');
+        } else if (opt.dataset.label === selectedAnswer && selectedAnswer !== currentChoiceQuestion.answer) {
+          opt.classList.add('wrong');
+        }
+      });
+      
+      // 禁用提交按钮，显示解析按钮
+      document.getElementById('submit-choice-btn').disabled = true;
+      document.getElementById('submit-choice-btn').style.opacity = '0.5';
+      document.getElementById('submit-choice-btn').style.cursor = 'not-allowed';
+      document.getElementById('show-analysis-btn').style.display = 'flex';
+      
+      // 更新答案解析
+      updateChoiceAnalysis();
+      
+      // 更新进度
+      updateChoiceProgress();
+    }
+
+    // 显示选择题解析
+    function showChoiceAnalysis() {
+      document.getElementById('answer-analysis').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // 更新选择题解析内容
+    function updateChoiceAnalysis() {
+      if (!currentChoiceQuestion) return;
+      
+      const isCorrect = selectedAnswer === currentChoiceQuestion.answer;
+      const resultText = answeredQuestions[currentChoiceQuestion.id] 
+        ? (isCorrect ? '<span class="text-emerald-400">✓ 回答正确！</span>' : '<span class="text-red-400">✗ 回答错误</span>')
+        : '<span class="text-gray-400">等待作答...</span>';
+      
+      document.getElementById('answer-analysis').innerHTML = `
+        <h4>答案解析</h4>
+        <div class="mb-4">
+          <p class="text-gray-300 mb-2">正确答案：<span class="text-emerald-400 font-bold">${currentChoiceQuestion.answer}</span></p>
+          <p class="text-gray-300">您的答案：${selectedAnswer ? `<span class="${isCorrect ? 'text-emerald-400' : 'text-red-400'} font-bold">${selectedAnswer}</span>` : '<span class="text-gray-500">未作答</span>'}</p>
         </div>
-        <div class="flex space-x-4">
-          <a href="#" class="text-gray-400 hover:text-white transition-colors">
-            <i class="fa fa-github text-xl"></i>
-          </a>
-          <a href="#" class="text-gray-400 hover:text-white transition-colors">
-            <i class="fa fa-linkedin text-xl"></i>
-          </a>
-          <a href="#" class="text-gray-400 hover:text-white transition-colors">
-            <i class="fa fa-envelope text-xl"></i>
-          </a>
+        <div class="bg-dark p-4 rounded-lg mb-4">
+          <h5 class="text-cyan-400 font-semibold mb-2">解析</h5>
+          <p class="text-gray-300">${currentChoiceQuestion.analysis}</p>
         </div>
-      </div>
-      <div class="mt-8 border-t border-gray-700 pt-4 text-center text-gray-400">
-        <p>© 2026 Xww. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
+        <h4>相关知识点</h4>
+        <ul class="list-disc list-inside space-y-1 mt-2">
+          <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('${getKnowledgeSection(currentChoiceQuestion.chapter)}')">${getChapterName(currentChoiceQuestion.chapter)}</a></li>
+        </ul>
+      `;
+    }
+
+    // 获取知识点章节ID
+    function getKnowledgeSection(chapter) {
+      const sections = {
+        1: 'data-preprocessing',
+        2: 'eda',
+        3: 'statistical-analysis',
+        4: 'pandas-basics',
+        5: 'data-visualization',
+        6: 'machine-learning'
+      };
+      return sections[chapter] || 'data-preprocessing';
+    }
+
+    // 获取章节名称
+    function getChapterName(chapter) {
+      const names = {
+        1: '数据预处理',
+        2: '探索性数据分析',
+        3: '统计分析',
+        4: 'Pandas基础',
+        5: '数据可视化',
+        6: '机器学习基础'
+      };
+      return names[chapter] || '数据分析';
+    }
+
+    // 更新选择题进度
+    function updateChoiceProgress() {
+      const totalChoice = choiceQuestions.length;
+      const answeredChoice = Object.keys(answeredQuestions).length;
+      const correctChoice = Object.entries(answeredQuestions).filter(([id, ans]) => {
+        const q = choiceQuestions.find(q => q.id === id);
+        return q && q.answer === ans;
+      }).length;
+      
+      // 可以在这里更新总体进度显示
+      console.log(`选择题进度: ${answeredChoice}/${totalChoice}, 正确: ${correctChoice}`);
+    }
+
+    // 加载编程题（恢复代码编辑器显示）
+    function loadProgrammingProblem(problemId) {
+      const problem = problems.find(p => p.id === problemId);
+      if (!problem) return;
+      
+      currentProblem = problemId;
+      
+      // 显示代码编辑器和运行结果区域
+      document.getElementById('codeEditor').parentElement.parentElement.style.display = 'block';
+      document.getElementById('code-output').parentElement.parentElement.style.display = 'block';
+      
+      // 更新问题信息
+      document.getElementById('problem-title').textContent = problem.title;
+      document.getElementById('problem-description').innerHTML = problem.description;
+      
+      // 更新难度标签
+      const difficultyTag = document.getElementById('difficulty-tag');
+      difficultyTag.className = 'difficulty-tag';
+      difficultyTag.classList.add('difficulty-' + problem.difficulty);
+      difficultyTag.textContent = problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难';
+      
+      // 更新代码编辑器
+      editor.setValue(problem.code);
+      editor.clearSelection();
+      
+      // 更新答案解析
+      document.getElementById('answer-analysis').innerHTML = problem.analysis;
+      
+      // 重置计时器
+      resetTimer();
+    }
+  </script>
 </body>
 </html>
