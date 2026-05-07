@@ -3780,6 +3780,10 @@ print(f"预测值: {new_prediction[0]:.4f}")
 
     // 显示选择题解析
     function showChoiceAnalysis() {
+      if (!answeredQuestions[currentChoiceQuestion.id]) {
+        alert('请先提交答案');
+        return;
+      }
       document.getElementById('answer-analysis').scrollIntoView({ behavior: 'smooth' });
     }
 
@@ -3787,25 +3791,36 @@ print(f"预测值: {new_prediction[0]:.4f}")
     function updateChoiceAnalysis() {
       if (!currentChoiceQuestion) return;
       
+      const isAnswered = !!answeredQuestions[currentChoiceQuestion.id];
       const isCorrect = selectedAnswer === currentChoiceQuestion.answer;
-      const resultText = answeredQuestions[currentChoiceQuestion.id] 
-        ? (isCorrect ? '<span class="text-emerald-400">✓ 回答正确！</span>' : '<span class="text-red-400">✗ 回答错误</span>')
-        : '<span class="text-gray-400">等待作答...</span>';
+      
+      let contentHtml;
+      if (!isAnswered) {
+        contentHtml = `
+          <div class="bg-amber-900 bg-opacity-20 border border-amber-700 rounded-lg p-4 mb-4">
+            <p class="text-amber-400"><i class="fa fa-info-circle"></i> 请先选择一个答案，然后点击"提交答案"查看解析</p>
+          </div>
+        `;
+      } else {
+        contentHtml = `
+          <div class="mb-4">
+            <p class="text-gray-300 mb-2">正确答案：<span class="text-emerald-400 font-bold">${currentChoiceQuestion.answer}</span></p>
+            <p class="text-gray-300">您的答案：${selectedAnswer ? `<span class="${isCorrect ? 'text-emerald-400' : 'text-red-400'} font-bold">${selectedAnswer}</span>` : '<span class="text-gray-500">未作答</span>'}</p>
+          </div>
+          <div class="bg-dark p-4 rounded-lg mb-4">
+            <h5 class="text-cyan-400 font-semibold mb-2">解析</h5>
+            <p class="text-gray-300">${currentChoiceQuestion.analysis}</p>
+          </div>
+          <h4>相关知识点</h4>
+          <ul class="list-disc list-inside space-y-1 mt-2">
+            <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('${getKnowledgeSection(currentChoiceQuestion.chapter)}')">${getChapterName(currentChoiceQuestion.chapter)}</a></li>
+          </ul>
+        `;
+      }
       
       document.getElementById('answer-analysis').innerHTML = `
         <h4>答案解析</h4>
-        <div class="mb-4">
-          <p class="text-gray-300 mb-2">正确答案：<span class="text-emerald-400 font-bold">${currentChoiceQuestion.answer}</span></p>
-          <p class="text-gray-300">您的答案：${selectedAnswer ? `<span class="${isCorrect ? 'text-emerald-400' : 'text-red-400'} font-bold">${selectedAnswer}</span>` : '<span class="text-gray-500">未作答</span>'}</p>
-        </div>
-        <div class="bg-dark p-4 rounded-lg mb-4">
-          <h5 class="text-cyan-400 font-semibold mb-2">解析</h5>
-          <p class="text-gray-300">${currentChoiceQuestion.analysis}</p>
-        </div>
-        <h4>相关知识点</h4>
-        <ul class="list-disc list-inside space-y-1 mt-2">
-          <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('${getKnowledgeSection(currentChoiceQuestion.chapter)}')">${getChapterName(currentChoiceQuestion.chapter)}</a></li>
-        </ul>
+        ${contentHtml}
       `;
     }
 
