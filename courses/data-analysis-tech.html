@@ -3291,6 +3291,10 @@ print(f"预测值: {new_prediction[0]:.4f}")
         useSoftTabs: true,
         wrap: true
       });
+      
+      // 设置初始占位符文本
+      editor.setValue('# 请编写代码');
+      editor.clearSelection();
 
       // 加载Pyodide
       initPyodide();
@@ -3427,10 +3431,6 @@ print(f"预测值: {new_prediction[0]:.4f}")
       const difficultyTag = document.getElementById('difficulty-tag');
       difficultyTag.className = 'difficulty-tag';
       difficultyTag.classList.add('difficulty-' + problem.difficulty);
-      
-      // 更新代码编辑器
-      editor.setValue(problem.code);
-      editor.clearSelection();
       
       // 更新答案解析
       document.getElementById('answer-analysis').innerHTML = problem.analysis;
