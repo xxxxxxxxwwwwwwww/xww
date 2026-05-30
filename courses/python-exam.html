@@ -272,8 +272,8 @@
           
           <div class="mb-8">
             <h3 class="text-xl font-bold text-gray-200 mb-4">答题情况</h3>
-            <div id="answers-summary" class="space-y-4">
-              <!-- 答题情况将通过JavaScript动态生成 -->
+            <div id="answers-status" class="space-y-4">
+              <!-- 答题状态将通过JavaScript动态生成 -->
             </div>
           </div>
           
@@ -729,28 +729,16 @@
       const answersSummary = document.getElementById('answers-summary');
       answersSummary.innerHTML = '';
 
+      // 计算得分
+      let score = 0;
+      
       examData.questions.forEach((question, index) => {
         const answer = answers[index];
-        const isCorrect = answer.trim() !== ''; // 简单判断，实际应该运行代码验证
+        const isAnswered = answer && answer.trim() !== '' && answer.trim() !== question.defaultCode.trim();
         
-        if (isCorrect) score++;
-
-        const questionEl = document.createElement('div');
-        questionEl.className = 'bg-dark p-4 rounded-lg border ' + (isCorrect ? 'border-emerald-500' : 'border-red-500');
-        questionEl.innerHTML = `
-          <div class="flex justify-between items-center mb-2">
-            <h4 class="font-semibold text-gray-200">${question.title}</h4>
-            <span class="${isCorrect ? 'text-emerald-400' : 'text-red-400'}">
-              ${isCorrect ? '✓ 正确' : '✗ 未完成'}
-            </span>
-          </div>
-          <div class="text-sm text-gray-400">
-            ${isCorrect ? '已完成' : '未完成'}
-          </div>
-        `;
-        answersSummary.appendChild(questionEl);
+        if (isAnswered) score++;
       });
-
+      
       // 更新结果
       const totalQuestions = examData.questions.length;
       const accuracy = Math.round((score / totalQuestions) * 100);
@@ -758,6 +746,36 @@
       document.getElementById('result-accuracy').textContent = `${accuracy}%`;
       document.getElementById('score-bar').style.width = `${accuracy}%`;
       document.getElementById('score-percentage').textContent = `${accuracy}%`;
+      
+      // 生成答题状态
+      const answersStatus = document.getElementById('answers-status');
+      answersStatus.innerHTML = '';
+      
+      let statusHtml = '<div class="grid grid-cols-5 gap-3">';
+      
+      examData.questions.forEach((question, index) => {
+        const answer = answers[index];
+        const isAnswered = answer && answer.trim() !== '' && answer.trim() !== question.defaultCode.trim();
+        
+        if (!isAnswered) {
+          statusHtml += `
+            <div class="flex flex-col items-center gap-1 p-2 bg-gray-800 rounded-lg">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm bg-gray-700 text-gray-400 border-2 border-gray-600">${index + 1}</div>
+              <span class="text-xs text-gray-400">未答</span>
+            </div>
+          `;
+        } else {
+          statusHtml += `
+            <div class="flex flex-col items-center gap-1 p-2 bg-gray-800 rounded-lg">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm bg-emerald-600 text-white"><i class="fa fa-check"></i></div>
+              <span class="text-xs text-emerald-400">题${index + 1} ✓</span>
+            </div>
+          `;
+        }
+      });
+      
+      statusHtml += '</div>';
+      answersStatus.innerHTML = statusHtml;
 
       // 显示结果页面
       document.getElementById('exam-questions').classList.add('hidden');

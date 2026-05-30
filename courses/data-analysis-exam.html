@@ -110,33 +110,6 @@
       .scrollbar-thin::-webkit-scrollbar-thumb:hover {
         @apply bg-gray-600;
       }
-      .choice-option {
-        @apply flex items-center gap-3 p-4 rounded-lg border border-gray-700 cursor-pointer transition-all duration-200 hover:border-cyan-500 hover:bg-dark-gray;
-      }
-      .choice-option.selected {
-        @apply border-cyan-500 bg-cyan-900 bg-opacity-30;
-      }
-      .choice-option.correct {
-        @apply border-emerald-500 bg-emerald-900 bg-opacity-30;
-      }
-      .choice-option.wrong {
-        @apply border-red-500 bg-red-900 bg-opacity-30;
-      }
-      .choice-option.disabled {
-        @apply cursor-not-allowed opacity-70;
-      }
-      .choice-label {
-        @apply w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold text-sm;
-      }
-      .choice-option.selected .choice-label {
-        @apply bg-cyan-500 text-gray-900;
-      }
-      .choice-option.correct .choice-label {
-        @apply bg-emerald-500 text-gray-900;
-      }
-      .choice-option.wrong .choice-label {
-        @apply bg-red-500 text-gray-900;
-      }
     }
   </style>
 </head>
@@ -173,11 +146,11 @@
               <h3 class="text-lg font-semibold text-gray-200 mb-4">考试规则</h3>
               <ul class="list-disc list-inside space-y-2 text-gray-400">
                 <li>考试时间：30分钟</li>
-                <li>共15道题目，包括10道编程题和5道选择题</li>
+                <li>共10道题目，包括1道编程题和9道选择题</li>
+                <li>选择题自动评分，编程题需运行代码后评分</li>
                 <li>请独立完成，不要参考外部资料</li>
                 <li>考试过程中不要刷新页面，否则会丢失进度</li>
                 <li>点击提交按钮后将无法修改答案</li>
-                <li>选择题点击选项即可作答，编程题需运行代码</li>
               </ul>
             </div>
             <button id="start-exam" class="btn-primary">
@@ -203,7 +176,7 @@
             <!-- 题目描述 -->
             <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
               <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
-                <h3 class="text-xl font-bold text-gray-200" id="exam-problem-title">问题1：缺失值处理</h3>
+                <h3 class="text-xl font-bold text-gray-200" id="exam-problem-title">问题1：BI概念理解</h3>
                 <span class="difficulty-tag difficulty-easy" id="exam-difficulty-tag">简单</span>
               </div>
               <div class="problem-description" id="exam-problem-description">
@@ -211,8 +184,24 @@
               </div>
             </div>
 
+            <!-- 选择题区域 -->
+            <div id="exam-choice-area" class="hidden bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
+                <h3 class="text-xl font-bold text-gray-200" id="exam-choice-title">选择题</h3>
+                <span class="difficulty-tag difficulty-easy" id="exam-choice-difficulty-tag">简单</span>
+              </div>
+              
+              <div class="mb-6">
+                <p class="text-lg text-gray-200 mb-4" id="exam-choice-question-text"></p>
+                
+                <div class="space-y-3" id="exam-choice-options">
+                  <!-- 选项将通过JavaScript动态生成 -->
+                </div>
+              </div>
+            </div>
+
             <!-- 代码编辑框 -->
-            <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+            <div id="exam-code-area" class="bg-dark-gray rounded-xl p-6 border border-gray-700">
               <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
                 <h3 class="text-lg font-semibold text-gray-200">代码编辑器</h3>
                 <div class="flex gap-2">
@@ -247,6 +236,9 @@
               <button id="prev-question" class="btn-secondary">
                 <i class="fa fa-arrow-left"></i> 上一题
               </button>
+              <button id="submit-exam" class="btn-accent">
+                <i class="fa fa-paper-plane"></i> 提交考试
+              </button>
               <button id="next-question" class="btn-primary">
                 下一题 <i class="fa fa-arrow-right"></i>
               </button>
@@ -278,7 +270,7 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
               <div class="bg-dark-gray p-4 rounded-lg text-center">
                 <p class="text-gray-400">总题目</p>
-                <p class="text-2xl font-bold text-gray-200">15</p>
+                <p class="text-2xl font-bold text-gray-200">10</p>
               </div>
               <div class="bg-dark-gray p-4 rounded-lg text-center">
                 <p class="text-gray-400">已完成</p>
@@ -296,7 +288,7 @@
             
             <div class="space-y-4">
               <h3 class="text-lg font-semibold text-gray-200">答题情况</h3>
-              <div id="answer-status" class="grid grid-cols-5 md:grid-cols-5 gap-2">
+              <div id="answer-status" class="grid grid-cols-5 gap-2">
                 <!-- 答题状态将通过JavaScript动态生成 -->
               </div>
             </div>
@@ -316,575 +308,26 @@
   </div>
 
   <script>
-    // 考试题目数据
+        // 考试题目数据
     const examProblems = [
       {
         id: 1,
-        title: "问题1：缺失值处理",
-        description: `编写一个程序，使用Pandas处理DataFrame中的缺失值。
+        title: "编程题：数据分析综合应用",
+        description: `综合运用所学知识，完成一个完整的数据分析任务。
 
-<strong>输入：</strong>
-一个包含缺失值的DataFrame
-
-<strong>输出：</strong>
-处理后的DataFrame，其中缺失值已被适当处理
+<strong>背景：</strong>
+一家电商公司提供了2024年1月的销售数据，请对这份数据进行完整的分析和处理。
 
 <strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>识别并统计缺失值</li>
-  <li>使用合适的方法填充缺失值（如均值、中位数或众数）</li>
-  <li>返回处理后的DataFrame</li>
-</ul>`,
-        difficulty: "easy",
-        code: `# 请编写代码
-import pandas as pd
-import numpy as np
-
-# 创建示例数据
-data = {
-    'A': [1, 2, np.nan, 4, 5],
-    'B': [np.nan, 2, 3, 4, np.nan],
-    'C': ['x', 'y', 'z', np.nan, 'x']
-}
-df = pd.DataFrame(data)
-
-# 识别缺失值
-print("缺失值统计:")
-print(df.isnull().sum())
-
-# 处理缺失值
-df['A'] = df['A'].fillna(df['A'].mean())
-df['B'] = df['B'].fillna(df['B'].median())
-df['C'] = df['C'].fillna(df['C'].mode()[0])
-
-print("\n处理后的数据:")
-print(df)`,
-        answer: `import pandas as pd
-import numpy as np
-
-data = {
-    'A': [1, 2, np.nan, 4, 5],
-    'B': [np.nan, 2, 3, 4, np.nan],
-    'C': ['x', 'y', 'z', np.nan, 'x']
-}
-df = pd.DataFrame(data)
-
-print("缺失值统计:")
-print(df.isnull().sum())
-
-df['A'] = df['A'].fillna(df['A'].mean())
-df['B'] = df['B'].fillna(df['B'].median())
-df['C'] = df['C'].fillna(df['C'].mode()[0])
-
-print("\n处理后的数据:")
-print(df)`,
-        score: 10
-      },
-      {
-        id: 2,
-        title: "问题2：异常值检测",
-        description: `编写一个程序，使用IQR方法检测数据中的异常值。
-
-<strong>输入：</strong>
-一个包含可能异常值的数据集
-
-<strong>输出：</strong>
-检测到的异常值
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>计算四分位数和IQR</li>
-  <li>定义异常值边界</li>
-  <li>检测并返回异常值</li>
+  <li>读取并理解数据结构</li>
+  <li>识别和处理数据中的缺失值和异常值</li>
+  <li>计算每日、每类别的销售总额和平均单价</li>
+  <li>输出分析结果</li>
 </ul>`,
         difficulty: "medium",
-        code: `# 请编写代码
-import pandas as pd
-import numpy as np
-
-# 创建示例数据
-data = pd.Series([1, 2, 3, 4, 100])
-
-# 计算四分位数
-Q1 = data.quantile(0.25)
-Q3 = data.quantile(0.75)
-IQR = Q3 - Q1
-
-# 定义异常值边界
-lower_bound = Q1 - 1.5 * IQR
-upper_bound = Q3 + 1.5 * IQR
-
-# 检测异常值
-outliers = data[(data < lower_bound) | (data > upper_bound)]
-print("异常值:", outliers)`,
-        answer: `import pandas as pd
-import numpy as np
-
-data = pd.Series([1, 2, 3, 4, 100])
-
-Q1 = data.quantile(0.25)
-Q3 = data.quantile(0.75)
-IQR = Q3 - Q1
-
-lower_bound = Q1 - 1.5 * IQR
-upper_bound = Q3 + 1.5 * IQR
-
-outliers = data[(data < lower_bound) | (data > upper_bound)]
-print("异常值:", outliers)`,
-        score: 10
-      },
-      {
-        id: 3,
-        title: "问题3：数据标准化",
-        description: `编写一个程序，对数据进行标准化处理。
-
-<strong>输入：</strong>
-一个包含数值型数据的DataFrame
-
-<strong>输出：</strong>
-标准化处理后的数据
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>使用StandardScaler进行标准化</li>
-  <li>返回标准化后的数据</li>
-</ul>`,
-        difficulty: "medium",
-        code: `# 请编写代码
-import pandas as pd
-import numpy as np
-from sklearn.preprocessing import StandardScaler
-
-# 创建示例数据
-data = {
-    'A': [1, 2, 3, 4, 5],
-    'B': [10, 20, 30, 40, 50],
-    'C': [100, 200, 300, 400, 500]
-}
-df = pd.DataFrame(data)
-
-# 初始化标准化器
-scaler = StandardScaler()
-
-# 进行标准化
-scaled_data = scaler.fit_transform(df)
-
-# 转换为DataFrame
-scaled_df = pd.DataFrame(scaled_data, columns=df.columns)
-
-print("标准化后的数据:")
-print(scaled_df)
-print("\n均值:", scaled_df.mean().round(4))
-print("标准差:", scaled_df.std().round(4))`,
-        answer: `import pandas as pd
-import numpy as np
-from sklearn.preprocessing import StandardScaler
-
-data = {
-    'A': [1, 2, 3, 4, 5],
-    'B': [10, 20, 30, 40, 50],
-    'C': [100, 200, 300, 400, 500]
-}
-df = pd.DataFrame(data)
-
-scaler = StandardScaler()
-scaled_data = scaler.fit_transform(df)
-scaled_df = pd.DataFrame(scaled_data, columns=df.columns)
-
-print("标准化后的数据:")
-print(scaled_df)
-print("\n均值:", scaled_df.mean().round(4))
-print("标准差:", scaled_df.std().round(4))`,
-        score: 10
-      },
-      {
-        id: 4,
-        title: "问题4：描述性统计分析",
-        description: `编写一个程序，对数据进行描述性统计分析。
-
-<strong>输入：</strong>
-一个包含数值型数据的DataFrame
-
-<strong>输出：</strong>
-数据的基本统计信息
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>计算基本统计量（均值、中位数、标准差等）</li>
-  <li>计算相关性矩阵</li>
-</ul>`,
-        difficulty: "easy",
-        code: `# 请编写代码
-import pandas as pd
-import numpy as np
-
-# 创建示例数据
-df = pd.DataFrame({
-    '年龄': [20, 25, 30, 35, 40],
-    '收入': [5000, 6000, 8000, 10000, 12000],
-    '评分': [4.5, 4.2, 3.8, 4.0, 4.7]
-})
-
-# 基本统计信息
-print("基本统计信息:")
-print(df.describe())
-
-# 中位数
-print("\n中位数:")
-print(df.median())
-
-# 众数
-print("\n众数:")
-print(df.mode())
-
-# 相关性
-print("\n相关性矩阵:")
-print(df.corr())`,
-        answer: `import pandas as pd
-import numpy as np
-
-df = pd.DataFrame({
-    '年龄': [20, 25, 30, 35, 40],
-    '收入': [5000, 6000, 8000, 10000, 12000],
-    '评分': [4.5, 4.2, 3.8, 4.0, 4.7]
-})
-
-print("基本统计信息:")
-print(df.describe())
-
-print("\n中位数:")
-print(df.median())
-
-print("\n众数:")
-print(df.mode())
-
-print("\n相关性矩阵:")
-print(df.corr())`,
-        score: 10
-      },
-      {
-        id: 5,
-        title: "问题5：数据可视化",
-        description: `编写一个程序，使用Matplotlib绘制直方图。
-
-<strong>输入：</strong>
-一组数值数据
-
-<strong>输出：</strong>
-数据的直方图
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>绘制直方图</li>
-  <li>添加标题和坐标轴标签</li>
-  <li>显示直方图</li>
-</ul>`,
-        difficulty: "medium",
-        code: `# 请编写代码
-import numpy as np
-import matplotlib.pyplot as plt
-
-# 生成随机数据
-data = np.random.normal(100, 10, 1000)
-
-# 绘制直方图
-plt.figure(figsize=(10, 6))
-plt.hist(data, bins=30, alpha=0.7, color='skyblue')
-plt.title('数据分布直方图')
-plt.xlabel('值')
-plt.ylabel('频率')
-plt.grid(axis='y', alpha=0.75)
-plt.show()`,
-        answer: `import numpy as np
-import matplotlib.pyplot as plt
-
-data = np.random.normal(100, 10, 1000)
-
-plt.figure(figsize=(10, 6))
-plt.hist(data, bins=30, alpha=0.7, color='skyblue')
-plt.title('数据分布直方图')
-plt.xlabel('值')
-plt.ylabel('频率')
-plt.grid(axis='y', alpha=0.75)
-plt.show()`,
-        score: 10
-      },
-      {
-        id: 6,
-        title: "问题6：假设检验",
-        description: `编写一个程序，进行独立样本t检验。
-
-<strong>输入：</strong>
-两组样本数据
-
-<strong>输出：</strong>
-t检验结果
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>计算t统计量和p值</li>
-  <li>根据p值判断是否拒绝原假设</li>
-</ul>`,
-        difficulty: "medium",
-        code: `# 请编写代码
-from scipy import stats
-import numpy as np
-
-# 生成两组样本数据
-group1 = np.random.normal(100, 10, 50)
-group2 = np.random.normal(105, 10, 50)
-
-# 独立样本t检验
-t_stat, p_value = stats.ttest_ind(group1, group2)
-
-print(f"t统计量: {t_stat:.4f}")
-print(f"p值: {p_value:.4f}")
-
-# 判断结果
-if p_value < 0.05:
-    print("拒绝原假设，两组数据存在显著差异")
-else:
-    print("不拒绝原假设，两组数据无显著差异")`,
-        answer: `from scipy import stats
-import numpy as np
-
-group1 = np.random.normal(100, 10, 50)
-group2 = np.random.normal(105, 10, 50)
-
-t_stat, p_value = stats.ttest_ind(group1, group2)
-
-print(f"t统计量: {t_stat:.4f}")
-print(f"p值: {p_value:.4f}")
-
-if p_value < 0.05:
-    print("拒绝原假设，两组数据存在显著差异")
-else:
-    print("不拒绝原假设，两组数据无显著差异")`,
-        score: 10
-      },
-      {
-        id: 7,
-        title: "问题7：回归分析",
-        description: `编写一个程序，进行线性回归分析。
-
-<strong>输入：</strong>
-自变量和因变量数据
-
-<strong>输出：</strong>
-回归模型参数和预测结果
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>拟合线性回归模型</li>
-  <li>计算模型参数（斜率、截距）</li>
-  <li>计算R²值</li>
-</ul>`,
-        difficulty: "hard",
-        code: `# 请编写代码
-import numpy as np
-from sklearn.linear_model import LinearRegression
-
-# 创建示例数据
-X = np.array([1, 2, 3, 4, 5]).reshape(-1, 1)
-y = np.array([2, 4, 5, 4, 5])
-
-# 拟合线性回归模型
-model = LinearRegression()
-model.fit(X, y)
-
-# 预测
-predictions = model.predict(X)
-
-# 模型参数
-print(f"斜率: {model.coef_[0]:.4f}")
-print(f"截距: {model.intercept_:.4f}")
-print(f"R²: {model.score(X, y):.4f}")`,
-        answer: `import numpy as np
-from sklearn.linear_model import LinearRegression
-
-X = np.array([1, 2, 3, 4, 5]).reshape(-1, 1)
-y = np.array([2, 4, 5, 4, 5])
-
-model = LinearRegression()
-model.fit(X, y)
-
-predictions = model.predict(X)
-
-print(f"斜率: {model.coef_[0]:.4f}")
-print(f"截距: {model.intercept_:.4f}")
-print(f"R²: {model.score(X, y):.4f}")`,
-        score: 10
-      },
-      {
-        id: 8,
-        title: "问题8：数据读取与处理",
-        description: `编写一个程序，读取CSV文件并进行基本处理。
-
-<strong>输入：</strong>
-CSV文件路径
-
-<strong>输出：</strong>
-处理后的数据信息
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>读取CSV文件</li>
-  <li>显示前5行数据</li>
-  <li>计算基本统计信息</li>
-  <li>显示数据形状</li>
-</ul>`,
-        difficulty: "easy",
-        code: `# 请编写代码
-import pandas as pd
-
-# 读取CSV文件（这里使用示例数据）
-# 实际使用时，将下面的路径替换为真实的CSV文件路径
-df = pd.DataFrame({
-    'A': [1, 2, 3, 4, 5],
-    'B': [10, 20, 30, 40, 50],
-    'C': [100, 200, 300, 400, 500]
-})
-
-# 显示前5行数据
-print("前5行数据:")
-print(df.head())
-
-# 计算基本统计信息
-print("\n基本统计信息:")
-print(df.describe())
-
-# 显示数据形状
-print("\n数据形状:", df.shape)`,
-        answer: `import pandas as pd
-
-df = pd.DataFrame({
-    'A': [1, 2, 3, 4, 5],
-    'B': [10, 20, 30, 40, 50],
-    'C': [100, 200, 300, 400, 500]
-})
-
-print("前5行数据:")
-print(df.head())
-
-print("\n基本统计信息:")
-print(df.describe())
-
-print("\n数据形状:", df.shape)`,
-        score: 10
-      },
-      {
-        id: 9,
-        title: "问题9：特征工程",
-        description: `编写一个程序，进行简单的特征工程。
-
-<strong>输入：</strong>
-包含原始特征的DataFrame
-
-<strong>输出：</strong>
-包含新特征的DataFrame
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>创建新特征</li>
-  <li>处理分类特征</li>
-  <li>返回处理后的DataFrame</li>
-</ul>`,
-        difficulty: "medium",
-        code: `# 请编写代码
-import pandas as pd
-import numpy as np
-
-# 创建示例数据
-df = pd.DataFrame({
-    '年龄': [20, 25, 30, 35, 40],
-    '收入': [5000, 6000, 8000, 10000, 12000],
-    '性别': ['男', '女', '男', '女', '男'],
-    '城市': ['北京', '上海', '广州', '深圳', '北京']
-})
-
-# 创建新特征
-# 收入水平
-df['收入水平'] = pd.cut(df['收入'], bins=[0, 6000, 10000, float('inf')], labels=['低', '中', '高'])
-
-# 年龄组
-df['年龄组'] = pd.cut(df['年龄'], bins=[0, 30, 40, float('inf')], labels=['青年', '中年', '老年'])
-
-# 处理分类特征
-# 独热编码
-df = pd.get_dummies(df, columns=['性别', '城市'], drop_first=True)
-
-print("处理后的数据:")
-print(df)
-print("\n数据形状:", df.shape)`,
-        answer: `import pandas as pd
-import numpy as np
-
-df = pd.DataFrame({
-    '年龄': [20, 25, 30, 35, 40],
-    '收入': [5000, 6000, 8000, 10000, 12000],
-    '性别': ['男', '女', '男', '女', '男'],
-    '城市': ['北京', '上海', '广州', '深圳', '北京']
-})
-
-df['收入水平'] = pd.cut(df['收入'], bins=[0, 6000, 10000, float('inf')], labels=['低', '中', '高'])
-df['年龄组'] = pd.cut(df['年龄'], bins=[0, 30, 40, float('inf')], labels=['青年', '中年', '老年'])
-df = pd.get_dummies(df, columns=['性别', '城市'], drop_first=True)
-
-print("处理后的数据:")
-print(df)
-print("\n数据形状:", df.shape)`,
-        score: 10
-      },
-      {
-        id: 10,
-        title: "问题10：聚类分析",
-        description: `编写一个程序，使用K-means算法进行聚类分析。
-
-<strong>输入：</strong>
-一组数据点
-
-<strong>输出：</strong>
-聚类结果
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>使用K-means算法</li>
-  <li>指定聚类数量为3</li>
-  <li>返回聚类标签</li>
-</ul>`,
-        difficulty: "hard",
-        code: `# 请编写代码
-import numpy as np
-from sklearn.cluster import KMeans
-
-# 创建示例数据
-X = np.array([[1, 2], [1.5, 1.8], [5, 8], [8, 8], [1, 0.6], [9, 11]])
-
-# 应用K-means聚类
-kmeans = KMeans(n_clusters=3, random_state=0)
-y_kmeans = kmeans.fit_predict(X)
-
-# 打印聚类结果
-print("数据点:")
-print(X)
-print("\n聚类标签:")
-print(y_kmeans)
-print("\n聚类中心:")
-print(kmeans.cluster_centers_)`,
-        answer: `import numpy as np
-from sklearn.cluster import KMeans
-
-X = np.array([[1, 2], [1.5, 1.8], [5, 8], [8, 8], [1, 0.6], [9, 11]])
-
-kmeans = KMeans(n_clusters=3, random_state=0)
-y_kmeans = kmeans.fit_predict(X)
-
-print("数据点:")
-print(X)
-print("\n聚类标签:")
-print(y_kmeans)
-print("\n聚类中心:")
-print(kmeans.cluster_centers_)`,
+        code: `# 请编写代码`,
+        answer: ``,
         score: 10
       }
     ];
@@ -892,170 +335,144 @@ print(kmeans.cluster_centers_)`,
     // 考试选择题数据
     const examChoiceQuestions = [
       {
-        id: 'ec1',
-        title: "选择题1：Pandas缺失值检测",
-        question: "在Pandas中，以下哪个方法可以用来检测DataFrame中的缺失值？",
-        options: [
-          { label: 'A', text: 'df.isna() 或 df.isnull()' },
-          { label: 'B', text: 'df.missing()' },
-          { label: 'C', text: 'df.check_null()' },
-          { label: 'D', text: 'df.find_na()' }
-        ],
-        answer: 'A',
-        analysis: "在Pandas中，isna()和isnull()是等价的，都可以用来检测缺失值。",
-        score: 10,
-        type: 'choice'
+        id: 11,
+        type: "choice",
+        title: "选择题1：数据分析定义",
+        question: "数据分析的核心目标是什么？",
+        options: {
+          A: "删除数据",
+          B: "提取有用信息和形成结论",
+          C: "只生成图表",
+          D: "存储大量数据"
+        },
+        answer: "B",
+        score: 10
       },
       {
-        id: 'ec2',
-        title: "选择题2：相关性系数",
-        question: "Pearson相关系数的取值范围是：",
-        options: [
-          { label: 'A', text: '0到1' },
-          { label: 'B', text: '-1到1' },
-          { label: 'C', text: '0到100' },
-          { label: 'D', text: '-∞到+∞' }
-        ],
-        answer: 'B',
-        analysis: "Pearson相关系数衡量两个变量之间的线性相关程度，取值范围是-1到1。",
-        score: 10,
-        type: 'choice'
+        id: 12,
+        type: "choice",
+        title: "选择题2：CRISP-DM方法论",
+        question: "CRISP-DM方法论中，哪个阶段是数据分析项目的核心？",
+        options: {
+          A: "业务理解",
+          B: "数据理解",
+          C: "数据建模",
+          D: "部署实施"
+        },
+        answer: "C",
+        score: 10
       },
       {
-        id: 'ec3',
-        title: "选择题3：假设检验",
-        question: "在假设检验中，当p值小于显著性水平α（通常为0.05）时，我们应该：",
-        options: [
-          { label: 'A', text: '接受原假设' },
-          { label: 'B', text: '拒绝原假设' },
-          { label: 'C', text: '无法做出判断' },
-          { label: 'D', text: '需要更多数据' }
-        ],
-        answer: 'B',
-        analysis: "当p值小于显著性水平α时，我们拒绝原假设，认为结果具有统计显著性。",
-        score: 10,
-        type: 'choice'
+        id: 13,
+        type: "choice",
+        title: "选择题3：缺失值处理",
+        question: "在Pandas中，检测缺失值的方法是？",
+        options: {
+          A: "df.missing()",
+          B: "df.isna() 或 df.isnull()",
+          C: "df.check_null()",
+          D: "df.empty()"
+        },
+        answer: "B",
+        score: 10
       },
       {
-        id: 'ec4',
-        title: "选择题4：数据可视化",
-        question: "以下哪种图表最适合展示数据的分布情况和识别异常值？",
-        options: [
-          { label: 'A', text: '饼图' },
-          { label: 'B', text: '柱状图' },
-          { label: 'C', text: '箱线图' },
-          { label: 'D', text: '折线图' }
-        ],
-        answer: 'C',
-        analysis: "箱线图可以同时展示数据的中位数、四分位数、最大值、最小值以及异常值。",
-        score: 10,
-        type: 'choice'
+        id: 14,
+        type: "choice",
+        title: "选择题4：异常值检测",
+        question: "使用IQR方法检测异常值时，通常使用多少倍IQR作为阈值？",
+        options: {
+          A: "0.5倍",
+          B: "1倍",
+          C: "1.5倍",
+          D: "3倍"
+        },
+        answer: "C",
+        score: 10
       },
       {
-        id: 'ec5',
-        title: "选择题5：机器学习评估指标",
-        question: "在分类问题中，以下哪个指标综合考虑了精确率和召回率？",
-        options: [
-          { label: 'A', text: '准确率（Accuracy）' },
-          { label: 'B', text: 'F1分数' },
-          { label: 'C', text: 'AUC' },
-          { label: 'D', text: '均方误差（MSE）' }
-        ],
-        answer: 'B',
-        analysis: "F1分数是精确率和召回率的调和平均值，综合考虑了这两个指标。",
-        score: 10,
-        type: 'choice'
+        id: 15,
+        type: "choice",
+        title: "选择题5：SQL查询",
+        question: "SQL中，哪个关键字用于去除查询结果中的重复记录？",
+        options: {
+          A: "TOP",
+          B: "UNIQUE",
+          C: "DISTINCT",
+          D: "GROUP BY"
+        },
+        answer: "C",
+        score: 10
       },
       {
-        id: 'ec6',
-        title: "选择题6：数据标准化",
-        question: "Min-Max标准化会将数据映射到哪个区间？",
-        options: [
-          { label: 'A', text: '0到100' },
-          { label: 'B', text: '-1到1' },
-          { label: 'C', text: '0到1' },
-          { label: 'D', text: '任意区间' }
-        ],
-        answer: 'C',
-        analysis: "Min-Max标准化公式为：X' = (X - Xmin) / (Xmax - Xmin)，将数据映射到[0, 1]区间。",
-        score: 10,
-        type: 'choice'
+        id: 16,
+        type: "choice",
+        title: "选择题6：描述性统计",
+        question: "描述数据集中趋势的指标不包括以下哪项？",
+        options: {
+          A: "均值",
+          B: "中位数",
+          C: "标准差",
+          D: "众数"
+        },
+        answer: "C",
+        score: 10
       },
       {
-        id: 'ec7',
-        title: "选择题7：异常值检测",
-        question: "使用IQR方法时，通常认为超出多少倍的IQR的值是异常值？",
-        options: [
-          { label: 'A', text: '0.5倍' },
-          { label: 'B', text: '1倍' },
-          { label: 'C', text: '1.5倍' },
-          { label: 'D', text: '3倍' }
-        ],
-        answer: 'C',
-        analysis: "IQR（四分位距）= Q3 - Q1，异常值通常定义为小于Q1 - 1.5×IQR或大于Q3 + 1.5×IQR的值。",
-        score: 10,
-        type: 'choice'
+        id: 17,
+        type: "choice",
+        title: "选择题7：假设检验",
+        question: "在假设检验中，p值表示什么？",
+        options: {
+          A: "原假设成立的概率",
+          B: "在原假设成立的前提下，观察到当前或更极端结果的概率",
+          C: "备择假设成立的概率",
+          D: "犯第二类错误的概率"
+        },
+        answer: "B",
+        score: 10
       },
       {
-        id: 'ec8',
-        title: "选择题8：数据透视表",
-        question: "在Pandas中，创建透视表使用哪个函数？",
-        options: [
-          { label: 'A', text: 'df.groupby()' },
-          { label: 'B', text: 'df.pivot_table()' },
-          { label: 'C', text: 'df.transpose()' },
-          { label: 'D', text: 'df.reshape()' }
-        ],
-        answer: 'B',
-        analysis: "pivot_table()函数可以创建数据透视表，支持聚合、分组和重塑数据。",
-        score: 10,
-        type: 'choice'
+        id: 18,
+        type: "choice",
+        title: "选择题8：机器学习",
+        question: "K-Means聚类算法属于哪种类型的机器学习？",
+        options: {
+          A: "监督学习",
+          B: "无监督学习",
+          C: "强化学习",
+          D: "半监督学习"
+        },
+        answer: "B",
+        score: 10
       },
       {
-        id: 'ec9',
-        title: "选择题9：回归分析",
-        question: "R²决定系数的取值范围是？",
-        options: [
-          { label: 'A', text: '0到1' },
-          { label: 'B', text: '-1到1' },
-          { label: 'C', text: '0到100' },
-          { label: 'D', text: '任意实数' }
-        ],
-        answer: 'A',
-        analysis: "R²决定系数表示模型解释的方差比例，取值范围是0到1，值越接近1表示模型拟合越好。",
-        score: 10,
-        type: 'choice'
-      },
-      {
-        id: 'ec10',
-        title: "选择题10：时间序列",
-        question: "在时间序列分析中，平稳性是指什么？",
-        options: [
-          { label: 'A', text: '数据的值不随时间变化' },
-          { label: 'B', text: '均值和方差不随时间变化，自协方差与时间间隔有关' },
-          { label: 'C', text: '数据呈线性增长趋势' },
-          { label: 'D', text: '数据具有周期性' }
-        ],
-        answer: 'B',
-        analysis: "平稳性分为严平稳和宽平稳。宽平稳要求均值、方差恒定，自协方差只与时间间隔有关。",
-        score: 10,
-        type: 'choice'
+        id: 19,
+        type: "choice",
+        title: "选择题9：数据可视化",
+        question: "以下哪种图表最适合展示数据的分布情况？",
+        options: {
+          A: "饼图",
+          B: "柱状图",
+          C: "直方图",
+          D: "折线图"
+        },
+        answer: "C",
+        score: 10
       }
     ];
 
-    // 合并所有题目
+    // 合并所有考试题目
     const allExamQuestions = [...examProblems, ...examChoiceQuestions];
 
     // 全局变量
     let currentQuestion = 1;
-    let currentQuestionIndex = 0;
     let pyodide = null;
     let editor = null;
     let examTimer = null;
     let examTime = 30 * 60; // 30分钟
     let studentName = "";
     let studentAnswers = {};
-    let choiceAnswers = {};
     let examStartTime = null;
 
     // 初始化函数
@@ -1067,7 +484,103 @@ print(kmeans.cluster_centers_)`,
       document.getElementById('back-to-course').addEventListener('click', function() {
         window.location.href = 'data-analysis-tech.html';
       });
+      
+      // 绑定提交考试按钮事件
+      document.getElementById('submit-exam').addEventListener('click', function() {
+        if (confirm('确定要提交考试吗？提交后将无法修改答案。')) {
+          submitExam();
+        }
+      });
+      
+      // 绑定查看答案按钮事件
+      document.getElementById('review-answers').addEventListener('click', function() {
+        showAnswerReview();
+      });
     });
+    
+    function showAnswerReview() {
+      const resultDiv = document.getElementById('exam-result');
+      
+      let html = `
+        <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold text-gray-200">答案解析</h3>
+            <button onclick="document.getElementById('exam-result').innerHTML = document.getElementById('original-result').innerHTML; initResultEvents();" class="btn-secondary text-sm">
+              <i class="fa fa-arrow-left"></i> 返回
+            </button>
+          </div>
+          
+          <div class="space-y-6 max-h-[70vh] overflow-y-auto pr-2">
+      `;
+      
+      examProblems.forEach((problem, index) => {
+        const studentAnswer = studentAnswers[problem.id];
+        const isCorrect = studentAnswer && studentAnswer.trim() === problem.answer.trim();
+        const isAnswered = studentAnswer && studentAnswer.trim() !== problem.code.trim();
+        
+        html += `
+          <div class="bg-dark p-4 rounded-lg border ${isCorrect ? 'border-emerald-600' : 'border-red-600'}">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-8 h-8 rounded-full ${isCorrect ? 'bg-emerald-600' : 'bg-red-600'} text-white flex items-center justify-center font-bold text-sm">${index + 1}</span>
+              <h4 class="font-semibold text-gray-200">${problem.title}</h4>
+              <span class="${isCorrect ? 'text-emerald-400' : isAnswered ? 'text-red-400' : 'text-gray-400'} text-sm">${isCorrect ? '✓ 正确' : isAnswered ? '✗ 错误' : '○ 未答'}</span>
+            </div>
+            <div class="text-sm text-gray-400 mb-2">
+              <strong>你的答案：</strong>
+              <span class="${isCorrect ? 'text-emerald-400' : 'text-red-400'}">${isAnswered ? (isCorrect ? '正确' : '错误') : '未作答'}</span>
+            </div>
+            <div class="bg-dark-gray p-3 rounded text-sm">
+              <strong class="text-emerald-400">参考答案：</strong>
+              <pre class="mt-2 text-gray-300 whitespace-pre-wrap">${problem.answer || '无'}</pre>
+            </div>
+          </div>
+        `;
+      });
+      
+      examChoiceQuestions.forEach((question, index) => {
+        const studentAnswer = studentAnswers[question.id];
+        const isCorrect = studentAnswer === question.answer;
+        const isAnswered = !!studentAnswer;
+        
+        html += `
+          <div class="bg-dark p-4 rounded-lg border ${isCorrect ? 'border-emerald-600' : 'border-red-600'}">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-8 h-8 rounded-full ${isCorrect ? 'bg-emerald-600' : 'bg-red-600'} text-white flex items-center justify-center font-bold text-sm">选${index + 1}</span>
+              <h4 class="font-semibold text-gray-200">${question.title}</h4>
+              <span class="${isCorrect ? 'text-emerald-400' : isAnswered ? 'text-red-400' : 'text-gray-400'} text-sm">${isCorrect ? '✓ 正确' : isAnswered ? '✗ 错误' : '○ 未答'}</span>
+            </div>
+            <div class="text-sm text-gray-400 mb-2">
+              <strong>你的答案：</strong>
+              <span class="${isCorrect ? 'text-emerald-400' : 'text-red-400'}">${isAnswered ? studentAnswer : '未作答'}</span>
+            </div>
+            <div class="text-sm text-gray-400 mb-2">
+              <strong>正确答案：</strong>
+              <span class="text-emerald-400">${question.answer}</span>
+            </div>
+          </div>
+        `;
+      });
+      
+      html += `
+          </div>
+        </div>
+      `;
+      
+      const originalResult = resultDiv.innerHTML;
+      resultDiv.innerHTML = `
+        <div id="original-result" class="hidden">${originalResult}</div>
+        ${html}
+      `;
+    }
+    
+    function initResultEvents() {
+      document.getElementById('back-to-course').addEventListener('click', function() {
+        window.location.href = 'data-analysis-tech.html';
+      });
+      document.getElementById('review-answers').addEventListener('click', function() {
+        showAnswerReview();
+      });
+    }
 
     // 开始考试
     function startExam() {
@@ -1099,13 +612,18 @@ print(kmeans.cluster_centers_)`,
       generateQuestionList();
       
       // 加载第一个问题
-      loadExamQuestion(0);
+      loadExamProblem(1);
       
       // 绑定按钮事件
       document.getElementById('exam-run-code').addEventListener('click', runExamCode);
       document.getElementById('exam-reset-code').addEventListener('click', resetExamCode);
       document.getElementById('prev-question').addEventListener('click', goToPrevQuestion);
       document.getElementById('next-question').addEventListener('click', goToNextQuestion);
+      document.getElementById('submit-exam').addEventListener('click', function() {
+        if (confirm('确定要提交考试吗？提交后将无法修改答案。')) {
+          submitExam();
+        }
+      });
       
       // 开始考试计时器
       startExamTimer();
@@ -1151,7 +669,7 @@ print(kmeans.cluster_centers_)`,
         try {
           pyodide = await loadWithTimeout(cdns[currentCDN]);
           statusEl.innerHTML = '<i class="fa fa-check text-emerald-400"></i> Python解释器加载成功';
-          await pyodide.loadPackage(['pandas', 'numpy', 'matplotlib', 'scipy', 'scikit-learn', 'seaborn']);
+          await pyodide.loadPackage(['pandas', 'numpy', 'scikit-learn']);
           return;
         } catch (error) {
           console.warn(`CDN ${cdns[currentCDN]} 加载失败:`, error);
@@ -1168,25 +686,27 @@ print(kmeans.cluster_centers_)`,
       const questionList = document.getElementById('question-list');
       questionList.innerHTML = '';
       
-      allExamQuestions.forEach((problem, index) => {
+      allExamQuestions.forEach((question, index) => {
         const problemItem = document.createElement('div');
         problemItem.className = 'problem-item';
-        problemItem.onclick = () => loadExamQuestion(index);
+        problemItem.onclick = () => loadExamQuestion(question.id);
         
-        const difficultyClass = problem.difficulty === 'easy' ? 'difficulty-easy' : 
-                             problem.difficulty === 'medium' ? 'difficulty-medium' : 'difficulty-hard';
+        const difficultyClass = question.difficulty === 'easy' ? 'difficulty-easy' : 
+                             question.difficulty === 'medium' ? 'difficulty-medium' : 'difficulty-easy';
         
-        const typeLabel = problem.type === 'choice' ? '<span class="text-xs text-purple-400 ml-1">选择题</span>' : '';
+        const isChoice = question.type === 'choice';
+        const iconBg = isChoice ? 'bg-purple-600' : 'bg-gray-700';
+        const typeLabel = isChoice ? '选择题' : (question.difficulty === 'easy' ? '简单' : question.difficulty === 'medium' ? '中等' : '困难');
         
         problemItem.innerHTML = `
-          <div class="w-8 h-8 rounded-full ${problem.type === 'choice' ? 'bg-purple-700' : 'bg-gray-700'} flex items-center justify-center font-bold text-sm">${index + 1}</div>
+          <div class="w-8 h-8 rounded-full ${iconBg} flex items-center justify-center font-bold ${isChoice ? 'text-white text-xs' : ''}">${isChoice ? '选' : (index + 1)}</div>
           <div class="flex-1">
-            <div class="font-medium">${problem.title.replace('问题', 'Q').replace('选择题', 'C')}${typeLabel}</div>
+            <div class="font-medium">${question.title}</div>
             <div class="flex items-center gap-2 mt-1">
-              <span class="difficulty-tag ${difficultyClass}">${problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难'}</span>
+              <span class="difficulty-tag ${difficultyClass}">${typeLabel}</span>
             </div>
           </div>
-          <div class="text-gray-500" id="status-${problem.id}">
+          <div class="text-gray-500" id="status-${question.id}">
             <i class="fa fa-circle-o"></i>
           </div>
         `;
@@ -1195,104 +715,128 @@ print(kmeans.cluster_centers_)`,
       });
     }
 
-    // 加载考试问题
-    function loadExamQuestion(index) {
-      currentQuestionIndex = index;
-      const problem = allExamQuestions[index];
+    // 当前选择题答案
+    let selectedChoiceAnswer = null;
+
+    // 加载考试问题（支持编程题和选择题）
+    function loadExamQuestion(questionId) {
+      const question = allExamQuestions.find(q => q.id === questionId);
       
-      if (!problem) return;
+      if (!question) return;
+      
+      // 保存当前编程题答案
+      if (editor && currentQuestion <= 1) {
+        studentAnswers[currentQuestion] = editor.getValue();
+      }
+      
+      currentQuestion = questionId;
+      
+      if (question.type === 'choice') {
+        // 加载选择题
+        loadExamChoiceQuestion(question);
+      } else {
+        // 加载编程题
+        loadExamProgrammingQuestion(question);
+      }
+      
+      // 更新问题项状态
+      document.querySelectorAll('.problem-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      const index = allExamQuestions.findIndex(q => q.id === questionId);
+      document.querySelector(`.problem-item:nth-child(${index + 1})`).classList.add('active');
+    }
+
+    // 加载选择题
+    function loadExamChoiceQuestion(question) {
+      // 隐藏编程题区域，显示选择题区域
+      document.getElementById('exam-code-area').classList.add('hidden');
+      document.getElementById('exam-code-output').parentElement.classList.add('hidden');
+      document.getElementById('exam-choice-area').classList.remove('hidden');
+      
+      // 更新选择题内容
+      document.getElementById('exam-choice-title').textContent = question.title;
+      document.getElementById('exam-choice-question-text').textContent = question.question;
+      
+      // 生成选项
+      const optionsContainer = document.getElementById('exam-choice-options');
+      optionsContainer.innerHTML = '';
+      selectedChoiceAnswer = studentAnswers[question.id] || null;
+      
+      ['A', 'B', 'C', 'D'].forEach(letter => {
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'exam-choice-option p-4 rounded-lg border border-gray-700 cursor-pointer hover:border-cyan-500 transition-all';
+        if (selectedChoiceAnswer === letter) {
+          optionDiv.classList.remove('border-gray-700');
+          optionDiv.classList.add('border-cyan-500', 'bg-cyan-900/30');
+        }
+        optionDiv.setAttribute('data-option', letter);
+        optionDiv.onclick = () => selectExamChoiceOption(letter, question.id);
+        optionDiv.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold text-gray-300">${letter}</div>
+            <span class="text-gray-200">${question.options[letter]}</span>
+          </div>
+        `;
+        optionsContainer.appendChild(optionDiv);
+      });
+      
+      // 更新题目描述区域
+      document.getElementById('exam-problem-title').textContent = question.title;
+      document.getElementById('exam-problem-description').innerHTML = `<p class="text-gray-300">请选择正确答案（单选题）</p>`;
+    }
+
+    // 选择考试选择题选项
+    function selectExamChoiceOption(option, questionId) {
+      selectedChoiceAnswer = option;
+      studentAnswers[questionId] = option;
+      
+      // 更新选项样式
+      document.querySelectorAll('.exam-choice-option').forEach(opt => {
+        opt.classList.remove('border-cyan-500', 'bg-cyan-900/30');
+        opt.classList.add('border-gray-700');
+      });
+      
+      const selectedOpt = document.querySelector(`.exam-choice-option[data-option="${option}"]`);
+      if (selectedOpt) {
+        selectedOpt.classList.remove('border-gray-700');
+        selectedOpt.classList.add('border-cyan-500', 'bg-cyan-900/30');
+      }
+      
+      // 更新问题状态
+      const statusElement = document.getElementById(`status-${questionId}`);
+      statusElement.innerHTML = '<i class="fa fa-check-circle text-emerald-400"></i>';
+    }
+
+    // 加载编程题
+    function loadExamProgrammingQuestion(question) {
+      // 显示编程题区域，隐藏选择题区域
+      document.getElementById('exam-code-area').classList.remove('hidden');
+      document.getElementById('exam-code-output').parentElement.classList.remove('hidden');
+      document.getElementById('exam-choice-area').classList.add('hidden');
       
       // 更新问题信息
-      document.getElementById('exam-problem-title').textContent = problem.title;
+      document.getElementById('exam-problem-title').textContent = question.title;
+      document.getElementById('exam-problem-description').innerHTML = question.description;
       
       // 更新难度标签
       const difficultyTag = document.getElementById('exam-difficulty-tag');
       difficultyTag.className = 'difficulty-tag';
-      difficultyTag.classList.add('difficulty-' + problem.difficulty);
-      difficultyTag.textContent = problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难';
-      
-      // 判断题目类型
-      if (problem.type === 'choice') {
-        loadChoiceQuestion(problem);
-      } else {
-        loadProgrammingQuestion(problem);
-      }
-      
-      // 更新问题项状态
-      document.querySelectorAll('.problem-item').forEach((item, i) => {
-        item.classList.remove('active');
-        if (i === index) {
-          item.classList.add('active');
-        }
-      });
-    }
-
-    // 加载编程题
-    function loadProgrammingQuestion(problem) {
-      // 显示代码编辑器区域
-      document.getElementById('exam-code-editor').parentElement.parentElement.style.display = 'block';
-      document.getElementById('exam-code-output').parentElement.parentElement.style.display = 'block';
-      
-      document.getElementById('exam-problem-description').innerHTML = problem.description;
+      difficultyTag.classList.add('difficulty-' + question.difficulty);
+      difficultyTag.textContent = question.difficulty === 'easy' ? '简单' : question.difficulty === 'medium' ? '中等' : '困难';
       
       // 更新代码编辑器
-      editor.setValue(studentAnswers[problem.id] || problem.code);
+      editor.setValue(studentAnswers[question.id] || question.code);
       editor.clearSelection();
     }
 
-    // 加载选择题
-    function loadChoiceQuestion(problem) {
-      // 隐藏代码编辑器区域
-      document.getElementById('exam-code-editor').parentElement.parentElement.style.display = 'none';
-      document.getElementById('exam-code-output').parentElement.parentElement.style.display = 'none';
-      
-      const selectedAnswer = choiceAnswers[problem.id] || null;
-      
-      let optionsHtml = problem.options.map(opt => {
-        let optionClass = 'choice-option';
-        if (selectedAnswer === opt.label) {
-          optionClass += ' selected';
-        }
-        return `
-          <div class="${optionClass}" onclick="selectExamChoice('${problem.id}', '${opt.label}')" data-label="${opt.label}">
-            <div class="choice-label">${opt.label}</div>
-            <div class="flex-1 text-gray-200">${opt.text}</div>
-          </div>
-        `;
-      }).join('');
-
-      document.getElementById('exam-problem-description').innerHTML = `
-        <div class="mb-6">
-          <p class="text-lg text-gray-200">${problem.question}</p>
-        </div>
-        <div class="space-y-3" id="choice-options">
-          ${optionsHtml}
-        </div>
-      `;
-    }
-
-    // 选择考试选择题答案
-    function selectExamChoice(questionId, label) {
-      choiceAnswers[questionId] = label;
-      
-      // 更新选项样式
-      document.querySelectorAll('.choice-option').forEach(opt => {
-        opt.classList.remove('selected');
-        if (opt.dataset.label === label) {
-          opt.classList.add('selected');
-        }
-      });
-      
-      // 更新问题状态
-      const statusElement = document.getElementById(`status-${questionId}`);
-      statusElement.innerHTML = '<i class="fa fa-check-circle text-cyan-400"></i>';
+    // 加载考试问题（保留旧函数兼容）
+    function loadExamProblem(problemId) {
+      loadExamQuestion(problemId);
     }
 
     // 运行代码
     async function runExamCode() {
-      const problem = allExamQuestions[currentQuestionIndex];
-      if (!problem || problem.type === 'choice') return;
-      
       const code = editor.getValue();
       const outputDiv = document.getElementById('exam-code-output');
       const executionTimeDiv = document.getElementById('exam-execution-time');
@@ -1318,10 +862,10 @@ print(kmeans.cluster_centers_)`,
         executionTimeDiv.textContent = `执行时间：${executionTime}ms`;
         
         // 保存答案
-        studentAnswers[problem.id] = code;
+        studentAnswers[currentQuestion] = code;
         
         // 更新问题状态
-        const statusElement = document.getElementById(`status-${problem.id}`);
+        const statusElement = document.getElementById(`status-${currentQuestion}`);
         statusElement.innerHTML = '<i class="fa fa-check-circle text-emerald-400"></i>';
       } catch (error) {
         outputDiv.textContent = `错误：${error.message}`;
@@ -1331,27 +875,26 @@ print(kmeans.cluster_centers_)`,
 
     // 重置代码
     function resetExamCode() {
-      const problem = allExamQuestions[currentQuestionIndex];
-      if (problem && problem.type !== 'choice') {
-        editor.setValue(problem.code);
+      const question = allExamQuestions.find(q => q.id === currentQuestion);
+      if (question && question.type !== 'choice') {
+        editor.setValue(question.code);
         editor.clearSelection();
       }
     }
 
     // 上一题
     function goToPrevQuestion() {
-      if (currentQuestionIndex > 0) {
-        loadExamQuestion(currentQuestionIndex - 1);
+      const currentIndex = allExamQuestions.findIndex(q => q.id === currentQuestion);
+      if (currentIndex > 0) {
+        loadExamQuestion(allExamQuestions[currentIndex - 1].id);
       }
     }
 
     // 下一题
     function goToNextQuestion() {
-      if (currentQuestionIndex < allExamQuestions.length - 1) {
-        loadExamQuestion(currentQuestionIndex + 1);
-      } else {
-        // 最后一题，提交考试
-        submitExam();
+      const currentIndex = allExamQuestions.findIndex(q => q.id === currentQuestion);
+      if (currentIndex < allExamQuestions.length - 1) {
+        loadExamQuestion(allExamQuestions[currentIndex + 1].id);
       }
     }
 
@@ -1364,7 +907,13 @@ print(kmeans.cluster_centers_)`,
         
         if (examTime <= 0) {
           clearInterval(examTimer);
+          alert('考试时间到！');
           submitExam();
+        }
+        
+        // 最后5分钟提醒
+        if (examTime === 300) {
+          alert('注意：考试还剩5分钟！');
         }
       }, 1000);
     }
@@ -1373,12 +922,24 @@ print(kmeans.cluster_centers_)`,
     function updateExamTimer() {
       const minutes = Math.floor(examTime / 60);
       const seconds = examTime % 60;
-      document.getElementById('exam-timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      const timerElement = document.getElementById('exam-timer');
+      timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      
+      // 最后5分钟显示红色
+      if (examTime <= 300) {
+        timerElement.classList.add('text-red-400');
+        timerElement.classList.remove('text-cyan-400');
+      }
     }
 
     // 提交考试
     function submitExam() {
       clearInterval(examTimer);
+      
+      // 保存当前答案
+      if (editor && currentQuestion <= 1) {
+        studentAnswers[currentQuestion] = editor.getValue();
+      }
       
       // 计算考试用时
       const examEndTime = new Date();
@@ -1388,28 +949,33 @@ print(kmeans.cluster_centers_)`,
       let totalScore = 0;
       let completedCount = 0;
       let correctCount = 0;
+      let choiceCorrectCount = 0;
+      let programmingCorrectCount = 0;
       
-      // 评分编程题
-      examProblems.forEach(problem => {
-        const studentAnswer = studentAnswers[problem.id];
-        if (studentAnswer) {
-          completedCount++;
-          // 简单的答案比较（实际考试中可能需要更复杂的评估）
-          if (studentAnswer.trim() === problem.answer.trim()) {
-            correctCount++;
-            totalScore += problem.score;
+      allExamQuestions.forEach(question => {
+        const studentAnswer = studentAnswers[question.id];
+        
+        if (question.type === 'choice') {
+          // 选择题评分
+          if (studentAnswer) {
+            completedCount++;
+            if (studentAnswer === question.answer) {
+              correctCount++;
+              choiceCorrectCount++;
+              totalScore += question.score;
+            }
           }
-        }
-      });
-      
-      // 评分选择题
-      examChoiceQuestions.forEach(problem => {
-        const studentAnswer = choiceAnswers[problem.id];
-        if (studentAnswer) {
-          completedCount++;
-          if (studentAnswer === problem.answer) {
-            correctCount++;
-            totalScore += problem.score;
+        } else {
+          // 编程题评分
+          if (studentAnswer && studentAnswer.trim() !== question.code.trim()) {
+            completedCount++;
+            if (studentAnswer.trim() === question.answer.trim()) {
+              correctCount++;
+              programmingCorrectCount++;
+              totalScore += question.score;
+            } else {
+              totalScore += Math.floor(question.score * 0.5);
+            }
           }
         }
       });
@@ -1424,43 +990,84 @@ print(kmeans.cluster_centers_)`,
       document.getElementById('completion-rate').textContent = completionRate;
       document.getElementById('completed-count').textContent = completedCount;
       document.getElementById('correct-count').textContent = correctCount;
-      document.getElementById('wrong-count').textContent = wrongCount;
+      document.getElementById('wrong-count').textContent = wrongCount > 0 ? wrongCount : 0;
       
       // 生成答题状态
       const answerStatus = document.getElementById('answer-status');
       answerStatus.innerHTML = '';
       
-      allExamQuestions.forEach(problem => {
+      let questionNumber = 1;
+      
+      examProblems.forEach(problem => {
         const statusItem = document.createElement('div');
-        statusItem.className = 'w-12 h-12 rounded-full flex items-center justify-center font-bold';
+        statusItem.className = 'flex flex-col items-center gap-1';
         
-        if (problem.type === 'choice') {
-          const studentAnswer = choiceAnswers[problem.id];
-          if (!studentAnswer) {
-            statusItem.className += ' bg-gray-700 text-gray-400';
-            statusItem.textContent = problem.id.replace('ec', 'C');
-          } else if (studentAnswer === problem.answer) {
-            statusItem.className += ' bg-emerald-900 text-emerald-400';
-            statusItem.innerHTML = `<i class="fa fa-check"></i>`;
-          } else {
-            statusItem.className += ' bg-red-900 text-red-400';
-            statusItem.innerHTML = `<i class="fa fa-times"></i>`;
-          }
+        const circleDiv = document.createElement('div');
+        circleDiv.className = 'w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm';
+        
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'text-xs text-gray-400';
+        
+        const studentAnswer = studentAnswers[problem.id];
+        const isAnswered = studentAnswer && studentAnswer.trim() !== problem.code.trim();
+        const isCorrect = isAnswered && studentAnswer.trim() === problem.answer.trim();
+        
+        if (!isAnswered) {
+          circleDiv.className += ' bg-gray-700 text-gray-400 border-2 border-gray-600';
+          circleDiv.textContent = questionNumber;
+          labelDiv.textContent = '未答';
+        } else if (isCorrect) {
+          circleDiv.className += ' bg-emerald-600 text-white';
+          circleDiv.innerHTML = `<i class="fa fa-check"></i>`;
+          labelDiv.textContent = `题${questionNumber} ✓`;
+          labelDiv.className = 'text-xs text-emerald-400';
         } else {
-          const studentAnswer = studentAnswers[problem.id];
-          if (!studentAnswer) {
-            statusItem.className += ' bg-gray-700 text-gray-400';
-            statusItem.textContent = problem.id;
-          } else if (studentAnswer.trim() === problem.answer.trim()) {
-            statusItem.className += ' bg-emerald-900 text-emerald-400';
-            statusItem.innerHTML = `<i class="fa fa-check"></i>`;
-          } else {
-            statusItem.className += ' bg-red-900 text-red-400';
-            statusItem.innerHTML = `<i class="fa fa-times"></i>`;
-          }
+          circleDiv.className += ' bg-yellow-600 text-white';
+          circleDiv.innerHTML = `<i class="fa fa-minus"></i>`;
+          labelDiv.textContent = `题${questionNumber} △`;
+          labelDiv.className = 'text-xs text-yellow-400';
         }
         
+        statusItem.appendChild(circleDiv);
+        statusItem.appendChild(labelDiv);
         answerStatus.appendChild(statusItem);
+        questionNumber++;
+      });
+      
+      examChoiceQuestions.forEach(question => {
+        const statusItem = document.createElement('div');
+        statusItem.className = 'flex flex-col items-center gap-1';
+        
+        const circleDiv = document.createElement('div');
+        circleDiv.className = 'w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm';
+        
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'text-xs text-gray-400';
+        
+        const studentAnswer = studentAnswers[question.id];
+        const isAnswered = !!studentAnswer;
+        const isCorrect = studentAnswer === question.answer;
+        
+        if (!isAnswered) {
+          circleDiv.className += ' bg-gray-700 text-gray-400 border-2 border-gray-600';
+          circleDiv.textContent = `选${questionNumber - 10}`;
+          labelDiv.textContent = '未答';
+        } else if (isCorrect) {
+          circleDiv.className += ' bg-emerald-600 text-white';
+          circleDiv.innerHTML = `<i class="fa fa-check"></i>`;
+          labelDiv.textContent = `选${questionNumber - 10} ✓`;
+          labelDiv.className = 'text-xs text-emerald-400';
+        } else {
+          circleDiv.className += ' bg-red-600 text-white';
+          circleDiv.innerHTML = `<i class="fa fa-times"></i>`;
+          labelDiv.textContent = `选${questionNumber - 10} ✗`;
+          labelDiv.className = 'text-xs text-red-400';
+        }
+        
+        statusItem.appendChild(circleDiv);
+        statusItem.appendChild(labelDiv);
+        answerStatus.appendChild(statusItem);
+        questionNumber++;
       });
       
       // 显示结果页面

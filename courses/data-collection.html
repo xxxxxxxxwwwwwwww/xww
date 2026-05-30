@@ -219,15 +219,15 @@
         <div class="flex flex-col lg:flex-row gap-6 py-6">
           <!-- 左侧：题目列表/章节目录 -->
           <div class="lg:w-1/4 bg-dark-gray rounded-xl p-4 border border-gray-700 h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin">
-            <h2 class="section-title">数据分析技术题库</h2>
+            <h2 class="section-title">数据采集与处理题库</h2>
             
             <!-- 章节列表 -->
             <div class="space-y-6">
-              <!-- 章节1：数据预处理 -->
+              <!-- 章节1：HTTP请求基础 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter1')">
                   <i class="fa fa-chevron-down text-gray-400 transition-transform duration-300" id="chapter1-icon"></i>
-                  数据预处理
+                  HTTP请求基础
                   <span class="ml-auto text-xs text-gray-400">
                     <span class="chapter-progress">0/6</span>
                     <span class="progress-percentage">(0%)</span>
@@ -238,7 +238,7 @@
                   <div class="problem-item active" onclick="loadProgrammingProblem(1)">
                     <div class="w-8 h-8 rounded-full bg-cyan-500 flex items-center justify-center text-gray-900 font-bold">1</div>
                     <div class="flex-1">
-                      <div class="font-medium">缺失值处理</div>
+                      <div class="font-medium">简单HTTP请求</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-easy">简单</span>
                         <span class="text-xs text-gray-400">15分钟</span>
@@ -248,7 +248,7 @@
                   <div class="problem-item" onclick="loadProgrammingProblem(2)">
                     <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">2</div>
                     <div class="flex-1">
-                      <div class="font-medium">异常值检测</div>
+                      <div class="font-medium">请求头设置</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-gray-400">20分钟</span>
@@ -258,7 +258,7 @@
                   <div class="problem-item" onclick="loadProgrammingProblem(3)">
                     <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">3</div>
                     <div class="flex-1">
-                      <div class="font-medium">数据标准化</div>
+                      <div class="font-medium">状态码处理</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-gray-400">15分钟</span>
@@ -269,7 +269,7 @@
                   <div class="problem-item" onclick="loadChoiceQuestion('c1')">
                     <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">A</div>
                     <div class="flex-1">
-                      <div class="font-medium">缺失值处理方法</div>
+                      <div class="font-medium">HTTP方法</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-easy">简单</span>
                         <span class="text-xs text-purple-400">选择题</span>
@@ -279,7 +279,7 @@
                   <div class="problem-item" onclick="loadChoiceQuestion('c2')">
                     <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">B</div>
                     <div class="flex-1">
-                      <div class="font-medium">异常值检测</div>
+                      <div class="font-medium">状态码含义</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-purple-400">选择题</span>
@@ -289,7 +289,7 @@
                   <div class="problem-item" onclick="loadChoiceQuestion('c3')">
                     <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">C</div>
                     <div class="flex-1">
-                      <div class="font-medium">数据标准化</div>
+                      <div class="font-medium">请求头</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-easy">简单</span>
                         <span class="text-xs text-purple-400">选择题</span>
@@ -299,11 +299,11 @@
                 </div>
               </div>
               
-              <!-- 章节2：探索性数据分析 -->
+              <!-- 章节2：HTML解析 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter2')">
                   <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter2-icon"></i>
-                  探索性数据分析
+                  HTML解析
                   <span class="ml-auto text-xs text-gray-400">
                     <span class="chapter-progress">0/4</span>
                     <span class="progress-percentage">(0%)</span>
@@ -314,7 +314,7 @@
                   <div class="problem-item" onclick="loadProgrammingProblem(4)">
                     <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">4</div>
                     <div class="flex-1">
-                      <div class="font-medium">描述性统计分析</div>
+                      <div class="font-medium">BeautifulSoup基础</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-easy">简单</span>
                         <span class="text-xs text-gray-400">10分钟</span>
@@ -324,7 +324,7 @@
                   <div class="problem-item" onclick="loadProgrammingProblem(5)">
                     <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">5</div>
                     <div class="flex-1">
-                      <div class="font-medium">数据可视化</div>
+                      <div class="font-medium">CSS选择器</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-gray-400">25分钟</span>
@@ -335,7 +335,7 @@
                   <div class="problem-item" onclick="loadChoiceQuestion('c4')">
                     <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">D</div>
                     <div class="flex-1">
-                      <div class="font-medium">描述性统计</div>
+                      <div class="font-medium">BeautifulSoup用法</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-easy">简单</span>
                         <span class="text-xs text-purple-400">选择题</span>
@@ -345,7 +345,7 @@
                   <div class="problem-item" onclick="loadChoiceQuestion('c5')">
                     <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">E</div>
                     <div class="flex-1">
-                      <div class="font-medium">相关性分析</div>
+                      <div class="font-medium">CSS选择器</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-easy">简单</span>
                         <span class="text-xs text-purple-400">选择题</span>
@@ -355,11 +355,11 @@
                 </div>
               </div>
               
-              <!-- 章节3：统计分析 -->
+              <!-- 章节3：正则表达式 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter3')">
                   <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter3-icon"></i>
-                  统计分析
+                  正则表达式
                   <span class="ml-auto text-xs text-gray-400">
                     <span class="chapter-progress">0/4</span>
                     <span class="progress-percentage">(0%)</span>
@@ -370,7 +370,7 @@
                   <div class="problem-item" onclick="loadProgrammingProblem(6)">
                     <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">6</div>
                     <div class="flex-1">
-                      <div class="font-medium">假设检验</div>
+                      <div class="font-medium">数据提取</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-gray-400">20分钟</span>
@@ -380,7 +380,7 @@
                   <div class="problem-item" onclick="loadProgrammingProblem(7)">
                     <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">7</div>
                     <div class="flex-1">
-                      <div class="font-medium">回归分析</div>
+                      <div class="font-medium">文本匹配</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-hard">困难</span>
                         <span class="text-xs text-gray-400">30分钟</span>
@@ -391,7 +391,7 @@
                   <div class="problem-item" onclick="loadChoiceQuestion('c6')">
                     <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">F</div>
                     <div class="flex-1">
-                      <div class="font-medium">假设检验</div>
+                      <div class="font-medium">正则语法</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-purple-400">选择题</span>
@@ -401,7 +401,7 @@
                   <div class="problem-item" onclick="loadChoiceQuestion('c7')">
                     <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">G</div>
                     <div class="flex-1">
-                      <div class="font-medium">方差分析</div>
+                      <div class="font-medium">匹配模式</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-purple-400">选择题</span>
@@ -411,11 +411,11 @@
                 </div>
               </div>
 
-              <!-- 章节4：Pandas基础 -->
+              <!-- 章节4：数据存储 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter4')">
                   <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter4-icon"></i>
-                  Pandas基础
+                  数据存储
                   <span class="ml-auto text-xs text-gray-400">
                     <span class="chapter-progress">0/1</span>
                     <span class="progress-percentage">(0%)</span>
@@ -426,7 +426,7 @@
                   <div class="problem-item" onclick="loadChoiceQuestion('c8')">
                     <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">H</div>
                     <div class="flex-1">
-                      <div class="font-medium">Pandas DataFrame</div>
+                      <div class="font-medium">CSV与JSON</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-purple-400">选择题</span>
@@ -436,11 +436,11 @@
                 </div>
               </div>
 
-              <!-- 章节5：数据可视化 -->
+              <!-- 章节5：反爬虫策略 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter5')">
                   <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter5-icon"></i>
-                  数据可视化
+                  反爬虫策略
                   <span class="ml-auto text-xs text-gray-400">
                     <span class="chapter-progress">0/1</span>
                     <span class="progress-percentage">(0%)</span>
@@ -451,7 +451,7 @@
                   <div class="problem-item" onclick="loadChoiceQuestion('c9')">
                     <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">I</div>
                     <div class="flex-1">
-                      <div class="font-medium">数据可视化</div>
+                      <div class="font-medium">反爬虫应对</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-easy">简单</span>
                         <span class="text-xs text-purple-400">选择题</span>
@@ -461,11 +461,11 @@
                 </div>
               </div>
 
-              <!-- 章节6：机器学习基础 -->
+              <!-- 章节6：高级爬虫 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter6')">
                   <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter6-icon"></i>
-                  机器学习基础
+                  高级爬虫
                   <span class="ml-auto text-xs text-gray-400">
                     <span class="chapter-progress">0/3</span>
                     <span class="progress-percentage">(0%)</span>
@@ -476,7 +476,7 @@
                   <div class="problem-item" onclick="loadChoiceQuestion('c10')">
                     <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">J</div>
                     <div class="flex-1">
-                      <div class="font-medium">机器学习</div>
+                      <div class="font-medium">Selenium</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-purple-400">选择题</span>
@@ -486,7 +486,7 @@
                   <div class="problem-item" onclick="loadChoiceQuestion('c11')">
                     <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">K</div>
                     <div class="flex-1">
-                      <div class="font-medium">聚类算法</div>
+                      <div class="font-medium">异步爬虫</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-purple-400">选择题</span>
@@ -496,7 +496,7 @@
                   <div class="problem-item" onclick="loadChoiceQuestion('c12')">
                     <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">L</div>
                     <div class="flex-1">
-                      <div class="font-medium">模型评估</div>
+                      <div class="font-medium">代理与IP池</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-purple-400">选择题</span>
@@ -6585,606 +6585,439 @@ if __name__ == '__main__':
     const problems = [
       {
         id: 1,
-        title: "问题1：缺失值处理",
-        description: `编写一个程序，使用Pandas处理DataFrame中的缺失值。
+        title: "问题1：简单HTTP请求",
+        description: `编写一个程序，使用requests库发送HTTP GET请求。
 
 <strong>输入：</strong>
-一个包含缺失值的DataFrame
+目标URL
 
 <strong>输出：</strong>
-处理后的DataFrame，其中缺失值已被适当处理
+响应状态码和响应内容
 
 <strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>识别并统计缺失值</li>
-  <li>使用合适的方法填充缺失值（如均值、中位数或众数）</li>
-  <li>返回处理后的DataFrame</li>
+  <li>使用requests.get()发送GET请求</li>
+  <li>获取响应状态码</li>
+  <li>获取响应内容</li>
 </ul>`,
         difficulty: "easy",
         time: "15分钟",
-        code: `# 请编写代码
-import pandas as pd
-import numpy as np
-
-# 创建示例数据
-data = {
-    'A': [1, 2, np.nan, 4, 5],
-    'B': [np.nan, 2, 3, 4, np.nan],
-    'C': ['x', 'y', 'z', np.nan, 'x']
-}
-df = pd.DataFrame(data)
-
-# 识别缺失值
-print("缺失值统计:")
-print(df.isnull().sum())
-
-# 处理缺失值
-df['A'] = df['A'].fillna(df['A'].mean())
-df['B'] = df['B'].fillna(df['B'].median())
-df['C'] = df['C'].fillna(df['C'].mode()[0])
-
-print("\n处理后的数据:")
-print(df)`,
+        code: `# 请编写代码`,
         analysis: `
 <h4>解题思路</h4>
-<p>1. 使用Pandas的isnull()和sum()方法识别并统计缺失值</p>
-<p>2. 根据数据类型选择合适的填充方法：数值型数据使用均值或中位数，分类型数据使用众数</p>
-<p>3. 使用fillna()方法填充缺失值</p>
+<p>1. 导入requests库</p>
+<p>2. 发送GET请求</p>
+<p>3. 检查响应状态</p>
+<p>4. 输出响应内容</p>
 <h4>代码示例</h4>
 <div class="bg-dark p-3 rounded-lg font-mono text-sm">
   <pre class="text-cyan-300">
-import pandas as pd
-import numpy as np
+import requests
 
-# 创建示例数据
-data = {
-    'A': [1, 2, np.nan, 4, 5],
-    'B': [np.nan, 2, 3, 4, np.nan],
-    'C': ['x', 'y', 'z', np.nan, 'x']
-}
-df = pd.DataFrame(data)
+url = 'https://httpbin.org/get'
 
-# 识别缺失值
-print("缺失值统计:")
-print(df.isnull().sum())
-
-# 处理缺失值
-df['A'] = df['A'].fillna(df['A'].mean())
-df['B'] = df['B'].fillna(df['B'].median())
-df['C'] = df['C'].fillna(df['C'].mode()[0])
-
-print("\n处理后的数据:")
-print(df)
+try:
+    response = requests.get(url)
+    print(f"状态码: {response.status_code}")
+    print(f"响应内容: {response.text[:200]}...")
+except requests.exceptions.RequestException as e:
+    print(f"请求出错: {e}")
   </pre>
 </div>
 <h4>知识点</h4>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-preprocessing')">数据预处理</a></li>
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('pandas-basics')">Pandas基础</a></li>
-  <li>缺失值处理方法</li>
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('http-requests')">HTTP请求基础</a></li>
+  <li>requests库使用</li>
+  <li>GET请求方法</li>
 </ul>`
       },
       {
         id: 2,
-        title: "问题2：异常值检测",
-        description: `编写一个程序，使用IQR方法检测数据中的异常值。
+        title: "问题2：请求头设置",
+        description: `编写一个程序，设置自定义请求头信息。
 
 <strong>输入：</strong>
-一个包含可能异常值的数据集
+目标URL和请求头
 
 <strong>输出：</strong>
-检测到的异常值
+响应内容
 
 <strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>计算四分位数和IQR</li>
-  <li>定义异常值边界</li>
-  <li>检测并返回异常值</li>
+  <li>设置User-Agent请求头</li>
+  <li>设置其他自定义请求头</li>
+  <li>发送带请求头的请求</li>
 </ul>`,
         difficulty: "medium",
         time: "20分钟",
-        code: `# 请编写代码
-import pandas as pd
-import numpy as np
-
-# 创建示例数据
-data = pd.Series([1, 2, 3, 4, 100])
-
-# 计算四分位数
-Q1 = data.quantile(0.25)
-Q3 = data.quantile(0.75)
-IQR = Q3 - Q1
-
-# 定义异常值边界
-lower_bound = Q1 - 1.5 * IQR
-upper_bound = Q3 + 1.5 * IQR
-
-# 检测异常值
-outliers = data[(data < lower_bound) | (data > upper_bound)]
-print("异常值:", outliers)`,
+        code: `# 请编写代码`,
         analysis: `
 <h4>解题思路</h4>
-<p>1. 计算数据的第一四分位数(Q1)和第三四分位数(Q3)</p>
-<p>2. 计算四分位距(IQR) = Q3 - Q1</p>
-<p>3. 定义异常值边界：下界 = Q1 - 1.5 * IQR，上界 = Q3 + 1.5 * IQR</p>
-<p>4. 检测并返回超出边界的值作为异常值</p>
+<p>1. 创建headers字典，包含User-Agent和其他请求头</p>
+<p>2. 在requests.get()的headers参数传递请求头</p>
+<p>3. 发送请求并获取响应</p>
 <h4>代码示例</h4>
 <div class="bg-dark p-3 rounded-lg font-mono text-sm">
   <pre class="text-cyan-300">
-import pandas as pd
-import numpy as np
+import requests
 
-# 创建示例数据
-data = pd.Series([1, 2, 3, 4, 100])
+url = 'https://httpbin.org/headers'
 
-# 计算四分位数
-Q1 = data.quantile(0.25)
-Q3 = data.quantile(0.75)
-IQR = Q3 - Q1
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+    'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+    'Referer': 'https://www.example.com/'
+}
 
-# 定义异常值边界
-lower_bound = Q1 - 1.5 * IQR
-upper_bound = Q3 + 1.5 * IQR
-
-# 检测异常值
-outliers = data[(data < lower_bound) | (data > upper_bound)]
-print("异常值:", outliers)
+response = requests.get(url, headers=headers)
+print(response.text)
   </pre>
 </div>
 <h4>知识点</h4>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-preprocessing')">数据预处理</a></li>
-  <li>异常值检测方法</li>
-  <li>统计量计算</li>
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('http-requests')">HTTP请求基础</a></li>
+  <li>请求头设置</li>
+  <li>反爬虫应对</li>
 </ul>`
       },
       {
         id: 3,
-        title: "问题3：数据标准化",
-        description: `编写一个程序，对数据进行标准化处理。
+        title: "问题3：状态码处理",
+        description: `编写一个程序，处理不同的HTTP状态码。
 
 <strong>输入：</strong>
-一个包含数值型数据的DataFrame
+目标URL
 
 <strong>输出：</strong>
-标准化处理后的数据
+状态码判断和处理
 
 <strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>使用StandardScaler进行标准化</li>
-  <li>返回标准化后的数据</li>
+  <li>检查响应状态码</li>
+  <li>根据状态码进行不同处理</li>
+  <li>使用raise_for_status()方法</li>
 </ul>`,
         difficulty: "medium",
         time: "15分钟",
-        code: `# 请编写代码
-import pandas as pd
-import numpy as np
-from sklearn.preprocessing import StandardScaler
-
-# 创建示例数据
-data = {
-    'A': [1, 2, 3, 4, 5],
-    'B': [10, 20, 30, 40, 50],
-    'C': [100, 200, 300, 400, 500]
-}
-df = pd.DataFrame(data)
-
-# 初始化标准化器
-scaler = StandardScaler()
-
-# 进行标准化
-scaled_data = scaler.fit_transform(df)
-
-# 转换为DataFrame
-scaled_df = pd.DataFrame(scaled_data, columns=df.columns)
-
-print("标准化后的数据:")
-print(scaled_df)
-print("\n均值:", scaled_df.mean().round(4))
-print("标准差:", scaled_df.std().round(4))`,
+        code: `# 请编写代码`,
         analysis: `
 <h4>解题思路</h4>
-<p>1. 使用sklearn的StandardScaler类进行数据标准化</p>
-<p>2. fit_transform()方法同时完成拟合和转换</p>
-<p>3. 将标准化后的数据转换回DataFrame格式</p>
+<p>1. 发送HTTP请求并检查状态码</p>
+<p>2. 使用raise_for_status()方法抛出异常</p>
+<p>3. 根据不同的状态码进行不同处理</p>
 <h4>代码示例</h4>
 <div class="bg-dark p-3 rounded-lg font-mono text-sm">
   <pre class="text-cyan-300">
-import pandas as pd
-import numpy as np
-from sklearn.preprocessing import StandardScaler
+import requests
 
-# 创建示例数据
-data = {
-    'A': [1, 2, 3, 4, 5],
-    'B': [10, 20, 30, 40, 50],
-    'C': [100, 200, 300, 400, 500]
-}
-df = pd.DataFrame(data)
+urls = [
+    'https://httpbin.org/status/200',
+    'https://httpbin.org/status/404',
+    'https://httpbin.org/status/500'
+]
 
-# 初始化标准化器
-scaler = StandardScaler()
-
-# 进行标准化
-scaled_data = scaler.fit_transform(df)
-
-# 转换为DataFrame
-scaled_df = pd.DataFrame(scaled_data, columns=df.columns)
-
-print("标准化后的数据:")
-print(scaled_df)
-print("\n均值:", scaled_df.mean().round(4))
-print("标准差:", scaled_df.std().round(4))
+for url in urls:
+    try:
+        response = requests.get(url)
+        print(f"URL: {url}")
+        print(f"状态码: {response.status_code}")
+        
+        if response.status_code == 200:
+            print("请求成功!")
+        elif response.status_code == 404:
+            print("页面未找到")
+        elif response.status_code == 500:
+            print("服务器错误")
+        
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        print(f"HTTP错误: {e}")
+    except requests.exceptions.RequestException as e:
+        print(f"请求异常: {e}")
+    print()
   </pre>
 </div>
 <h4>知识点</h4>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-preprocessing')">数据预处理</a></li>
-  <li>特征缩放</li>
-  <li>sklearn库使用</li>
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('http-requests')">HTTP请求基础</a></li>
+  <li>HTTP状态码</li>
+  <li>异常处理</li>
 </ul>`
       },
       {
         id: 4,
-        title: "问题4：描述性统计分析",
-        description: `编写一个程序，对数据进行描述性统计分析。
+        title: "问题4：BeautifulSoup基础",
+        description: `编写一个程序，使用BeautifulSoup解析HTML。
 
 <strong>输入：</strong>
-一个包含数值型数据的DataFrame
+HTML内容
 
 <strong>输出：</strong>
-数据的基本统计信息
+解析后的数据
 
 <strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>计算基本统计量（均值、中位数、标准差等）</li>
-  <li>计算相关性矩阵</li>
-  <li>可视化数据分布</li>
+  <li>创建BeautifulSoup对象</li>
+  <li>查找HTML标签</li>
+  <li>获取标签文本和属性</li>
 </ul>`,
         difficulty: "easy",
-        time: "10分钟",
-        code: `# 请编写代码
-import pandas as pd
-import numpy as np
-
-# 创建示例数据
-df = pd.DataFrame({
-    '年龄': [20, 25, 30, 35, 40],
-    '收入': [5000, 6000, 8000, 10000, 12000],
-    '评分': [4.5, 4.2, 3.8, 4.0, 4.7]
-})
-
-# 基本统计信息
-print("基本统计信息:")
-print(df.describe())
-
-# 中位数
-print("\n中位数:")
-print(df.median())
-
-# 众数
-print("\n众数:")
-print(df.mode())
-
-# 相关性
-print("\n相关性矩阵:")
-print(df.corr())`,
+        time: "15分钟",
+        code: `# 请编写代码`,
         analysis: `
 <h4>解题思路</h4>
-<p>1. 使用DataFrame的describe()方法获取基本统计信息</p>
-<p>2. 使用median()方法计算中位数</p>
-<p>3. 使用mode()方法计算众数</p>
-<p>4. 使用corr()方法计算相关性矩阵</p>
+<p>1. 导入BeautifulSoup库</p>
+<p>2. 使用BeautifulSoup解析HTML</p>
+<p>3. 使用find()或find_all()方法查找元素</p>
+<p>4. 获取文本内容和属性</p>
 <h4>代码示例</h4>
 <div class="bg-dark p-3 rounded-lg font-mono text-sm">
   <pre class="text-cyan-300">
-import pandas as pd
-import numpy as np
+from bs4 import BeautifulSoup
 
-# 创建示例数据
-df = pd.DataFrame({
-    '年龄': [20, 25, 30, 35, 40],
-    '收入': [5000, 6000, 8000, 10000, 12000],
-    '评分': [4.5, 4.2, 3.8, 4.0, 4.7]
-})
+html = '''
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;h1&gt;欢迎来到数据采集课程&lt;/h1&gt;
+    &lt;p class="intro"&gt;这是一个简单的HTML文档&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;项目1&lt;/li&gt;
+      &lt;li&gt;项目2&lt;/li&gt;
+      &lt;li&gt;项目3&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;a href="https://example.com"&gt;点击这里&lt;/a&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+'''
 
-# 基本统计信息
-print("基本统计信息:")
-print(df.describe())
+soup = BeautifulSoup(html, 'html.parser')
 
-# 中位数
-print("\n中位数:")
-print(df.median())
+# 查找标题
+title = soup.find('h1').text
+print("标题:", title)
 
-# 众数
-print("\n众数:")
-print(df.mode())
+# 查找段落
+intro = soup.find('p', class_='intro').text
+print("介绍:", intro)
 
-# 相关性
-print("\n相关性矩阵:")
-print(df.corr())
+# 查找列表项
+items = soup.find_all('li')
+print("\n列表项:")
+for item in items:
+    print("-", item.text)
+
+# 查找链接
+link = soup.find('a')
+print(f"\n链接文本: {link.text}")
+print(f"链接地址: {link['href']}")
   </pre>
 </div>
 <h4>知识点</h4>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('eda')">探索性数据分析</a></li>
-  <li>描述性统计</li>
-  <li>相关性分析</li>
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('html-parsing')">HTML解析</a></li>
+  <li>BeautifulSoup库</li>
+  <li>HTML标签查找</li>
 </ul>`
       },
       {
         id: 5,
-        title: "问题5：数据可视化",
-        description: `编写一个程序，使用Matplotlib和Seaborn进行数据可视化。
+        title: "问题5：CSS选择器",
+        description: `编写一个程序，使用CSS选择器提取数据。
 
 <strong>输入：</strong>
-一个包含数据的DataFrame
+HTML内容
 
 <strong>输出：</strong>
-多种类型的可视化图表
+使用CSS选择器提取的数据
 
 <strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>绘制直方图</li>
-  <li>绘制箱线图</li>
-  <li>绘制散点图</li>
+  <li>使用select()方法</li>
+  <li>使用不同的CSS选择器语法</li>
+  <li>提取指定元素</li>
 </ul>`,
         difficulty: "medium",
-        time: "25分钟",
-        code: `# 请编写代码
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-# 加载示例数据
-df = sns.load_dataset('iris')
-
-# 直方图
-plt.figure(figsize=(10, 6))
-sns.histplot(df['sepal_length'], bins=20, kde=True)
-plt.title('花萼长度分布')
-plt.xlabel('花萼长度')
-plt.ylabel('频率')
-plt.show()
-
-# 箱线图
-plt.figure(figsize=(10, 6))
-sns.boxplot(x='species', y='sepal_length', data=df)
-plt.title('不同物种的花萼长度分布')
-plt.xlabel('物种')
-plt.ylabel('花萼长度')
-plt.show()
-
-# 散点图
-plt.figure(figsize=(10, 6))
-sns.scatterplot(x='sepal_length', y='sepal_width', hue='species', data=df)
-plt.title('花萼长度与宽度关系')
-plt.xlabel('花萼长度')
-plt.ylabel('花萼宽度')
-plt.show()`,
+        time: "20分钟",
+        code: `# 请编写代码`,
         analysis: `
 <h4>解题思路</h4>
-<p>1. 使用Seaborn加载示例数据集</p>
-<p>2. 使用sns.histplot()绘制直方图，展示数据分布</p>
-<p>3. 使用sns.boxplot()绘制箱线图，展示不同类别的数据分布</p>
-<p>4. 使用sns.scatterplot()绘制散点图，展示变量间的关系</p>
+<p>1. 使用select()方法进行CSS选择</p>
+<p>2. 掌握常见CSS选择器语法（类、ID、属性等）</p>
+<p>3. 提取所需数据</p>
 <h4>代码示例</h4>
 <div class="bg-dark p-3 rounded-lg font-mono text-sm">
   <pre class="text-cyan-300">
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
+from bs4 import BeautifulSoup
 
-# 加载示例数据
-df = sns.load_dataset('iris')
+html = '''
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;div id="main" class="container"&gt;
+      &lt;h2 class="title"&gt;课程列表&lt;/h2&gt;
+      &lt;ul class="course-list"&gt;
+        &lt;li class="course-item" data-id="1"&gt;Python基础&lt;/li&gt;
+        &lt;li class="course-item" data-id="2"&gt;数据采集&lt;/li&gt;
+        &lt;li class="course-item" data-id="3"&gt;数据分析&lt;/li&gt;
+      &lt;/ul&gt;
+      &lt;p class="description"&gt;这是一些精彩的课程&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+'''
 
-# 直方图
-plt.figure(figsize=(10, 6))
-sns.histplot(df['sepal_length'], bins=20, kde=True)
-plt.title('花萼长度分布')
-plt.xlabel('花萼长度')
-plt.ylabel('频率')
-plt.show()
+soup = BeautifulSoup(html, 'html.parser')
 
-# 箱线图
-plt.figure(figsize=(10, 6))
-sns.boxplot(x='species', y='sepal_length', data=df)
-plt.title('不同物种的花萼长度分布')
-plt.xlabel('物种')
-plt.ylabel('花萼长度')
-plt.show()
+# 通过ID选择
+main_div = soup.select_one('#main')
+print("通过ID选择:")
+print(main_div.get('class'))
 
-# 散点图
-plt.figure(figsize=(10, 6))
-sns.scatterplot(x='sepal_length', y='sepal_width', hue='species', data=df)
-plt.title('花萼长度与宽度关系')
-plt.xlabel('花萼长度')
-plt.ylabel('花萼宽度')
-plt.show()
+# 通过类选择
+course_items = soup.select('.course-item')
+print("\n通过类选择的课程:")
+for item in course_items:
+    print(f"- {item.text} (ID: {item['data-id']})")
+
+# 通过标签和类组合
+title = soup.select_one('h2.title').text
+print(f"\n标题: {title}")
+
+# 通过属性选择
+data_items = soup.select('[data-id]')
+print(f"\n有data-id属性的元素数: {len(data_items)}")
   </pre>
 </div>
 <h4>知识点</h4>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-visualization')">数据可视化</a></li>
-  <li>Matplotlib使用</li>
-  <li>Seaborn使用</li>
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('html-parsing')">HTML解析</a></li>
+  <li>CSS选择器</li>
+  <li>select()方法</li>
 </ul>`
       },
       {
         id: 6,
-        title: "问题6：假设检验",
-        description: `编写一个程序，进行独立样本t检验。
+        title: "问题6：正则表达式",
+        description: `编写一个程序，使用正则表达式提取文本中的信息。
 
 <strong>输入：</strong>
-两组样本数据
+包含特定模式的文本
 
 <strong>输出：</strong>
-t检验结果
+提取出的信息
 
 <strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>计算t统计量和p值</li>
-  <li>根据p值判断是否拒绝原假设</li>
+  <li>使用re模块</li>
+  <li>编写正则表达式模式</li>
+  <li>提取匹配内容</li>
 </ul>`,
         difficulty: "medium",
         time: "20分钟",
-        code: `# 请编写代码
-from scipy import stats
-import numpy as np
-
-# 生成两组样本数据
-group1 = np.random.normal(100, 10, 50)
-group2 = np.random.normal(105, 10, 50)
-
-# 独立样本t检验
-t_stat, p_value = stats.ttest_ind(group1, group2)
-
-print(f"t统计量: {t_stat:.4f}")
-print(f"p值: {p_value:.4f}")
-
-# 判断结果
-if p_value < 0.05:
-    print("拒绝原假设，两组数据存在显著差异")
-else:
-    print("不拒绝原假设，两组数据无显著差异")`,
+        code: `# 请编写代码`,
         analysis: `
 <h4>解题思路</h4>
-<p>1. 使用numpy生成两组样本数据</p>
-<p>2. 使用scipy.stats.ttest_ind()进行独立样本t检验</p>
-<p>3. 根据p值判断是否拒绝原假设（通常以0.05为显著性水平）</p>
+<p>1. 导入re模块</p>
+<p>2. 编写合适的正则表达式模式</p>
+<p>3. 使用search()、findall()或finditer()方法匹配</p>
 <h4>代码示例</h4>
 <div class="bg-dark p-3 rounded-lg font-mono text-sm">
   <pre class="text-cyan-300">
-from scipy import stats
-import numpy as np
+import re
 
-# 生成两组样本数据
-group1 = np.random.normal(100, 10, 50)
-group2 = np.random.normal(105, 10, 50)
+text = '''
+联系方式：
+- 电话：13812345678
+- 邮箱：contact@example.com
+- 网址：https://www.example.com
+'''
 
-# 独立样本t检验
-t_stat, p_value = stats.ttest_ind(group1, group2)
+# 提取手机号
+phone_pattern = r'1[3-9]\d{9}'
+phones = re.findall(phone_pattern, text)
+print("手机号:", phones)
 
-print(f"t统计量: {t_stat:.4f}")
-print(f"p值: {p_value:.4f}")
+# 提取邮箱
+email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+emails = re.findall(email_pattern, text)
+print("邮箱:", emails)
 
-# 判断结果
-if p_value < 0.05:
-    print("拒绝原假设，两组数据存在显著差异")
-else:
-    print("不拒绝原假设，两组数据无显著差异")
+# 提取URL
+url_pattern = r'https?://[^\s]+'
+urls = re.findall(url_pattern, text)
+print("网址:", urls)
   </pre>
 </div>
 <h4>知识点</h4>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('statistical-analysis')">统计分析</a></li>
-  <li>假设检验</li>
-  <li>t检验</li>
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('regex')">正则表达式</a></li>
+  <li>re模块使用</li>
+  <li>模式匹配</li>
 </ul>`
       },
       {
         id: 7,
-        title: "问题7：回归分析",
-        description: `编写一个程序，进行线性回归分析。
+        title: "问题7：数据存储-CSV",
+        description: `编写一个程序，将数据保存到CSV文件。
 
 <strong>输入：</strong>
-自变量和因变量数据
+要保存的数据（列表或字典）
 
 <strong>输出：</strong>
-回归模型参数和预测结果
+CSV文件
 
 <strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>拟合线性回归模型</li>
-  <li>计算模型参数（斜率、截距）</li>
-  <li>计算R²值</li>
-  <li>进行预测</li>
+  <li>使用csv模块或pandas</li>
+  <li>写入表头和数据行</li>
+  <li>读取CSV文件验证</li>
 </ul>`,
-        difficulty: "hard",
-        time: "30分钟",
-        code: `# 请编写代码
-import numpy as np
-from sklearn.linear_model import LinearRegression
-import matplotlib.pyplot as plt
-
-# 创建示例数据
-X = np.array([1, 2, 3, 4, 5]).reshape(-1, 1)
-y = np.array([2, 4, 5, 4, 5])
-
-# 拟合线性回归模型
-model = LinearRegression()
-model.fit(X, y)
-
-# 预测
-predictions = model.predict(X)
-
-# 模型参数
-print(f"斜率: {model.coef_[0]:.4f}")
-print(f"截距: {model.intercept_:.4f}")
-print(f"R²: {model.score(X, y):.4f}")
-
-# 可视化
-plt.scatter(X, y, color='blue')
-plt.plot(X, predictions, color='red')
-plt.title('线性回归')
-plt.xlabel('X')
-plt.ylabel('y')
-plt.show()
-
-# 预测新数据
-new_X = np.array([6]).reshape(-1, 1)
-new_prediction = model.predict(new_X)
-print(f"预测值: {new_prediction[0]:.4f}")`,
+        difficulty: "medium",
+        time: "20分钟",
+        code: `# 请编写代码`,
         analysis: `
 <h4>解题思路</h4>
-<p>1. 使用numpy创建自变量和因变量数据</p>
-<p>2. 使用sklearn的LinearRegression类拟合线性回归模型</p>
-<p>3. 提取模型参数（斜率、截距）</p>
-<p>4. 使用score()方法计算R²值</p>
-<p>5. 使用predict()方法进行预测</p>
-<p>6. 可视化数据和回归直线</p>
+<p>1. 使用csv.writer或csv.DictWriter写入CSV</p>
+<p>2. 或使用pandas的to_csv()方法</p>
+<p>3. 验证文件内容是否正确</p>
 <h4>代码示例</h4>
 <div class="bg-dark p-3 rounded-lg font-mono text-sm">
   <pre class="text-cyan-300">
-import numpy as np
-from sklearn.linear_model import LinearRegression
-import matplotlib.pyplot as plt
+import csv
+import pandas as pd
 
-# 创建示例数据
-X = np.array([1, 2, 3, 4, 5]).reshape(-1, 1)
-y = np.array([2, 4, 5, 4, 5])
+# 使用csv模块
+data = [
+    ['姓名', '年龄', '城市'],
+    ['张三', 25, '北京'],
+    ['李四', 30, '上海'],
+    ['王五', 28, '广州']
+]
 
-# 拟合线性回归模型
-model = LinearRegression()
-model.fit(X, y)
+with open('output.csv', 'w', newline='', encoding='utf-8') as f:
+    writer = csv.writer(f)
+    writer.writerows(data)
+print("CSV文件已保存")
 
-# 预测
-predictions = model.predict(X)
+# 使用pandas
+df = pd.DataFrame({
+    '商品': ['苹果', '香蕉', '橙子'],
+    '价格': [5.5, 3.0, 4.2],
+    '数量': [100, 150, 80]
+})
+df.to_csv('products.csv', index=False, encoding='utf-8')
+print("Pandas CSV已保存")
 
-# 模型参数
-print(f"斜率: {model.coef_[0]:.4f}")
-print(f"截距: {model.intercept_:.4f}")
-print(f"R²: {model.score(X, y):.4f}")
-
-# 可视化
-plt.scatter(X, y, color='blue')
-plt.plot(X, predictions, color='red')
-plt.title('线性回归')
-plt.xlabel('X')
-plt.ylabel('y')
-plt.show()
-
-# 预测新数据
-new_X = np.array([6]).reshape(-1, 1)
-new_prediction = model.predict(new_X)
-print(f"预测值: {new_prediction[0]:.4f}")
+# 读取验证
+print("\n读取验证:")
+print(pd.read_csv('products.csv'))
   </pre>
 </div>
 <h4>知识点</h4>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('statistical-analysis')">统计分析</a></li>
-  <li>线性回归</li>
-  <li>sklearn库使用</li>
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-storage')">数据存储</a></li>
+  <li>CSV文件操作</li>
+  <li>pandas数据保存</li>
 </ul>`
       }
     ];
@@ -7194,181 +7027,181 @@ print(f"预测值: {new_prediction[0]:.4f}")
       {
         id: 'c1',
         chapter: 1,
-        title: "选择题1：缺失值处理方法",
-        question: "在Pandas中，以下哪个方法可以用来检测DataFrame中的缺失值？",
+        title: "选择题1：HTTP方法",
+        question: "以下哪个HTTP方法用于获取资源而不修改服务器状态？",
         options: [
-          { label: 'A', text: 'df.isna() 或 df.isnull()' },
-          { label: 'B', text: 'df.missing()' },
-          { label: 'C', text: 'df.check_null()' },
-          { label: 'D', text: 'df.find_na()' }
+          { label: 'A', text: 'POST' },
+          { label: 'B', text: 'GET' },
+          { label: 'C', text: 'PUT' },
+          { label: 'D', text: 'DELETE' }
         ],
-        answer: 'A',
-        analysis: "在Pandas中，isna()和isnull()是等价的，都可以用来检测缺失值。它们返回一个布尔类型的DataFrame，True表示该位置是缺失值。missing()、check_null()和find_na()都不是Pandas的标准方法。",
+        answer: 'B',
+        analysis: "GET方法用于请求获取资源，不会改变服务器上的状态，属于安全的请求方法。POST、PUT、DELETE都会修改服务器状态。",
         difficulty: "easy"
       },
       {
         id: 'c2',
         chapter: 1,
-        title: "选择题2：异常值检测",
-        question: "使用IQR方法检测异常值时，通常将超出以下范围的值定义为异常值：",
+        title: "选择题2：状态码含义",
+        question: "HTTP状态码404表示什么？",
         options: [
-          { label: 'A', text: 'Q1 - 1.5*IQR 到 Q3 + 1.5*IQR 之外' },
-          { label: 'B', text: '均值 ± 2倍标准差 之外' },
-          { label: 'C', text: 'Q1 - IQR 到 Q3 + IQR 之外' },
-          { label: 'D', text: '最小值到最大值之外' }
+          { label: 'A', text: '服务器内部错误' },
+          { label: 'B', text: '请求成功' },
+          { label: 'C', text: '未找到资源' },
+          { label: 'D', text: '重定向' }
         ],
-        answer: 'A',
-        analysis: "IQR（四分位距）方法中，异常值通常定义为小于 Q1 - 1.5*IQR 或大于 Q3 + 1.5*IQR 的值。这是统计学中常用的异常值检测方法，基于数据的四分位数来定义边界。",
+        answer: 'C',
+        analysis: "HTTP状态码404表示Not Found（未找到），服务器无法找到请求的资源。200表示成功，500表示服务器错误，3xx表示重定向。",
         difficulty: "medium"
       },
       {
         id: 'c3',
         chapter: 1,
-        title: "选择题3：数据标准化",
-        question: "StandardScaler进行Z-score标准化后，数据的分布特征是：",
+        title: "选择题3：请求头",
+        question: "以下哪个请求头用于标识客户端的浏览器和操作系统信息？",
         options: [
-          { label: 'A', text: '均值=0，标准差=1' },
-          { label: 'B', text: '均值=1，标准差=0' },
-          { label: 'C', text: '最小值=0，最大值=1' },
-          { label: 'D', text: '中位数=0，方差=1' }
+          { label: 'A', text: 'User-Agent' },
+          { label: 'B', text: 'Content-Type' },
+          { label: 'C', text: 'Accept' },
+          { label: 'D', text: 'Authorization' }
         ],
         answer: 'A',
-        analysis: "StandardScaler使用Z-score标准化方法，将数据转换为均值为0、标准差为1的分布。公式为：(x - μ) / σ，其中μ是均值，σ是标准差。选项C描述的是Min-Max标准化的结果。",
+        analysis: "User-Agent请求头包含发出请求的客户端程序信息，如浏览器类型和版本、操作系统等，常用于网站识别访问者。",
         difficulty: "easy"
       },
       {
         id: 'c4',
         chapter: 2,
-        title: "选择题4：描述性统计",
-        question: "以下哪个统计量不受极端值（异常值）的影响？",
+        title: "选择题4：BeautifulSoup用法",
+        question: "在BeautifulSoup中，哪个方法用于查找第一个匹配的元素？",
         options: [
-          { label: 'A', text: '均值' },
-          { label: 'B', text: '标准差' },
-          { label: 'C', text: '中位数' },
-          { label: 'D', text: '方差' }
+          { label: 'A', text: 'find_all()' },
+          { label: 'B', text: 'find()' },
+          { label: 'C', text: 'select()' },
+          { label: 'D', text: 'get()' }
         ],
-        answer: 'C',
-        analysis: "中位数是将数据排序后位于中间位置的值，它不受极端值的影响，是一种稳健的集中趋势度量。而均值、标准差和方差的计算都会受到极端值的影响。",
+        answer: 'B',
+        analysis: "find()方法返回找到的第一个匹配元素，find_all()返回所有匹配元素的列表，select()使用CSS选择器查找，get()用于获取属性值。",
         difficulty: "easy"
       },
       {
         id: 'c5',
         chapter: 2,
-        title: "选择题5：相关性分析",
-        question: "Pearson相关系数的取值范围是：",
+        title: "选择题5：CSS选择器",
+        question: "以下哪个CSS选择器可以选择class为'content'的元素？",
         options: [
-          { label: 'A', text: '0到1' },
-          { label: 'B', text: '-1到1' },
-          { label: 'C', text: '0到100' },
-          { label: 'D', text: '-∞到+∞' }
+          { label: 'A', text: '#content' },
+          { label: 'B', text: '.content' },
+          { label: 'C', text: '[content]' },
+          { label: 'D', text: '*content' }
         ],
         answer: 'B',
-        analysis: "Pearson相关系数衡量两个变量之间的线性相关程度，取值范围是-1到1。-1表示完全负相关，0表示无线性相关，1表示完全正相关。",
+        analysis: "在CSS选择器中，点(.)表示class选择器，#表示ID选择器，[attribute]表示属性选择器。",
         difficulty: "easy"
       },
       {
         id: 'c6',
         chapter: 3,
-        title: "选择题6：假设检验",
-        question: "在假设检验中，当p值小于显著性水平α（通常为0.05）时，我们应该：",
+        title: "选择题6：正则语法",
+        question: "正则表达式中，\\d表示什么？",
         options: [
-          { label: 'A', text: '接受原假设' },
-          { label: 'B', text: '拒绝原假设' },
-          { label: 'C', text: '无法做出判断' },
-          { label: 'D', text: '需要更多数据' }
+          { label: 'A', text: '任意字母' },
+          { label: 'B', text: '任意数字' },
+          { label: 'C', text: '任意空白字符' },
+          { label: 'D', text: '任意非空白字符' }
         ],
         answer: 'B',
-        analysis: "在假设检验中，p值表示在原假设为真的情况下，观察到当前或更极端结果的概率。当p值小于显著性水平α时，我们拒绝原假设，认为结果具有统计显著性。",
+        analysis: "\\d表示任意数字字符（等价于[0-9]），\\w表示字母数字下划线，\\s表示空白字符。",
         difficulty: "medium"
       },
       {
         id: 'c7',
         chapter: 3,
-        title: "选择题7：方差分析",
-        question: "单因素方差分析（ANOVA）主要用于检验：",
+        title: "选择题7：匹配模式",
+        question: "正则表达式中，+表示什么？",
         options: [
-          { label: 'A', text: '两个样本均值是否相等' },
-          { label: 'B', text: '多个样本均值是否存在显著差异' },
-          { label: 'C', text: '两个变量是否相关' },
-          { label: 'D', text: '数据是否符合正态分布' }
+          { label: 'A', text: '匹配0次或多次' },
+          { label: 'B', text: '匹配1次或多次' },
+          { label: 'C', text: '匹配0次或1次' },
+          { label: 'D', text: '匹配精确次数' }
         ],
         answer: 'B',
-        analysis: "单因素方差分析（ANOVA）用于比较三个或更多组的均值是否存在显著差异。它通过分析组间方差和组内方差来判断各组均值是否相等。选项A是t检验的功能，选项C是相关性分析，选项D是正态性检验。",
+        analysis: "+表示前面的字符匹配1次或多次，*表示0次或多次，?表示0次或1次。",
         difficulty: "medium"
       },
       {
         id: 'c8',
         chapter: 4,
-        title: "选择题8：Pandas DataFrame",
-        question: "在Pandas中，df.loc和df.iloc的主要区别是：",
+        title: "选择题8：CSV与JSON",
+        question: "以下关于CSV和JSON格式的描述，哪个是正确的？",
         options: [
-          { label: 'A', text: 'loc基于标签索引，iloc基于位置索引' },
-          { label: 'B', text: 'loc更快，iloc更慢' },
-          { label: 'C', text: 'loc只能选择行，iloc只能选择列' },
-          { label: 'D', text: '它们功能完全相同' }
+          { label: 'A', text: 'CSV支持嵌套结构，JSON不支持' },
+          { label: 'B', text: 'JSON支持嵌套结构，CSV是扁平的表格格式' },
+          { label: 'C', text: 'CSV和JSON都支持嵌套结构' },
+          { label: 'D', text: 'CSV和JSON都不支持嵌套结构' }
         ],
-        answer: 'A',
-        analysis: "df.loc是基于标签（label-based）的索引方法，使用行标签和列标签进行选择；df.iloc是基于位置（integer-location based）的索引方法，使用整数位置进行选择。例如，df.loc[0, 'A']选择标签为0的行的'A'列，而df.iloc[0, 0]选择第一行第一列。",
+        answer: 'B',
+        analysis: "JSON（JavaScript Object Notation）支持复杂的嵌套结构，而CSV（Comma Separated Values）是简单的逗号分隔的表格格式，不支持嵌套。",
         difficulty: "medium"
       },
       {
         id: 'c9',
         chapter: 5,
-        title: "选择题9：数据可视化",
-        question: "以下哪种图表最适合展示数据的分布情况和识别异常值？",
+        title: "选择题9：反爬虫应对",
+        question: "以下哪种方法可以有效应对网站的User-Agent检测？",
         options: [
-          { label: 'A', text: '饼图' },
-          { label: 'B', text: '柱状图' },
-          { label: 'C', text: '箱线图' },
-          { label: 'D', text: '折线图' }
+          { label: 'A', text: '增加请求延迟' },
+          { label: 'B', text: '使用代理IP' },
+          { label: 'C', text: '在请求头中设置真实的浏览器User-Agent' },
+          { label: 'D', text: '减少请求次数' }
         ],
         answer: 'C',
-        analysis: "箱线图（Box Plot）可以同时展示数据的中位数、四分位数、最大值、最小值以及异常值，是识别数据分布和异常值的最佳选择。饼图适合展示占比，柱状图适合比较类别，折线图适合展示趋势。",
+        analysis: "设置User-Agent可以模拟真实浏览器访问，避免被网站识别为爬虫。其他选项也有帮助，但不是针对User-Agent检测的。",
         difficulty: "easy"
       },
       {
         id: 'c10',
         chapter: 6,
-        title: "选择题10：机器学习",
-        question: "在分类问题中，以下哪个指标综合考虑了精确率和召回率？",
+        title: "选择题10：Selenium",
+        question: "Selenium主要用于什么场景？",
         options: [
-          { label: 'A', text: '准确率（Accuracy）' },
-          { label: 'B', text: 'F1分数' },
-          { label: 'C', text: 'AUC' },
-          { label: 'D', text: '均方误差（MSE）' }
+          { label: 'A', text: '静态网页爬取' },
+          { label: 'B', text: 'JavaScript动态渲染的网页爬取' },
+          { label: 'C', text: 'API数据请求' },
+          { label: 'D', text: '文件下载' }
         ],
         answer: 'B',
-        analysis: "F1分数是精确率和召回率的调和平均值，综合考虑了这两个指标。公式为：F1 = 2 * (Precision * Recall) / (Precision + Recall)。准确率只考虑正确预测的比例，AUC是ROC曲线下面积，MSE是回归问题的评估指标。",
+        analysis: "Selenium是一个浏览器自动化工具，可以真实地打开浏览器执行JavaScript，特别适合爬取动态渲染的网页。",
         difficulty: "medium"
       },
       {
         id: 'c11',
         chapter: 6,
-        title: "选择题11：聚类算法",
-        question: "K-means聚类算法中，确定最佳K值常用的方法是：",
+        title: "选择题11：异步爬虫",
+        question: "异步爬虫相比同步爬虫的主要优势是什么？",
         options: [
-          { label: 'A', text: '皮尔逊相关系数' },
-          { label: 'B', text: '肘部法（Elbow Method）' },
-          { label: 'C', text: 't检验' },
-          { label: 'D', text: '卡方检验' }
+          { label: 'A', text: '代码更简单' },
+          { label: 'B', text: '可以同时发起多个请求，提高效率' },
+          { label: 'C', text: '不需要外部库' },
+          { label: 'D', text: '兼容性更好' }
         ],
         answer: 'B',
-        analysis: "肘部法（Elbow Method）是确定K-means最佳聚类数的常用方法。通过绘制不同K值对应的惯性（inertia，样本到最近聚类中心的距离平方和）曲线，找到曲线出现'肘部'转折的点作为最佳K值。",
+        analysis: "异步爬虫（如使用asyncio或aiohttp）可以同时发起多个请求并等待响应，大大提高爬取效率，特别是在需要大量请求时。",
         difficulty: "medium"
       },
       {
         id: 'c12',
         chapter: 6,
-        title: "选择题12：模型评估",
-        question: "交叉验证的主要目的是：",
+        title: "选择题12：代理与IP池",
+        question: "使用代理IP的主要目的是什么？",
         options: [
-          { label: 'A', text: '增加训练数据量' },
-          { label: 'B', text: '更准确地评估模型性能并防止过拟合' },
-          { label: 'C', text: '加快模型训练速度' },
-          { label: 'D', text: '减少特征数量' }
+          { label: 'A', text: '提高请求速度' },
+          { label: 'B', text: '隐藏真实IP，避免被封禁' },
+          { label: 'C', text: '增加请求并发数' },
+          { label: 'D', text: '加密传输数据' }
         ],
         answer: 'B',
-        analysis: "交叉验证（Cross-Validation）通过将数据分成多个子集，轮流使用其中一部分作为验证集，其余作为训练集，从而更准确地评估模型性能。它可以有效防止过拟合，并提供更可靠的模型性能估计。",
+        analysis: "代理IP可以隐藏爬虫的真实IP地址，通过轮换IP可以避免被目标网站检测和封禁，是反爬虫的重要手段之一。",
         difficulty: "medium"
       }
     ];
@@ -7573,33 +7406,58 @@ print(f"预测值: {new_prediction[0]:.4f}")
         return;
       }
       
-      let currentOutput = '';
-      const appendOutput = (text, type = 'normal') => {
-        currentOutput += text;
-        outputDiv.innerHTML = currentOutput.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      };
-      
       outputDiv.textContent = '运行中...';
       executionTimeDiv.textContent = '执行时间：计算中...';
       
       try {
         const startTime = performance.now();
         
-        // 运行代码，重定向stdout和stderr
-        await pyodide.runPythonAsync(code, {
-          stdout: (text) => appendOutput(text),
-          stderr: (text) => appendOutput(text, 'error')
+        // 重置并捕获 stdout 和 stderr
+        let stdoutOutput = '';
+        let stderrOutput = '';
+        
+        pyodide.setStdout({
+          batched: (text) => {
+            stdoutOutput += text;
+          }
         });
+        
+        pyodide.setStderr({
+          batched: (text) => {
+            stderrOutput += text;
+          }
+        });
+        
+        // 运行代码
+        const result = await pyodide.runPythonAsync(code);
         
         const endTime = performance.now();
         const executionTime = (endTime - startTime).toFixed(2);
         
-        if (!currentOutput) {
-          outputDiv.textContent = '代码执行成功，无输出';
+        // 组合输出：优先显示 stdout，其次 stderr，然后是返回值
+        let displayOutput = '';
+        if (stdoutOutput.trim()) {
+          displayOutput += stdoutOutput.trim();
         }
+        if (stderrOutput.trim()) {
+          if (displayOutput) displayOutput += '\n\n';
+          displayOutput += '错误输出:\n' + stderrOutput.trim();
+        }
+        if (!displayOutput && result !== undefined) {
+          displayOutput = String(result);
+        }
+        if (!displayOutput) {
+          displayOutput = '代码执行成功，无输出';
+        }
+        
+        outputDiv.textContent = displayOutput;
         executionTimeDiv.textContent = `执行时间：${executionTime}ms`;
       } catch (error) {
-        outputDiv.textContent = `错误：${error.message}`;
+        let errorMsg = `错误：${error.message}`;
+        if (error.pyodide_type) {
+          errorMsg += ` (类型: ${error.pyodide_type})`;
+        }
+        outputDiv.textContent = errorMsg;
         executionTimeDiv.textContent = '执行时间：0ms';
       }
     }

@@ -146,7 +146,8 @@
               <h3 class="text-lg font-semibold text-gray-200 mb-4">考试规则</h3>
               <ul class="list-disc list-inside space-y-2 text-gray-400">
                 <li>考试时间：30分钟</li>
-                <li>共10道题目，涵盖SQL基础、数据库设计、事务管理等知识点</li>
+                <li>共10道题目，包括1道编程题和9道选择题</li>
+                <li>选择题自动评分，编程题需运行代码后评分</li>
                 <li>请独立完成，不要参考外部资料</li>
                 <li>考试过程中不要刷新页面，否则会丢失进度</li>
                 <li>点击提交按钮后将无法修改答案</li>
@@ -166,25 +167,41 @@
           <div class="lg:w-1/4 bg-dark-gray rounded-xl p-4 border border-gray-700 h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin">
             <h2 class="section-title">考试题目</h2>
             <div class="space-y-2" id="question-list">
+              <!-- 题目列表将通过JavaScript动态生成 -->
             </div>
           </div>
 
           <!-- 右侧：问题、代码编辑器、运行结果 -->
           <div class="lg:w-3/4 space-y-6">
-            <!-- 编程题区域 -->
-            <div id="exam-coding-section">
             <!-- 题目描述 -->
             <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
               <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
-                <h3 class="text-xl font-bold text-gray-200" id="exam-problem-title">问题1：基础查询语句</h3>
+                <h3 class="text-xl font-bold text-gray-200" id="exam-problem-title">问题1：数据库综合应用</h3>
                 <span class="difficulty-tag difficulty-easy" id="exam-difficulty-tag">简单</span>
               </div>
               <div class="problem-description" id="exam-problem-description">
+                <!-- 题目描述将通过JavaScript动态生成 -->
+              </div>
+            </div>
+
+            <!-- 选择题区域 -->
+            <div id="exam-choice-area" class="hidden bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
+                <h3 class="text-xl font-bold text-gray-200" id="exam-choice-title">选择题</h3>
+                <span class="difficulty-tag difficulty-easy" id="exam-choice-difficulty-tag">简单</span>
+              </div>
+              
+              <div class="mb-6">
+                <p class="text-lg text-gray-200 mb-4" id="exam-choice-question-text"></p>
+                
+                <div class="space-y-3" id="exam-choice-options">
+                  <!-- 选项将通过JavaScript动态生成 -->
+                </div>
               </div>
             </div>
 
             <!-- 代码编辑框 -->
-            <div class="bg-dark-gray rounded-xl p-6 border border-gray-700 mt-6">
+            <div id="exam-code-area" class="bg-dark-gray rounded-xl p-6 border border-gray-700">
               <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
                 <h3 class="text-lg font-semibold text-gray-200">代码编辑器</h3>
                 <div class="flex gap-2">
@@ -203,7 +220,7 @@
             </div>
 
             <!-- 运行结果 -->
-            <div class="bg-dark-gray rounded-xl p-6 border border-gray-700 mt-6">
+            <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
               <h3 class="text-lg font-semibold text-gray-200 mb-4">运行结果</h3>
               <div class="run-info">
                 <span id="exam-execution-time">执行时间：0ms</span>
@@ -213,36 +230,14 @@
                 运行代码查看输出...
               </div>
             </div>
-            </div>
-            
-            <!-- 选择题区域 -->
-            <div id="exam-choice-section" class="hidden">
-              <!-- 选择题题目描述 -->
-              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
-                <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
-                  <h3 class="text-xl font-bold text-gray-200" id="exam-choice-title">选择题</h3>
-                  <div class="flex items-center gap-4 flex-wrap">
-                    <span class="difficulty-tag difficulty-easy" id="exam-choice-difficulty-tag">简单</span>
-                    <span class="text-xs text-purple-400 font-semibold">选择题</span>
-                  </div>
-                </div>
-                <div class="problem-description" id="exam-choice-question">
-                  <p>题目内容</p>
-                </div>
-              </div>
-              
-              <!-- 选择题选项 -->
-              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700 mt-6">
-                <h3 class="text-lg font-semibold text-gray-200 mb-4">请选择答案</h3>
-                <div class="space-y-3" id="exam-choice-options">
-                </div>
-              </div>
-            </div>
 
             <!-- 导航按钮 -->
-            <div class="flex justify-between items-center mt-6">
+            <div class="flex justify-between items-center">
               <button id="prev-question" class="btn-secondary">
                 <i class="fa fa-arrow-left"></i> 上一题
+              </button>
+              <button id="submit-exam" class="btn-accent">
+                <i class="fa fa-paper-plane"></i> 提交考试
               </button>
               <button id="next-question" class="btn-primary">
                 下一题 <i class="fa fa-arrow-right"></i>
@@ -294,6 +289,7 @@
             <div class="space-y-4">
               <h3 class="text-lg font-semibold text-gray-200">答题情况</h3>
               <div id="answer-status" class="grid grid-cols-5 gap-2">
+                <!-- 答题状态将通过JavaScript动态生成 -->
               </div>
             </div>
           </div>
@@ -316,849 +312,22 @@
     const examProblems = [
       {
         id: 1,
-        title: "问题1：基础查询语句",
-        description: `编写SQL语句，查询员工表中薪资大于8000的员工信息。
+        title: "编程题：数据库综合应用",
+        description: `综合运用所学知识，完成一个完整的数据库应用任务。
 
-<strong>表结构：</strong>
-employees表：id, name, department, salary
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>查询薪资大于8000的员工</li>
-  <li>结果按薪资降序排列</li>
-  <li>使用Python sqlite3模拟执行</li>
-</ul>`,
-        difficulty: "easy",
-        code: `# 请编写代码
-import sqlite3
-
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-cursor.execute('''
-CREATE TABLE employees (
-    id INTEGER PRIMARY KEY,
-    name TEXT,
-    department TEXT,
-    salary REAL
-)
-''')
-
-data = [
-    (1, '张三', '技术部', 9000),
-    (2, '李四', '市场部', 7000),
-    (3, '王五', '技术部', 8500),
-    (4, '赵六', '人事部', 6000)
-]
-cursor.executemany('INSERT INTO employees VALUES (?,?,?,?)', data)
-
-# 请编写SQL查询语句
-cursor.execute('''
-SELECT * FROM employees
-WHERE salary > 8000
-ORDER BY salary DESC
-''')
-
-print("薪资大于8000的员工：")
-for row in cursor.fetchall():
-    print(row)
-
-conn.close()`,
-        answer: `import sqlite3
-
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-cursor.execute('''
-CREATE TABLE employees (
-    id INTEGER PRIMARY KEY,
-    name TEXT,
-    department TEXT,
-    salary REAL
-)
-''')
-
-data = [
-    (1, '张三', '技术部', 9000),
-    (2, '李四', '市场部', 7000),
-    (3, '王五', '技术部', 8500),
-    (4, '赵六', '人事部', 6000)
-]
-cursor.executemany('INSERT INTO employees VALUES (?,?,?,?)', data)
-
-cursor.execute('''
-SELECT * FROM employees
-WHERE salary > 8000
-ORDER BY salary DESC
-''')
-
-print("薪资大于8000的员工：")
-for row in cursor.fetchall():
-    print(row)
-
-conn.close()`,
-        score: 10
-      },
-      {
-        id: 2,
-        title: "问题2：多表连接查询",
-        description: `编写SQL语句，查询每个员工的姓名和部门名称。
-
-<strong>表结构：</strong>
-- employees表：id, name, dept_id
-- departments表：id, dept_name
+<strong>背景：</strong>
+设计并实现一个简单的学生成绩管理系统，包含学生表和成绩表。
 
 <strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>使用INNER JOIN连接两个表</li>
-  <li>显示员工姓名和部门名称</li>
+  <li>创建学生表（student）和成绩表（score）</li>
+  <li>插入测试数据</li>
+  <li>查询所有学生的平均分</li>
+  <li>输出查询结果</li>
 </ul>`,
         difficulty: "medium",
-        code: `# 请编写代码
-import sqlite3
-
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-cursor.execute('''
-CREATE TABLE departments (
-    id INTEGER PRIMARY KEY,
-    dept_name TEXT
-)
-''')
-
-cursor.execute('''
-CREATE TABLE employees (
-    id INTEGER PRIMARY KEY,
-    name TEXT,
-    dept_id INTEGER,
-    FOREIGN KEY (dept_id) REFERENCES departments(id)
-)
-''')
-
-cursor.executemany('INSERT INTO departments VALUES (?,?)', [(1, '技术部'), (2, '市场部')])
-cursor.executemany('INSERT INTO employees VALUES (?,?,?)', [(1, '张三', 1), (2, '李四', 2), (3, '王五', 1)])
-
-# 请编写SQL连接查询
-cursor.execute('''
-SELECT e.name, d.dept_name
-FROM employees e
-INNER JOIN departments d ON e.dept_id = d.id
-''')
-
-print("员工部门信息：")
-for row in cursor.fetchall():
-    print(row)
-
-conn.close()`,
-        answer: `import sqlite3
-
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-cursor.execute('CREATE TABLE departments (id INTEGER PRIMARY KEY, dept_name TEXT)')
-cursor.execute('CREATE TABLE employees (id INTEGER PRIMARY KEY, name TEXT, dept_id INTEGER)')
-
-cursor.executemany('INSERT INTO departments VALUES (?,?)', [(1, '技术部'), (2, '市场部')])
-cursor.executemany('INSERT INTO employees VALUES (?,?,?)', [(1, '张三', 1), (2, '李四', 2), (3, '王五', 1)])
-
-cursor.execute('''
-SELECT e.name, d.dept_name
-FROM employees e
-INNER JOIN departments d ON e.dept_id = d.id
-''')
-
-for row in cursor.fetchall():
-    print(row)
-
-conn.close()`,
-        score: 10
-      },
-      {
-        id: 3,
-        title: "问题3：聚合函数与分组",
-        description: `编写SQL语句，统计各部门的员工人数和平均薪资。
-
-<strong>表结构：</strong>
-employees表：id, name, department, salary
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>按部门分组</li>
-  <li>计算每个部门的人数和平均薪资</li>
-  <li>使用COUNT和AVG函数</li>
-</ul>`,
-        difficulty: "medium",
-        code: `# 请编写代码
-import sqlite3
-
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-cursor.execute('''
-CREATE TABLE employees (
-    id INTEGER PRIMARY KEY,
-    name TEXT,
-    department TEXT,
-    salary REAL
-)
-''')
-
-data = [
-    (1, '张三', '技术部', 9000),
-    (2, '李四', '市场部', 7000),
-    (3, '王五', '技术部', 8500),
-    (4, '赵六', '市场部', 6500)
-]
-cursor.executemany('INSERT INTO employees VALUES (?,?,?,?)', data)
-
-# 请编写SQL聚合查询
-cursor.execute('''
-SELECT department, COUNT(*) as count, AVG(salary) as avg_salary
-FROM employees
-GROUP BY department
-''')
-
-print("部门统计：")
-for row in cursor.fetchall():
-    print(row)
-
-conn.close()`,
-        answer: `import sqlite3
-
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-cursor.execute('CREATE TABLE employees (id INTEGER PRIMARY KEY, name TEXT, department TEXT, salary REAL)')
-
-data = [(1, '张三', '技术部', 9000), (2, '李四', '市场部', 7000), (3, '王五', '技术部', 8500), (4, '赵六', '市场部', 6500)]
-cursor.executemany('INSERT INTO employees VALUES (?,?,?,?)', data)
-
-cursor.execute('''
-SELECT department, COUNT(*) as count, AVG(salary) as avg_salary
-FROM employees
-GROUP BY department
-''')
-
-for row in cursor.fetchall():
-    print(row)
-
-conn.close()`,
-        score: 10
-      },
-      {
-        id: 4,
-        title: "问题4：子查询",
-        description: `编写SQL语句，查询薪资高于平均薪资的员工。
-
-<strong>表结构：</strong>
-employees表：id, name, department, salary
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>使用子查询计算平均薪资</li>
-  <li>查询薪资高于平均值的员工</li>
-</ul>`,
-        difficulty: "medium",
-        code: `# 请编写代码
-import sqlite3
-
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-cursor.execute('''
-CREATE TABLE employees (
-    id INTEGER PRIMARY KEY,
-    name TEXT,
-    department TEXT,
-    salary REAL
-)
-''')
-
-data = [
-    (1, '张三', '技术部', 9000),
-    (2, '李四', '市场部', 7000),
-    (3, '王五', '技术部', 8500),
-    (4, '赵六', '市场部', 6500)
-]
-cursor.executemany('INSERT INTO employees VALUES (?,?,?,?)', data)
-
-# 请编写子查询
-cursor.execute('''
-SELECT * FROM employees
-WHERE salary > (SELECT AVG(salary) FROM employees)
-''')
-
-print("薪资高于平均值的员工：")
-for row in cursor.fetchall():
-    print(row)
-
-conn.close()`,
-        answer: `import sqlite3
-
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-cursor.execute('CREATE TABLE employees (id INTEGER PRIMARY KEY, name TEXT, department TEXT, salary REAL)')
-
-data = [(1, '张三', '技术部', 9000), (2, '李四', '市场部', 7000), (3, '王五', '技术部', 8500), (4, '赵六', '市场部', 6500)]
-cursor.executemany('INSERT INTO employees VALUES (?,?,?,?)', data)
-
-cursor.execute('''
-SELECT * FROM employees
-WHERE salary > (SELECT AVG(salary) FROM employees)
-''')
-
-for row in cursor.fetchall():
-    print(row)
-
-conn.close()`,
-        score: 10
-      },
-      {
-        id: 5,
-        title: "问题5：ER图设计",
-        description: `设计一个简单的图书管理系统的ER模型。
-
-<strong>需求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>图书有ISBN、书名、作者属性</li>
-  <li>读者有借书证号、姓名属性</li>
-  <li>一个读者可以借多本书</li>
-</ul>
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>创建对应的数据库表</li>
-  <li>建立正确的主键和外键关系</li>
-</ul>`,
-        difficulty: "medium",
-        code: `# 请编写代码：创建图书管理系统的表结构
-import sqlite3
-
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-# 请创建图书表、读者表和借阅表
-cursor.execute('''
-CREATE TABLE books (
-    ISBN TEXT PRIMARY KEY,
-    title TEXT NOT NULL,
-    author TEXT
-)
-''')
-
-cursor.execute('''
-CREATE TABLE readers (
-    reader_id TEXT PRIMARY KEY,
-    name TEXT NOT NULL
-)
-''')
-
-cursor.execute('''
-CREATE TABLE borrowings (
-    reader_id TEXT,
-    ISBN TEXT,
-    borrow_date TEXT,
-    PRIMARY KEY (reader_id, ISBN),
-    FOREIGN KEY (reader_id) REFERENCES readers(reader_id),
-    FOREIGN KEY (ISBN) REFERENCES books(ISBN)
-)
-''')
-
-# 插入测试数据
-cursor.execute("INSERT INTO books VALUES ('978-7-001', '数据库原理', '王珊')")
-cursor.execute("INSERT INTO readers VALUES ('R001', '张三')")
-cursor.execute("INSERT INTO borrowings VALUES ('R001', '978-7-001', '2023-06-01')")
-
-print("表结构创建成功！")
-print("\n图书表：")
-cursor.execute("SELECT * FROM books")
-for row in cursor.fetchall():
-    print(row)
-
-print("\n读者表：")
-cursor.execute("SELECT * FROM readers")
-for row in cursor.fetchall():
-    print(row)
-
-print("\n借阅表：")
-cursor.execute("SELECT * FROM borrowings")
-for row in cursor.fetchall():
-    print(row)
-
-conn.close()`,
-        answer: `import sqlite3
-
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-cursor.execute('CREATE TABLE books (ISBN TEXT PRIMARY KEY, title TEXT NOT NULL, author TEXT)')
-cursor.execute('CREATE TABLE readers (reader_id TEXT PRIMARY KEY, name TEXT NOT NULL)')
-cursor.execute('''
-CREATE TABLE borrowings (
-    reader_id TEXT,
-    ISBN TEXT,
-    borrow_date TEXT,
-    PRIMARY KEY (reader_id, ISBN),
-    FOREIGN KEY (reader_id) REFERENCES readers(reader_id),
-    FOREIGN KEY (ISBN) REFERENCES books(ISBN)
-)
-''')
-
-cursor.execute("INSERT INTO books VALUES ('978-7-001', '数据库原理', '王珊')")
-cursor.execute("INSERT INTO readers VALUES ('R001', '张三')")
-cursor.execute("INSERT INTO borrowings VALUES ('R001', '978-7-001', '2023-06-01')")
-
-print("表结构创建成功！")
-
-conn.close()`,
-        score: 10
-      },
-      {
-        id: 6,
-        title: "问题6：范式分析",
-        description: `分析以下关系模式，指出范式级别并说明原因。
-
-<strong>关系模式：</strong>
-学生选课(学号, 姓名, 课程号, 课程名, 成绩)
-
-<strong>函数依赖：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>学号 → 姓名</li>
-  <li>课程号 → 课程名</li>
-  <li>(学号, 课程号) → 成绩</li>
-</ul>
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>分析当前范式级别</li>
-  <li>转换为3NF</li>
-</ul>`,
-        difficulty: "hard",
-        code: `# 请编写代码：范式分析与优化
-print("=== 范式分析 ===")
-print("原始关系模式：学生选课(学号, 姓名, 课程号, 课程名, 成绩)")
-print("\n函数依赖：")
-print("学号 → 姓名")
-print("课程号 → 课程名")
-print("(学号, 课程号) → 成绩")
-
-print("\n分析：")
-print("1. 存在部分依赖：姓名依赖于学号（主键的一部分）")
-print("2. 存在部分依赖：课程名依赖于课程号（主键的一部分）")
-print("3. 当前范式：1NF（不满足2NF）")
-
-print("\n=== 转换为3NF ===")
-
-import sqlite3
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-# 优化后的表结构
-cursor.execute('''
-CREATE TABLE students (
-    student_id TEXT PRIMARY KEY,
-    name TEXT NOT NULL
-)
-''')
-
-cursor.execute('''
-CREATE TABLE courses (
-    course_id TEXT PRIMARY KEY,
-    course_name TEXT NOT NULL
-)
-''')
-
-cursor.execute('''
-CREATE TABLE enrollments (
-    student_id TEXT,
-    course_id TEXT,
-    score REAL,
-    PRIMARY KEY (student_id, course_id),
-    FOREIGN KEY (student_id) REFERENCES students(student_id),
-    FOREIGN KEY (course_id) REFERENCES courses(course_id)
-)
-''')
-
-print("优化后的关系模式：")
-print("学生(学号, 姓名) - 3NF")
-print("课程(课程号, 课程名) - 3NF")
-print("选课(学号, 课程号, 成绩) - 3NF")
-
-# 插入测试数据
-cursor.execute("INSERT INTO students VALUES ('S001', '张三')")
-cursor.execute("INSERT INTO courses VALUES ('C001', '数据库原理')")
-cursor.execute("INSERT INTO enrollments VALUES ('S001', 'C001', 85)")
-
-print("\n查询结果：")
-cursor.execute('''
-SELECT s.name, c.course_name, e.score
-FROM students s
-JOIN enrollments e ON s.student_id = e.student_id
-JOIN courses c ON e.course_id = c.course_id
-''')
-for row in cursor.fetchall():
-    print(row)
-
-conn.close()`,
-        answer: `print("=== 范式分析 ===")
-print("原始关系模式：学生选课(学号, 姓名, 课程号, 课程名, 成绩)")
-print("当前范式：1NF（存在部分依赖）")
-print("优化后：学生(学号, 姓名), 课程(课程号, 课程名), 选课(学号, 课程号, 成绩)")
-
-import sqlite3
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-cursor.execute('CREATE TABLE students (student_id TEXT PRIMARY KEY, name TEXT NOT NULL)')
-cursor.execute('CREATE TABLE courses (course_id TEXT PRIMARY KEY, course_name TEXT NOT NULL)')
-cursor.execute('''
-CREATE TABLE enrollments (
-    student_id TEXT,
-    course_id TEXT,
-    score REAL,
-    PRIMARY KEY (student_id, course_id)
-)
-''')
-
-conn.close()`,
-        score: 10
-      },
-      {
-        id: 7,
-        title: "问题7：事务处理",
-        description: `编写Python代码实现银行转账事务。
-
-<strong>场景：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>账户A向账户B转账100元</li>
-  <li>需要保证事务的原子性</li>
-</ul>
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>使用事务实现转账</li>
-  <li>处理余额不足的情况</li>
-  <li>演示回滚操作</li>
-</ul>`,
-        difficulty: "medium",
-        code: `# 请编写代码：银行转账事务
-import sqlite3
-
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-# 创建账户表
-cursor.execute('''
-CREATE TABLE accounts (
-    account_id TEXT PRIMARY KEY,
-    balance REAL NOT NULL CHECK (balance >= 0)
-)
-''')
-
-cursor.execute("INSERT INTO accounts VALUES ('A001', 500)")
-cursor.execute("INSERT INTO accounts VALUES ('A002', 300)")
-
-print("转账前：")
-cursor.execute("SELECT * FROM accounts")
-for row in cursor.fetchall():
-    print(row)
-
-def transfer(from_acc, to_acc, amount):
-    try:
-        cursor.execute("BEGIN TRANSACTION")
-        
-        cursor.execute("SELECT balance FROM accounts WHERE account_id = ?", (from_acc,))
-        balance = cursor.fetchone()[0]
-        
-        if balance < amount:
-            raise Exception("余额不足")
-        
-        cursor.execute("UPDATE accounts SET balance = balance - ? WHERE account_id = ?", (amount, from_acc))
-        cursor.execute("UPDATE accounts SET balance = balance + ? WHERE account_id = ?", (amount, to_acc))
-        
-        conn.commit()
-        print(f"\\n转账成功：{from_acc} -> {to_acc}, 金额：{amount}")
-    except Exception as e:
-        conn.rollback()
-        print(f"\\n转账失败：{e}")
-
-transfer('A001', 'A002', 100)
-
-print("\\n转账后：")
-cursor.execute("SELECT * FROM accounts")
-for row in cursor.fetchall():
-    print(row)
-
-conn.close()`,
-        answer: `import sqlite3
-
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-cursor.execute('CREATE TABLE accounts (account_id TEXT PRIMARY KEY, balance REAL NOT NULL CHECK (balance >= 0))')
-cursor.execute("INSERT INTO accounts VALUES ('A001', 500)")
-cursor.execute("INSERT INTO accounts VALUES ('A002', 300)")
-
-def transfer(from_acc, to_acc, amount):
-    try:
-        cursor.execute("BEGIN TRANSACTION")
-        cursor.execute("SELECT balance FROM accounts WHERE account_id = ?", (from_acc,))
-        balance = cursor.fetchone()[0]
-        if balance < amount:
-            raise Exception("余额不足")
-        cursor.execute("UPDATE accounts SET balance = balance - ? WHERE account_id = ?", (amount, from_acc))
-        cursor.execute("UPDATE accounts SET balance = balance + ? WHERE account_id = ?", (amount, to_acc))
-        conn.commit()
-    except Exception as e:
-        conn.rollback()
-
-transfer('A001', 'A002', 100)
-conn.close()`,
-        score: 10
-      },
-      {
-        id: 8,
-        title: "问题8：数据插入与更新",
-        description: `编写SQL语句，实现数据的插入和更新操作。
-
-<strong>表结构：</strong>
-employees表：id, name, department, salary
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>插入3条员工记录</li>
-  <li>将技术部所有员工薪资增加10%</li>
-  <li>删除薪资低于6000的员工</li>
-</ul>`,
-        difficulty: "easy",
-        code: `# 请编写代码：数据插入与更新
-import sqlite3
-
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-cursor.execute('''
-CREATE TABLE employees (
-    id INTEGER PRIMARY KEY,
-    name TEXT,
-    department TEXT,
-    salary REAL
-)
-''')
-
-# 插入数据
-cursor.execute("INSERT INTO employees VALUES (1, '张三', '技术部', 8000)")
-cursor.execute("INSERT INTO employees VALUES (2, '李四', '市场部', 5500)")
-cursor.execute("INSERT INTO employees VALUES (3, '王五', '技术部', 9000)")
-
-print("插入后：")
-cursor.execute("SELECT * FROM employees")
-for row in cursor.fetchall():
-    print(row)
-
-# 更新：技术部员工薪资增加10%
-cursor.execute("UPDATE employees SET salary = salary * 1.1 WHERE department = '技术部'")
-print("\\n技术部员工加薪10%后：")
-cursor.execute("SELECT * FROM employees")
-for row in cursor.fetchall():
-    print(row)
-
-# 删除：薪资低于6000的员工
-cursor.execute("DELETE FROM employees WHERE salary < 6000")
-print("\\n删除低薪员工后：")
-cursor.execute("SELECT * FROM employees")
-for row in cursor.fetchall():
-    print(row)
-
-conn.close()`,
-        answer: `import sqlite3
-
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-cursor.execute('CREATE TABLE employees (id INTEGER PRIMARY KEY, name TEXT, department TEXT, salary REAL)')
-
-cursor.execute("INSERT INTO employees VALUES (1, '张三', '技术部', 8000)")
-cursor.execute("INSERT INTO employees VALUES (2, '李四', '市场部', 5500)")
-cursor.execute("INSERT INTO employees VALUES (3, '王五', '技术部', 9000)")
-
-cursor.execute("UPDATE employees SET salary = salary * 1.1 WHERE department = '技术部'")
-cursor.execute("DELETE FROM employees WHERE salary < 6000")
-
-conn.close()`,
-        score: 10
-      },
-      {
-        id: 9,
-        title: "问题9：索引创建与分析",
-        description: `创建合适的索引并分析查询性能。
-
-<strong>表结构：</strong>
-employees表：id, name, department, salary
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>在name列上创建索引</li>
-  <li>在department和salary上创建复合索引</li>
-  <li>演示索引的使用</li>
-</ul>`,
-        difficulty: "medium",
-        code: `# 请编写代码：索引创建与分析
-import sqlite3
-
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-cursor.execute('''
-CREATE TABLE employees (
-    id INTEGER PRIMARY KEY,
-    name TEXT,
-    department TEXT,
-    salary REAL
-)
-''')
-
-# 插入测试数据
-import random
-for i in range(1, 1001):
-    name = f"员工{i}"
-    dept = random.choice(['技术部', '市场部', '人事部'])
-    salary = random.randint(5000, 15000)
-    cursor.execute("INSERT INTO employees VALUES (?, ?, ?, ?)", (i, name, dept, salary))
-
-print("已插入1000条记录")
-
-# 创建索引
-cursor.execute("CREATE INDEX idx_name ON employees(name)")
-cursor.execute("CREATE INDEX idx_dept_salary ON employees(department, salary)")
-print("\\n已创建索引：idx_name, idx_dept_salary")
-
-# 查询演示
-print("\\n按姓名查询：")
-cursor.execute("SELECT * FROM employees WHERE name = '员工500'")
-for row in cursor.fetchall():
-    print(row)
-
-print("\\n按部门和薪资查询：")
-cursor.execute("SELECT * FROM employees WHERE department = '技术部' AND salary > 10000 LIMIT 5")
-for row in cursor.fetchall():
-    print(row)
-
-# 查看索引列表
-print("\\n索引列表：")
-cursor.execute("SELECT name, tbl_name FROM sqlite_master WHERE type='index'")
-for row in cursor.fetchall():
-    print(row)
-
-conn.close()`,
-        answer: `import sqlite3
-
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-cursor.execute('CREATE TABLE employees (id INTEGER PRIMARY KEY, name TEXT, department TEXT, salary REAL)')
-
-for i in range(1, 1001):
-    cursor.execute("INSERT INTO employees VALUES (?, ?, ?, ?)", (i, f"员工{i}", '技术部', 8000))
-
-cursor.execute("CREATE INDEX idx_name ON employees(name)")
-cursor.execute("CREATE INDEX idx_dept_salary ON employees(department, salary)")
-
-cursor.execute("SELECT * FROM employees WHERE name = '员工500'")
-
-conn.close()`,
-        score: 10
-      },
-      {
-        id: 10,
-        title: "问题10：综合查询",
-        description: `编写复杂的SQL查询，综合运用多种技术。
-
-<strong>表结构：</strong>
-- employees表：id, name, dept_id, salary
-- departments表：id, dept_name
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>查询每个部门的员工数量、最高薪资、平均薪资</li>
-  <li>只显示员工数量大于1的部门</li>
-  <li>结果按平均薪资降序排列</li>
-</ul>`,
-        difficulty: "hard",
-        code: `# 请编写代码：综合查询
-import sqlite3
-
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-cursor.execute('''
-CREATE TABLE departments (
-    id INTEGER PRIMARY KEY,
-    dept_name TEXT
-)
-''')
-
-cursor.execute('''
-CREATE TABLE employees (
-    id INTEGER PRIMARY KEY,
-    name TEXT,
-    dept_id INTEGER,
-    salary REAL,
-    FOREIGN KEY (dept_id) REFERENCES departments(id)
-)
-''')
-
-cursor.executemany('INSERT INTO departments VALUES (?,?)', 
-    [(1, '技术部'), (2, '市场部'), (3, '人事部')])
-
-cursor.executemany('INSERT INTO employees VALUES (?,?,?,?)',
-    [(1, '张三', 1, 9000), (2, '李四', 1, 8500), (3, '王五', 2, 7000),
-     (4, '赵六', 2, 6500), (5, '钱七', 2, 7500), (6, '孙八', 3, 5000)])
-
-# 综合查询
-cursor.execute('''
-SELECT 
-    d.dept_name,
-    COUNT(*) as employee_count,
-    MAX(e.salary) as max_salary,
-    AVG(e.salary) as avg_salary
-FROM employees e
-INNER JOIN departments d ON e.dept_id = d.id
-GROUP BY d.dept_name
-HAVING COUNT(*) > 1
-ORDER BY avg_salary DESC
-''')
-
-print("部门统计（员工数>1）：")
-print("部门名称 | 员工数 | 最高薪资 | 平均薪资")
-print("-" * 45)
-for row in cursor.fetchall():
-    print(f"{row[0]:8} | {row[1]:6} | {row[2]:8.0f} | {row[3]:8.2f}")
-
-conn.close()`,
-        answer: `import sqlite3
-
-conn = sqlite3.connect(':memory:')
-cursor = conn.cursor()
-
-cursor.execute('CREATE TABLE departments (id INTEGER PRIMARY KEY, dept_name TEXT)')
-cursor.execute('CREATE TABLE employees (id INTEGER PRIMARY KEY, name TEXT, dept_id INTEGER, salary REAL)')
-
-cursor.executemany('INSERT INTO departments VALUES (?,?)', [(1, '技术部'), (2, '市场部'), (3, '人事部')])
-cursor.executemany('INSERT INTO employees VALUES (?,?,?,?)', [(1, '张三', 1, 9000), (2, '李四', 1, 8500), (3, '王五', 2, 7000)])
-
-cursor.execute('''
-SELECT d.dept_name, COUNT(*), MAX(e.salary), AVG(e.salary)
-FROM employees e
-INNER JOIN departments d ON e.dept_id = d.id
-GROUP BY d.dept_name
-HAVING COUNT(*) > 1
-ORDER BY AVG(e.salary) DESC
-''')
-
-conn.close()`,
+        code: `# 请编写代码`,
+        answer: ``,
         score: 10
       }
     ];
@@ -1167,147 +336,133 @@ conn.close()`,
     const examChoiceQuestions = [
       {
         id: 11,
-        title: "选择题1：SQL基础",
-        question: "以下哪个关键字用于去除查询结果中的重复记录？",
-        options: [
-          "A. UNIQUE",
-          "B. DISTINCT",
-          "C. DIFFERENT",
-          "D. REMOVE"
-        ],
+        type: "choice",
+        title: "选择题1：SQL连接",
+        question: "LEFT JOIN会返回哪个表的所有记录？",
+        options: {
+          A: "右表",
+          B: "左表",
+          C: "两个表的交集",
+          D: "两个表的并集"
+        },
         answer: "B",
-        difficulty: "easy",
         score: 10
       },
       {
         id: 12,
-        title: "选择题2：数据库设计",
-        question: "在关系数据库设计中，消除非主属性对主键的部分依赖，可以达到哪个范式？",
-        options: [
-          "A. 1NF",
-          "B. 2NF",
-          "C. 3NF",
-          "D. BCNF"
-        ],
+        type: "choice",
+        title: "选择题2：事务ACID",
+        question: "事务的ACID特性中，'C'代表什么？",
+        options: {
+          A: "原子性",
+          B: "一致性",
+          C: "隔离性",
+          D: "持久性"
+        },
         answer: "B",
-        difficulty: "medium",
         score: 10
       },
       {
         id: 13,
-        title: "选择题3：事务管理",
-        question: "以下哪个隔离级别可以避免幻读？",
-        options: [
-          "A. Read Uncommitted",
-          "B. Read Committed",
-          "C. Repeatable Read",
-          "D. Serializable"
-        ],
-        answer: "D",
-        difficulty: "medium",
+        type: "choice",
+        title: "选择题3：索引类型",
+        question: "以下哪种索引最适合范围查询？",
+        options: {
+          A: "哈希索引",
+          B: "B+树索引",
+          C: "位图索引",
+          D: "全文索引"
+        },
+        answer: "B",
         score: 10
       },
       {
         id: 14,
-        title: "选择题4：索引优化",
-        question: "关于数据库索引，以下说法错误的是？",
-        options: [
-          "A. 索引可以提高查询速度",
-          "B. 索引会降低INSERT操作速度",
-          "C. 主键自动创建唯一索引",
-          "D. 应该对所有列都创建索引"
-        ],
+        type: "choice",
+        title: "选择题4：存储过程",
+        question: "存储过程的主要优点是什么？",
+        options: {
+          A: "减少网络传输",
+          B: "提高数据安全性",
+          C: "简化复杂操作",
+          D: "以上都是"
+        },
         answer: "D",
-        difficulty: "medium",
         score: 10
       },
       {
         id: 15,
-        title: "选择题5：SQL查询",
-        question: "以下关于HAVING子句的说法，正确的是？",
-        options: [
-          "A. HAVING子句必须在WHERE子句之前",
-          "B. HAVING子句可以不与GROUP BY一起使用",
-          "C. HAVING子句用于过滤分组后的结果",
-          "D. HAVING子句不能使用聚合函数"
-        ],
-        answer: "C",
-        difficulty: "medium",
+        type: "choice",
+        title: "选择题5：约束类型",
+        question: "FOREIGN KEY约束的作用是什么？",
+        options: {
+          A: "确保列值唯一",
+          B: "建立表之间的关联关系",
+          C: "确保列值非空",
+          D: "限制列值范围"
+        },
+        answer: "B",
         score: 10
       },
       {
         id: 16,
-        title: "选择题6：范式理论",
-        question: "第三范式（3NF）要求消除什么依赖？",
-        options: [
-          "A. 部分依赖",
-          "B. 传递依赖",
-          "C. 多值依赖",
-          "D. 函数依赖"
-        ],
-        answer: "B",
-        difficulty: "medium",
+        type: "choice",
+        title: "选择题6：数据库范式",
+        question: "第一范式（1NF）要求什么？",
+        options: {
+          A: "消除部分依赖",
+          B: "消除传递依赖",
+          C: "每个属性都是原子值",
+          D: "消除多值依赖"
+        },
+        answer: "C",
         score: 10
       },
       {
         id: 17,
-        title: "选择题7：数据库锁",
-        question: "以下哪种锁可以防止脏读？",
-        options: [
-          "A. 共享锁",
-          "B. 排他锁",
-          "C. 意向锁",
-          "D. 都不行"
-        ],
-        answer: "B",
-        difficulty: "hard",
+        type: "choice",
+        title: "选择题7：SQL聚合函数",
+        question: "以下哪个聚合函数用于计算行数？",
+        options: {
+          A: "SUM()",
+          B: "AVG()",
+          C: "COUNT()",
+          D: "MAX()"
+        },
+        answer: "C",
         score: 10
       },
       {
         id: 18,
-        title: "选择题8：SQL JOIN",
-        question: "INNER JOIN返回的结果是？",
-        options: [
-          "A. 两个表的所有记录",
-          "B. 两个表的交集",
-          "C. 左表的所有记录",
-          "D. 右表的所有记录"
-        ],
+        type: "choice",
+        title: "选择题8：数据库备份",
+        question: "以下哪种备份方式会锁表？",
+        options: {
+          A: "热备份",
+          B: "冷备份",
+          C: "增量备份",
+          D: "差异备份"
+        },
         answer: "B",
-        difficulty: "easy",
         score: 10
       },
       {
         id: 19,
-        title: "选择题9：视图",
-        question: "关于视图的说法，正确的是？",
-        options: [
-          "A. 视图存储实际数据",
-          "B. 视图不能更新基表数据",
-          "C. 视图可以简化复杂查询",
-          "D. 视图只能查询一个表"
-        ],
+        type: "choice",
+        title: "选择题9：触发器",
+        question: "触发器通常在什么情况下触发？",
+        options: {
+          A: "只有INSERT操作时",
+          B: "只有UPDATE操作时",
+          C: "INSERT、UPDATE或DELETE操作时",
+          D: "只有DELETE操作时"
+        },
         answer: "C",
-        difficulty: "easy",
-        score: 10
-      },
-      {
-        id: 20,
-        title: "选择题10：SQL聚合",
-        question: "COUNT(*)和COUNT(列名)的区别是？",
-        options: [
-          "A. 没有区别",
-          "B. COUNT(*)统计所有行，COUNT(列名)忽略NULL值",
-          "C. COUNT(*)忽略NULL值，COUNT(列名)统计所有行",
-          "D. COUNT(*)只能用于数字列"
-        ],
-        answer: "B",
-        difficulty: "easy",
         score: 10
       }
     ];
 
-    // 合并所有题目
+    // 合并所有考试题目
     const allExamQuestions = [...examProblems, ...examChoiceQuestions];
 
     // 全局变量
@@ -1315,19 +470,110 @@ conn.close()`,
     let pyodide = null;
     let editor = null;
     let examTimer = null;
-    let examTime = 30 * 60;
+    let examTime = 30 * 60; // 30分钟
     let studentName = "";
     let studentAnswers = {};
-    let studentChoiceAnswers = {};
     let examStartTime = null;
 
     // 初始化函数
     document.addEventListener('DOMContentLoaded', function() {
+      // 绑定开始考试按钮事件
       document.getElementById('start-exam').addEventListener('click', startExam);
+      
+      // 绑定返回课程按钮事件
       document.getElementById('back-to-course').addEventListener('click', function() {
         window.location.href = 'database-principles.html';
       });
+      
+      // 绑定查看答案按钮事件
+      document.getElementById('review-answers').addEventListener('click', function() {
+        showAnswerReview();
+      });
     });
+    
+    function showAnswerReview() {
+      const resultDiv = document.getElementById('exam-result');
+      
+      let html = `
+        <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold text-gray-200">答案解析</h3>
+            <button onclick="document.getElementById('exam-result').innerHTML = document.getElementById('original-result').innerHTML; initResultEvents();" class="btn-secondary text-sm">
+              <i class="fa fa-arrow-left"></i> 返回
+            </button>
+          </div>
+          
+          <div class="space-y-6 max-h-[70vh] overflow-y-auto pr-2">
+      `;
+      
+      examProblems.forEach((problem, index) => {
+        const studentAnswer = studentAnswers[problem.id];
+        const isCorrect = studentAnswer && studentAnswer.trim() === problem.answer.trim();
+        const isAnswered = studentAnswer && studentAnswer.trim() !== problem.code.trim();
+        
+        html += `
+          <div class="bg-dark p-4 rounded-lg border ${isCorrect ? 'border-emerald-600' : 'border-red-600'}">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-8 h-8 rounded-full ${isCorrect ? 'bg-emerald-600' : 'bg-red-600'} text-white flex items-center justify-center font-bold text-sm">${index + 1}</span>
+              <h4 class="font-semibold text-gray-200">${problem.title}</h4>
+              <span class="${isCorrect ? 'text-emerald-400' : isAnswered ? 'text-red-400' : 'text-gray-400'} text-sm">${isCorrect ? '✓ 正确' : isAnswered ? '✗ 错误' : '○ 未答'}</span>
+            </div>
+            <div class="text-sm text-gray-400 mb-2">
+              <strong>你的答案：</strong>
+              <span class="${isCorrect ? 'text-emerald-400' : 'text-red-400'}">${isAnswered ? (isCorrect ? '正确' : '错误') : '未作答'}</span>
+            </div>
+            <div class="bg-dark-gray p-3 rounded text-sm">
+              <strong class="text-emerald-400">参考答案：</strong>
+              <pre class="mt-2 text-gray-300 whitespace-pre-wrap">${problem.answer || '无'}</pre>
+            </div>
+          </div>
+        `;
+      });
+      
+      examChoiceQuestions.forEach((question, index) => {
+        const studentAnswer = studentAnswers[question.id];
+        const isCorrect = studentAnswer === question.answer;
+        const isAnswered = !!studentAnswer;
+        
+        html += `
+          <div class="bg-dark p-4 rounded-lg border ${isCorrect ? 'border-emerald-600' : 'border-red-600'}">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-8 h-8 rounded-full ${isCorrect ? 'bg-emerald-600' : 'bg-red-600'} text-white flex items-center justify-center font-bold text-sm">选${index + 1}</span>
+              <h4 class="font-semibold text-gray-200">${question.title}</h4>
+              <span class="${isCorrect ? 'text-emerald-400' : isAnswered ? 'text-red-400' : 'text-gray-400'} text-sm">${isCorrect ? '✓ 正确' : isAnswered ? '✗ 错误' : '○ 未答'}</span>
+            </div>
+            <div class="text-sm text-gray-400 mb-2">
+              <strong>你的答案：</strong>
+              <span class="${isCorrect ? 'text-emerald-400' : 'text-red-400'}">${isAnswered ? studentAnswer : '未作答'}</span>
+            </div>
+            <div class="text-sm text-gray-400 mb-2">
+              <strong>正确答案：</strong>
+              <span class="text-emerald-400">${question.answer}</span>
+            </div>
+          </div>
+        `;
+      });
+      
+      html += `
+          </div>
+        </div>
+      `;
+      
+      const originalResult = resultDiv.innerHTML;
+      resultDiv.innerHTML = `
+        <div id="original-result" class="hidden">${originalResult}</div>
+        ${html}
+      `;
+    }
+    
+    function initResultEvents() {
+      document.getElementById('back-to-course').addEventListener('click', function() {
+        window.location.href = 'database-principles.html';
+      });
+      document.getElementById('review-answers').addEventListener('click', function() {
+        showAnswerReview();
+      });
+    }
 
     // 开始考试
     function startExam() {
@@ -1337,9 +583,11 @@ conn.close()`,
         return;
       }
       
+      // 隐藏开始页面，显示考试页面
       document.getElementById('exam-start').classList.add('hidden');
       document.getElementById('exam-content').classList.remove('hidden');
       
+      // 初始化代码编辑器
       editor = ace.edit('exam-code-editor');
       editor.setTheme('ace/theme/tomorrow_night');
       editor.getSession().setMode('ace/mode/python');
@@ -1350,16 +598,30 @@ conn.close()`,
         wrap: true
       });
       
+      // 加载Pyodide
       initPyodide();
+      
+      // 生成题目列表
       generateQuestionList();
+      
+      // 加载第一个问题
       loadExamQuestion(1);
       
+      // 绑定按钮事件
       document.getElementById('exam-run-code').addEventListener('click', runExamCode);
       document.getElementById('exam-reset-code').addEventListener('click', resetExamCode);
       document.getElementById('prev-question').addEventListener('click', goToPrevQuestion);
       document.getElementById('next-question').addEventListener('click', goToNextQuestion);
+      document.getElementById('submit-exam').addEventListener('click', function() {
+        if (confirm('确定要提交考试吗？提交后将无法修改答案。')) {
+          submitExam();
+        }
+      });
       
+      // 开始考试计时器
       startExamTimer();
+      
+      // 记录考试开始时间
       examStartTime = new Date();
     }
 
@@ -1400,7 +662,7 @@ conn.close()`,
         try {
           pyodide = await loadWithTimeout(cdns[currentCDN]);
           statusEl.innerHTML = '<i class="fa fa-check text-emerald-400"></i> Python解释器加载成功';
-          await pyodide.loadPackage(['pandas', 'numpy']);
+          await pyodide.loadPackage(['pandas', 'numpy', 'scikit-learn']);
           return;
         } catch (error) {
           console.warn(`CDN ${cdns[currentCDN]} 加载失败:`, error);
@@ -1422,17 +684,19 @@ conn.close()`,
         problemItem.className = 'problem-item';
         problemItem.onclick = () => loadExamQuestion(question.id);
         
-        const isChoice = question.id > 10;
         const difficultyClass = question.difficulty === 'easy' ? 'difficulty-easy' : 
-                             question.difficulty === 'medium' ? 'difficulty-medium' : 'difficulty-hard';
+                             question.difficulty === 'medium' ? 'difficulty-medium' : 'difficulty-easy';
+        
+        const isChoice = question.type === 'choice';
+        const iconBg = isChoice ? 'bg-purple-600' : 'bg-gray-700';
+        const typeLabel = isChoice ? '选择题' : (question.difficulty === 'easy' ? '简单' : question.difficulty === 'medium' ? '中等' : '困难');
         
         problemItem.innerHTML = `
-          <div class="w-8 h-8 rounded-full ${isChoice ? 'bg-purple-600' : 'bg-gray-700'} flex items-center justify-center font-bold ${isChoice ? 'text-white text-sm' : ''}">${isChoice ? '选' : question.id}</div>
+          <div class="w-8 h-8 rounded-full ${iconBg} flex items-center justify-center font-bold ${isChoice ? 'text-white text-xs' : ''}">${isChoice ? '选' : (index + 1)}</div>
           <div class="flex-1">
             <div class="font-medium">${question.title}</div>
             <div class="flex items-center gap-2 mt-1">
-              <span class="difficulty-tag ${difficultyClass}">${question.difficulty === 'easy' ? '简单' : question.difficulty === 'medium' ? '中等' : '困难'}</span>
-              ${isChoice ? '<span class="text-xs text-purple-400">选择题</span>' : ''}
+              <span class="difficulty-tag ${difficultyClass}">${typeLabel}</span>
             </div>
           </div>
           <div class="text-gray-500" id="status-${question.id}">
@@ -1444,112 +708,124 @@ conn.close()`,
       });
     }
 
+    // 当前选择题答案
+    let selectedChoiceAnswer = null;
+
     // 加载考试问题（支持编程题和选择题）
     function loadExamQuestion(questionId) {
-      currentQuestion = questionId;
-      
-      const isChoice = questionId > 10;
-      
-      if (isChoice) {
-        loadExamChoiceQuestion(questionId);
-      } else {
-        loadExamProblem(questionId);
-      }
-      
-      // 更新问题项状态
-      document.querySelectorAll('.problem-item').forEach((item, index) => {
-        item.classList.remove('active');
-        if (allExamQuestions[index].id === questionId) {
-          item.classList.add('active');
-        }
-      });
-    }
-
-    // 加载编程题
-    function loadExamProblem(problemId) {
-      const problem = examProblems.find(p => p.id === problemId);
-      
-      if (!problem) return;
-      
-      // 显示编程题区域，隐藏选择题区域
-      document.getElementById('exam-coding-section').classList.remove('hidden');
-      document.getElementById('exam-choice-section').classList.add('hidden');
-      
-      document.getElementById('exam-problem-title').textContent = problem.title;
-      document.getElementById('exam-problem-description').innerHTML = problem.description;
-      
-      const difficultyTag = document.getElementById('exam-difficulty-tag');
-      difficultyTag.className = 'difficulty-tag';
-      difficultyTag.classList.add('difficulty-' + problem.difficulty);
-      difficultyTag.textContent = problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难';
-      
-      editor.setValue(studentAnswers[problemId] || problem.code);
-      editor.clearSelection();
-    }
-
-    // 加载选择题
-    function loadExamChoiceQuestion(questionId) {
-      const question = examChoiceQuestions.find(q => q.id === questionId);
+      const question = allExamQuestions.find(q => q.id === questionId);
       
       if (!question) return;
       
-      // 显示选择题区域，隐藏编程题区域
-      document.getElementById('exam-coding-section').classList.add('hidden');
-      document.getElementById('exam-choice-section').classList.remove('hidden');
+      // 保存当前编程题答案
+      if (editor && currentQuestion <= 1) {
+        studentAnswers[currentQuestion] = editor.getValue();
+      }
       
+      currentQuestion = questionId;
+      
+      if (question.type === 'choice') {
+        // 加载选择题
+        loadExamChoiceQuestion(question);
+      } else {
+        // 加载编程题
+        loadExamProgrammingQuestion(question);
+      }
+      
+      // 更新问题项状态
+      document.querySelectorAll('.problem-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      const index = allExamQuestions.findIndex(q => q.id === questionId);
+      document.querySelector(`.problem-item:nth-child(${index + 1})`).classList.add('active');
+    }
+
+    // 加载选择题
+    function loadExamChoiceQuestion(question) {
+      // 隐藏编程题区域，显示选择题区域
+      document.getElementById('exam-code-area').classList.add('hidden');
+      document.getElementById('exam-code-output').parentElement.classList.add('hidden');
+      document.getElementById('exam-choice-area').classList.remove('hidden');
+      
+      // 更新选择题内容
       document.getElementById('exam-choice-title').textContent = question.title;
-      document.getElementById('exam-choice-question').innerHTML = `<p>${question.question}</p>`;
+      document.getElementById('exam-choice-question-text').textContent = question.question;
       
-      const difficultyTag = document.getElementById('exam-choice-difficulty-tag');
+      // 生成选项
+      const optionsContainer = document.getElementById('exam-choice-options');
+      optionsContainer.innerHTML = '';
+      selectedChoiceAnswer = studentAnswers[question.id] || null;
+      
+      ['A', 'B', 'C', 'D'].forEach(letter => {
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'exam-choice-option p-4 rounded-lg border border-gray-700 cursor-pointer hover:border-cyan-500 transition-all';
+        if (selectedChoiceAnswer === letter) {
+          optionDiv.classList.remove('border-gray-700');
+          optionDiv.classList.add('border-cyan-500', 'bg-cyan-900/30');
+        }
+        optionDiv.setAttribute('data-option', letter);
+        optionDiv.onclick = () => selectExamChoiceOption(letter, question.id);
+        optionDiv.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold text-gray-300">${letter}</div>
+            <span class="text-gray-200">${question.options[letter]}</span>
+          </div>
+        `;
+        optionsContainer.appendChild(optionDiv);
+      });
+      
+      // 更新题目描述区域
+      document.getElementById('exam-problem-title').textContent = question.title;
+      document.getElementById('exam-problem-description').innerHTML = `<p class="text-gray-300">请选择正确答案（单选题）</p>`;
+    }
+
+    // 选择考试选择题选项
+    function selectExamChoiceOption(option, questionId) {
+      selectedChoiceAnswer = option;
+      studentAnswers[questionId] = option;
+      
+      // 更新选项样式
+      document.querySelectorAll('.exam-choice-option').forEach(opt => {
+        opt.classList.remove('border-cyan-500', 'bg-cyan-900/30');
+        opt.classList.add('border-gray-700');
+      });
+      
+      const selectedOpt = document.querySelector(`.exam-choice-option[data-option="${option}"]`);
+      if (selectedOpt) {
+        selectedOpt.classList.remove('border-gray-700');
+        selectedOpt.classList.add('border-cyan-500', 'bg-cyan-900/30');
+      }
+      
+      // 更新问题状态
+      const statusElement = document.getElementById(`status-${questionId}`);
+      statusElement.innerHTML = '<i class="fa fa-check-circle text-emerald-400"></i>';
+    }
+
+    // 加载编程题
+    function loadExamProgrammingQuestion(question) {
+      // 显示编程题区域，隐藏选择题区域
+      document.getElementById('exam-code-area').classList.remove('hidden');
+      document.getElementById('exam-code-output').parentElement.classList.remove('hidden');
+      document.getElementById('exam-choice-area').classList.add('hidden');
+      
+      // 更新问题信息
+      document.getElementById('exam-problem-title').textContent = question.title;
+      document.getElementById('exam-problem-description').innerHTML = question.description;
+      
+      // 更新难度标签
+      const difficultyTag = document.getElementById('exam-difficulty-tag');
       difficultyTag.className = 'difficulty-tag';
       difficultyTag.classList.add('difficulty-' + question.difficulty);
       difficultyTag.textContent = question.difficulty === 'easy' ? '简单' : question.difficulty === 'medium' ? '中等' : '困难';
       
-      // 生成选项
-      const optionsDiv = document.getElementById('exam-choice-options');
-      optionsDiv.innerHTML = '';
-      
-      question.options.forEach((option, index) => {
-        const optionDiv = document.createElement('div');
-        optionDiv.className = 'p-4 rounded-lg border border-gray-700 cursor-pointer hover:border-cyan-500 transition-colors exam-choice-option';
-        
-        // 如果已经选择过，恢复选中状态
-        if (studentChoiceAnswers[questionId] === option.charAt(0)) {
-          optionDiv.classList.add('border-cyan-500', 'bg-cyan-900/20');
-        }
-        
-        optionDiv.onclick = () => selectExamChoice(optionDiv, option.charAt(0), questionId);
-        optionDiv.innerHTML = `
-          <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full ${studentChoiceAnswers[questionId] === option.charAt(0) ? 'bg-cyan-500 text-gray-900' : 'bg-gray-700'} flex items-center justify-center font-bold exam-choice-radio">${option.charAt(0)}</div>
-            <div class="flex-1">${option.substring(3)}</div>
-          </div>
-        `;
-        optionsDiv.appendChild(optionDiv);
-      });
+      // 更新代码编辑器
+      editor.setValue(studentAnswers[question.id] || question.code);
+      editor.clearSelection();
     }
 
-    // 选择考试答案
-    function selectExamChoice(element, choice, questionId) {
-      studentChoiceAnswers[questionId] = choice;
-      
-      // 移除其他选项的选中状态
-      document.querySelectorAll('.exam-choice-option').forEach(opt => {
-        opt.classList.remove('border-cyan-500', 'bg-cyan-900/20');
-        opt.querySelector('.exam-choice-radio').classList.remove('bg-cyan-500', 'text-gray-900');
-        opt.querySelector('.exam-choice-radio').classList.add('bg-gray-700');
-      });
-      
-      // 设置当前选项的选中状态
-      element.classList.add('border-cyan-500', 'bg-cyan-900/20');
-      element.querySelector('.exam-choice-radio').classList.remove('bg-gray-700');
-      element.querySelector('.exam-choice-radio').classList.add('bg-cyan-500', 'text-gray-900');
-      
-      // 更新状态图标
-      const statusElement = document.getElementById(`status-${questionId}`);
-      if (statusElement) {
-        statusElement.innerHTML = '<i class="fa fa-check-circle text-emerald-400"></i>';
-      }
+    // 加载考试问题（保留旧函数兼容）
+    function loadExamProblem(problemId) {
+      loadExamQuestion(problemId);
     }
 
     // 运行代码
@@ -1568,15 +844,20 @@ conn.close()`,
       
       try {
         const startTime = performance.now();
+        
+        // 运行代码
         const result = await pyodide.runPythonAsync(code);
+        
         const endTime = performance.now();
         const executionTime = (endTime - startTime).toFixed(2);
         
         outputDiv.textContent = result || '代码执行成功，无输出';
         executionTimeDiv.textContent = `执行时间：${executionTime}ms`;
         
+        // 保存答案
         studentAnswers[currentQuestion] = code;
         
+        // 更新问题状态
         const statusElement = document.getElementById(`status-${currentQuestion}`);
         statusElement.innerHTML = '<i class="fa fa-check-circle text-emerald-400"></i>';
       } catch (error) {
@@ -1587,9 +868,9 @@ conn.close()`,
 
     // 重置代码
     function resetExamCode() {
-      const problem = examProblems.find(p => p.id === currentQuestion);
-      if (problem) {
-        editor.setValue(problem.code);
+      const question = allExamQuestions.find(q => q.id === currentQuestion);
+      if (question && question.type !== 'choice') {
+        editor.setValue(question.code);
         editor.clearSelection();
       }
     }
@@ -1607,8 +888,6 @@ conn.close()`,
       const currentIndex = allExamQuestions.findIndex(q => q.id === currentQuestion);
       if (currentIndex < allExamQuestions.length - 1) {
         loadExamQuestion(allExamQuestions[currentIndex + 1].id);
-      } else {
-        submitExam();
       }
     }
 
@@ -1621,7 +900,13 @@ conn.close()`,
         
         if (examTime <= 0) {
           clearInterval(examTimer);
+          alert('考试时间到！');
           submitExam();
+        }
+        
+        // 最后5分钟提醒
+        if (examTime === 300) {
+          alert('注意：考试还剩5分钟！');
         }
       }, 1000);
     }
@@ -1630,40 +915,60 @@ conn.close()`,
     function updateExamTimer() {
       const minutes = Math.floor(examTime / 60);
       const seconds = examTime % 60;
-      document.getElementById('exam-timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      const timerElement = document.getElementById('exam-timer');
+      timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      
+      // 最后5分钟显示红色
+      if (examTime <= 300) {
+        timerElement.classList.add('text-red-400');
+        timerElement.classList.remove('text-cyan-400');
+      }
     }
 
     // 提交考试
     function submitExam() {
       clearInterval(examTimer);
       
+      // 保存当前答案
+      if (editor && currentQuestion <= 1) {
+        studentAnswers[currentQuestion] = editor.getValue();
+      }
+      
+      // 计算考试用时
       const examEndTime = new Date();
       const usedMinutes = Math.round((examEndTime - examStartTime) / (1000 * 60));
       
+      // 计算得分
       let totalScore = 0;
       let completedCount = 0;
       let correctCount = 0;
+      let choiceCorrectCount = 0;
+      let programmingCorrectCount = 0;
       
-      // 评分编程题
-      examProblems.forEach(problem => {
-        const studentAnswer = studentAnswers[problem.id];
-        if (studentAnswer) {
-          completedCount++;
-          if (studentAnswer.trim() === problem.answer.trim()) {
-            correctCount++;
-            totalScore += problem.score;
+      allExamQuestions.forEach(question => {
+        const studentAnswer = studentAnswers[question.id];
+        
+        if (question.type === 'choice') {
+          // 选择题评分
+          if (studentAnswer) {
+            completedCount++;
+            if (studentAnswer === question.answer) {
+              correctCount++;
+              choiceCorrectCount++;
+              totalScore += question.score;
+            }
           }
-        }
-      });
-      
-      // 评分选择题
-      examChoiceQuestions.forEach(question => {
-        const studentAnswer = studentChoiceAnswers[question.id];
-        if (studentAnswer) {
-          completedCount++;
-          if (studentAnswer === question.answer) {
-            correctCount++;
-            totalScore += question.score;
+        } else {
+          // 编程题评分
+          if (studentAnswer && studentAnswer.trim() !== question.code.trim()) {
+            completedCount++;
+            if (studentAnswer.trim() === question.answer.trim()) {
+              correctCount++;
+              programmingCorrectCount++;
+              totalScore += question.score;
+            } else {
+              totalScore += Math.floor(question.score * 0.5);
+            }
           }
         }
       });
@@ -1671,53 +976,94 @@ conn.close()`,
       const wrongCount = completedCount - correctCount;
       const completionRate = Math.round((completedCount / allExamQuestions.length) * 100);
       
+      // 更新结果页面
       document.getElementById('result-name').textContent = `姓名：${studentName}`;
       document.getElementById('total-score').textContent = totalScore;
       document.getElementById('used-time').textContent = usedMinutes;
       document.getElementById('completion-rate').textContent = completionRate;
       document.getElementById('completed-count').textContent = completedCount;
       document.getElementById('correct-count').textContent = correctCount;
-      document.getElementById('wrong-count').textContent = wrongCount;
+      document.getElementById('wrong-count').textContent = wrongCount > 0 ? wrongCount : 0;
       
-      // 更新总题目数显示
-      document.querySelector('.grid.grid-cols-2.md\\:grid-cols-4 .bg-dark-gray:first-child p:last-child').textContent = allExamQuestions.length;
-      
+      // 生成答题状态
       const answerStatus = document.getElementById('answer-status');
       answerStatus.innerHTML = '';
       
-      // 显示所有题目的答题情况
-      allExamQuestions.forEach(question => {
+      let questionNumber = 1;
+      
+      examProblems.forEach(problem => {
         const statusItem = document.createElement('div');
-        statusItem.className = 'w-12 h-12 rounded-full flex items-center justify-center font-bold';
+        statusItem.className = 'flex flex-col items-center gap-1';
         
-        const isChoice = question.id > 10;
-        let isAnswered = false;
-        let isCorrect = false;
+        const circleDiv = document.createElement('div');
+        circleDiv.className = 'w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm';
         
-        if (isChoice) {
-          const studentAnswer = studentChoiceAnswers[question.id];
-          isAnswered = !!studentAnswer;
-          isCorrect = studentAnswer === question.answer;
-        } else {
-          const studentAnswer = studentAnswers[question.id];
-          isAnswered = !!studentAnswer;
-          isCorrect = studentAnswer && studentAnswer.trim() === question.answer.trim();
-        }
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'text-xs text-gray-400';
+        
+        const studentAnswer = studentAnswers[problem.id];
+        const isAnswered = studentAnswer && studentAnswer.trim() !== problem.code.trim();
+        const isCorrect = isAnswered && studentAnswer.trim() === problem.answer.trim();
         
         if (!isAnswered) {
-          statusItem.className += ' bg-gray-700 text-gray-400';
-          statusItem.textContent = isChoice ? '选' : question.id;
+          circleDiv.className += ' bg-gray-700 text-gray-400 border-2 border-gray-600';
+          circleDiv.textContent = questionNumber;
+          labelDiv.textContent = '未答';
         } else if (isCorrect) {
-          statusItem.className += ' bg-emerald-900 text-emerald-400';
-          statusItem.innerHTML = `<i class="fa fa-check"></i>`;
+          circleDiv.className += ' bg-emerald-600 text-white';
+          circleDiv.innerHTML = '<i class="fa fa-check"></i>';
+          labelDiv.textContent = `题${questionNumber} ✓`;
+          labelDiv.className = 'text-xs text-emerald-400';
         } else {
-          statusItem.className += ' bg-red-900 text-red-400';
-          statusItem.innerHTML = `<i class="fa fa-times"></i>`;
+          circleDiv.className += ' bg-yellow-600 text-white';
+          circleDiv.innerHTML = '<i class="fa fa-minus"></i>';
+          labelDiv.textContent = `题${questionNumber} △`;
+          labelDiv.className = 'text-xs text-yellow-400';
         }
         
+        statusItem.appendChild(circleDiv);
+        statusItem.appendChild(labelDiv);
         answerStatus.appendChild(statusItem);
+        questionNumber++;
       });
       
+      examChoiceQuestions.forEach(question => {
+        const statusItem = document.createElement('div');
+        statusItem.className = 'flex flex-col items-center gap-1';
+        
+        const circleDiv = document.createElement('div');
+        circleDiv.className = 'w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm';
+        
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'text-xs text-gray-400';
+        
+        const studentAnswer = studentAnswers[question.id];
+        const isAnswered = !!studentAnswer;
+        const isCorrect = studentAnswer === question.answer;
+        
+        if (!isAnswered) {
+          circleDiv.className += ' bg-gray-700 text-gray-400 border-2 border-gray-600';
+          circleDiv.textContent = `选${questionNumber - 1}`;
+          labelDiv.textContent = '未答';
+        } else if (isCorrect) {
+          circleDiv.className += ' bg-emerald-600 text-white';
+          circleDiv.innerHTML = '<i class="fa fa-check"></i>';
+          labelDiv.textContent = `选${questionNumber - 1} ✓`;
+          labelDiv.className = 'text-xs text-emerald-400';
+        } else {
+          circleDiv.className += ' bg-red-600 text-white';
+          circleDiv.innerHTML = '<i class="fa fa-times"></i>';
+          labelDiv.textContent = `选${questionNumber - 1} ✗`;
+          labelDiv.className = 'text-xs text-red-400';
+        }
+        
+        statusItem.appendChild(circleDiv);
+        statusItem.appendChild(labelDiv);
+        answerStatus.appendChild(statusItem);
+        questionNumber++;
+      });
+      
+      // 显示结果页面
       document.getElementById('exam-content').classList.add('hidden');
       document.getElementById('exam-result').classList.remove('hidden');
     }

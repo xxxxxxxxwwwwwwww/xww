@@ -146,7 +146,7 @@
               <h3 class="text-lg font-semibold text-gray-200 mb-4">考试规则</h3>
               <ul class="list-disc list-inside space-y-2 text-gray-400">
                 <li>考试时间：30分钟</li>
-                <li>共15道题目，包括10道编程题和5道选择题</li>
+                <li>共10道题目，包括1道编程题和9道选择题</li>
                 <li>选择题自动评分，编程题需运行代码后评分</li>
                 <li>请独立完成，不要参考外部资料</li>
                 <li>考试过程中不要刷新页面，否则会丢失进度</li>
@@ -270,7 +270,7 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
               <div class="bg-dark-gray p-4 rounded-lg text-center">
                 <p class="text-gray-400">总题目</p>
-                <p class="text-2xl font-bold text-gray-200">15</p>
+                <p class="text-2xl font-bold text-gray-200">10</p>
               </div>
               <div class="bg-dark-gray p-4 rounded-lg text-center">
                 <p class="text-gray-400">已完成</p>
@@ -308,485 +308,26 @@
   </div>
 
   <script>
-    // 考试题目数据
+        // 考试题目数据
     const examProblems = [
       {
         id: 1,
-        title: "问题1：BI核心概念",
-        description: `编写程序展示商务智能(BI)的四大核心组成部分。
+        title: "编程题：数据分析综合应用",
+        description: `综合运用所学知识，完成一个完整的数据分析任务。
+
+<strong>背景：</strong>
+一家电商公司提供了2024年1月的销售数据，请对这份数据进行完整的分析和处理。
 
 <strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>定义BI的四个核心层次</li>
-  <li>输出每个层次的主要功能</li>
-</ul>`,
-        difficulty: "easy",
-        code: `# 请编写代码展示BI核心概念
-bi_layers = {
-    "数据源层": "数据采集与整合",
-    "数据存储层": "数据仓库与数据集市",
-    "数据分析层": "OLAP与数据挖掘",
-    "数据展示层": "报表与可视化"
-}
-
-for layer, function in bi_layers.items():
-    print(f"{layer}: {function}")`,
-        answer: `bi_layers = {
-    "数据源层": "数据采集与整合",
-    "数据存储层": "数据仓库与数据集市",
-    "数据分析层": "OLAP与数据挖掘",
-    "数据展示层": "报表与可视化"
-}
-
-for layer, function in bi_layers.items():
-    print(f"{layer}: {function}")`,
-        score: 10
-      },
-      {
-        id: 2,
-        title: "问题2：数据仓库特征",
-        description: `编写程序展示数据仓库的四个基本特征。
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>列出数据仓库的四个特征</li>
-  <li>解释每个特征的含义</li>
-</ul>`,
-        difficulty: "easy",
-        code: `# 请编写代码展示数据仓库特征
-dw_features = {
-    "面向主题": "按业务主题组织数据",
-    "集成性": "整合多源异构数据",
-    "非易失性": "数据一旦加载不修改",
-    "时变性": "记录历史变化趋势"
-}
-
-print("数据仓库四大特征:")
-for feature, desc in dw_features.items():
-    print(f"  {feature}: {desc}")`,
-        answer: `dw_features = {
-    "面向主题": "按业务主题组织数据",
-    "集成性": "整合多源异构数据",
-    "非易失性": "数据一旦加载不修改",
-    "时变性": "记录历史变化趋势"
-}
-
-print("数据仓库四大特征:")
-for feature, desc in dw_features.items():
-    print(f"  {feature}: {desc}")`,
-        score: 10
-      },
-      {
-        id: 3,
-        title: "问题3：ETL流程设计",
-        description: `编写一个简单的ETL流程程序。
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>实现数据抽取(extract)</li>
-  <li>实现数据转换(transform)</li>
-  <li>实现数据加载(load)</li>
+  <li>读取并理解数据结构</li>
+  <li>识别和处理数据中的缺失值和异常值</li>
+  <li>计算每日、每类别的销售总额和平均单价</li>
+  <li>输出分析结果</li>
 </ul>`,
         difficulty: "medium",
-        code: `# 请编写ETL流程代码
-def extract():
-    """数据抽取"""
-    return [100, 200, 150, 300, 250]
-
-def transform(data):
-    """数据转换"""
-    return [x * 1.1 for x in data]
-
-def load(data, target):
-    """数据加载"""
-    print(f"加载 {len(data)} 条数据到 {target}")
-    return True
-
-# 执行ETL
-raw_data = extract()
-clean_data = transform(raw_data)
-load(clean_data, "数据仓库")`,
-        answer: `def extract():
-    return [100, 200, 150, 300, 250]
-
-def transform(data):
-    return [x * 1.1 for x in data]
-
-def load(data, target):
-    print(f"加载 {len(data)} 条数据到 {target}")
-    return True
-
-raw_data = extract()
-clean_data = transform(raw_data)
-load(clean_data, "数据仓库")`,
-        score: 10
-      },
-      {
-        id: 4,
-        title: "问题4：星型模型设计",
-        description: `设计一个简单的销售数据仓库星型模型。
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>定义一个销售事实表</li>
-  <li>定义产品维度表</li>
-  <li>输出表结构</li>
-</ul>`,
-        difficulty: "medium",
-        code: `# 请编写星型模型设计代码
-# 事实表
-fact_sales = {
-    '销售ID': [1, 2, 3],
-    '产品ID': [101, 102, 101],
-    '销售金额': [1000, 2000, 1500]
-}
-
-# 产品维度表
-dim_product = {
-    '产品ID': [101, 102],
-    '产品名称': ['产品A', '产品B'],
-    '类别': ['电子', '服装']
-}
-
-print("事实表: 销售事实")
-for key, values in fact_sales.items():
-    print(f"  {key}: {values}")
-
-print("\\n维度表: 产品维度")
-for key, values in dim_product.items():
-    print(f"  {key}: {values}")`,
-        answer: `fact_sales = {
-    '销售ID': [1, 2, 3],
-    '产品ID': [101, 102, 101],
-    '销售金额': [1000, 2000, 1500]
-}
-
-dim_product = {
-    '产品ID': [101, 102],
-    '产品名称': ['产品A', '产品B'],
-    '类别': ['电子', '服装']
-}
-
-print("事实表: 销售事实")
-for key, values in fact_sales.items():
-    print(f"  {key}: {values}")
-
-print("\\n维度表: 产品维度")
-for key, values in dim_product.items():
-    print(f"  {key}: {values}")`,
-        score: 10
-      },
-      {
-        id: 5,
-        title: "问题5：OLAP操作",
-        description: `实现OLAP的切片(Slice)和上卷(Roll-up)操作。
-
-<strong>输入：</strong>
-销售数据
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>实现切片操作选择Q1数据</li>
-  <li>实现上卷操作按产品汇总</li>
-</ul>`,
-        difficulty: "medium",
-        code: `# 请编写OLAP操作代码
-import pandas as pd
-
-data = pd.DataFrame({
-    '产品': ['A', 'A', 'B', 'B'],
-    '季度': ['Q1', 'Q2', 'Q1', 'Q2'],
-    '销售额': [100, 120, 200, 180]
-})
-
-# 切片操作 - 选择Q1数据
-slice_q1 = data[data['季度'] == 'Q1']
-print("切片结果(Q1):")
-print(slice_q1)
-
-# 上卷操作 - 按产品汇总
-roll_up = data.groupby('产品')['销售额'].sum()
-print("\\n上卷结果(按产品):")
-print(roll_up)`,
-        answer: `import pandas as pd
-
-data = pd.DataFrame({
-    '产品': ['A', 'A', 'B', 'B'],
-    '季度': ['Q1', 'Q2', 'Q1', 'Q2'],
-    '销售额': [100, 120, 200, 180]
-})
-
-slice_q1 = data[data['季度'] == 'Q1']
-print("切片结果(Q1):")
-print(slice_q1)
-
-roll_up = data.groupby('产品')['销售额'].sum()
-print("\\n上卷结果(按产品):")
-print(roll_up)`,
-        score: 10
-      },
-      {
-        id: 6,
-        title: "问题6：多维数据分析",
-        description: `创建一个数据立方体并进行多维聚合分析。
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>创建三维销售数据</li>
-  <li>按产品维度聚合</li>
-  <li>计算总销售额</li>
-</ul>`,
-        difficulty: "medium",
-        code: `# 请编写多维数据分析代码
-import pandas as pd
-
-# 创建三维数据立方体
-cube = pd.DataFrame({
-    '产品': ['A', 'A', 'B', 'B', 'A', 'A', 'B', 'B'],
-    '地区': ['北', '南', '北', '南', '北', '南', '北', '南'],
-    '季度': ['Q1', 'Q1', 'Q1', 'Q1', 'Q2', 'Q2', 'Q2', 'Q2'],
-    '销售额': [100, 150, 200, 180, 120, 160, 220, 190]
-})
-
-# 按产品聚合
-by_product = cube.groupby('产品')['销售额'].sum()
-print("按产品聚合:")
-print(by_product)
-
-# 计算总销售额
-total = cube['销售额'].sum()
-print(f"\\n总销售额: {total}")`,
-        answer: `import pandas as pd
-
-cube = pd.DataFrame({
-    '产品': ['A', 'A', 'B', 'B', 'A', 'A', 'B', 'B'],
-    '地区': ['北', '南', '北', '南', '北', '南', '北', '南'],
-    '季度': ['Q1', 'Q1', 'Q1', 'Q1', 'Q2', 'Q2', 'Q2', 'Q2'],
-    '销售额': [100, 150, 200, 180, 120, 160, 220, 190]
-})
-
-by_product = cube.groupby('产品')['销售额'].sum()
-print("按产品聚合:")
-print(by_product)
-
-total = cube['销售额'].sum()
-print(f"\\n总销售额: {total}")`,
-        score: 10
-      },
-      {
-        id: 7,
-        title: "问题7：关联规则计算",
-        description: `计算商品组合的支持度和置信度。
-
-<strong>输入：</strong>
-交易数据
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>计算商品组合的支持度</li>
-  <li>计算关联规则置信度</li>
-</ul>`,
-        difficulty: "hard",
-        code: `# 请编写关联规则计算代码
-transactions = [
-    ['面包', '牛奶'],
-    ['面包', '牛奶', '黄油'],
-    ['牛奶', '黄油'],
-    ['面包', '牛奶'],
-    ['面包', '黄油']
-]
-
-# 计算支持度
-def support(items, transactions):
-    count = sum(1 for t in transactions if set(items).issubset(set(t)))
-    return count / len(transactions)
-
-# 计算置信度
-def confidence(antecedent, consequent, transactions):
-    both = support(antecedent + consequent, transactions)
-    ante = support(antecedent, transactions)
-    return both / ante if ante > 0 else 0
-
-# 计算{面包} -> {牛奶}的规则
-sup = support(['面包', '牛奶'], transactions)
-conf = confidence(['面包'], ['牛奶'], transactions)
-
-print(f"{{面包, 牛奶}} 支持度: {sup:.2%}")
-print(f"{{面包}} -> {{牛奶}} 置信度: {conf:.2%}")`,
-        answer: `transactions = [
-    ['面包', '牛奶'],
-    ['面包', '牛奶', '黄油'],
-    ['牛奶', '黄油'],
-    ['面包', '牛奶'],
-    ['面包', '黄油']
-]
-
-def support(items, transactions):
-    count = sum(1 for t in transactions if set(items).issubset(set(t)))
-    return count / len(transactions)
-
-def confidence(antecedent, consequent, transactions):
-    both = support(antecedent + consequent, transactions)
-    ante = support(antecedent, transactions)
-    return both / ante if ante > 0 else 0
-
-sup = support(['面包', '牛奶'], transactions)
-conf = confidence(['面包'], ['牛奶'], transactions)
-
-print(f"{{面包, 牛奶}} 支持度: {sup:.2%}")
-print(f"{{面包}} -> {{牛奶}} 置信度: {conf:.2%}")`,
-        score: 10
-      },
-      {
-        id: 8,
-        title: "问题8：客户细分",
-        description: `使用K-means算法对客户进行细分。
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>创建客户数据</li>
-  <li>进行K-means聚类</li>
-  <li>输出各群体平均特征</li>
-</ul>`,
-        difficulty: "medium",
-        code: `# 请编写客户细分代码
-import pandas as pd
-from sklearn.cluster import KMeans
-
-# 客户数据
-customers = pd.DataFrame({
-    '年龄': [25, 35, 45, 28, 55, 42, 31, 48],
-    '年收入': [30, 50, 80, 35, 120, 75, 45, 95],
-    '消费频次': [5, 8, 12, 6, 15, 10, 7, 14]
-})
-
-# K-means聚类
-kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
-customers['群体'] = kmeans.fit_predict(customers)
-
-# 各群体平均特征
-print("各客户群体平均特征:")
-print(customers.groupby('群体').mean().round(1))`,
-        answer: `import pandas as pd
-from sklearn.cluster import KMeans
-
-customers = pd.DataFrame({
-    '年龄': [25, 35, 45, 28, 55, 42, 31, 48],
-    '年收入': [30, 50, 80, 35, 120, 75, 45, 95],
-    '消费频次': [5, 8, 12, 6, 15, 10, 7, 14]
-})
-
-kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
-customers['群体'] = kmeans.fit_predict(customers)
-
-print("各客户群体平均特征:")
-print(customers.groupby('群体').mean().round(1))`,
-        score: 10
-      },
-      {
-        id: 9,
-        title: "问题9：KPI计算",
-        description: `计算企业KPI指标的目标达成率。
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>定义KPI数据</li>
-  <li>计算目标达成率</li>
-  <li>判断是否达标</li>
-</ul>`,
-        difficulty: "easy",
-        code: `# 请编写KPI计算代码
-kpis = {
-    '销售额': {'当前': 1250000, '目标': 1000000},
-    '客户满意度': {'当前': 92, '目标': 90},
-    '订单完成率': {'当前': 98.5, '目标': 95}
-}
-
-print("KPI目标达成分析:")
-print("-" * 40)
-
-for name, data in kpis.items():
-    achievement = (data['当前'] / data['目标']) * 100
-    status = "达标" if achievement >= 100 else "未达标"
-    print(f"{name}:")
-    print(f"  当前值: {data['当前']}")
-    print(f"  目标值: {data['目标']}")
-    print(f"  达成率: {achievement:.1f}%")
-    print(f"  状态: {status}")
-    print()`,
-        answer: `kpis = {
-    '销售额': {'当前': 1250000, '目标': 1000000},
-    '客户满意度': {'当前': 92, '目标': 90},
-    '订单完成率': {'当前': 98.5, '目标': 95}
-}
-
-print("KPI目标达成分析:")
-print("-" * 40)
-
-for name, data in kpis.items():
-    achievement = (data['当前'] / data['目标']) * 100
-    status = "达标" if achievement >= 100 else "未达标"
-    print(f"{name}:")
-    print(f"  当前值: {data['当前']}")
-    print(f"  目标值: {data['目标']}")
-    print(f"  达成率: {achievement:.1f}%")
-    print(f"  状态: {status}")
-    print()`,
-        score: 10
-      },
-      {
-        id: 10,
-        title: "问题10：数据透视分析",
-        description: `创建销售数据的透视表分析。
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>创建销售数据</li>
-  <li>生成产品-地区的透视表</li>
-  <li>计算行列汇总</li>
-</ul>`,
-        difficulty: "medium",
-        code: `# 请编写数据透视分析代码
-import pandas as pd
-
-# 销售数据
-data = pd.DataFrame({
-    '产品': ['A', 'A', 'B', 'B', 'A', 'A', 'B', 'B'],
-    '地区': ['北', '南', '北', '南', '北', '南', '北', '南'],
-    '销售额': [100, 150, 200, 180, 120, 160, 220, 190]
-})
-
-# 创建透视表
-pivot = data.pivot_table(
-    values='销售额',
-    index='产品',
-    columns='地区',
-    aggfunc='sum',
-    margins=True,
-    margins_name='合计'
-)
-
-print("销售数据透视表:")
-print(pivot)`,
-        answer: `import pandas as pd
-
-data = pd.DataFrame({
-    '产品': ['A', 'A', 'B', 'B', 'A', 'A', 'B', 'B'],
-    '地区': ['北', '南', '北', '南', '北', '南', '北', '南'],
-    '销售额': [100, 150, 200, 180, 120, 160, 220, 190]
-})
-
-pivot = data.pivot_table(
-    values='销售额',
-    index='产品',
-    columns='地区',
-    aggfunc='sum',
-    margins=True,
-    margins_name='合计'
-)
-
-print("销售数据透视表:")
-print(pivot)`,
+        code: `# 请编写代码`,
+        answer: ``,
         score: 10
       }
     ];
@@ -796,13 +337,13 @@ print(pivot)`,
       {
         id: 11,
         type: "choice",
-        title: "选择题1：BI核心概念",
-        question: "商务智能(BI)的核心目标是什么？",
+        title: "选择题1：数据分析定义",
+        question: "数据分析的核心目标是什么？",
         options: {
-          A: "替代人工决策",
-          B: "将数据转化为知识，支持决策",
-          C: "减少数据存储成本",
-          D: "提高数据处理速度"
+          A: "删除数据",
+          B: "提取有用信息和形成结论",
+          C: "只生成图表",
+          D: "存储大量数据"
         },
         answer: "B",
         score: 10
@@ -810,13 +351,13 @@ print(pivot)`,
       {
         id: 12,
         type: "choice",
-        title: "选择题2：数据仓库特征",
-        question: "数据仓库的四大特征不包括以下哪项？",
+        title: "选择题2：CRISP-DM方法论",
+        question: "CRISP-DM方法论中，哪个阶段是数据分析项目的核心？",
         options: {
-          A: "面向主题",
-          B: "集成性",
-          C: "实时更新",
-          D: "非易失性"
+          A: "业务理解",
+          B: "数据理解",
+          C: "数据建模",
+          D: "部署实施"
         },
         answer: "C",
         score: 10
@@ -824,55 +365,55 @@ print(pivot)`,
       {
         id: 13,
         type: "choice",
-        title: "选择题3：OLAP操作",
-        question: "OLAP中，从汇总数据深入到明细数据的操作叫什么？",
+        title: "选择题3：缺失值处理",
+        question: "在Pandas中，检测缺失值的方法是？",
         options: {
-          A: "切片(Slice)",
-          B: "切块(Dice)",
-          C: "下钻(Drill-down)",
-          D: "上卷(Roll-up)"
+          A: "df.missing()",
+          B: "df.isna() 或 df.isnull()",
+          C: "df.check_null()",
+          D: "df.empty()"
         },
-        answer: "C",
+        answer: "B",
         score: 10
       },
       {
         id: 14,
         type: "choice",
-        title: "选择题4：关联规则",
-        question: "关联规则挖掘中，置信度(Confidence)衡量的是什么？",
+        title: "选择题4：异常值检测",
+        question: "使用IQR方法检测异常值时，通常使用多少倍IQR作为阈值？",
         options: {
-          A: "项集出现的频率",
-          B: "规则的可信程度",
-          C: "规则的提升效果",
-          D: "规则的数量"
+          A: "0.5倍",
+          B: "1倍",
+          C: "1.5倍",
+          D: "3倍"
         },
-        answer: "B",
+        answer: "C",
         score: 10
       },
       {
         id: 15,
         type: "choice",
-        title: "选择题5：KPI设计",
-        question: "KPI设计中的SMART原则中，'M'代表什么？",
+        title: "选择题5：SQL查询",
+        question: "SQL中，哪个关键字用于去除查询结果中的重复记录？",
         options: {
-          A: "Meaningful(有意义的)",
-          B: "Measurable(可衡量的)",
-          C: "Manageable(可管理的)",
-          D: "Multiple(多样的)"
+          A: "TOP",
+          B: "UNIQUE",
+          C: "DISTINCT",
+          D: "GROUP BY"
         },
-        answer: "B",
+        answer: "C",
         score: 10
       },
       {
         id: 16,
         type: "choice",
-        title: "选择题6：数据可视化",
-        question: "以下哪种图表最适合展示数据的趋势变化？",
+        title: "选择题6：描述性统计",
+        question: "描述数据集中趋势的指标不包括以下哪项？",
         options: {
-          A: "饼图",
-          B: "柱状图",
-          C: "折线图",
-          D: "散点图"
+          A: "均值",
+          B: "中位数",
+          C: "标准差",
+          D: "众数"
         },
         answer: "C",
         score: 10
@@ -880,27 +421,27 @@ print(pivot)`,
       {
         id: 17,
         type: "choice",
-        title: "选择题7：数据挖掘",
-        question: "聚类分析属于哪种类型的数据挖掘方法？",
+        title: "选择题7：假设检验",
+        question: "在假设检验中，p值表示什么？",
         options: {
-          A: "分类",
-          B: "预测",
-          C: "描述",
-          D: "关联"
+          A: "原假设成立的概率",
+          B: "在原假设成立的前提下，观察到当前或更极端结果的概率",
+          C: "备择假设成立的概率",
+          D: "犯第二类错误的概率"
         },
-        answer: "C",
+        answer: "B",
         score: 10
       },
       {
         id: 18,
         type: "choice",
-        title: "选择题8：ETL过程",
-        question: "ETL中的'T'代表什么？",
+        title: "选择题8：机器学习",
+        question: "K-Means聚类算法属于哪种类型的机器学习？",
         options: {
-          A: "Transfer(传输)",
-          B: "Transform(转换)",
-          C: "Track(追踪)",
-          D: "Test(测试)"
+          A: "监督学习",
+          B: "无监督学习",
+          C: "强化学习",
+          D: "半监督学习"
         },
         answer: "B",
         score: 10
@@ -908,27 +449,13 @@ print(pivot)`,
       {
         id: 19,
         type: "choice",
-        title: "选择题9：数据模型",
-        question: "星型模型的核心是？",
+        title: "选择题9：数据可视化",
+        question: "以下哪种图表最适合展示数据的分布情况？",
         options: {
-          A: "事实表",
-          B: "维度表",
-          C: "桥接表",
-          D: "汇总表"
-        },
-        answer: "A",
-        score: 10
-      },
-      {
-        id: 20,
-        type: "choice",
-        title: "选择题10：预测分析",
-        question: "回归分析主要用于解决什么问题？",
-        options: {
-          A: "分类",
-          B: "聚类",
-          C: "预测数值",
-          D: "关联分析"
+          A: "饼图",
+          B: "柱状图",
+          C: "直方图",
+          D: "折线图"
         },
         answer: "C",
         score: 10
@@ -967,9 +494,93 @@ print(pivot)`,
       
       // 绑定查看答案按钮事件
       document.getElementById('review-answers').addEventListener('click', function() {
-        alert('答案解析功能正在开发中...');
+        showAnswerReview();
       });
     });
+    
+    function showAnswerReview() {
+      const resultDiv = document.getElementById('exam-result');
+      
+      let html = `
+        <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold text-gray-200">答案解析</h3>
+            <button onclick="document.getElementById('exam-result').innerHTML = document.getElementById('original-result').innerHTML; initResultEvents();" class="btn-secondary text-sm">
+              <i class="fa fa-arrow-left"></i> 返回
+            </button>
+          </div>
+          
+          <div class="space-y-6 max-h-[70vh] overflow-y-auto pr-2">
+      `;
+      
+      examProblems.forEach((problem, index) => {
+        const studentAnswer = studentAnswers[problem.id];
+        const isCorrect = studentAnswer && studentAnswer.trim() === problem.answer.trim();
+        const isAnswered = studentAnswer && studentAnswer.trim() !== problem.code.trim();
+        
+        html += `
+          <div class="bg-dark p-4 rounded-lg border ${isCorrect ? 'border-emerald-600' : 'border-red-600'}">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-8 h-8 rounded-full ${isCorrect ? 'bg-emerald-600' : 'bg-red-600'} text-white flex items-center justify-center font-bold text-sm">${index + 1}</span>
+              <h4 class="font-semibold text-gray-200">${problem.title}</h4>
+              <span class="${isCorrect ? 'text-emerald-400' : isAnswered ? 'text-red-400' : 'text-gray-400'} text-sm">${isCorrect ? '✓ 正确' : isAnswered ? '✗ 错误' : '○ 未答'}</span>
+            </div>
+            <div class="text-sm text-gray-400 mb-2">
+              <strong>你的答案：</strong>
+              <span class="${isCorrect ? 'text-emerald-400' : 'text-red-400'}">${isAnswered ? (isCorrect ? '正确' : '错误') : '未作答'}</span>
+            </div>
+            <div class="bg-dark-gray p-3 rounded text-sm">
+              <strong class="text-emerald-400">参考答案：</strong>
+              <pre class="mt-2 text-gray-300 whitespace-pre-wrap">${problem.answer || '无'}</pre>
+            </div>
+          </div>
+        `;
+      });
+      
+      examChoiceQuestions.forEach((question, index) => {
+        const studentAnswer = studentAnswers[question.id];
+        const isCorrect = studentAnswer === question.answer;
+        const isAnswered = !!studentAnswer;
+        
+        html += `
+          <div class="bg-dark p-4 rounded-lg border ${isCorrect ? 'border-emerald-600' : 'border-red-600'}">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-8 h-8 rounded-full ${isCorrect ? 'bg-emerald-600' : 'bg-red-600'} text-white flex items-center justify-center font-bold text-sm">选${index + 1}</span>
+              <h4 class="font-semibold text-gray-200">${question.title}</h4>
+              <span class="${isCorrect ? 'text-emerald-400' : isAnswered ? 'text-red-400' : 'text-gray-400'} text-sm">${isCorrect ? '✓ 正确' : isAnswered ? '✗ 错误' : '○ 未答'}</span>
+            </div>
+            <div class="text-sm text-gray-400 mb-2">
+              <strong>你的答案：</strong>
+              <span class="${isCorrect ? 'text-emerald-400' : 'text-red-400'}">${isAnswered ? studentAnswer : '未作答'}</span>
+            </div>
+            <div class="text-sm text-gray-400 mb-2">
+              <strong>正确答案：</strong>
+              <span class="text-emerald-400">${question.answer}</span>
+            </div>
+          </div>
+        `;
+      });
+      
+      html += `
+          </div>
+        </div>
+      `;
+      
+      const originalResult = resultDiv.innerHTML;
+      resultDiv.innerHTML = `
+        <div id="original-result" class="hidden">${originalResult}</div>
+        ${html}
+      `;
+    }
+    
+    function initResultEvents() {
+      document.getElementById('back-to-course').addEventListener('click', function() {
+        window.location.href = 'business-intelligence.html';
+      });
+      document.getElementById('review-answers').addEventListener('click', function() {
+        showAnswerReview();
+      });
+    }
 
     // 开始考试
     function startExam() {
@@ -1008,6 +619,11 @@ print(pivot)`,
       document.getElementById('exam-reset-code').addEventListener('click', resetExamCode);
       document.getElementById('prev-question').addEventListener('click', goToPrevQuestion);
       document.getElementById('next-question').addEventListener('click', goToNextQuestion);
+      document.getElementById('submit-exam').addEventListener('click', function() {
+        if (confirm('确定要提交考试吗？提交后将无法修改答案。')) {
+          submitExam();
+        }
+      });
       
       // 开始考试计时器
       startExamTimer();
@@ -1109,7 +725,7 @@ print(pivot)`,
       if (!question) return;
       
       // 保存当前编程题答案
-      if (editor && currentQuestion <= 10) {
+      if (editor && currentQuestion <= 1) {
         studentAnswers[currentQuestion] = editor.getValue();
       }
       
@@ -1321,7 +937,7 @@ print(pivot)`,
       clearInterval(examTimer);
       
       // 保存当前答案
-      if (editor && currentQuestion <= 10) {
+      if (editor && currentQuestion <= 1) {
         studentAnswers[currentQuestion] = editor.getValue();
       }
       
@@ -1380,39 +996,78 @@ print(pivot)`,
       const answerStatus = document.getElementById('answer-status');
       answerStatus.innerHTML = '';
       
-      allExamQuestions.forEach((question, index) => {
+      let questionNumber = 1;
+      
+      examProblems.forEach(problem => {
         const statusItem = document.createElement('div');
-        statusItem.className = 'w-12 h-12 rounded-full flex items-center justify-center font-bold';
+        statusItem.className = 'flex flex-col items-center gap-1';
         
-        const studentAnswer = studentAnswers[question.id];
+        const circleDiv = document.createElement('div');
+        circleDiv.className = 'w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm';
         
-        if (question.type === 'choice') {
-          // 选择题状态
-          if (!studentAnswer) {
-            statusItem.className += ' bg-gray-700 text-gray-400';
-            statusItem.textContent = index + 1;
-          } else if (studentAnswer === question.answer) {
-            statusItem.className += ' bg-emerald-900 text-emerald-400';
-            statusItem.innerHTML = `<i class="fa fa-check"></i>`;
-          } else {
-            statusItem.className += ' bg-red-900 text-red-400';
-            statusItem.innerHTML = `<i class="fa fa-times"></i>`;
-          }
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'text-xs text-gray-400';
+        
+        const studentAnswer = studentAnswers[problem.id];
+        const isAnswered = studentAnswer && studentAnswer.trim() !== problem.code.trim();
+        const isCorrect = isAnswered && studentAnswer.trim() === problem.answer.trim();
+        
+        if (!isAnswered) {
+          circleDiv.className += ' bg-gray-700 text-gray-400 border-2 border-gray-600';
+          circleDiv.textContent = questionNumber;
+          labelDiv.textContent = '未答';
+        } else if (isCorrect) {
+          circleDiv.className += ' bg-emerald-600 text-white';
+          circleDiv.innerHTML = `<i class="fa fa-check"></i>`;
+          labelDiv.textContent = `题${questionNumber} ✓`;
+          labelDiv.className = 'text-xs text-emerald-400';
         } else {
-          // 编程题状态
-          if (!studentAnswer || studentAnswer.trim() === question.code.trim()) {
-            statusItem.className += ' bg-gray-700 text-gray-400';
-            statusItem.textContent = index + 1;
-          } else if (studentAnswer.trim() === question.answer.trim()) {
-            statusItem.className += ' bg-emerald-900 text-emerald-400';
-            statusItem.innerHTML = `<i class="fa fa-check"></i>`;
-          } else {
-            statusItem.className += ' bg-yellow-900 text-yellow-400';
-            statusItem.innerHTML = `<i class="fa fa-minus"></i>`;
-          }
+          circleDiv.className += ' bg-yellow-600 text-white';
+          circleDiv.innerHTML = `<i class="fa fa-minus"></i>`;
+          labelDiv.textContent = `题${questionNumber} △`;
+          labelDiv.className = 'text-xs text-yellow-400';
         }
         
+        statusItem.appendChild(circleDiv);
+        statusItem.appendChild(labelDiv);
         answerStatus.appendChild(statusItem);
+        questionNumber++;
+      });
+      
+      examChoiceQuestions.forEach(question => {
+        const statusItem = document.createElement('div');
+        statusItem.className = 'flex flex-col items-center gap-1';
+        
+        const circleDiv = document.createElement('div');
+        circleDiv.className = 'w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm';
+        
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'text-xs text-gray-400';
+        
+        const studentAnswer = studentAnswers[question.id];
+        const isAnswered = !!studentAnswer;
+        const isCorrect = studentAnswer === question.answer;
+        
+        if (!isAnswered) {
+          circleDiv.className += ' bg-gray-700 text-gray-400 border-2 border-gray-600';
+          circleDiv.textContent = `选${questionNumber - 10}`;
+          labelDiv.textContent = '未答';
+        } else if (isCorrect) {
+          circleDiv.className += ' bg-emerald-600 text-white';
+          circleDiv.innerHTML = `<i class="fa fa-check"></i>`;
+          labelDiv.textContent = `选${questionNumber - 10} ✓`;
+          labelDiv.className = 'text-xs text-emerald-400';
+        } else {
+          circleDiv.className += ' bg-red-600 text-white';
+          circleDiv.innerHTML = `<i class="fa fa-times"></i>`;
+          labelDiv.textContent = `选${questionNumber - 10} ✗`;
+          labelDiv.className = 'text-xs text-red-400';
+        }
+        
+        statusItem.appendChild(circleDiv);
+        statusItem.appendChild(labelDiv);
+        answerStatus.appendChild(statusItem);
+        questionNumber++;
       });
       
       // 显示结果页面
