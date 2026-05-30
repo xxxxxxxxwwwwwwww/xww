@@ -31,54 +31,158 @@
   </script>
   <style type="text/tailwindcss">
     @layer utilities {
-      .content-auto { content-visibility: auto; }
-      .code-editor { @apply w-full h-96 bg-dark rounded-lg overflow-hidden border border-gray-700; }
-      .code-output { @apply w-full h-64 bg-dark rounded-lg p-4 font-mono text-sm overflow-auto border border-gray-700; }
-      .btn-primary { @apply bg-cyan-500 hover:bg-cyan-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2; }
-      .btn-secondary { @apply bg-dark-gray hover:bg-gray-700 text-gray-200 px-4 py-2 rounded-lg transition-all duration-300 border border-gray-700 flex items-center gap-2; }
-      .nav-link { @apply relative text-gray-300 hover:text-cyan-400 transition-colors px-4 py-2 rounded-lg hover:bg-dark-gray flex items-center gap-2; }
-      .nav-link.active { @apply text-cyan-400 bg-dark-gray; }
-      .problem-item { @apply flex items-center gap-3 p-3 rounded-lg hover:bg-dark-gray transition-colors cursor-pointer border border-gray-700; }
-      .problem-item.active { @apply bg-dark-gray border-cyan-500; }
-      .problem-item.solved { @apply border-emerald-500; }
-      .section-title { @apply text-xl font-bold text-gray-200 mb-4 relative pb-2; }
-      .section-title::after { content: ''; @apply absolute bottom-0 left-0 w-16 h-1 bg-cyan-500 rounded-full; }
-      .topic-title { @apply text-lg font-semibold text-gray-300 mb-3 flex items-center gap-2 cursor-pointer; }
-      .topic-title:hover { @apply text-cyan-400; }
-      .problem-description { @apply text-gray-300 space-y-4; }
-      .answer-analysis { @apply text-gray-300 space-y-3; }
-      .answer-analysis h4 { @apply text-lg font-semibold text-emerald-400 mb-2; }
-      .run-info { @apply flex justify-between items-center mb-2 text-xs text-gray-400; }
-      .difficulty-tag { @apply text-xs px-2 py-1 rounded-full; }
-      .difficulty-easy { @apply bg-emerald-900 text-emerald-300; }
-      .difficulty-medium { @apply bg-yellow-900 text-yellow-300; }
-      .difficulty-hard { @apply bg-red-900 text-red-300; }
-      .chapter-item { @apply mb-6; }
-      .chapter-content { @apply space-y-2 ml-4 transition-all duration-300; }
-      .chapter-content.collapsed { @apply hidden; }
-      .scrollbar-thin { scrollbar-width: thin; }
-      .scrollbar-thin::-webkit-scrollbar { width: 6px; }
-      .scrollbar-thin::-webkit-scrollbar-track { @apply bg-dark; }
-      .scrollbar-thin::-webkit-scrollbar-thumb { @apply bg-gray-700 rounded-full; }
-      .knowledge-nav.active { @apply bg-cyan-500 text-gray-900; }
-      .knowledge-nav:not(.active) { @apply bg-gray-600 text-gray-200 hover:bg-gray-500; }
-      .choice-option { @apply flex items-center gap-3 p-4 rounded-lg border border-gray-700 cursor-pointer transition-all duration-200 hover:border-cyan-500 hover:bg-dark-gray; }
-      .choice-option.selected { @apply border-cyan-500 bg-cyan-900 bg-opacity-30; }
-      .choice-option.correct { @apply border-emerald-500 bg-emerald-900 bg-opacity-30; }
-      .choice-option.wrong { @apply border-red-500 bg-red-900 bg-opacity-30; }
-      .choice-label { @apply w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold text-sm; }
-      .choice-option.selected .choice-label { @apply bg-cyan-500 text-gray-900; }
-      .choice-option.correct .choice-label { @apply bg-emerald-500 text-gray-900; }
-      .choice-option.wrong .choice-label { @apply bg-red-500 text-gray-900; }
+      .content-auto {
+        content-visibility: auto;
+      }
+      .code-editor {
+        @apply w-full h-96 bg-dark rounded-lg overflow-hidden border border-gray-700;
+      }
+      .code-output {
+        @apply w-full h-64 bg-dark rounded-lg p-4 font-mono text-sm overflow-auto border border-gray-700;
+      }
+      .btn-primary {
+        @apply bg-cyan-500 hover:bg-cyan-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2;
+      }
+      .btn-secondary {
+        @apply bg-dark-gray hover:bg-gray-700 text-gray-200 px-4 py-2 rounded-lg transition-all duration-300 border border-gray-700 flex items-center gap-2;
+      }
+      .btn-accent {
+        @apply bg-emerald-500 hover:bg-emerald-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2;
+      }
+      .nav-link {
+        @apply relative text-gray-300 hover:text-cyan-400 transition-colors px-4 py-2 rounded-lg hover:bg-dark-gray flex items-center gap-2;
+      }
+      .nav-link.active {
+        @apply text-cyan-400 bg-dark-gray;
+      }
+      .nav-link::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300;
+      }
+      .nav-link:hover::after {
+        @apply w-full;
+      }
+      .problem-item {
+        @apply flex items-center gap-3 p-3 rounded-lg hover:bg-dark-gray transition-colors cursor-pointer border border-gray-700;
+      }
+      .problem-item.active {
+        @apply bg-dark-gray border-cyan-500;
+      }
+      .problem-item.solved {
+        @apply border-emerald-500;
+      }
+      .problem-item.attempted {
+        @apply border-yellow-500;
+      }
+      .section-title {
+        @apply text-xl font-bold text-gray-200 mb-4 relative pb-2;
+      }
+      .section-title::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-16 h-1 bg-cyan-500 rounded-full;
+      }
+      .topic-title {
+        @apply text-lg font-semibold text-gray-300 mb-3 flex items-center gap-2 cursor-pointer;
+      }
+      .topic-title:hover {
+        @apply text-cyan-400;
+      }
+      .problem-description {
+        @apply text-gray-300 space-y-4;
+      }
+      .problem-description code {
+        @apply bg-dark-gray px-2 py-1 rounded text-cyan-400;
+      }
+      .answer-analysis {
+        @apply text-gray-300 space-y-3;
+      }
+      .answer-analysis h4 {
+        @apply text-lg font-semibold text-emerald-400 mb-2;
+      }
+      .run-info {
+        @apply flex justify-between items-center mb-2 text-xs text-gray-400;
+      }
+      .difficulty-tag {
+        @apply text-xs px-2 py-1 rounded-full;
+      }
+      .difficulty-easy {
+        @apply bg-emerald-900 text-emerald-300;
+      }
+      .difficulty-medium {
+        @apply bg-yellow-900 text-yellow-300;
+      }
+      .difficulty-hard {
+        @apply bg-red-900 text-red-300;
+      }
+      .chapter-item {
+        @apply mb-6;
+      }
+      .chapter-content {
+        @apply space-y-2 ml-4 transition-all duration-300;
+      }
+      .chapter-content.collapsed {
+        @apply hidden;
+      }
+      .scrollbar-thin {
+        scrollbar-width: thin;
+      }
+      .scrollbar-thin::-webkit-scrollbar {
+        width: 6px;
+      }
+      .scrollbar-thin::-webkit-scrollbar-track {
+        @apply bg-dark;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb {
+        @apply bg-gray-700 rounded-full;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        @apply bg-gray-600;
+      }
+      .knowledge-nav.active {
+        @apply bg-cyan-500 text-gray-900;
+      }
+      .knowledge-nav:not(.active) {
+        @apply bg-gray-600 text-gray-200 hover:bg-gray-500;
+      }
+      .choice-option {
+        @apply flex items-center gap-3 p-4 rounded-lg border border-gray-700 cursor-pointer transition-all duration-200 hover:border-cyan-500 hover:bg-dark-gray;
+      }
+      .choice-option.selected {
+        @apply border-cyan-500 bg-cyan-900 bg-opacity-30;
+      }
+      .choice-option.correct {
+        @apply border-emerald-500 bg-emerald-900 bg-opacity-30;
+      }
+      .choice-option.wrong {
+        @apply border-red-500 bg-red-900 bg-opacity-30;
+      }
+      .choice-option.disabled {
+        @apply cursor-not-allowed opacity-70;
+      }
+      .choice-label {
+        @apply w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold text-sm;
+      }
+      .choice-option.selected .choice-label {
+        @apply bg-cyan-500 text-gray-900;
+      }
+      .choice-option.correct .choice-label {
+        @apply bg-emerald-500 text-gray-900;
+      }
+      .choice-option.wrong .choice-label {
+        @apply bg-red-500 text-gray-900;
+      }
     }
   </style>
 </head>
 <body class="bg-dark min-h-screen text-gray-200">
+  <!-- 顶部导航栏 -->
   <nav class="bg-dark-gray shadow-lg fixed w-full z-10">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center flex-wrap gap-4">
-      <a href="../index.html" class="text-cyan-400 font-bold text-xl flex items-center gap-2">
-        <i class="fa fa-arrow-left mr-2"></i> Xww的课程页面
-      </a>
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="text-cyan-400 font-bold text-xl flex items-center gap-2">
+          <i class="fa fa-arrow-left mr-2"></i> Xww的课程页面
+        </a>
+      </div>
       <div class="flex items-center gap-2 flex-wrap">
         <a href="#" class="nav-link active" onclick="showTab('question-bank')">
           <i class="fa fa-list"></i> 题库
@@ -94,7 +198,9 @@
         </a>
       </div>
       <div class="flex items-center gap-4">
-        <div class="text-sm text-gray-300">完成进度：<span id="overall-progress" class="text-cyan-400 font-bold">0%</span></div>
+        <div class="text-sm text-gray-300">
+          完成进度：<span id="overall-progress" class="text-cyan-400 font-bold">0%</span>
+        </div>
         <div class="w-48 bg-gray-700 rounded-full h-2.5">
           <div id="progress-bar" class="bg-cyan-500 h-2.5 rounded-full" style="width: 0%"></div>
         </div>
@@ -102,18 +208,27 @@
     </div>
   </nav>
 
+  <!-- 主要内容区 -->
   <div class="pt-24 min-h-screen">
     <div class="container mx-auto px-4">
+      <!-- 题库标签页 -->
       <div id="question-bank" class="tab-content">
         <div class="flex flex-col lg:flex-row gap-6 py-6">
+          <!-- 左侧：题目列表/章节目录 -->
           <div class="lg:w-1/4 bg-dark-gray rounded-xl p-4 border border-gray-700 h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin">
             <h2 class="section-title">购物篮分析题库</h2>
+            
+            <!-- 章节列表 -->
             <div class="space-y-6">
+              <!-- 章节1：购物篮分析基础 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter1')">
                   <i class="fa fa-chevron-down text-gray-400 transition-transform duration-300" id="chapter1-icon"></i>
                   购物篮分析基础
-                  <span class="ml-auto text-xs text-gray-400"><span class="chapter-progress">0/4</span>(0%)</span>
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/4</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
                 </h3>
                 <div class="chapter-content" id="chapter1-content">
                   <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
@@ -123,17 +238,7 @@
                       <div class="font-medium">数据加载与探索</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-easy">简单</span>
-                        <span class="text-xs text-gray-400">20分钟</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="problem-item" onclick="loadProgrammingProblem(2)">
-                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">2</div>
-                    <div class="flex-1">
-                      <div class="font-medium">商品组合统计</div>
-                      <div class="flex items-center gap-2 mt-1">
-                        <span class="difficulty-tag difficulty-medium">中等</span>
-                        <span class="text-xs text-gray-400">30分钟</span>
+                        <span class="text-xs text-gray-400">15分钟</span>
                       </div>
                     </div>
                   </div>
@@ -161,21 +266,35 @@
                 </div>
               </div>
               
+              <!-- 章节2：Apriori算法 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter2')">
                   <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter2-icon"></i>
                   Apriori算法
-                  <span class="ml-auto text-xs text-gray-400"><span class="chapter-progress">0/3</span>(0%)</span>
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/3</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
                 </h3>
                 <div class="chapter-content collapsed" id="chapter2-content">
                   <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(2)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">2</div>
+                    <div class="flex-1">
+                      <div class="font-medium">商品组合统计</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-gray-400">15分钟</span>
+                      </div>
+                    </div>
+                  </div>
                   <div class="problem-item" onclick="loadProgrammingProblem(3)">
                     <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">3</div>
                     <div class="flex-1">
                       <div class="font-medium">频繁项集挖掘</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
-                        <span class="text-xs text-gray-400">35分钟</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
                       </div>
                     </div>
                   </div>
@@ -190,24 +309,18 @@
                       </div>
                     </div>
                   </div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c4')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">D</div>
-                    <div class="flex-1">
-                      <div class="font-medium">关联规则生成</div>
-                      <div class="flex items-center gap-2 mt-1">
-                        <span class="difficulty-tag difficulty-hard">困难</span>
-                        <span class="text-xs text-purple-400">选择题</span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
               
+              <!-- 章节3：结果可视化与应用 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter3')">
                   <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter3-icon"></i>
                   结果可视化与应用
-                  <span class="ml-auto text-xs text-gray-400"><span class="chapter-progress">0/3</span>(0%)</span>
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/3</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
                 </h3>
                 <div class="chapter-content collapsed" id="chapter3-content">
                   <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
@@ -217,13 +330,13 @@
                       <div class="font-medium">关联规则可视化</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
-                        <span class="text-xs text-gray-400">40分钟</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
                       </div>
                     </div>
                   </div>
                   <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c5')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">E</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c4')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">D</div>
                     <div class="flex-1">
                       <div class="font-medium">业务应用场景</div>
                       <div class="flex items-center gap-2 mt-1">
@@ -232,8 +345,8 @@
                       </div>
                     </div>
                   </div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c6')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">F</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c5')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">E</div>
                     <div class="flex-1">
                       <div class="font-medium">营销策略优化</div>
                       <div class="flex items-center gap-2 mt-1">
@@ -247,7 +360,9 @@
             </div>
           </div>
           
+          <!-- 右侧：问题、代码编辑器、运行结果、答案解析 -->
           <div class="lg:w-3/4 space-y-6">
+            <!-- 问题描述 -->
             <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
               <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
                 <h3 class="text-xl font-bold text-gray-200" id="problem-title">问题1：数据加载与探索</h3>
@@ -263,24 +378,29 @@
                 </div>
               </div>
               <div class="problem-description" id="problem-description">
-                <p>加载购物篮数据集，进行初步的数据探索分析，了解数据的基本特征。</p>
+                <p>编写一个程序，加载购物篮数据并进行基本探索性分析。</p>
                 <p><strong>输入：</strong></p>
-                <p>market_basket.csv - 购物篮交易数据</p>
+                <p>购物篮交易数据，格式为列表的列表，每个子列表代表一次交易包含的商品</p>
                 <p><strong>输出：</strong></p>
-                <p>数据基本信息统计，包括交易数量、商品总数、热门商品等</p>
+                <p>数据的基本统计信息，包括交易次数、商品总数、最频繁商品等</p>
                 <p><strong>要求：</strong></p>
                 <ul class="list-disc list-inside space-y-1 mt-2">
-                  <li>加载并查看数据结构</li>
-                  <li>统计基本信息（交易数、商品数等）</li>
-                  <li>找出最热门的商品</li>
+                  <li>统计总交易次数</li>
+                  <li>统计商品总种类数</li>
+                  <li>统计每个商品出现的频率</li>
+                  <li>找出Top 10最频繁商品</li>
                 </ul>
               </div>
             </div>
             
+            <!-- 代码编辑框 -->
             <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
               <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
                 <h3 class="text-lg font-semibold text-gray-200">代码编辑器</h3>
                 <div class="flex gap-2">
+                  <button class="btn-secondary text-sm" onclick="toggleCodeEditor()" id="toggle-code-btn" title="折叠代码编辑器">
+                    <i class="fa fa-chevron-up" id="toggle-code-icon"></i>
+                  </button>
                   <button id="resetCode" class="btn-secondary text-sm">
                     <i class="fa fa-refresh"></i> 重置
                   </button>
@@ -297,59 +417,68 @@
               </div>
             </div>
             
+            <!-- 运行结果和答案解析 -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- 运行结果 -->
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-lg font-semibold text-gray-200 mb-4">运行结果</h3>
                 <div class="run-info">
                   <span id="execution-time">执行时间：0ms</span>
+                  <span id="memory-usage">内存：0MB</span>
                 </div>
-                <div id="code-output" class="code-output">运行代码查看输出...</div>
+                <div id="code-output" class="code-output">
+                  运行代码查看输出...
+                </div>
               </div>
               
+              <!-- 答案解析 -->
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-lg font-semibold text-gray-200 mb-4">答案解析</h3>
                 <div class="answer-analysis" id="answer-analysis">
                   <h4>解题思路</h4>
-                  <p>1. 使用Pandas加载CSV数据，了解数据格式</p>
-                  <p>2. 统计基本信息：交易数量、商品种类数</p>
-                  <p>3. 计算每个商品的出现频率，找出最热门商品</p>
+                  <p>1. 使用Python字典统计每个商品出现的频率</p>
+                  <p>2. 使用collections.Counter进行高效统计</p>
+                  <p>3. 排序后提取Top 10商品</p>
                   <h4>代码示例</h4>
                   <div class="bg-dark p-3 rounded-lg font-mono text-sm">
                     <pre class="text-cyan-300">
-import pandas as pd
-from collections import Counter
+from collections import Counter, defaultdict
 
-# 创建示例购物篮数据
-data = {
-    'TransactionID': [1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 5],
-    'Item': ['牛奶', '面包', '面包', '鸡蛋', '牛奶', '牛奶', '鸡蛋', '面包', '鸡蛋', '牛奶', '面包']
-}
-df = pd.DataFrame(data)
+# 示例购物篮数据
+transactions = [
+    ['面包', '牛奶', '鸡蛋'],
+    ['牛奶', '鸡蛋', '啤酒'],
+    ['面包', '牛奶', '啤酒', '薯片'],
+    ['面包', '薯片'],
+    ['牛奶', '鸡蛋', '面包'],
+    ['啤酒', '薯片'],
+    ['面包', '牛奶', '鸡蛋', '薯片'],
+    ['牛奶', '鸡蛋'],
+    ['面包', '啤酒'],
+    ['鸡蛋', '薯片']
+]
 
-print("数据预览：")
-print(df)
-print("\n" + "="*50)
+print("=== 购物篮数据探索 ===")
+print(f"总交易次数: {len(transactions)}")
 
-# 统计基本信息
-total_transactions = df['TransactionID'].nunique()
-total_items = df['Item'].nunique()
-print(f"总交易数：{total_transactions}")
-print(f"商品种类数：{total_items}")
+# 统计所有商品
+all_items = [item for transaction in transactions for item in transaction]
+item_counts = Counter(all_items)
 
-# 统计商品频率
-item_counts = df['Item'].value_counts()
-print("\n商品销售排名：")
-print(item_counts)
+print(f"商品总种类数: {len(item_counts)}")
+print("\n商品频率统计:")
+for item, count in item_counts.items():
+    print(f"  {item}: {count}次 ({count/len(transactions)*100:.1f}%)")
 
-print("\n最热门商品：")
-print(f"{item_counts.index[0]}，销售{item_counts.iloc[0]}次")
+print("\nTop 5 最频繁商品:")
+for item, count in item_counts.most_common(5):
+    print(f"  {item}: {count}次")
                     </pre>
                   </div>
                   <h4>知识点</h4>
                   <ul class="list-disc list-inside space-y-1 mt-2">
-                    <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge')">数据探索分析</a></li>
-                    <li>Pandas基础</li>
-                    <li>数据统计与频率分析</li>
+                    <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module1-basics')">购物篮分析基础</a></li>
+                    <li>数据探索与统计</li>
                   </ul>
                 </div>
               </div>
@@ -358,6 +487,7 @@ print(f"{item_counts.index[0]}，销售{item_counts.iloc[0]}次")
         </div>
       </div>
       
+      <!-- 错题标签页 -->
       <div id="wrong-questions" class="tab-content hidden">
         <div class="py-6">
           <h2 class="section-title">错题本</h2>
@@ -374,6 +504,7 @@ print(f"{item_counts.index[0]}，销售{item_counts.iloc[0]}次")
         </div>
       </div>
       
+      <!-- 收藏标签页 -->
       <div id="favorites" class="tab-content hidden">
         <div class="py-6">
           <h2 class="section-title">收藏题目</h2>
@@ -382,68 +513,93 @@ print(f"{item_counts.index[0]}，销售{item_counts.iloc[0]}次")
               <i class="fa fa-star-o text-4xl text-yellow-500 mb-4"></i>
               <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无收藏</h3>
               <p class="text-gray-400">在题库中点击题目旁边的星标图标来收藏题目</p>
+              <button class="btn-primary mt-6" onclick="showTab('question-bank')">
+                <i class="fa fa-list"></i> 浏览题库
+              </button>
             </div>
           </div>
         </div>
       </div>
       
+      <!-- 知识点标签页 -->
       <div id="knowledge" class="tab-content hidden">
         <div class="py-6">
           <h2 class="section-title">📚 知识点学习</h2>
           
+          <!-- 导航栏 -->
           <div class="flex flex-wrap gap-3 mb-8 bg-dark-gray p-4 rounded-xl border border-gray-700">
             <button class="knowledge-nav active px-4 py-2 rounded-lg font-semibold transition" data-target="module1-basics">模块1：购物篮分析基础</button>
             <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module2-apriori">模块2：Apriori算法</button>
-            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module3-application">模块3：结果可视化与应用</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module3-visualization">模块3：结果可视化与应用</button>
           </div>
 
           <div class="space-y-8">
+            <!-- 模块1：购物篮分析基础 -->
             <div id="module1-basics" class="knowledge-section">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-shopping-cart"></i> 模块1：购物篮分析基础（45分钟）
+                  <i class="fa fa-shopping-basket"></i> 模块1：购物篮分析基础
                 </h3>
                 
                 <div class="grid md:grid-cols-2 gap-6">
+                  <!-- 什么是购物篮分析 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-lightbulb-o text-yellow-400"></i> 什么是购物篮分析
                     </h4>
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">购物篮分析是一种数据挖掘技术，用于发现顾客购买的商品之间的关联关系。通过分析交易数据，找出哪些商品经常被一起购买。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">购物篮分析（Market Basket Analysis）是数据挖掘技术在零售业的典型应用，通过分析顾客购物篮中的商品组合，发现商品之间的关联关系，从而制定营销策略。</p>
                     
                     <div class="space-y-3 mb-4">
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-emerald-400 font-semibold mb-1">🛒 经典案例</h5>
-                        <p class="text-gray-400 text-sm">啤酒与尿布：美国超市发现周五下午买尿布的顾客经常也买啤酒，将它们放在一起后销量大增。</p>
+                        <h5 class="text-emerald-400 font-semibold mb-1">🎯 核心目标</h5>
+                        <p class="text-gray-400 text-sm">找出哪些商品经常被一起购买，发现商品间的关联规则。</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-yellow-400 font-semibold mb-1">🎯 应用场景</h5>
-                        <p class="text-gray-400 text-sm">商品陈列优化、交叉销售推荐、促销活动设计、库存管理等。</p>
+                        <h5 class="text-yellow-400 font-semibold mb-1">📊 典型应用</h5>
+                        <p class="text-gray-400 text-sm">商品摆放优化、交叉销售推荐、促销策略制定。</p>
                       </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# 购物篮分析示例数据
+# 每条记录代表一次交易
+transactions = [
+    ['面包', '牛奶', '鸡蛋'],
+    ['牛奶', '鸡蛋', '啤酒'],
+    ['面包', '牛奶', '啤酒', '薯片'],
+    # ... 更多交易记录
+]
+
+# 经典案例："啤酒与尿布"
+# 发现：购买尿布的顾客常购买啤酒
+# 原因：年轻父亲周末购物，顺便买啤酒
+                      </pre>
                     </div>
                   </div>
 
+                  <!-- 关联规则基本概念 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-link text-emerald-400"></i> 关联规则基本概念
                     </h4>
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">关联规则是形如 X → Y 的表达式，表示购买了商品X的顾客也很可能购买商品Y。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">关联规则表示为 A → B，表示购买了A的顾客很可能也会购买B。需要通过三个指标来评估规则的质量。</p>
                     
                     <div class="space-y-3 mb-4">
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-emerald-400 font-semibold mb-2">📊 支持度（Support）</h5>
-                        <p class="text-gray-400 text-sm mb-2">同时包含X和Y的交易占总交易的比例。</p>
-                        <div class="bg-dark p-2 rounded text-center font-mono text-cyan-300">Support = P(X∩Y)</div>
+                        <h5 class="text-emerald-400 font-semibold mb-1">📌 支持度（Support）</h5>
+                        <p class="text-gray-400 text-sm">Support(A→B) = 同时包含A和B的交易数 / 总交易数</p>
+                        <p class="text-gray-500 text-xs mt-1">表示商品组合的流行程度</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-yellow-400 font-semibold mb-2">🔗 置信度（Confidence）</h5>
-                        <p class="text-gray-400 text-sm mb-2">购买了X的顾客中也购买Y的比例。</p>
-                        <div class="bg-dark p-2 rounded text-center font-mono text-cyan-300">Confidence = P(Y|X)</div>
+                        <h5 class="text-yellow-400 font-semibold mb-1">📌 置信度（Confidence）</h5>
+                        <p class="text-gray-400 text-sm">Confidence(A→B) = 同时包含A和B的交易数 / 包含A的交易数</p>
+                        <p class="text-gray-500 text-xs mt-1">表示购买A时购买B的条件概率</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-pink-400 font-semibold mb-2">⚡ 提升度（Lift）</h5>
-                        <p class="text-gray-400 text-sm mb-2">购买X对购买Y的提升程度，大于1表示正相关。</p>
-                        <div class="bg-dark p-2 rounded text-center font-mono text-cyan-300">Lift = P(Y|X) / P(Y)</div>
+                        <h5 class="text-pink-400 font-semibold mb-1">📌 提升度（Lift）</h5>
+                        <p class="text-gray-400 text-sm">Lift(A→B) = Confidence(A→B) / Support(B)</p>
+                        <p class="text-gray-500 text-xs mt-1">Lift>1表示A对B有正向促进作用</p>
                       </div>
                     </div>
                   </div>
@@ -451,54 +607,79 @@ print(f"{item_counts.index[0]}，销售{item_counts.iloc[0]}次")
               </div>
             </div>
 
+            <!-- 模块2：Apriori算法 -->
             <div id="module2-apriori" class="knowledge-section hidden">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-cogs"></i> 模块2：Apriori算法（50分钟）
+                  <i class="fa fa-cogs"></i> 模块2：Apriori算法
                 </h3>
                 
                 <div class="grid md:grid-cols-2 gap-6">
+                  <!-- Apriori原理 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-lightbulb-o text-yellow-400"></i> Apriori原理
                     </h4>
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">Apriori算法利用一个重要性质：如果一个项集是频繁的，那么它的所有子集也都是频繁的；反之，如果一个项集是不频繁的，那么它的所有超集也都是不频繁的。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">Apriori算法是最经典的频繁项集挖掘算法，利用先验知识（Apriori原理）来减少搜索空间。</p>
                     
                     <div class="space-y-3 mb-4">
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-emerald-400 font-semibold mb-1">🔍 核心思想</h5>
-                        <p class="text-gray-400 text-sm">通过逐层搜索的方式，先找出所有频繁1项集，再用它们找频繁2项集，以此类推。</p>
+                        <h5 class="text-emerald-400 font-semibold mb-1">🔑 核心原理</h5>
+                        <p class="text-gray-400 text-sm">如果一个项集是频繁的，那么它的所有非空子集也必须是频繁的。</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-yellow-400 font-semibold mb-1">⚡ 优化技巧</h5>
-                        <p class="text-gray-400 text-sm">利用先验性质剪枝，避免搜索不可能频繁的项集，大幅减少计算量。</p>
+                        <h5 class="text-yellow-400 font-semibold mb-1">💡 逆否命题</h5>
+                        <p class="text-gray-400 text-sm">如果一个项集是非频繁的，那么它的所有超集也一定是非频繁的。</p>
                       </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+# Apriori原理示例
+# 假设最小支持度为 2/5 = 40%
+
+transactions = [
+    ['A', 'B', 'C'],
+    ['A', 'B'],
+    ['A', 'C'],
+    ['A', 'B', 'D'],
+    ['B', 'C']
+]
+
+# 如果 {'A', 'B', 'C'} 是频繁的
+# 那么其子集 {'A','B'}, {'A','C'}, {'B','C'} 也必须是频繁的
+
+# 如果 {'D'} 不频繁（支持度1/5=20%）
+# 那么包含D的所有超集都不频繁
+                      </pre>
                     </div>
                   </div>
 
+                  <!-- 算法步骤 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-list-ol text-emerald-400"></i> 算法步骤
                     </h4>
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">Apriori算法分为两个主要阶段：频繁项集挖掘和关联规则生成。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">Apriori算法分为两个主要阶段：找出所有频繁项集，然后从频繁项集中生成强关联规则。</p>
                     
-                    <div class="space-y-3">
+                    <div class="space-y-3 mb-4">
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-emerald-400 font-semibold mb-2">1️⃣ 频繁项集挖掘</h5>
-                        <ul class="text-gray-400 text-sm list-disc list-inside space-y-1">
-                          <li>设置最小支持度阈值</li>
-                          <li>找出所有满足支持度的项集</li>
-                          <li>从k项集生成k+1项集候选</li>
-                          <li>剪枝、测试，直到无法生成</li>
-                        </ul>
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span>1️⃣</span> 找出频繁项集
+                        </h5>
+                        <p class="text-gray-400 text-sm mb-2">从1-项集开始，逐步迭代，利用Apriori原理剪枝。</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-yellow-400 font-semibold mb-2">2️⃣ 关联规则生成</h5>
-                        <ul class="text-gray-400 text-sm list-disc list-inside space-y-1">
-                          <li>从每个频繁项集生成所有可能规则</li>
-                          <li>计算置信度和提升度</li>
-                          <li>筛选满足阈值的规则</li>
-                        </ul>
+                        <h5 class="text-yellow-400 font-semibold mb-2 flex items-center gap-2">
+                          <span>2️⃣</span> 生成关联规则
+                        </h5>
+                        <p class="text-gray-400 text-sm mb-2">从每个频繁项集生成所有可能的规则，筛选满足最小置信度的规则。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-pink-400 font-semibold mb-2 flex items-center gap-2">
+                          <span>3️⃣</span> 评估规则质量
+                        </h5>
+                        <p class="text-gray-400 text-sm mb-2">使用提升度等指标进一步筛选有意义的规则。</p>
                       </div>
                     </div>
                   </div>
@@ -506,53 +687,68 @@ print(f"{item_counts.index[0]}，销售{item_counts.iloc[0]}次")
               </div>
             </div>
 
-            <div id="module3-application" class="knowledge-section hidden">
+            <!-- 模块3：结果可视化与应用 -->
+            <div id="module3-visualization" class="knowledge-section hidden">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-chart-bar"></i> 模块3：结果可视化与应用（45分钟）
+                  <i class="fa fa-chart-bar"></i> 模块3：结果可视化与应用
                 </h3>
                 
                 <div class="grid md:grid-cols-2 gap-6">
+                  <!-- 可视化方法 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-paint-brush text-yellow-400"></i> 可视化方法
                     </h4>
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">通过可视化技术，将复杂的关联规则转化为直观的图表，帮助理解和决策。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">购物篮分析结果的可视化有助于直观理解商品间的关系，常见的可视化方式包括：</p>
                     
                     <div class="space-y-3 mb-4">
                       <div class="bg-dark-gray p-3 rounded-lg">
                         <h5 class="text-emerald-400 font-semibold mb-1">📊 散点图</h5>
-                        <p class="text-gray-400 text-sm">用支持度和置信度作为坐标轴，每个点代表一条规则。</p>
+                        <p class="text-gray-400 text-sm">横轴支持度，纵轴置信度，点大小表示提升度。</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
                         <h5 class="text-yellow-400 font-semibold mb-1">🕸️ 网络图</h5>
-                        <p class="text-gray-400 text-sm">节点代表商品，边代表关联关系，边的粗细代表强度。</p>
+                        <p class="text-gray-400 text-sm">节点表示商品，边表示关联规则，边粗细表示强度。</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-pink-400 font-semibold mb-1">📈 热力图</h5>
-                        <p class="text-gray-400 text-sm">展示商品之间的共现频率矩阵。</p>
+                        <h5 class="text-pink-400 font-semibold mb-1">📈 柱状图</h5>
+                        <p class="text-gray-400 text-sm">展示频繁商品或强规则的排名。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">🔥 热力图</h5>
+                        <p class="text-gray-400 text-sm">展示商品两两共同出现的频率矩阵。</p>
                       </div>
                     </div>
                   </div>
 
+                  <!-- 业务应用 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-briefcase text-emerald-400"></i> 业务应用
                     </h4>
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">购物篮分析的结果可以直接应用于业务决策，提升销售和用户体验。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">购物篮分析的结果可以应用于零售业的多个方面，帮助提升销售和客户体验。</p>
                     
-                    <div class="space-y-3">
+                    <div class="space-y-3 mb-4">
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-emerald-400 font-semibold mb-2">🏪 商品陈列优化</h5>
-                        <p class="text-gray-400 text-sm">将强关联的商品放在相近位置，促进连带购买。</p>
+                        <h5 class="text-emerald-400 font-semibold mb-1">🛒 商品陈列优化</h5>
+                        <p class="text-gray-400 text-sm">将强关联商品放在一起，增加交叉销售机会。</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-yellow-400 font-semibold mb-2">🎁 促销活动设计</h5>
-                        <p class="text-gray-400 text-sm">基于关联规则设计捆绑销售和组合优惠。</p>
+                        <h5 class="text-yellow-400 font-semibold mb-1">🎁 捆绑销售策略</h5>
+                        <p class="text-gray-400 text-sm">将频繁一起购买的商品组合成套餐，优惠销售。</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-pink-400 font-semibold mb-2">💡 推荐系统</h5>
-                        <p class="text-gray-400 text-sm">用户浏览或购买商品A时，推荐关联商品B。</p>
+                        <h5 class="text-pink-400 font-semibold mb-1">💡 个性化推荐</h5>
+                        <p class="text-gray-400 text-sm">根据顾客当前购物车商品，推荐关联商品。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-1">📢 促销活动设计</h5>
+                        <p class="text-gray-400 text-sm">针对关联商品设计促销，A打折时B不打折。</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-purple-400 font-semibold mb-1">📦 库存管理优化</h5>
+                        <p class="text-gray-400 text-sm">关联商品的库存协调管理。</p>
                       </div>
                     </div>
                   </div>
@@ -566,404 +762,764 @@ print(f"{item_counts.index[0]}，销售{item_counts.iloc[0]}次")
   </div>
 
   <script>
+    // 编程题数据
     const problems = [
       {
         id: 1,
         title: "问题1：数据加载与探索",
-        description: `<p>加载购物篮数据集，进行初步的数据探索分析，了解数据的基本特征。</p>
-<p><strong>输入：</strong>market_basket.csv - 购物篮交易数据</p>
-<p><strong>输出：</strong>数据基本信息统计，包括交易数量、商品总数、热门商品等</p>
+        description: `
+<p>编写一个程序，加载购物篮数据并进行基本探索性分析。</p>
+<p><strong>输入：</strong></p>
+<p>购物篮交易数据，格式为列表的列表，每个子列表代表一次交易包含的商品</p>
+<p><strong>输出：</strong></p>
+<p>数据的基本统计信息，包括交易次数、商品总数、最频繁商品等</p>
 <p><strong>要求：</strong></p>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>加载并查看数据结构</li>
-  <li>统计基本信息（交易数、商品数等）</li>
-  <li>找出最热门的商品</li>
-</ul>`,
+  <li>统计总交易次数</li>
+  <li>统计商品总种类数</li>
+  <li>统计每个商品出现的频率</li>
+  <li>找出Top 10最频繁商品</li>
+</ul>
+        `,
         difficulty: "easy",
-        time: "20分钟",
-        code: `# 请编写代码`,
-        analysis: `<h4>解题思路</h4>
-<p>1. 使用Pandas加载CSV数据，了解数据格式</p>
-<p>2. 统计基本信息：交易数量、商品种类数</p>
-<p>3. 计算每个商品的出现频率，找出最热门商品</p>
+        time: "15分钟",
+        code: `from collections import Counter
+
+# 示例购物篮数据
+transactions = [
+    ['面包', '牛奶', '鸡蛋'],
+    ['牛奶', '鸡蛋', '啤酒'],
+    ['面包', '牛奶', '啤酒', '薯片'],
+    ['面包', '薯片'],
+    ['牛奶', '鸡蛋', '面包'],
+    ['啤酒', '薯片'],
+    ['面包', '牛奶', '鸡蛋', '薯片'],
+    ['牛奶', '鸡蛋'],
+    ['面包', '啤酒'],
+    ['鸡蛋', '薯片']
+]
+
+# 请在此编写代码
+        `,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 使用Python字典统计每个商品出现的频率</p>
+<p>2. 使用collections.Counter进行高效统计</p>
+<p>3. 排序后提取Top 10商品</p>
 <h4>代码示例</h4>
 <div class="bg-dark p-3 rounded-lg font-mono text-sm">
-<pre class="text-cyan-300">
-import pandas as pd
+  <pre class="text-cyan-300">
 from collections import Counter
 
-# 创建示例购物篮数据
-data = {
-    'TransactionID': [1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 5],
-    'Item': ['牛奶', '面包', '面包', '鸡蛋', '牛奶', '牛奶', '鸡蛋', '面包', '鸡蛋', '牛奶', '面包']
-}
-df = pd.DataFrame(data)
+# 示例购物篮数据
+transactions = [
+    ['面包', '牛奶', '鸡蛋'],
+    ['牛奶', '鸡蛋', '啤酒'],
+    ['面包', '牛奶', '啤酒', '薯片'],
+    ['面包', '薯片'],
+    ['牛奶', '鸡蛋', '面包'],
+    ['啤酒', '薯片'],
+    ['面包', '牛奶', '鸡蛋', '薯片'],
+    ['牛奶', '鸡蛋'],
+    ['面包', '啤酒'],
+    ['鸡蛋', '薯片']
+]
 
-print("数据预览：")
-print(df)
-print("\\n" + "="*50)
+print("=== 购物篮数据探索 ===")
+print(f"总交易次数: {len(transactions)}")
 
-# 统计基本信息
-total_transactions = df['TransactionID'].nunique()
-total_items = df['Item'].nunique()
-print(f"总交易数：{total_transactions}")
-print(f"商品种类数：{total_items}")
+# 统计所有商品
+all_items = [item for transaction in transactions for item in transaction]
+item_counts = Counter(all_items)
 
-# 统计商品频率
-item_counts = df['Item'].value_counts()
-print("\\n商品销售排名：")
-print(item_counts)
+print(f"商品总种类数: {len(item_counts)}")
+print("\\n商品频率统计:")
+for item, count in item_counts.items():
+    print(f"  {item}: {count}次 ({count/len(transactions)*100:.1f}%)")
 
-print("\\n最热门商品：")
-print(f"{item_counts.index[0]}，销售{item_counts.iloc[0]}次")
-</pre>
+print("\\nTop 5 最频繁商品:")
+for item, count in item_counts.most_common(5):
+    print(f"  {item}: {count}次")
+  </pre>
 </div>
 <h4>知识点</h4>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge')">数据探索分析</a></li>
-  <li>Pandas基础</li>
-  <li>数据统计与频率分析</li>
-</ul>`
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module1-basics')">购物篮分析基础</a></li>
+  <li>数据探索与统计</li>
+</ul>
+        `
       },
       {
         id: 2,
         title: "问题2：商品组合统计",
-        description: `<p>分析购物篮数据中的商品组合，统计常见的商品对。</p>
-<p><strong>输入：</strong>购物篮交易数据</p>
-<p><strong>输出：</strong>商品对出现频率统计</p>
+        description: `
+<p>编写一个程序，统计购物篮中常见的商品组合（二元组合）。</p>
+<p><strong>输入：</strong></p>
+<p>购物篮交易数据</p>
+<p><strong>输出：</strong></p>
+<p>二元商品组合的频率统计</p>
 <p><strong>要求：</strong></p>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>找出所有可能的商品组合</li>
-  <li>统计每个商品组合的出现次数</li>
-  <li>找出最常见的商品组合</li>
-</ul>`,
-        difficulty: "medium",
-        time: "30分钟",
-        code: `# 请编写代码`,
-        analysis: `<h4>解题思路</h4>
-<p>1. 将数据按交易分组，得到每个交易的商品列表</p>
-<p>2. 对每个交易生成所有可能的商品组合</p>
-<p>3. 统计每个组合的出现频率</p>
+  <li>生成所有可能的二元商品组合</li>
+  <li>统计每个组合出现的频率</li>
+  <li>按频率降序排列</li>
+  <li>输出Top 10组合</li>
+</ul>
+        `,
+        difficulty: "easy",
+        time: "15分钟",
+        code: `from collections import Counter
+from itertools import combinations
+
+# 示例购物篮数据
+transactions = [
+    ['面包', '牛奶', '鸡蛋'],
+    ['牛奶', '鸡蛋', '啤酒'],
+    ['面包', '牛奶', '啤酒', '薯片'],
+    ['面包', '薯片'],
+    ['牛奶', '鸡蛋', '面包'],
+    ['啤酒', '薯片'],
+    ['面包', '牛奶', '鸡蛋', '薯片'],
+    ['牛奶', '鸡蛋'],
+    ['面包', '啤酒'],
+    ['鸡蛋', '薯片']
+]
+
+# 请在此编写代码
+        `,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 使用itertools.combinations生成二元组合</p>
+<p>2. 对每个交易生成所有可能的二元组合</p>
+<p>3. 使用Counter统计频率</p>
+<p>4. 排序输出Top组合</p>
 <h4>代码示例</h4>
 <div class="bg-dark p-3 rounded-lg font-mono text-sm">
-<pre class="text-cyan-300">
-import pandas as pd
+  <pre class="text-cyan-300">
+from collections import Counter
 from itertools import combinations
-from collections import defaultdict
 
-# 创建示例购物篮数据
-data = {
-    'TransactionID': [1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 5, 5, 6, 6, 7],
-    'Item': ['牛奶', '面包', '面包', '鸡蛋', '牛奶', '牛奶', '鸡蛋', 
-             '面包', '鸡蛋', '牛奶', '面包', '饼干', '牛奶', '饼干', '面包']
-}
-df = pd.DataFrame(data)
+# 示例购物篮数据
+transactions = [
+    ['面包', '牛奶', '鸡蛋'],
+    ['牛奶', '鸡蛋', '啤酒'],
+    ['面包', '牛奶', '啤酒', '薯片'],
+    ['面包', '薯片'],
+    ['牛奶', '鸡蛋', '面包'],
+    ['啤酒', '薯片'],
+    ['面包', '牛奶', '鸡蛋', '薯片'],
+    ['牛奶', '鸡蛋'],
+    ['面包', '啤酒'],
+    ['鸡蛋', '薯片']
+]
 
-print("原始数据：")
-print(df)
-print("\\n" + "="*50)
+print("=== 二元商品组合统计 ===")
 
-# 按交易分组
-transactions = df.groupby('TransactionID')['Item'].apply(list).tolist()
-print(f"交易数：{len(transactions)}")
+# 统计二元组合
+pair_counts = Counter()
+for transaction in transactions:
+    # 生成所有二元组合
+    pairs = combinations(sorted(transaction), 2)
+    pair_counts.update(pairs)
 
-# 统计商品对频率
-pair_counts = defaultdict(int)
-for items in transactions:
-    items_sorted = sorted(items)
-    for pair in combinations(items_sorted, 2):
-        pair_counts[pair] += 1
-
-# 转换为DataFrame并排序
-pair_df = pd.DataFrame([
-    {'商品1': k[0], '商品2': k[1], '次数': v} 
-    for k, v in pair_counts.items()
-]).sort_values('次数', ascending=False)
-
-print("\\n商品组合排名：")
-print(pair_df)
-</pre>
+print(f"总二元组合数: {len(pair_counts)}")
+print("\\nTop 10 二元组合:")
+for i, (pair, count) in enumerate(pair_counts.most_common(10), 1):
+    support = count / len(transactions) * 100
+    print(f"  {i}. {pair[0]} & {pair[1]}: {count}次 ({support:.1f}%)")
+  </pre>
 </div>
 <h4>知识点</h4>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>数据分组与聚合</li>
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module2-apriori')">Apriori算法</a></li>
+  <li>频繁项集</li>
   <li>组合数学</li>
-  <li>频率统计</li>
-</ul>`
+</ul>
+        `
       },
       {
         id: 3,
         title: "问题3：频繁项集挖掘",
-        description: `<p>实现简单的Apriori算法，挖掘频繁项集。</p>
-<p><strong>输入：</strong>购物篮交易数据</p>
-<p><strong>输出：</strong>频繁项集列表</p>
+        description: `
+<p>实现一个简化版的Apriori算法，找出所有频繁项集。</p>
+<p><strong>输入：</strong></p>
+<p>购物篮交易数据和最小支持度</p>
+<p><strong>输出：</strong></p>
+<p>所有满足最小支持度的频繁项集</p>
 <p><strong>要求：</strong></p>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>设置最小支持度阈值</li>
-  <li>找出所有频繁项集</li>
-  <li>按支持度排序输出</li>
-</ul>`,
+  <li>从1-项集开始逐步迭代</li>
+  <li>利用Apriori原理剪枝</li>
+  <li>输出所有频繁项集及其支持度</li>
+</ul>
+        `,
         difficulty: "medium",
-        time: "35分钟",
-        code: `# 请编写代码`,
-        analysis: `<h4>解题思路</h4>
-<p>1. 先找出所有频繁1项集</p>
-<p>2. 利用先验性质生成候选k项集</p>
-<p>3. 扫描数据库计算支持度</p>
-<p>4. 迭代直到无法找到更多频繁项集</p>
-<h4>代码示例</h4>
-<div class="bg-dark p-3 rounded-lg font-mono text-sm">
-<pre class="text-cyan-300">
-import pandas as pd
-from collections import defaultdict
+        time: "20分钟",
+        code: `from collections import Counter
 from itertools import combinations
 
-# 创建示例数据
-data = {
-    'TransactionID': [1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 5, 5, 6, 6, 7],
-    'Item': ['牛奶', '面包', '面包', '鸡蛋', '牛奶', '牛奶', '鸡蛋', 
-             '面包', '鸡蛋', '牛奶', '面包', '饼干', '牛奶', '饼干', '面包']
-}
-df = pd.DataFrame(data)
+# 示例购物篮数据
+transactions = [
+    ['面包', '牛奶', '鸡蛋'],
+    ['牛奶', '鸡蛋', '啤酒'],
+    ['面包', '牛奶', '啤酒', '薯片'],
+    ['面包', '薯片'],
+    ['牛奶', '鸡蛋', '面包'],
+    ['啤酒', '薯片'],
+    ['面包', '牛奶', '鸡蛋', '薯片'],
+    ['牛奶', '鸡蛋'],
+    ['面包', '啤酒'],
+    ['鸡蛋', '薯片']
+]
 
-min_support = 0.3
+min_support = 0.3  # 最小支持度30%
 
-# 转换交易数据
-transactions = df.groupby('TransactionID')['Item'].apply(set).tolist()
-n_transactions = len(transactions)
+# 请在此编写代码
+        `,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 先找出所有频繁1-项集</p>
+<p>2. 从k-项集生成k+1-项集候选</p>
+<p>3. 利用Apriori原理剪枝</p>
+<p>4. 计算候选集的支持度，筛选频繁项集</p>
+<p>5. 重复直到没有新的频繁项集</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">
+from collections import Counter
+from itertools import combinations
 
-print(f"总交易数：{n_transactions}")
-print(f"最小支持度：{min_support}")
-print("\\n" + "="*50)
+def create_candidates(prev_itemsets, k):
+    \"\"\"从k-1项集生成k项集候选\"\"\"
+    candidates = set()
+    prev_list = list(prev_itemsets)
+    for i in range(len(prev_list)):
+        for j in range(i + 1, len(prev_list)):
+            itemset1 = prev_list[i]
+            itemset2 = prev_list[j]
+            # 前k-2个元素相同则合并
+            if sorted(itemset1)[:-1] == sorted(itemset2)[:-1]:
+                candidate = tuple(sorted(itemset1.union(itemset2)))
+                candidates.add(candidate)
+    return candidates
 
-# 找频繁1项集
-item_counts = defaultdict(int)
-for trans in transactions:
-    for item in trans:
-        item_counts[frozenset([item])] += 1
+def prune_candidates(candidates, prev_itemsets, k):
+    \"\"\"Apriori剪枝：如果任一个k-1子集非频繁，则剪枝\"\"\"
+    pruned = []
+    for candidate in candidates:
+        # 检查所有k-1子集
+        all_subsets_frequent = True
+        for subset in combinations(candidate, k-1):
+            if frozenset(subset) not in prev_itemsets:
+                all_subsets_frequent = False
+                break
+        if all_subsets_frequent:
+            pruned.append(candidate)
+    return pruned
 
-print("\\n频繁项集：")
-for itemset, count in sorted(item_counts.items(), key=lambda x: -x[1]):
-    support = count / n_transactions
-    if support >= min_support:
-        print(f"{set(itemset)}: {support:.1%}")
-</pre>
+def apriori(transactions, min_support):
+    \"\"\"Apriori算法主函数\"\"\"
+    n_transactions = len(transactions)
+    min_count = int(min_support * n_transactions)
+    
+    # 找出频繁1-项集
+    all_items = [item for tx in transactions for item in tx]
+    item_counts = Counter(all_items)
+    itemsets_1 = {frozenset([item]): count for item, count in item_counts.items() if count >= min_count}
+    
+    all_frequent = itemsets_1.copy()
+    current_itemsets = itemsets_1
+    k = 1
+    
+    while current_itemsets:
+        k += 1
+        # 生成候选集
+        candidates = create_candidates(current_itemsets.keys(), k)
+        if not candidates:
+            break
+        # 剪枝
+        candidates = prune_candidates(candidates, current_itemsets.keys(), k)
+        if not candidates:
+            break
+        # 统计候选集频率
+        candidate_counts = Counter()
+        for tx in transactions:
+            tx_set = set(tx)
+            for candidate in candidates:
+                if set(candidate).issubset(tx_set):
+                    candidate_counts[candidate] += 1
+        # 筛选频繁项集
+        current_itemsets = {frozenset(itemset): count for itemset, count in candidate_counts.items() if count >= min_count}
+        # 添加到结果
+        all_frequent.update(current_itemsets)
+    
+    return all_frequent
+
+# 示例数据
+transactions = [
+    ['面包', '牛奶', '鸡蛋'],
+    ['牛奶', '鸡蛋', '啤酒'],
+    ['面包', '牛奶', '啤酒', '薯片'],
+    ['面包', '薯片'],
+    ['牛奶', '鸡蛋', '面包'],
+    ['啤酒', '薯片'],
+    ['面包', '牛奶', '鸡蛋', '薯片'],
+    ['牛奶', '鸡蛋'],
+    ['面包', '啤酒'],
+    ['鸡蛋', '薯片']
+]
+
+min_support = 0.3  # 30%
+frequent_itemsets = apriori(transactions, min_support)
+
+print("=== 频繁项集挖掘结果 ===")
+print(f"最小支持度: {min_support*100}%")
+print(f"共发现 {len(frequent_itemsets)} 个频繁项集\\n")
+
+# 按项集大小分组
+itemsets_by_size = {}
+for itemset, count in frequent_itemsets.items():
+    size = len(itemset)
+    if size not in itemsets_by_size:
+        itemsets_by_size[size] = []
+    itemsets_by_size[size].append((sorted(itemset), count))
+
+for size in sorted(itemsets_by_size.keys()):
+    print(f"{size}-项集:")
+    for itemset, count in itemsets_by_size[size]:
+        support = count / len(transactions) * 100
+        print(f"  {itemset}: {count}次 ({support:.1f}%)")
+    print()
+  </pre>
 </div>
 <h4>知识点</h4>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>Apriori算法</li>
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module2-apriori')">Apriori算法</a></li>
   <li>频繁项集挖掘</li>
-  <li>支持度计算</li>
-</ul>`
+  <li>Apriori原理</li>
+</ul>
+        `
       },
       {
         id: 4,
         title: "问题4：关联规则可视化",
-        description: `<p>将挖掘出的关联规则进行可视化展示。</p>
-<p><strong>输入：</strong>关联规则数据</p>
-<p><strong>输出：</strong>规则可视化结果</p>
+        description: `
+<p>编写一个程序，从频繁项集中生成关联规则并展示结果。</p>
+<p><strong>输入：</strong></p>
+<p>购物篮交易数据、最小支持度、最小置信度</p>
+<p><strong>输出：</strong></p>
+<p>强关联规则列表（包含支持度、置信度、提升度）</p>
 <p><strong>要求：</strong></p>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>计算规则的各项指标</li>
-  <li>用文本形式展示规则</li>
-  <li>按指标排序</li>
-</ul>`,
+  <li>从频繁项集生成所有可能的规则</li>
+  <li>计算规则的支持度、置信度、提升度</li>
+  <li>筛选满足最小置信度的规则</li>
+  <li>按提升度降序排列输出</li>
+</ul>
+        `,
         difficulty: "medium",
-        time: "40分钟",
-        code: `# 请编写代码`,
-        analysis: `<h4>解题思路</h4>
-<p>1. 从频繁项集生成可能的规则</p>
-<p>2. 计算每条规则的支持度、置信度、提升度</p>
-<p>3. 筛选有意义的规则</p>
-<p>4. 格式化输出展示</p>
-<h4>代码示例</h4>
-<div class="bg-dark p-3 rounded-lg font-mono text-sm">
-<pre class="text-cyan-300">
-import pandas as pd
+        time: "20分钟",
+        code: `from collections import Counter
+from itertools import combinations
 
-# 示例关联规则数据
-rules_data = [
-    {'前项': ['牛奶'], '后项': ['面包'], '支持度': 0.57, '置信度': 0.80, '提升度': 1.14},
-    {'前项': ['面包'], '后项': ['牛奶'], '支持度': 0.57, '置信度': 0.80, '提升度': 1.14},
-    {'前项': ['牛奶'], '后项': ['鸡蛋'], '支持度': 0.43, '置信度': 0.60, '提升度': 1.05},
+# 示例购物篮数据
+transactions = [
+    ['面包', '牛奶', '鸡蛋'],
+    ['牛奶', '鸡蛋', '啤酒'],
+    ['面包', '牛奶', '啤酒', '薯片'],
+    ['面包', '薯片'],
+    ['牛奶', '鸡蛋', '面包'],
+    ['啤酒', '薯片'],
+    ['面包', '牛奶', '鸡蛋', '薯片'],
+    ['牛奶', '鸡蛋'],
+    ['面包', '啤酒'],
+    ['鸡蛋', '薯片']
 ]
 
-rules_df = pd.DataFrame(rules_data)
+min_support = 0.3  # 最小支持度30%
+min_confidence = 0.6  # 最小置信度60%
 
-print("发现的关联规则：")
-print("="*80)
+# 请在此编写代码
+        `,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 先用Apriori找到所有频繁项集</p>
+<p>2. 对每个频繁项集（大小>=2），生成所有可能的规则 A→B</p>
+<p>3. 计算每个规则的支持度、置信度、提升度</p>
+<p>4. 筛选满足条件的强规则并排序</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">
+from collections import Counter
+from itertools import combinations
 
-for idx, row in rules_df.iterrows():
-    antecedent = ','.join(row['前项'])
-    consequent = ','.join(row['后项'])
-    print(f"规则 {idx+1}: {{{antecedent}}} → {{{consequent}}}")
-    print(f"  支持度: {row['支持度']:.1%}, 置信度: {row['置信度']:.1%}, 提升度: {row['提升度']:.2f}")
+def get_itemset_support(itemset, transactions):
+    \"\"\"计算项集支持度\"\"\"
+    count = 0
+    itemset_set = set(itemset)
+    for tx in transactions:
+        if itemset_set.issubset(tx):
+            count += 1
+    return count / len(transactions), count
+
+def generate_rules(frequent_itemsets, min_confidence, transactions):
+    \"\"\"从频繁项集生成关联规则\"\"\"
+    rules = []
+    n = len(transactions)
     
-    if row['提升度'] > 1:
-        print(f"  ✓ 购买\"{antecedent}\"会促进\"{consequent}\"的销售")
-    print()
-</pre>
+    for itemset in frequent_itemsets.keys():
+        k = len(itemset)
+        if k < 2:
+            continue
+        # 生成所有非空真子集作为前件
+        for size in range(1, k):
+            for antecedent in combinations(itemset, size):
+                antecedent = frozenset(antecedent)
+                consequent = itemset - antecedent
+                if not consequent:
+                    continue
+                # 计算指标
+                support_antecedent, _ = get_itemset_support(antecedent, transactions)
+                support_consequent, _ = get_itemset_support(consequent, transactions)
+                support_itemset, count_itemset = get_itemset_support(itemset, transactions)
+                confidence = support_itemset / support_antecedent if support_antecedent > 0 else 0
+                lift = confidence / support_consequent if support_consequent > 0 else 0
+                # 筛选满足最小置信度的规则
+                if confidence >= min_confidence:
+                    rules.append({
+                        'antecedent': sorted(antecedent),
+                        'consequent': sorted(consequent),
+                        'support': support_itemset,
+                        'confidence': confidence,
+                        'lift': lift,
+                        'count': count_itemset
+                    })
+    
+    # 按提升度降序排列
+    rules.sort(key=lambda x: x['lift'], reverse=True)
+    return rules
+
+def apriori(transactions, min_support):
+    \"\"\"简化的Apriori，这里直接统计所有项集\"\"\"
+    n = len(transactions)
+    min_count = int(min_support * n)
+    
+    # 统计所有可能的项集（简化版本）
+    all_items = set(item for tx in transactions for item in tx)
+    itemsets = {}
+    
+    # 先统计1-项集
+    item_counts = Counter(item for tx in transactions for item in tx)
+    itemsets.update({frozenset([item]): count for item, count in item_counts.items() if count >= min_count})
+    
+    # 统计更大的项集
+    for k in range(2, len(all_items) + 1):
+        k_itemsets = {}
+        # 从已有k-1项集生成候选
+        prev_items = list(itemsets.keys())
+        candidates = set()
+        for i in range(len(prev_items)):
+            for j in range(i + 1, len(prev_items)):
+                itemset1 = prev_items[i]
+                itemset2 = prev_items[j]
+                if len(itemset1) == k-1 and len(itemset2) == k-1:
+                    union = itemset1.union(itemset2)
+                    if len(union) == k:
+                        candidates.add(frozenset(union))
+        # 统计候选
+        for tx in transactions:
+            tx_set = set(tx)
+            for candidate in candidates:
+                if candidate.issubset(tx_set):
+                    k_itemsets[candidate] = k_itemsets.get(candidate, 0) + 1
+        # 筛选频繁项集
+        k_itemsets = {itemset: count for itemset, count in k_itemsets.items() if count >= min_count}
+        if not k_itemsets:
+            break
+        itemsets.update(k_itemsets)
+    
+    return itemsets
+
+# 示例数据
+transactions = [
+    ['面包', '牛奶', '鸡蛋'],
+    ['牛奶', '鸡蛋', '啤酒'],
+    ['面包', '牛奶', '啤酒', '薯片'],
+    ['面包', '薯片'],
+    ['牛奶', '鸡蛋', '面包'],
+    ['啤酒', '薯片'],
+    ['面包', '牛奶', '鸡蛋', '薯片'],
+    ['牛奶', '鸡蛋'],
+    ['面包', '啤酒'],
+    ['鸡蛋', '薯片']
+]
+
+min_support = 0.3
+min_confidence = 0.6
+
+print("=== 关联规则挖掘结果 ===")
+print(f"最小支持度: {min_support*100}%")
+print(f"最小置信度: {min_confidence*100}%\\n")
+
+# 找出频繁项集
+frequent_itemsets = apriori(transactions, min_support)
+
+# 生成规则
+rules = generate_rules(frequent_itemsets, min_confidence, transactions)
+
+if not rules:
+    print("未发现满足条件的规则")
+else:
+    print(f"发现 {len(rules)} 条强关联规则:\\n")
+    for i, rule in enumerate(rules, 1):
+        ant = ", ".join(rule['antecedent'])
+        con = ", ".join(rule['consequent'])
+        print(f"规则 {i}: {{{ant}}} → {{{con}}}")
+        print(f"  支持度: {rule['support']*100:.1f}% ({rule['count']}次)")
+        print(f"  置信度: {rule['confidence']*100:.1f}%")
+        print(f"  提升度: {rule['lift']:.2f}")
+        print()
+  </pre>
 </div>
 <h4>知识点</h4>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>结果可视化</li>
-  <li>关联规则解释</li>
-  <li>业务洞察</li>
-</ul>`
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module3-visualization')">结果可视化与应用</a></li>
+  <li>关联规则生成</li>
+  <li>支持度、置信度、提升度</li>
+</ul>
+        `
       }
     ];
 
+    // 选择题数据
     const choiceQuestions = [
       {
         id: 'c1',
         chapter: 1,
-        title: "选择题A：购物篮分析概念",
+        title: "选择题1：购物篮分析概念",
         question: "购物篮分析的主要目标是什么？",
         options: [
-          { label: 'A', text: '预测商品价格趋势' },
+          { label: 'A', text: '预测单个商品的销量' },
           { label: 'B', text: '发现商品之间的关联关系' },
-          { label: 'C', text: '优化仓库存储空间' },
-          { label: 'D', text: '计算商品进货成本' }
+          { label: 'C', text: '优化仓库存储位置' },
+          { label: 'D', text: '分析顾客人口统计特征' }
         ],
         answer: 'B',
-        analysis: "购物篮分析的核心目标是发现顾客购买的商品之间的关联关系，从而了解哪些商品经常被一起购买。",
+        analysis: "购物篮分析通过分析顾客购物篮中的商品组合，发现哪些商品经常被一起购买，从而找出商品之间的关联关系。",
         difficulty: "easy"
       },
       {
         id: 'c2',
         chapter: 1,
-        title: "选择题B：关联规则指标",
-        question: "在关联规则 X→Y 中，\"购买了X的顾客中也购买Y的比例\"指的是哪个指标？",
+        title: "选择题2：关联规则指标",
+        question: "如果规则 A→B 的提升度(Lift)为1.0，这意味着什么？",
         options: [
-          { label: 'A', text: '支持度' },
-          { label: 'B', text: '置信度' },
-          { label: 'C', text: '提升度' },
-          { label: 'D', text: '相关性' }
+          { label: 'A', text: '购买A的顾客极有可能购买B' },
+          { label: 'B', text: 'A和B之间没有关联，是独立事件' },
+          { label: 'C', text: '购买A的顾客不太可能购买B' },
+          { label: 'D', text: '规则的置信度为100%' }
         ],
         answer: 'B',
-        analysis: "置信度（Confidence）定义为购买了X的顾客中也购买Y的比例，即 P(Y|X)。",
+        analysis: "提升度(Lift) = 1表示A和B是独立事件，购买A对购买B没有影响；Lift > 1表示正相关；Lift < 1表示负相关。",
         difficulty: "medium"
       },
       {
         id: 'c3',
         chapter: 2,
-        title: "选择题C：Apriori原理",
-        question: "Apriori算法的核心先验性质是什么？",
+        title: "选择题3：Apriori原理",
+        question: "根据Apriori原理，下列说法正确的是？",
         options: [
-          { label: 'A', text: '如果一个项集是频繁的，那么它的所有子集也是频繁的' },
-          { label: 'B', text: '如果一个项集是不频繁的，那么它的所有超集也是不频繁的' },
-          { label: 'C', text: 'A和B都是' },
-          { label: 'D', text: 'A和B都不是' }
+          { label: 'A', text: '如果一个项集是频繁的，那么它的所有超集也是频繁的' },
+          { label: 'B', text: '如果一个项集是非频繁的，那么它的所有子集也是非频繁的' },
+          { label: 'C', text: '如果一个项集是频繁的，那么它的所有子集也是频繁的' },
+          { label: 'D', text: 'Apriori原理只适用于2-项集' }
         ],
         answer: 'C',
-        analysis: "Apriori原理包含两个方向：如果一个项集是频繁的，那么它的所有子集也都是频繁的；反之，如果一个项集是不频繁的，那么它的所有超集也都是不频繁的。",
+        analysis: "Apriori原理：如果一个项集是频繁的，那么它的所有非空子集也必须是频繁的。逆否命题：如果一个项集是非频繁的，那么它的所有超集也一定是非频繁的。",
         difficulty: "medium"
       },
       {
         id: 'c4',
-        chapter: 2,
-        title: "选择题D：关联规则生成",
-        question: "如果提升度（Lift）> 1，说明什么？",
+        chapter: 3,
+        title: "选择题4：业务应用场景",
+        question: "购物篮分析结果最适合用于以下哪种场景？",
         options: [
-          { label: 'A', text: '购买X和购买Y是独立的' },
-          { label: 'B', text: '购买X会促进Y的销售' },
-          { label: 'C', text: '购买X会减少Y的销售' },
-          { label: 'D', text: '无法判断两者关系' }
+          { label: 'A', text: '商品定价策略' },
+          { label: 'B', text: '商品陈列优化' },
+          { label: 'C', text: '员工排班计划' },
+          { label: 'D', text: '供应商选择' }
         ],
         answer: 'B',
-        analysis: "提升度 Lift = P(Y|X) / P(Y)。如果 Lift > 1，说明购买X的顾客购买Y的概率高于整体顾客购买Y的概率，即购买X会促进Y的销售。",
-        difficulty: "hard"
+        analysis: "购物篮分析发现的关联规则最适合用于商品陈列优化，将强关联商品放在一起可以增加交叉销售机会。",
+        difficulty: "easy"
       },
       {
         id: 'c5',
         chapter: 3,
-        title: "选择题E：业务应用场景",
-        question: "以下哪项不是购物篮分析的典型应用？",
+        title: "选择题5：营销策略优化",
+        question: "如果发现规则 {牛奶} → {饼干} 的置信度很高但提升度仅为1.2，应该如何制定促销策略？",
         options: [
-          { label: 'A', text: '商品陈列优化' },
-          { label: 'B', text: '交叉销售推荐' },
-          { label: 'C', text: '员工排班安排' },
-          { label: 'D', text: '促销活动设计' }
+          { label: 'A', text: '牛奶和饼干都打5折' },
+          { label: 'B', text: '买牛奶送饼干' },
+          { label: 'C', text: '牛奶打折，饼干不打折' },
+          { label: 'D', text: '饼干打折，牛奶不打折' }
         ],
         answer: 'C',
-        analysis: "购物篮分析主要应用于商品陈列、交叉销售、促销设计等与商品销售相关的场景，员工排班安排通常不是它的应用。",
-        difficulty: "easy"
-      },
-      {
-        id: 'c6',
-        chapter: 3,
-        title: "选择题F：营销策略优化",
-        question: "基于购物篮分析发现规则「啤酒→尿布」，最好的营销策略是什么？",
-        options: [
-          { label: 'A', text: '将啤酒和尿布放在一起陈列' },
-          { label: 'B', text: '啤酒和尿布都涨价' },
-          { label: 'C', text: '只卖啤酒不卖尿布' },
-          { label: 'D', text: '停止销售这两个商品' }
-        ],
-        answer: 'A',
-        analysis: "发现强关联规则后，最优的策略通常是将相关商品放在相近位置陈列，方便顾客购买，促进连带销售。",
+        analysis: "提升度不高说明两者相关性有限，但置信度高说明买牛奶的人常买饼干。所以应该对牛奶打折吸引顾客，饼干不打折保证利润。",
         difficulty: "medium"
       }
     ];
 
+    // 全局变量
     let currentProblem = 1;
     let pyodide = null;
     let editor = null;
     let timerInterval = null;
     let seconds = 0;
+    let isCodeEditorCollapsed = false;
 
+    // 切换代码编辑器折叠状态
+    function toggleCodeEditor() {
+      const container = document.getElementById('code-editor-container');
+      const icon = document.getElementById('toggle-code-icon');
+      
+      if (isCodeEditorCollapsed) {
+        container.style.display = 'block';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+        isCodeEditorCollapsed = false;
+      } else {
+        container.style.display = 'none';
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+        isCodeEditorCollapsed = true;
+      }
+    }
+
+
+    // 初始化函数
     document.addEventListener('DOMContentLoaded', function() {
+      // 初始化代码编辑器
       editor = ace.edit('codeEditor');
       editor.setTheme('ace/theme/tomorrow_night');
       editor.getSession().setMode('ace/mode/python');
-      editor.setOptions({ fontSize: '14px', tabSize: 4, useSoftTabs: true, wrap: true });
+      editor.setOptions({
+        fontSize: '14px',
+        tabSize: 4,
+        useSoftTabs: true,
+        wrap: true
+      });
+      
+      // 设置初始占位符文本
       editor.setValue('# 请编写代码');
       editor.clearSelection();
 
+      // 加载Pyodide
       initPyodide();
+
+      // 加载第一个问题
       loadProgrammingProblem(1);
 
+      // 绑定按钮事件
       document.getElementById('runCode').addEventListener('click', runCode);
       document.getElementById('resetCode').addEventListener('click', resetCode);
 
-      document.querySelectorAll('.knowledge-nav').forEach((button) => {
+      // 绑定知识点导航事件
+      document.querySelectorAll('.knowledge-nav').forEach((button, index) => {
         button.addEventListener('click', function(e) {
           e.preventDefault();
           e.stopPropagation();
+          
+          // 更新按钮状态
           document.querySelectorAll('.knowledge-nav').forEach(btn => btn.classList.remove('active'));
           this.classList.add('active');
+          
+          // 获取目标模块ID
           const target = this.getAttribute('data-target');
-          document.querySelectorAll('.knowledge-section').forEach(section => section.classList.add('hidden'));
-          document.getElementById(target).classList.remove('hidden');
+          
+          // 隐藏所有模块
+          document.querySelectorAll('.knowledge-section').forEach(section => {
+            section.classList.add('hidden');
+          });
+          
+          // 显示目标模块
+          const targetElement = document.getElementById(target);
+          if (targetElement) {
+            targetElement.classList.remove('hidden');
+          }
         });
       });
     });
 
+    // 加载Pyodide
     async function initPyodide() {
       const statusEl = document.getElementById('pyodide-status');
+      const cdns = [
+        "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/",
+        "https://unpkg.com/pyodide@0.24.1/full/",
+        "https://cdnjs.cloudflare.com/ajax/libs/pyodide/0.24.1/full/"
+      ];
+      let currentCDN = 0;
+      let retryCount = 0;
+      const maxRetries = 3;
+      
       statusEl.innerHTML = '<i class="fa fa-spinner fa-spin text-amber-400"></i> 正在加载Python解释器...';
-      try {
-        pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/" });
-        statusEl.innerHTML = '<i class="fa fa-check text-emerald-400"></i> Python解释器加载成功';
-      } catch (error) {
-        statusEl.innerHTML = '<i class="fa fa-exclamation-triangle text-red-400"></i> Python解释器加载失败';
+
+      async function switchCDN() {
+        currentCDN++;
+        if (currentCDN >= cdns.length) {
+          currentCDN = 0;
+          retryCount++;
+          if (retryCount >= maxRetries) {
+            throw new Error('所有CDN均无法访问');
+          }
+        }
       }
+
+      async function loadWithTimeout(indexURL) {
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('加载超时')), 30000);
+        });
+        const loadPromise = loadPyodide({ indexURL });
+        return Promise.race([loadPromise, timeoutPromise]);
+      }
+
+      while (retryCount < maxRetries) {
+        try {
+          pyodide = await loadWithTimeout(cdns[currentCDN]);
+          statusEl.innerHTML = '<i class="fa fa-check text-emerald-400"></i> Python解释器加载成功';
+          return;
+        } catch (error) {
+          console.warn(`CDN ${cdns[currentCDN]} 加载失败:`, error);
+          await switchCDN();
+        }
+      }
+      
+      statusEl.innerHTML = '<i class="fa fa-exclamation-triangle text-red-400"></i> Python解释器加载失败';
+      console.error('Pyodide load error:', error);
     }
 
+    // 切换标签页
     function showTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.add('hidden');
+      });
       document.getElementById(tabId).classList.remove('hidden');
+      
       document.querySelectorAll('.nav-link').forEach(link => {
         link.classList.remove('active');
+        // 找到对应的导航链接并激活
         if(link.getAttribute('onclick') && link.getAttribute('onclick').includes("'" + tabId + "'")) {
           link.classList.add('active');
         }
       });
     }
 
+    // 切换章节
     function toggleChapter(chapterId) {
       const content = document.getElementById(chapterId + '-content');
       const icon = document.getElementById(chapterId + '-icon');
+      
       if (content.classList.contains('collapsed')) {
         content.classList.remove('collapsed');
         icon.classList.remove('fa-chevron-right');
@@ -975,155 +1531,389 @@ for idx, row in rules_df.iterrows():
       }
     }
 
+
+    // 加载编程题
     function loadProgrammingProblem(problemId) {
       currentProblem = problemId;
       const problem = problems.find(p => p.id === problemId);
-      if (!problem) return;
       
+      if (!problem) return
+      showTab("question-bank");
+      
+      // 确保在题库标签页
+      showTab('question-bank');
+      
+      // 更新问题信息
       document.getElementById('problem-title').textContent = problem.title;
       document.getElementById('problem-description').innerHTML = problem.description;
-      document.getElementById('difficulty-tag').textContent = problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难';
-      document.getElementById('difficulty-tag').className = 'difficulty-tag difficulty-' + problem.difficulty;
-      document.getElementById('answer-analysis').innerHTML = problem.analysis;
       
+      // 更新难度标签
+      const difficultyTag = document.getElementById('difficulty-tag');
+      difficultyTag.className = 'difficulty-tag';
+      difficultyTag.classList.add('difficulty-' + problem.difficulty);
+      difficultyTag.textContent = problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难';
+      
+      // 显示代码编辑器和运行结果区域
+      const codeContainer = document.getElementById('code-editor-container');
+      codeContainer.style.display = 'block';
+      if (isCodeEditorCollapsed) {
+        isCodeEditorCollapsed = false;
+        document.getElementById('toggle-code-icon').classList.remove('fa-chevron-down');
+        document.getElementById('toggle-code-icon').classList.add('fa-chevron-up');
+      }
+      document.getElementById('code-output').parentElement.parentElement.style.display = 'block';
+      
+      // 更新代码编辑器
       editor.setValue(problem.code);
       editor.clearSelection();
       
-      document.getElementById('code-output').textContent = '运行代码查看输出...';
-      document.getElementById('execution-time').textContent = '执行时间：0ms';
+      // 更新答案解析
+      document.getElementById('answer-analysis').innerHTML = problem.analysis;
       
-      seconds = 0;
-      document.getElementById('timer').textContent = '00:00';
-      clearInterval(timerInterval);
-      timerInterval = setInterval(() => {
-        seconds++;
-        document.getElementById('timer').textContent = `${Math.floor(seconds / 60).toString().padStart(2, '0')}:${(seconds % 60).toString().padStart(2, '0')}`;
-      }, 1000);
-
-      document.querySelectorAll('.problem-item').forEach(item => item.classList.remove('active'));
-      event.target.closest('.problem-item')?.classList.add('active');
-    }
-
-    function loadChoiceQuestion(questionId) {
-      const question = choiceQuestions.find(q => q.id === questionId);
-      if (!question) return;
+      // 重置计时器
+      resetTimer();
       
-      const html = `
-        <div class="mb-4">
-          <h4 class="text-xl font-semibold text-gray-200 mb-4">${question.title}</h4>
-          <p class="text-gray-300 mb-6">${question.question}</p>
-          <div class="space-y-3">
-            ${question.options.map(opt => `
-              <div class="choice-option" onclick="selectOption(this, '${opt.label}')">
-                <div class="choice-label">${opt.label}</div>
-                <div class="flex-1">${opt.text}</div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-        <div id="choice-result" class="hidden mt-6 p-4 rounded-lg"></div>
-        <div id="choice-analysis" class="hidden mt-6">
-          <h4 class="text-lg font-semibold text-emerald-400 mb-2">答案解析</h4>
-          <p class="text-gray-300">${question.analysis}</p>
-        </div>
-      `;
-      
-      document.getElementById('problem-description').innerHTML = html;
-      document.getElementById('problem-title').textContent = question.title;
-      document.getElementById('answer-analysis').innerHTML = '<p class="text-gray-400">完成答题后查看答案解析</p>';
-      
-      seconds = 0;
-      document.getElementById('timer').textContent = '00:00';
-    }
-
-    function selectOption(element, label) {
-      const options = document.querySelectorAll('.choice-option');
-      options.forEach(opt => {
-        opt.classList.remove('selected');
-        opt.classList.add('disabled');
-        opt.onclick = null;
+      // 更新问题项状态
+      document.querySelectorAll('.problem-item').forEach(item => {
+        item.classList.remove('active');
       });
-      element.classList.add('selected');
-      
-      const questionId = choiceQuestions.find(q => q.title === document.getElementById('problem-title').textContent)?.id;
-      const question = choiceQuestions.find(q => q.id === questionId);
-      
-      if (question) {
-        const isCorrect = label === question.answer;
-        const resultDiv = document.getElementById('choice-result');
-        resultDiv.classList.remove('hidden');
-        
-        if (isCorrect) {
-          resultDiv.className = 'mt-6 p-4 rounded-lg bg-emerald-900 bg-opacity-30 border border-emerald-500';
-          resultDiv.innerHTML = '<p class="text-emerald-400 font-semibold">✓ 回答正确！</p>';
-          element.classList.add('correct');
-        } else {
-          resultDiv.className = 'mt-6 p-4 rounded-lg bg-red-900 bg-opacity-30 border border-red-500';
-          resultDiv.innerHTML = '<p class="text-red-400 font-semibold">✗ 回答错误！正确答案是：' + question.answer + '</p>';
-          element.classList.add('wrong');
-          options.forEach(opt => {
-            if (opt.querySelector('.choice-label').textContent === question.answer) {
-              opt.classList.add('correct');
-            }
-          });
+      // 给当前点击的问题项添加 active 类
+      const allProblemItems = document.querySelectorAll('.problem-item');
+      allProblemItems.forEach(item => {
+        const onclickAttr = item.getAttribute('onclick');
+        if (onclickAttr && onclickAttr.includes('loadProgrammingProblem(' + problemId + ')')) {
+          item.classList.add('active');
         }
-        
-        document.getElementById('choice-analysis').classList.remove('hidden');
-      }
+      });
     }
 
+    // 运行代码
     async function runCode() {
-      if (!pyodide) {
-        document.getElementById('code-output').textContent = 'Python解释器尚未加载完成，请稍候...';
-        return;
-      }
-      
       const code = editor.getValue();
       const outputDiv = document.getElementById('code-output');
       const executionTimeDiv = document.getElementById('execution-time');
       
+      if (!pyodide) {
+        outputDiv.textContent = 'Python解释器尚未加载完成，请稍候...';
+        return;
+      }
+      
       outputDiv.textContent = '运行中...';
-      const startTime = performance.now();
+      executionTimeDiv.textContent = '执行时间：计算中...';
       
       try {
+        const startTime = performance.now();
+        
+        // 重置并捕获 stdout 和 stderr
         let stdoutOutput = '';
+        let stderrOutput = '';
+        
         pyodide.setStdout({
-          batched: (text) => { stdoutOutput += text + '\n'; }
+          batched: (text) => {
+            stdoutOutput += text;
+          }
         });
         
+        pyodide.setStderr({
+          batched: (text) => {
+            stderrOutput += text;
+          }
+        });
+        
+        // 运行代码
         const result = await pyodide.runPythonAsync(code);
+        
         const endTime = performance.now();
-        const displayOutput = stdoutOutput.trim() || result || '代码执行成功，无输出';
+        const executionTime = (endTime - startTime).toFixed(2);
+        
+        // 组合输出：优先显示 stdout，其次 stderr，然后是返回值
+        let displayOutput = '';
+        if (stdoutOutput.trim()) {
+          displayOutput += stdoutOutput.trim();
+        }
+        if (stderrOutput.trim()) {
+          if (displayOutput) displayOutput += '\\n\\n';
+          displayOutput += '错误输出:\\n' + stderrOutput.trim();
+        }
+        if (!displayOutput && result !== undefined) {
+          displayOutput = String(result);
+        }
+        if (!displayOutput) {
+          displayOutput = '代码执行成功，无输出';
+        }
+        
         outputDiv.textContent = displayOutput;
-        executionTimeDiv.textContent = `执行时间：${(endTime - startTime).toFixed(2)}ms`;
+        executionTimeDiv.textContent = `执行时间：${executionTime}ms`;
       } catch (error) {
-        outputDiv.textContent = `错误：${error.message}`;
+        let errorMsg = `错误：${error.message}`;
+        if (error.pyodide_type) {
+          errorMsg += ` (类型：${error.pyodide_type})`;
+        }
+        outputDiv.textContent = errorMsg;
         executionTimeDiv.textContent = '执行时间：0ms';
       }
     }
 
+    // 重置代码
     function resetCode() {
       const problem = problems.find(p => p.id === currentProblem);
       if (problem) {
         editor.setValue(problem.code);
         editor.clearSelection();
-        document.getElementById('code-output').textContent = '运行代码查看输出...';
-        document.getElementById('execution-time').textContent = '执行时间：0ms';
       }
     }
 
+    // 切换收藏状态
     function toggleFavorite(problemId) {
       const btn = document.getElementById('favorite-btn');
-      const icon = btn.querySelector('i');
-      if (icon.classList.contains('fa-star-o')) {
-        icon.classList.remove('fa-star-o');
-        icon.classList.add('fa-star');
-        btn.classList.add('text-yellow-400');
+      if (btn.innerHTML.includes('fa-star-o')) {
+        btn.innerHTML = '<i class="fa fa-star text-yellow-400"></i>';
       } else {
-        icon.classList.remove('fa-star');
-        icon.classList.add('fa-star-o');
-        btn.classList.remove('text-yellow-400');
+        btn.innerHTML = '<i class="fa fa-star-o"></i>';
       }
+    }
+
+    // 重置计时器
+    function resetTimer() {
+      clearInterval(timerInterval);
+      seconds = 0;
+      updateTimer();
+      timerInterval = setInterval(() => {
+        seconds++;
+        updateTimer();
+      }, 1000);
+    }
+
+    // 更新计时器
+    function updateTimer() {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    // 滚动到指定知识点
+    function scrollToKnowledge(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // 选择题相关变量和函数
+    let currentChoiceQuestion = null;
+    let selectedAnswer = null;
+    let answeredQuestions = {};
+
+    // 加载选择题
+    function loadChoiceQuestion(questionId) {
+      currentChoiceQuestion = choiceQuestions.find(q => q.id === questionId);
+      showTab("question-bank");
+      if (!currentChoiceQuestion) return;
+
+      // 自动切换到题库标签页
+      showTab('question-bank');
+      
+      selectedAnswer = answeredQuestions[questionId] || null;
+      
+      // 更新问题信息
+      document.getElementById('problem-title').textContent = currentChoiceQuestion.title;
+      
+      // 更新难度标签
+      const difficultyTag = document.getElementById('difficulty-tag');
+      difficultyTag.className = 'difficulty-tag';
+      difficultyTag.classList.add('difficulty-' + currentChoiceQuestion.difficulty);
+      difficultyTag.textContent = currentChoiceQuestion.difficulty === 'easy' ? '简单' : currentChoiceQuestion.difficulty === 'medium' ? '中等' : '困难';
+      
+      // 构建选择题HTML
+      let optionsHtml = currentChoiceQuestion.options.map(opt => {
+        let optionClass = 'choice-option';
+        if (selectedAnswer === opt.label) {
+          optionClass += ' selected';
+        }
+        if (answeredQuestions[questionId]) {
+          optionClass += ' disabled';
+          if (opt.label === currentChoiceQuestion.answer) {
+            optionClass += ' correct';
+          } else if (opt.label === selectedAnswer && selectedAnswer !== currentChoiceQuestion.answer) {
+            optionClass += ' wrong';
+          }
+        }
+        return `
+          <div class="${optionClass}" onclick="selectChoice('${opt.label}')" data-label="${opt.label}">
+            <div class="choice-label">${opt.label}</div>
+            <div class="flex-1 text-gray-200">${opt.text}</div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('problem-description').innerHTML = `
+        <div class="mb-6">
+          <p class="text-lg text-gray-200">${currentChoiceQuestion.question}</p>
+        </div>
+        <div class="space-y-3" id="choice-options">
+          ${optionsHtml}
+        </div>
+        <div class="mt-6 flex gap-3">
+          <button class="btn-primary" onclick="submitChoice()" id="submit-choice-btn" ${answeredQuestions[questionId] ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>
+            <i class="fa fa-check"></i> 提交答案
+          </button>
+          <button class="btn-secondary" onclick="showChoiceAnalysis()" id="show-analysis-btn" ${!answeredQuestions[questionId] ? 'style="display:none"' : ''}>
+            <i class="fa fa-lightbulb-o"></i> 查看解析
+          </button>
+        </div>
+      `;
+
+      // 隐藏代码编辑器和运行结果区域
+      document.getElementById('code-editor-container').style.display = 'none';
+      document.getElementById('code-output').parentElement.parentElement.style.display = 'none';
+      
+      // 更新答案解析
+      updateChoiceAnalysis();
+      
+      // 滚动到问题描述区域
+      document.getElementById('problem-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      // 重置计时器
+      resetTimer();
+      
+      // 更新问题项状态
+      document.querySelectorAll('.problem-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      // 给当前点击的问题项添加 active 类
+      const allProblemItems = document.querySelectorAll('.problem-item');
+      allProblemItems.forEach(item => {
+        const onclickAttr = item.getAttribute('onclick');
+        if (onclickAttr && onclickAttr.includes('loadChoiceQuestion(\\'' + questionId + '\\')')) {
+          item.classList.add('active');
+        }
+      });
+    }
+
+    // 选择答案
+    function selectChoice(label) {
+      if (answeredQuestions[currentChoiceQuestion.id]) return;
+      
+      selectedAnswer = label;
+      
+      // 更新选项样式
+      document.querySelectorAll('.choice-option').forEach(opt => {
+        opt.classList.remove('selected');
+        if (opt.dataset.label === label) {
+          opt.classList.add('selected');
+        }
+      });
+    }
+
+    // 提交选择题答案
+    function submitChoice() {
+      if (!selectedAnswer) {
+        alert('请先选择一个答案');
+        return;
+      }
+      
+      answeredQuestions[currentChoiceQuestion.id] = selectedAnswer;
+      
+      // 更新选项样式
+      document.querySelectorAll('.choice-option').forEach(opt => {
+        opt.classList.add('disabled');
+        if (opt.dataset.label === currentChoiceQuestion.answer) {
+          opt.classList.add('correct');
+        } else if (opt.dataset.label === selectedAnswer && selectedAnswer !== currentChoiceQuestion.answer) {
+          opt.classList.add('wrong');
+        }
+      });
+      
+      // 禁用提交按钮，显示解析按钮
+      document.getElementById('submit-choice-btn').disabled = true;
+      document.getElementById('submit-choice-btn').style.opacity = '0.5';
+      document.getElementById('submit-choice-btn').style.cursor = 'not-allowed';
+      document.getElementById('show-analysis-btn').style.display = 'flex';
+      
+      // 更新答案解析
+      updateChoiceAnalysis();
+      
+      // 更新进度
+      updateChoiceProgress();
+    }
+
+    // 显示选择题解析
+    function showChoiceAnalysis() {
+      if (!answeredQuestions[currentChoiceQuestion.id]) {
+        alert('请先提交答案');
+        return;
+      }
+      document.getElementById('answer-analysis').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // 更新选择题解析内容
+    function updateChoiceAnalysis() {
+      if (!currentChoiceQuestion) return;
+      
+      const isAnswered = !!answeredQuestions[currentChoiceQuestion.id];
+      const isCorrect = selectedAnswer === currentChoiceQuestion.answer;
+      
+      let contentHtml;
+      if (!isAnswered) {
+        contentHtml = `
+          <div class="bg-amber-900 bg-opacity-20 border border-amber-700 rounded-lg p-4 mb-4">
+            <p class="text-amber-400"><i class="fa fa-info-circle"></i> 请先选择一个答案，然后点击"提交答案"查看解析</p>
+          </div>
+        `;
+      } else {
+        contentHtml = `
+          <div class="mb-4">
+            <p class="text-gray-300 mb-2">正确答案：<span class="text-emerald-400 font-bold">${currentChoiceQuestion.answer}</span></p>
+            <p class="text-gray-300">您的答案：<span class="${isCorrect ? 'text-emerald-400' : 'text-red-400'} font-bold">${selectedAnswer || '未作答'}</span></p>
+          </div>
+          <div class="bg-dark p-4 rounded-lg mb-4">
+            <h5 class="text-cyan-400 font-semibold mb-2">解析</h5>
+            <p class="text-gray-300">${currentChoiceQuestion.analysis}</p>
+          </div>
+          <h4>相关知识点</h4>
+          <ul class="list-disc list-inside space-y-1 mt-2">
+            <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('${getKnowledgeSection(currentChoiceQuestion.chapter)}')">${getChapterName(currentChoiceQuestion.chapter)}</a></li>
+          </ul>
+        `;
+      }
+      
+      document.getElementById('answer-analysis').innerHTML = `
+        <h4>答案解析</h4>
+        ${contentHtml}
+      `;
+    }
+
+    // 获取知识点章节ID
+    function getKnowledgeSection(chapter) {
+      const sections = {
+        1: 'module1-basics',
+        2: 'module2-apriori',
+        3: 'module3-visualization'
+      };
+      return sections[chapter] || 'module1-basics';
+    }
+
+    // 获取章节名称
+    function getChapterName(chapter) {
+      const names = {
+        1: '购物篮分析基础',
+        2: 'Apriori算法',
+        3: '结果可视化与应用'
+      };
+      return names[chapter] || '购物篮分析';
+    }
+
+    // 更新选择题进度
+    function updateChoiceProgress() {
+      const totalChoice = choiceQuestions.length;
+      const answeredChoice = Object.keys(answeredQuestions).length;
+      const correctChoice = Object.entries(answeredQuestions).filter(([id, ans]) => {
+        const q = choiceQuestions.find(q => q.id === id);
+        return q && q.answer === ans;
+      }).length;
+      
+      // 可以在这里更新总体进度显示
+      console.log(`选择题进度: ${answeredChoice}/${totalChoice}, 正确: ${correctChoice}`);
     }
   </script>
 </body>
