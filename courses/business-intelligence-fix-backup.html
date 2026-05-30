@@ -1,0 +1,2524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>商务智能分析 - Xww的课程页面</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/ace.js"></script>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#06b6d4',
+            secondary: '#1e293b',
+            accent: '#10b981',
+            code: '#1e293b',
+            codeText: '#e2e8f0',
+            dark: '#111827',
+            'dark-gray': '#1f2937',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .code-editor {
+        @apply w-full h-96 bg-dark rounded-lg overflow-hidden border border-gray-700;
+      }
+      .code-output {
+        @apply w-full h-64 bg-dark rounded-lg p-4 font-mono text-sm overflow-auto border border-gray-700;
+      }
+      .btn-primary {
+        @apply bg-cyan-500 hover:bg-cyan-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2;
+      }
+      .btn-secondary {
+        @apply bg-dark-gray hover:bg-gray-700 text-gray-200 px-4 py-2 rounded-lg transition-all duration-300 border border-gray-700 flex items-center gap-2;
+      }
+      .btn-accent {
+        @apply bg-emerald-500 hover:bg-emerald-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2;
+      }
+      .nav-link {
+        @apply relative text-gray-300 hover:text-cyan-400 transition-colors px-4 py-2 rounded-lg hover:bg-dark-gray flex items-center gap-2;
+      }
+      .nav-link.active {
+        @apply text-cyan-400 bg-dark-gray;
+      }
+      .nav-link::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300;
+      }
+      .nav-link:hover::after {
+        @apply w-full;
+      }
+      .problem-item {
+        @apply flex items-center gap-3 p-3 rounded-lg hover:bg-dark-gray transition-colors cursor-pointer border border-gray-700;
+      }
+      .problem-item.active {
+        @apply bg-dark-gray border-cyan-500;
+      }
+      .problem-item.solved {
+        @apply border-emerald-500;
+      }
+      .problem-item.attempted {
+        @apply border-yellow-500;
+      }
+      .section-title {
+        @apply text-xl font-bold text-gray-200 mb-4 relative pb-2;
+      }
+      .section-title::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-16 h-1 bg-cyan-500 rounded-full;
+      }
+      .topic-title {
+        @apply text-lg font-semibold text-gray-300 mb-3 flex items-center gap-2 cursor-pointer;
+      }
+      .topic-title:hover {
+        @apply text-cyan-400;
+      }
+      .problem-description {
+        @apply text-gray-300 space-y-4;
+      }
+      .problem-description code {
+        @apply bg-dark-gray px-2 py-1 rounded text-cyan-400;
+      }
+      .answer-analysis {
+        @apply text-gray-300 space-y-3;
+      }
+      .answer-analysis h4 {
+        @apply text-lg font-semibold text-emerald-400 mb-2;
+      }
+      .run-info {
+        @apply flex justify-between items-center mb-2 text-xs text-gray-400;
+      }
+      .difficulty-tag {
+        @apply text-xs px-2 py-1 rounded-full;
+      }
+      .difficulty-easy {
+        @apply bg-emerald-900 text-emerald-300;
+      }
+      .difficulty-medium {
+        @apply bg-yellow-900 text-yellow-300;
+      }
+      .difficulty-hard {
+        @apply bg-red-900 text-red-300;
+      }
+      .chapter-item {
+        @apply mb-6;
+      }
+      .chapter-content {
+        @apply space-y-2 ml-4 transition-all duration-300;
+      }
+      .chapter-content.collapsed {
+        @apply hidden;
+      }
+      .scrollbar-thin {
+        scrollbar-width: thin;
+      }
+      .scrollbar-thin::-webkit-scrollbar {
+        width: 6px;
+      }
+      .scrollbar-thin::-webkit-scrollbar-track {
+        @apply bg-dark;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb {
+        @apply bg-gray-700 rounded-full;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        @apply bg-gray-600;
+      }
+      .knowledge-nav.active {
+        @apply bg-cyan-500 text-gray-900;
+      }
+      .knowledge-nav:not(.active) {
+        @apply bg-gray-600 text-gray-200 hover:bg-gray-500;
+      }
+      .choice-option {
+        @apply flex items-center gap-3 p-4 rounded-lg border border-gray-700 cursor-pointer transition-all duration-200 hover:border-cyan-500 hover:bg-dark-gray;
+      }
+      .choice-option.selected {
+        @apply border-cyan-500 bg-cyan-900 bg-opacity-30;
+      }
+      .choice-option.correct {
+        @apply border-emerald-500 bg-emerald-900 bg-opacity-30;
+      }
+      .choice-option.wrong {
+        @apply border-red-500 bg-red-900 bg-opacity-30;
+      }
+      .choice-option.disabled {
+        @apply cursor-not-allowed opacity-70;
+      }
+      .choice-label {
+        @apply w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold text-sm;
+      }
+      .choice-option.selected .choice-label {
+        @apply bg-cyan-500 text-gray-900;
+      }
+      .choice-option.correct .choice-label {
+        @apply bg-emerald-500 text-gray-900;
+      }
+      .choice-option.wrong .choice-label {
+        @apply bg-red-500 text-gray-900;
+      }
+    }
+  </style>
+</head>
+<body class="bg-dark min-h-screen text-gray-200">
+  <!-- 顶部导航栏 -->
+  <nav class="bg-dark-gray shadow-lg fixed w-full z-10">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center flex-wrap gap-4">
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="text-cyan-400 font-bold text-xl flex items-center gap-2">
+          <i class="fa fa-arrow-left mr-2"></i> Xww的课程页面
+        </a>
+      </div>
+      <div class="flex items-center gap-2 flex-wrap">
+        <a href="#" class="nav-link active" onclick="showTab('question-bank')">
+          <i class="fa fa-list"></i> 题库
+        </a>
+        <a href="#" class="nav-link" onclick="showTab('wrong-questions')">
+          <i class="fa fa-times-circle"></i> 错题
+        </a>
+        <a href="#" class="nav-link" onclick="showTab('favorites')">
+          <i class="fa fa-star"></i> 收藏
+        </a>
+        <a href="#" class="nav-link" onclick="showTab('knowledge')">
+          <i class="fa fa-book"></i> 知识点
+        </a>
+        <a href="business-intelligence-exam.html" class="nav-link">
+          <i class="fa fa-pencil-square-o"></i> 考试
+        </a>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="text-sm text-gray-300">
+          完成进度：<span id="overall-progress" class="text-cyan-400 font-bold">0%</span>
+        </div>
+        <div class="w-48 bg-gray-700 rounded-full h-2.5">
+          <div id="progress-bar" class="bg-cyan-500 h-2.5 rounded-full" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主要内容区 -->
+  <div class="pt-24 min-h-screen">
+    <div class="container mx-auto px-4">
+      <!-- 题库标签页 -->
+      <div id="question-bank" class="tab-content">
+        <div class="flex flex-col lg:flex-row gap-6 py-6">
+          <!-- 左侧：题目列表/章节目录 -->
+          <div class="lg:w-1/4 bg-dark-gray rounded-xl p-4 border border-gray-700 h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin">
+            <h2 class="section-title">商务智能分析题库</h2>
+            
+            <!-- 章节列表 -->
+            <div class="space-y-6">
+              <!-- 章节1：供应链概述 -->
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter1')">
+                  <i class="fa fa-chevron-down text-gray-400 transition-transform duration-300" id="chapter1-icon"></i>
+                  供应链概述
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/6</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
+                </h3>
+                <div class="chapter-content" id="chapter1-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
+                  <div class="problem-item active" onclick="loadProgrammingProblem(1)">
+                    <div class="w-8 h-8 rounded-full bg-cyan-500 flex items-center justify-center text-gray-900 font-bold">1</div>
+                    <div class="flex-1">
+                      <div class="font-medium">供应链数据预处理</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-gray-400">15分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(2)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">2</div>
+                    <div class="flex-1">
+                      <div class="font-medium">供应商绩效评估</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c1')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">A</div>
+                    <div class="flex-1">
+                      <div class="font-medium">供应链基本概念</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c2')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">B</div>
+                    <div class="flex-1">
+                      <div class="font-medium">供应链核心流程</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c3')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">C</div>
+                    <div class="flex-1">
+                      <div class="font-medium">供应链管理目标</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 章节2：需求预测 -->
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter2')">
+                  <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter2-icon"></i>
+                  需求预测
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/5</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
+                </h3>
+                <div class="chapter-content collapsed" id="chapter2-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(3)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">3</div>
+                    <div class="flex-1">
+                      <div class="font-medium">移动平均预测</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-gray-400">15分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(4)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">4</div>
+                    <div class="flex-1">
+                      <div class="font-medium">指数平滑预测</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">25分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c4')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">D</div>
+                    <div class="flex-1">
+                      <div class="font-medium">预测方法比较</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c5')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">E</div>
+                    <div class="flex-1">
+                      <div class="font-medium">预测误差分析</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 章节3：库存管理 -->
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter3')">
+                  <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter3-icon"></i>
+                  库存管理
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/5</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
+                </h3>
+                <div class="chapter-content collapsed" id="chapter3-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(5)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">5</div>
+                    <div class="flex-1">
+                      <div class="font-medium">EOQ经济订货量</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(6)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">6</div>
+                    <div class="flex-1">
+                      <div class="font-medium">安全库存计算</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-hard">困难</span>
+                        <span class="text-xs text-gray-400">30分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c6')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">F</div>
+                    <div class="flex-1">
+                      <div class="font-medium">库存成本分析</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c7')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">G</div>
+                    <div class="flex-1">
+                      <div class="font-medium">ABC分类法</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 章节4：物流优化 -->
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter4')">
+                  <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter4-icon"></i>
+                  物流优化
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/3</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
+                </h3>
+                <div class="chapter-content collapsed" id="chapter4-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(7)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">7</div>
+                    <div class="flex-1">
+                      <div class="font-medium">运输路线优化</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">25分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c8')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">H</div>
+                    <div class="flex-1">
+                      <div class="font-medium">物流成本分析</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 章节5：供应链数据分析 -->
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter5')">
+                  <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter5-icon"></i>
+                  供应链数据分析
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/3</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
+                </h3>
+                <div class="chapter-content collapsed" id="chapter5-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c9')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">I</div>
+                    <div class="flex-1">
+                      <div class="font-medium">供应链数据分析</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c10')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">J</div>
+                    <div class="flex-1">
+                      <div class="font-medium">供应链可视化</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 章节6：供应链风险与优化 -->
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter6')">
+                  <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter6-icon"></i>
+                  供应链风险与优化
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/3</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
+                </h3>
+                <div class="chapter-content collapsed" id="chapter6-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c11')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">K</div>
+                    <div class="flex-1">
+                      <div class="font-medium">供应链风险管理</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c12')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">L</div>
+                    <div class="flex-1">
+                      <div class="font-medium">供应链优化策略</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 右侧：问题、代码编辑器、运行结果、答案解析 -->
+          <div class="lg:w-3/4 space-y-6">
+            <!-- 问题描述 -->
+            <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
+                <h3 class="text-xl font-bold text-gray-200" id="problem-title">问题1：供应链数据预处理</h3>
+                <div class="flex items-center gap-4 flex-wrap">
+                  <div class="flex items-center gap-2">
+                    <i class="fa fa-clock-o text-cyan-400"></i>
+                    <span id="timer" class="text-gray-200 font-mono">00:00</span>
+                  </div>
+                  <span class="difficulty-tag difficulty-easy" id="difficulty-tag">简单</span>
+                  <button class="text-gray-400 hover:text-yellow-400 transition-colors" onclick="toggleFavorite(1)" id="favorite-btn">
+                    <i class="fa fa-star-o"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="problem-description" id="problem-description">
+                <p>编写一个程序，对供应链数据进行预处理，包括缺失值处理、异常值检测等。</p>
+                <p><strong>输入：</strong></p>
+                <p>包含缺失值和异常值的供应链数据</p>
+                <p><strong>输出：</strong></p>
+                <p>处理后的干净数据</p>
+                <p><strong>要求：</strong></p>
+                <ul class="list-disc list-inside space-y-1 mt-2">
+                  <li>识别并统计缺失值</li>
+                  <li>使用合适的方法填充缺失值</li>
+                  <li>检测并处理异常值</li>
+                </ul>
+              </div>
+            </div>
+            
+            <!-- 代码编辑框 -->
+            <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
+                <h3 class="text-lg font-semibold text-gray-200">代码编辑器</h3>
+                <div class="flex gap-2">
+                  <button class="btn-secondary text-sm" onclick="toggleCodeEditor()" id="toggle-code-btn" title="折叠代码编辑器">
+                    <i class="fa fa-chevron-up" id="toggle-code-icon"></i>
+                  </button>
+                  <button id="resetCode" class="btn-secondary text-sm">
+                    <i class="fa fa-refresh"></i> 重置
+                  </button>
+                  <button id="runCode" class="btn-primary">
+                    <i class="fa fa-play"></i> 运行代码
+                  </button>
+                </div>
+              </div>
+              <div id="code-editor-container">
+                <div id="codeEditor" class="code-editor"></div>
+                <div id="pyodide-status" class="mt-2 text-sm text-yellow-400">
+                  <i class="fa fa-spinner fa-spin"></i> 正在加载Python解释器...
+                </div>
+              </div>
+            </div>
+            
+            <!-- 运行结果和答案解析 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- 运行结果 -->
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">运行结果</h3>
+                <div class="run-info">
+                  <span id="execution-time">执行时间：0ms</span>
+                  <span id="memory-usage">内存：0MB</span>
+                </div>
+                <div id="code-output" class="code-output">
+                  运行代码查看输出...
+                </div>
+              </div>
+              
+              <!-- 答案解析 -->
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">答案解析</h3>
+                <div class="answer-analysis" id="answer-analysis">
+                  <h4>解题思路</h4>
+                  <p>1. 使用Pandas的isnull()和sum()方法识别并统计缺失值</p>
+                  <p>2. 根据数据类型选择合适的填充方法：数值型数据使用均值或中位数，分类型数据使用众数</p>
+                  <p>3. 使用IQR方法检测异常值</p>
+                  <h4>代码示例</h4>
+                  <div class="bg-dark p-3 rounded-lg font-mono text-sm">
+                    <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+
+# 创建示例数据
+data = {
+    'product_id': [1, 2, 3, 4, 5, 6],
+    'demand': [100, 120, np.nan, 150, 200, 1000],
+    'lead_time': [7, 8, 6, np.nan, 9, 8],
+    'supplier': ['A', 'B', 'A', 'C', 'B', 'A']
+}
+df = pd.DataFrame(data)
+
+# 识别缺失值
+print("缺失值统计:")
+print(df.isnull().sum())
+
+# 处理缺失值
+df['demand'] = df['demand'].fillna(df['demand'].mean())
+df['lead_time'] = df['lead_time'].fillna(df['lead_time'].median())
+
+# 检测异常值（IQR方法
+Q1 = df['demand'].quantile(0.25)
+Q3 = df['demand'].quantile(0.75)
+IQR = Q3 - Q1
+lower = Q1 - 1.5 * IQR
+upper = Q3 + 1.5 * IQR
+outliers = df[(df['demand'] < lower) | (df['demand'] > upper)]
+print("\n检测到的异常值:")
+print(outliers)
+
+# 处理异常值（截断）
+df['demand'] = df['demand'].clip(lower, upper)
+
+print("\n处理后的数据:")
+print(df)
+                    </pre>
+                  </div>
+                  <h4>知识点</h4>
+                  <ul class="list-disc list-inside space-y-1 mt-2">
+                    <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-preprocessing')">数据预处理</a></li>
+                    <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('pandas-basics')">Pandas基础</a></li>
+                    <li>缺失值和异常值处理</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 错题标签页 -->
+      <div id="wrong-questions" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">错题本</h2>
+          <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+            <div class="text-center py-12">
+              <i class="fa fa-times-circle text-4xl text-red-500 mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无错题</h3>
+              <p class="text-gray-400">当你在练习中答错题目时，它们会自动添加到这里</p>
+              <button class="btn-primary mt-6" onclick="showTab('question-bank')">
+                <i class="fa fa-list"></i> 开始练习
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 收藏标签页 -->
+      <div id="favorites" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">收藏题目</h2>
+          <div class="bg-dark-gray rounded-xl p-6 border border-gray-700" id="favorites-container">
+            <div class="text-center py-12">
+              <i class="fa fa-star-o text-4xl text-yellow-500 mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无收藏</h3>
+              <p class="text-gray-400">在题库中点击题目旁边的星标图标来收藏题目</p>
+              <button class="btn-primary mt-6" onclick="showTab('question-bank')">
+                <i class="fa fa-list"></i> 浏览题库
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 知识点标签页 -->
+      <div id="knowledge" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="text-2xl font-bold text-cyan-400 mb-6">📚 商务智能分析 - 详细知识点</h2>
+          
+          <div class="space-y-4">
+            <!-- 第1章 -->
+            <div class="chapter-item border border-gray-700 rounded-lg overflow-hidden">
+              <div class="chapter-header flex items-center justify-between p-4 bg-dark cursor-pointer hover:bg-gray-800 transition-colors" onclick="toggleChapter(this)">
+                <h3 class="chapter-title text-lg font-semibold text-gray-200 flex items-center gap-2">
+                  <i class="fa fa-book text-cyan-400"></i>
+                  第1章 商务智能基础认知
+                </h3>
+                <i class="fa fa-chevron-down text-gray-400 transition-transform"></i>
+              </div>
+              <div class="chapter-content p-4 bg-gray-800 border-t border-gray-700">
+                <div class="space-y-4">
+                  <div class="bg-dark p-4 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-emerald-400 mb-3">1.1 商务智能概念、价值与应用场景</h4>
+                    <div class="text-sm text-gray-300 space-y-3">
+                      <p><strong>什么是商务智能？</strong></p>
+                      <p>商务智能（BI）是将企业数据转化为知识，帮助做出明智业务决策的技术和过程。</p>
+                      <div class="bg-dark-gray p-3 rounded">
+                        <p class="font-semibold text-yellow-400 mb-2">📊 BI核心价值</p>
+                        <ul class="list-disc list-inside text-gray-400 text-sm space-y-1">
+                          <li>数据驱动决策：从经验决策转向基于数据的科学决策</li>
+                          <li>提升运营效率：优化业务流程，降低成本</li>
+                          <li>发现市场机会：挖掘客户需求，识别增长机会</li>
+                          <li>风险预警管理：及时发现潜在风险</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-4 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-emerald-400 mb-3">1.2 数据→信息→知识→决策</h4>
+                    <div class="text-sm text-gray-300">
+                      <div class="grid grid-cols-4 gap-3 text-center mb-4">
+                        <div>
+                          <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-1">📝</div>
+                          <strong class="text-blue-400 text-sm">数据</strong>
+                          <p class="text-xs text-gray-400">原始事实</p>
+                        </div>
+                        <div>
+                          <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-1">📊</div>
+                          <strong class="text-green-400 text-sm">信息</strong>
+                          <p class="text-xs text-gray-400">有意义数据</p>
+                        </div>
+                        <div>
+                          <div class="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center mx-auto mb-1">💡</div>
+                          <strong class="text-yellow-400 text-sm">知识</strong>
+                          <p class="text-xs text-gray-400">规律模式</p>
+                        </div>
+                        <div>
+                          <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-1">🎯</div>
+                          <strong class="text-purple-400 text-sm">决策</strong>
+                          <p class="text-xs text-gray-400">行动选择</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-4 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-emerald-400 mb-3">1.3 BI核心架构</h4>
+                    <div class="text-sm text-gray-300 space-y-3">
+                      <div class="bg-dark-gray p-3 rounded">
+                        <div class="flex items-center gap-2 mb-2">
+                          <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center"><i class="fa fa-database"></i></div>
+                          <strong class="text-blue-400">数据源层</strong>
+                        </div>
+                        <p class="text-gray-400 text-xs">业务数据库、ERP、CRM、日志文件、外部数据</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded">
+                        <div class="flex items-center gap-2 mb-2">
+                          <div class="w-8 h-8 bg-green-600 rounded flex items-center justify-center"><i class="fa fa-refresh"></i></div>
+                          <strong class="text-green-400">ETL层</strong>
+                        </div>
+                        <p class="text-gray-400 text-xs">Extract抽取→Transform转换→Load加载</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded">
+                        <div class="flex items-center gap-2 mb-2">
+                          <div class="w-8 h-8 bg-yellow-600 rounded flex items-center justify-center"><i class="fa fa-server"></i></div>
+                          <strong class="text-yellow-400">数据仓库层</strong>
+                        </div>
+                        <p class="text-gray-400 text-xs">集中存储，支持OLAP分析</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded">
+                        <div class="flex items-center gap-2 mb-2">
+                          <div class="w-8 h-8 bg-purple-600 rounded flex items-center justify-center"><i class="fa fa-search"></i></div>
+                          <strong class="text-purple-400">分析层</strong>
+                        </div>
+                        <p class="text-gray-400 text-xs">OLAP、数据挖掘、机器学习</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded">
+                        <div class="flex items-center gap-2 mb-2">
+                          <div class="w-8 h-8 bg-emerald-600 rounded flex items-center justify-center"><i class="fa fa-bar-chart"></i></div>
+                          <strong class="text-emerald-400">可视化层</strong>
+                        </div>
+                        <p class="text-gray-400 text-xs">报表、看板、仪表板</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 第2章 -->
+            <div class="chapter-item border border-gray-700 rounded-lg overflow-hidden">
+              <div class="chapter-header flex items-center justify-between p-4 bg-dark cursor-pointer hover:bg-gray-800 transition-colors" onclick="toggleChapter(this)">
+                <h3 class="chapter-title text-lg font-semibold text-gray-200 flex items-center gap-2">
+                  <i class="fa fa-line-chart text-cyan-400"></i>
+                  第2章 业务理解与数据分析思维
+                </h3>
+                <i class="fa fa-chevron-down text-gray-400 transition-transform"></i>
+              </div>
+              <div class="chapter-content p-4 bg-gray-800 border-t border-gray-700">
+                <div class="space-y-4">
+                  <div class="bg-dark p-4 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-emerald-400 mb-3">2.1 四种分析层次</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                      <div class="bg-dark-gray p-3 rounded border-l-4 border-blue-500">
+                        <strong class="text-blue-400">📊 描述性分析</strong>
+                        <p class="text-gray-400 text-xs mt-1">回答：发生了什么？</p>
+                        <p class="text-gray-500 text-xs">示例：5月销售额1000万</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded border-l-4 border-yellow-500">
+                        <strong class="text-yellow-400">🔍 诊断性分析</strong>
+                        <p class="text-gray-400 text-xs mt-1">回答：为什么发生？</p>
+                        <p class="text-gray-500 text-xs">示例：增长来自华东地区</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded border-l-4 border-orange-500">
+                        <strong class="text-orange-400">🔮 预测性分析</strong>
+                        <p class="text-gray-400 text-xs mt-1">回答：将要发生什么？</p>
+                        <p class="text-gray-500 text-xs">示例：预计6月销售1200万</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded border-l-4 border-green-500">
+                        <strong class="text-green-400">🎯 规范性分析</strong>
+                        <p class="text-gray-400 text-xs mt-1">回答：应该怎么做？</p>
+                        <p class="text-gray-500 text-xs">示例：建议加大营销投入</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-4 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-emerald-400 mb-3">2.2 维度拆解</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-2 text-xs">
+                      <div class="bg-dark-gray p-2 rounded text-center">
+                        <div class="text-blue-400 text-lg">📅</div>
+                        <strong class="text-blue-400">时间</strong>
+                        <p class="text-gray-500">年/季/月/周/日</p>
+                      </div>
+                      <div class="bg-dark-gray p-2 rounded text-center">
+                        <div class="text-green-400 text-lg">🌍</div>
+                        <strong class="text-green-400">地区</strong>
+                        <p class="text-gray-500">国家/区域/省/市</p>
+                      </div>
+                      <div class="bg-dark-gray p-2 rounded text-center">
+                        <div class="text-yellow-400 text-lg">📦</div>
+                        <strong class="text-yellow-400">产品</strong>
+                        <p class="text-gray-500">分类/品牌/价格带</p>
+                      </div>
+                      <div class="bg-dark-gray p-2 rounded text-center">
+                        <div class="text-purple-400 text-lg">📱</div>
+                        <strong class="text-purple-400">渠道</strong>
+                        <p class="text-gray-500">线上/线下/APP</p>
+                      </div>
+                      <div class="bg-dark-gray p-2 rounded text-center">
+                        <div class="text-emerald-400 text-lg">👥</div>
+                        <strong class="text-emerald-400">用户</strong>
+                        <p class="text-gray-500">新老/等级/画像</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 第3章 -->
+            <div class="chapter-item border border-gray-700 rounded-lg overflow-hidden">
+              <div class="chapter-header flex items-center justify-between p-4 bg-dark cursor-pointer hover:bg-gray-800 transition-colors" onclick="toggleChapter(this)">
+                <h3 class="chapter-title text-lg font-semibold text-gray-200 flex items-center gap-2">
+                  <i class="fa fa-database text-cyan-400"></i>
+                  第3章 数据库与SQL数据查询
+                </h3>
+                <i class="fa fa-chevron-down text-gray-400 transition-transform"></i>
+              </div>
+              <div class="chapter-content p-4 bg-gray-800 border-t border-gray-700">
+                <div class="space-y-4">
+                  <div class="bg-dark p-4 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-emerald-400 mb-3">3.1 SQL基础语法</h4>
+                    <div class="bg-dark-gray p-3 rounded font-mono text-xs">
+                      <pre class="text-cyan-300">-- SELECT查询
+SELECT user_id, name, amount 
+FROM orders 
+WHERE amount > 100 
+ORDER BY amount DESC 
+LIMIT 10;
+
+-- 聚合函数
+SELECT 
+  COUNT(*) AS total,
+  SUM(amount) AS sum_amount,
+  AVG(amount) AS avg_amount
+FROM orders
+GROUP BY user_id
+HAVING SUM(amount) > 1000;</pre>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-4 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-emerald-400 mb-3">3.2 JOIN多表查询</h4>
+                    <div class="bg-dark-gray p-3 rounded font-mono text-xs">
+                      <pre class="text-cyan-300">-- INNER JOIN
+SELECT o.order_id, u.name, o.amount
+FROM orders o
+INNER JOIN users u ON o.user_id = u.user_id;
+
+-- LEFT JOIN
+SELECT u.name, COUNT(o.order_id) AS order_count
+FROM users u
+LEFT JOIN orders o ON u.user_id = o.user_id
+GROUP BY u.name;</pre>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-4 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-emerald-400 mb-3">3.3 窗口函数</h4>
+                    <div class="bg-dark-gray p-3 rounded font-mono text-xs">
+                      <pre class="text-cyan-300">-- ROW_NUMBER, RANK, DENSE_RANK
+SELECT 
+  user_id, amount,
+  ROW_NUMBER() OVER(ORDER BY amount DESC) AS rn,
+  RANK() OVER(ORDER BY amount DESC) AS rk
+FROM orders;
+
+-- LAG/LEAD 同比环比
+SELECT 
+  date, amount,
+  LAG(amount, 1) OVER(ORDER BY date) AS prev,
+  (amount - LAG(amount, 1) OVER(ORDER BY date)) 
+  / LAG(amount, 1) OVER(ORDER BY date) AS growth_rate
+FROM daily_sales;</pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 第4章 -->
+            <div class="chapter-item border border-gray-700 rounded-lg overflow-hidden">
+              <div class="chapter-header flex items-center justify-between p-4 bg-dark cursor-pointer hover:bg-gray-800 transition-colors" onclick="toggleChapter(this)">
+                <h3 class="chapter-title text-lg font-semibold text-gray-200 flex items-center gap-2">
+                  <i class="fa fa-cubes text-cyan-400"></i>
+                  第4章 数据仓库与ETL数据处理
+                </h3>
+                <i class="fa fa-chevron-down text-gray-400 transition-transform"></i>
+              </div>
+              <div class="chapter-content p-4 bg-gray-800 border-t border-gray-700">
+                <div class="space-y-4">
+                  <div class="bg-dark p-4 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-emerald-400 mb-3">4.1 维度建模</h4>
+                    <div class="text-sm text-gray-300 space-y-2">
+                      <div class="bg-dark-gray p-3 rounded">
+                        <strong class="text-blue-400">星型模型 Star Schema</strong>
+                        <p class="text-gray-400 text-xs mt-1">事实表在中心，连接多个维度表</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded">
+                        <strong class="text-green-400">雪花模型 Snowflake Schema</strong>
+                        <p class="text-gray-400 text-xs mt-1">维度表规范化，层级结构</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-4 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-emerald-400 mb-3">4.2 数据分层</h4>
+                    <div class="text-sm text-gray-300 space-y-2">
+                      <div class="bg-dark-gray p-3 rounded border-l-4 border-yellow-500">
+                        <strong>ODS 操作数据层</strong>
+                        <p class="text-gray-400 text-xs">原始数据，基本清洗</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded border-l-4 border-blue-500">
+                        <strong>DWD 明细数据层</strong>
+                        <p class="text-gray-400 text-xs">清洗后的明细数据</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded border-l-4 border-green-500">
+                        <strong>DWS 汇总数据层</strong>
+                        <p class="text-gray-400 text-xs">轻度汇总，按主题组织</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 第5章 -->
+            <div class="chapter-item border border-gray-700 rounded-lg overflow-hidden">
+              <div class="chapter-header flex items-center justify-between p-4 bg-dark cursor-pointer hover:bg-gray-800 transition-colors" onclick="toggleChapter(this)">
+                <h3 class="chapter-title text-lg font-semibold text-gray-200 flex items-center gap-2">
+                  <i class="fa fa-file-excel-o text-cyan-400"></i>
+                  第5章 Excel高级商务数据分析
+                </h3>
+                <i class="fa fa-chevron-down text-gray-400 transition-transform"></i>
+              </div>
+              <div class="chapter-content p-4 bg-gray-800 border-t border-gray-700">
+                <div class="space-y-4 text-sm text-gray-300">
+                  <div class="bg-dark p-4 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-emerald-400 mb-3">5.1 高级函数</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                      <div class="bg-dark-gray p-2 rounded"><code class="text-cyan-400">VLOOKUP/XLOOKUP</code> - 查找匹配</div>
+                      <div class="bg-dark-gray p-2 rounded"><code class="text-cyan-400">SUMIFS/COUNTIFS</code> - 多条件统计</div>
+                      <div class="bg-dark-gray p-2 rounded"><code class="text-cyan-400">INDEX/MATCH</code> - 高级查找</div>
+                      <div class="bg-dark-gray p-2 rounded"><code class="text-cyan-400">IFS/SWITCH</code> - 多条件判断</div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-4 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-emerald-400 mb-3">5.2 数据透视表</h4>
+                    <p class="text-gray-400 text-xs">快速汇总分析大量数据，支持行、列、值、筛选器四个区域</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 第6章 -->
+            <div class="chapter-item border border-gray-700 rounded-lg overflow-hidden">
+              <div class="chapter-header flex items-center justify-between p-4 bg-dark cursor-pointer hover:bg-gray-800 transition-colors" onclick="toggleChapter(this)">
+                <h3 class="chapter-title text-lg font-semibold text-gray-200 flex items-center gap-2">
+                  <i class="fa fa-bar-chart text-cyan-400"></i>
+                  第6章 主流BI可视化工具
+                </h3>
+                <i class="fa fa-chevron-down text-gray-400 transition-transform"></i>
+              </div>
+              <div class="chapter-content p-4 bg-gray-800 border-t border-gray-700">
+                <div class="space-y-4 text-sm text-gray-300">
+                  <div class="bg-dark p-4 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-emerald-400 mb-3">6.1 Power BI</h4>
+                    <div class="text-xs space-y-2 text-gray-400">
+                      <p>• Power Query：数据清洗和转换</p>
+                      <p>• Power Pivot：数据建模</p>
+                      <p>• DAX：数据分析表达式</p>
+                      <p>• Power View：数据可视化</p>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-4 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-emerald-400 mb-3">6.2 图表选型</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs">
+                      <div class="bg-dark-gray p-2 rounded">📊 柱形图 - 类别对比</div>
+                      <div class="bg-dark-gray p-2 rounded">📈 折线图 - 趋势变化</div>
+                      <div class="bg-dark-gray p-2 rounded">🥧 饼图 - 占比分析</div>
+                      <div class="bg-dark-gray p-2 rounded">🔵 散点图 - 相关性</div>
+                      <div class="bg-dark-gray p-2 rounded">🗺️ 地图 - 地理位置</div>
+                      <div class="bg-dark-gray p-2 rounded">🎯 漏斗图 - 转化分析</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 第7章 -->
+            <div class="chapter-item border border-gray-700 rounded-lg overflow-hidden">
+              <div class="chapter-header flex items-center justify-between p-4 bg-dark cursor-pointer hover:bg-gray-800 transition-colors" onclick="toggleChapter(this)">
+                <h3 class="chapter-title text-lg font-semibold text-gray-200 flex items-center gap-2">
+                  <i class="fa fa-calculator text-cyan-400"></i>
+                  第7章 统计学基础与商务分析模型
+                </h3>
+                <i class="fa fa-chevron-down text-gray-400 transition-transform"></i>
+              </div>
+              <div class="chapter-content p-4 bg-gray-800 border-t border-gray-700">
+                <div class="space-y-4 text-sm text-gray-300">
+                  <div class="bg-dark p-4 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-emerald-400 mb-3">7.1 RFM用户分层模型</h4>
+                    <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                      <div class="bg-dark-gray p-2 rounded">
+                        <strong class="text-blue-400">R Recency</strong>
+                        <p class="text-gray-400">最近一次消费</p>
+                      </div>
+                      <div class="bg-dark-gray p-2 rounded">
+                        <strong class="text-green-400">F Frequency</strong>
+                        <p class="text-gray-400">消费频率</p>
+                      </div>
+                      <div class="bg-dark-gray p-2 rounded">
+                        <strong class="text-yellow-400">M Monetary</strong>
+                        <p class="text-gray-400">消费金额</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-4 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-emerald-400 mb-3">7.2 ABC分类</h4>
+                    <div class="text-xs text-gray-400 space-y-1">
+                      <p>• A类：20%的商品贡献80%的销售额，重点管理</p>
+                      <p>• B类：30%的商品贡献15%的销售额，常规管理</p>
+                      <p>• C类：50%的商品贡献5%的销售额，简化管理</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 第8章 -->
+            <div class="chapter-item border border-gray-700 rounded-lg overflow-hidden">
+              <div class="chapter-header flex items-center justify-between p-4 bg-dark cursor-pointer hover:bg-gray-800 transition-colors" onclick="toggleChapter(this)">
+                <h3 class="chapter-title text-lg font-semibold text-gray-200 flex items-center gap-2">
+                  <i class="fa fa-pie-chart text-cyan-400"></i>
+                  第8章 数据可视化与BI看板设计
+                </h3>
+                <i class="fa fa-chevron-down text-gray-400 transition-transform"></i>
+              </div>
+              <div class="chapter-content p-4 bg-gray-800 border-t border-gray-700">
+                <div class="space-y-4 text-sm text-gray-300">
+                  <div class="bg-dark p-4 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-emerald-400 mb-3">8.1 看板设计原则</h4>
+                    <div class="text-xs text-gray-400 space-y-1">
+                      <p>✓ 重点突出：核心KPI放在显眼位置</p>
+                      <p>✓ 逻辑清晰：从宏观到微观层层深入</p>
+                      <p>✓ 配色协调：不超过3-5种主色</p>
+                      <p>✓ 交互友好：支持钻取、筛选、联动</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 第9章 -->
+            <div class="chapter-item border border-gray-700 rounded-lg overflow-hidden">
+              <div class="chapter-header flex items-center justify-between p-4 bg-dark cursor-pointer hover:bg-gray-800 transition-colors" onclick="toggleChapter(this)">
+                <h3 class="chapter-title text-lg font-semibold text-gray-200 flex items-center gap-2">
+                  <i class="fa fa-code text-cyan-400"></i>
+                  第9章 Python商务智能分析
+                </h3>
+                <i class="fa fa-chevron-down text-gray-400 transition-transform"></i>
+              </div>
+              <div class="chapter-content p-4 bg-gray-800 border-t border-gray-700">
+                <div class="space-y-4 text-sm text-gray-300">
+                  <div class="bg-dark p-4 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-emerald-400 mb-3">9.1 核心库</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs">
+                      <div class="bg-dark-gray p-2 rounded"><strong class="text-blue-400">Pandas</strong> - 数据处理</div>
+                      <div class="bg-dark-gray p-2 rounded"><strong class="text-green-400">NumPy</strong> - 数值计算</div>
+                      <div class="bg-dark-gray p-2 rounded"><strong class="text-yellow-400">Matplotlib/Seaborn</strong> - 可视化</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 第10章 -->
+            <div class="chapter-item border border-gray-700 rounded-lg overflow-hidden">
+              <div class="chapter-header flex items-center justify-between p-4 bg-dark cursor-pointer hover:bg-gray-800 transition-colors" onclick="toggleChapter(this)">
+                <h3 class="chapter-title text-lg font-semibold text-gray-200 flex items-center gap-2">
+                  <i class="fa fa-briefcase text-cyan-400"></i>
+                  第10章 行业实战项目
+                </h3>
+                <i class="fa fa-chevron-down text-gray-400 transition-transform"></i>
+              </div>
+              <div class="chapter-content p-4 bg-gray-800 border-t border-gray-700">
+                <div class="space-y-3 text-sm text-gray-300">
+                  <div class="bg-dark-gray p-3 rounded">📊 项目一：电商销售BI分析</div>
+                  <div class="bg-dark-gray p-3 rounded">💰 项目二：企业经营财务分析</div>
+                  <div class="bg-dark-gray p-3 rounded">👥 项目三：用户运营分析</div>
+                  <div class="bg-dark-gray p-3 rounded">📦 项目四：供应链库存分析</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 第11章 -->
+            <div class="chapter-item border border-gray-700 rounded-lg overflow-hidden">
+              <div class="chapter-header flex items-center justify-between p-4 bg-dark cursor-pointer hover:bg-gray-800 transition-colors" onclick="toggleChapter(this)">
+                <h3 class="chapter-title text-lg font-semibold text-gray-200 flex items-center gap-2">
+                  <i class="fa fa-rocket text-cyan-400"></i>
+                  第11章 商务智能综合应用与职业拓展
+                </h3>
+                <i class="fa fa-chevron-down text-gray-400 transition-transform"></i>
+              </div>
+              <div class="chapter-content p-4 bg-gray-800 border-t border-gray-700">
+                <div class="space-y-3 text-sm text-gray-300">
+                  <div class="bg-dark-gray p-3 rounded">⚡ 自动化报表、定时刷新、数据预警</div>
+                  <div class="bg-dark-gray p-3 rounded">🌐 大数据与BI结合：Hive、Spark基础</div>
+                  <div class="bg-dark-gray p-3 rounded">📋 数据治理、指标体系搭建</div>
+                  <div class="bg-dark-gray p-3 rounded">🎯 BI岗位方向、求职技能清单</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </div>
+
+  <script>
+    // 问题数据
+    const problems = [
+      {
+        id: 1,
+        title: "SQL查询：计算各地区销售额",
+        description: `编写SQL查询语句，计算每个地区的总销售额和订单数量，按销售额降序排列。
+
+<strong>题目背景：</strong>
+分析不同地区的销售表现是商务智能分析的基础任务。
+
+<strong>假设表结构：</strong>
+- users(user_id, name, region)
+- orders(order_id, user_id, amount, order_date)
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>关联users和orders表</li>
+  <li>按地区分组统计</li>
+  <li>输出地区、总销售额、总订单数</li>
+  <li>按销售额降序排列</li>
+</ul>`,
+        difficulty: "easy",
+        time: "10分钟",
+        code: `-- 请编写SQL查询
+SELECT 
+    -- 地区,
+    -- 总销售额,
+    -- 总订单数
+FROM orders
+-- 关联users表
+-- 按地区分组
+-- 按销售额降序排列
+;`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 使用INNER JOIN或LEFT JOIN连接users和orders表</p>
+<p>2. 使用GROUP BY按地区分组</p>
+<p>3. 使用SUM()计算总销售额，COUNT()计算订单数量</p>
+<p>4. 使用ORDER BY按销售额降序排列</p>
+
+<h4>参考解答</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre class="text-cyan-300">
+SELECT 
+    u.region AS 地区,
+    SUM(o.amount) AS 总销售额,
+    COUNT(o.order_id) AS 总订单数
+FROM orders o
+INNER JOIN users u ON o.user_id = u.user_id
+GROUP BY u.region
+ORDER BY 总销售额 DESC;
+</pre>
+</div>
+
+<h4>知识点关联</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter3')">第3章：SQL基础语法</a></li>
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter2')">第2章：维度拆解</a></li>
+</ul>`
+      },
+      {
+        id: 2,
+        title: "Python数据分析：计算同比增长率",
+        description: `编写Python函数 calculate_growth_rate，计算同比增长率。
+
+<strong>题目背景：</strong>
+同比增长率是商务智能分析中的核心指标，用于衡量业务同比变化情况。
+
+<strong>参数说明：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>current_period: 本期值（如本期销售额）</li>
+  <li>previous_period: 上期值（如去年同期销售额）</li>
+</ul>
+
+<strong>返回值：</strong>
+增长率百分比（保留2位小数）
+
+<strong>示例：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>输入：(1100, 1000) → 输出：10.0</li>
+  <li>输入：(900, 1000) → 输出：-10.0</li>
+</ul>`,
+        difficulty: "easy",
+        time: "10分钟",
+        code: `def calculate_growth_rate(current_period, previous_period):
+    """
+    计算同比增长率
+    
+    Args:
+        current_period: 本期值
+        previous_period: 上期值
+    
+    Returns:
+        增长率百分比（保留2位小数）
+    """
+    # 请编写代码
+    pass`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 计算差值：本期值 - 上期值</p>
+<p>2. 计算增长率：差值 / 上期值</p>
+<p>3. 转换为百分比并保留2位小数</p>
+
+<h4>参考解答</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre class="text-cyan-300">
+def calculate_growth_rate(current_period, previous_period):
+    if previous_period == 0:
+        return 0.0
+    growth_rate = (current_period - previous_period) / previous_period * 100
+    return round(growth_rate, 2)
+</pre>
+</div>
+
+<h4>知识点关联</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter7')">第7章：统计学基础</a></li>
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter9')">第9章：Python数据分析</a></li>
+</ul>`
+      },
+      {
+        id: 3,
+        title: "Python数据处理：RFM用户分层",
+        description: `编写Python函数 rfm_classification，对用户进行RFM分层。
+
+<strong>题目背景：</strong>
+RFM模型是客户价值分析的重要工具，帮助企业识别不同价值的客户群体。
+
+<strong>参数说明：</strong>
+- users_data: 用户消费数据列表，每个元素是包含以下字段的字典：
+  - user_id: 用户ID
+  - recency: 最近一次消费距今天数（越小越好）
+  - frequency: 消费频率（越大越好）
+  - monetary: 消费金额（越大越好）
+
+<strong>返回值：</strong>
+字典，键为user_id，值为RFM等级：
+- "高价值用户"：R、F、M三个指标都高于平均值
+- "潜力用户"：R低但F、M低于平均值
+- "流失风险"：R高且F、M低
+- "一般用户"：其他情况
+
+<strong>分层规则：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>每个指标：高于平均值记为"高"，低于平均值记为"低"</li>
+  <li>高价值：高=高=高</li>
+  <li>潜力：低=低=高</li>
+  <li>流失风险：高=低=低</li>
+  <li>一般用户：其他组合</li>
+</ul>`,
+        difficulty: "medium",
+        time: "20分钟",
+        code: `def rfm_classification(users_data):
+    """
+    RFM用户分层
+    
+    Args:
+        users_data: 用户消费数据列表
+    
+    Returns:
+        字典，键为user_id，值为RFM等级
+    """
+    # 请编写代码
+    # 1. 计算R、F、M的平均值
+    # 2. 对每个用户判断R、F、M是高还是低
+    # 3. 根据组合判断用户类型
+    pass`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 计算R、F、M各自的平均值</p>
+<p>2. 对每个用户：</p>
+<p>   - 比较R、F、M与平均值的关系</p>
+<p>   - 标记每个指标为"高"或"低"</p>
+<p>3. 根据组合模式判断用户类型</p>
+
+<h4>参考解答</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre class="text-cyan-300">
+def rfm_classification(users_data):
+    if not users_data:
+        return {}
+    
+    # 计算平均值
+    avg_r = sum(u['recency'] for u in users_data) / len(users_data)
+    avg_f = sum(u['frequency'] for u in users_data) / len(users_data)
+    avg_m = sum(u['monetary'] for u in users_data) / len(users_data)
+    
+    result = {}
+    for user in users_data:
+        r_level = '高' if user['recency'] < avg_r else '低'
+        f_level = '高' if user['frequency'] > avg_f else '低'
+        m_level = '高' if user['monetary'] > avg_m else '低'
+        
+        if r_level == '高' and f_level == '高' and m_level == '高':
+            result[user['user_id']] = '高价值用户'
+        elif r_level == '低' and f_level == '低' and m_level == '高':
+            result[user['user_id']] = '潜力用户'
+        elif r_level == '高' and f_level == '低' and m_level == '低':
+            result[user['user_id']] = '流失风险'
+        else:
+            result[user['user_id']] = '一般用户'
+    
+    return result
+</pre>
+</div>
+
+<h4>知识点关联</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter7')">第7章：RFM用户分层模型</a></li>
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter9')">第9章：Python数据处理</a></li>
+</ul>`
+      },
+      {
+        id: 4,
+        title: "SQL窗口函数：计算累计销售额",
+        description: `编写SQL查询，使用窗口函数计算每日累计销售额。
+
+<strong>题目背景：</strong>
+累计销售额是销售分析中的重要指标，帮助了解销售增长趋势。
+
+<strong>假设表结构：</strong>
+- daily_sales(date, amount)
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>按日期升序排列</li>
+  <li>计算每日累计销售额</li>
+  <li>使用窗口函数实现</li>
+</ul>
+
+<strong>预期输出示例：</strong>
+<table class="w-full text-sm mt-2">
+  <tr><th>date</th><th>amount</th><th>cumulative</th></tr>
+  <tr><td>2024-01-01</td><td>1000</td><td>1000</td></tr>
+  <tr><td>2024-01-02</td><td>1500</td><td>2500</td></tr>
+  <tr><td>2024-01-03</td><td>1200</td><td>3700</td></tr>
+</table>`,
+        difficulty: "easy",
+        time: "10分钟",
+        code: `-- 请编写SQL查询
+SELECT 
+    date,
+    amount,
+    -- 累计销售额（使用窗口函数）
+FROM daily_sales
+ORDER BY date ASC
+;`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 使用窗口函数的SUM() OVER()语法</p>
+<p>2. 使用ORDER BY指定排序方式</p>
+<p>3. 默认框架（不指定ROWS）会包含当前行及之前所有行</p>
+
+<h4>参考解答</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre class="text-cyan-300">
+SELECT 
+    date,
+    amount,
+    SUM(amount) OVER(
+        ORDER BY date
+        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+    ) AS cumulative
+FROM daily_sales
+ORDER BY date ASC;
+</pre>
+</div>
+
+<h4>知识点关联</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter3')">第3章：窗口函数</a></li>
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter2')">第2章：时间维度分析</a></li>
+</ul>`
+      },
+      {
+        id: 5,
+        title: "ABC商品分类",
+        description: `编写Python函数 abc_classification，对商品进行ABC分类。
+
+<strong>题目背景：</strong>
+ABC分类法是库存管理和商品分析的重要方法，基于帕累托原则（二八法则）。
+
+<strong>分类规则：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>A类商品：销售额累计占比 0% - 80%（重点管理）</li>
+  <li>B类商品：销售额累计占比 80% - 95%（常规管理）</li>
+  <li>C类商品：销售额累计占比 95% - 100%（简化管理）</li>
+</ul>
+
+<strong>参数说明：</strong>
+- products: 商品销售数据列表，每个元素是包含product_id、sales的字典
+
+<strong>返回值：</strong>
+字典，键为product_id，值为分类（"A"、"B"或"C"）
+
+<strong>示例数据：</strong>
+- P1: 销售额 50000
+- P2: 销售额 25000
+- P3: 销售额 15000
+- P4: 销售额 10000
+- 总销售额: 100000
+- P1占比: 50%（累计50%）→ A类
+- P2占比: 25%（累计75%）→ A类
+- P3占比: 15%（累计90%）→ B类
+- P4占比: 10%（累计100%）→ C类`,
+        difficulty: "medium",
+        time: "20分钟",
+        code: `def abc_classification(products):
+    """
+    ABC商品分类
+    
+    Args:
+        products: 商品销售数据列表
+    
+    Returns:
+        字典，键为product_id，值为分类
+    """
+    # 请编写代码
+    # 1. 按销售额降序排列
+    # 2. 计算累计销售额和占比
+    # 3. 根据占比阈值分类
+    pass`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 按销售额降序排列商品</p>
+<p>2. 计算总销售额</p>
+<p>3. 计算每个商品的累计销售额和占比</p>
+<p>4. 根据累计占比判断分类：</p>
+<p>   - 累计占比 ≤ 80% → A类</p>
+<p>   - 累计占比 ≤ 95% → B类</p>
+<p>   - 其他 → C类</p>
+
+<h4>参考解答</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre class="text-cyan-300">
+def abc_classification(products):
+    # 按销售额降序排列
+    sorted_products = sorted(products, key=lambda x: x['sales'], reverse=True)
+    
+    # 计算总销售额
+    total_sales = sum(p['sales'] for p in products)
+    
+    result = {}
+    cumulative = 0
+    
+    for product in sorted_products:
+        cumulative += product['sales']
+        cumulative_pct = cumulative / total_sales * 100
+        
+        if cumulative_pct <= 80:
+            result[product['product_id']] = 'A'
+        elif cumulative_pct <= 95:
+            result[product['product_id']] = 'B'
+        else:
+            result[product['product_id']] = 'C'
+    
+    return result
+</pre>
+</div>
+
+<h4>知识点关联</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter7')">第7章：ABC分类、帕累托二八法则</a></li>
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter9')">第9章：Python数据处理</a></li>
+</ul>`
+      },
+      {
+        id: 6,
+        title: "Python数据聚合：多维度统计",
+        description: `编写Python函数 multi_dimension_analysis，进行多维度销售分析。
+
+<strong>题目背景：</strong>
+多维度分析是商务智能分析的核心能力，帮助从不同角度理解业务。
+
+<strong>参数说明：</strong>
+- sales_data: 销售数据列表，每个元素包含：
+  - region: 地区
+  - product: 产品
+  - channel: 渠道
+  - amount: 销售额
+
+<strong>返回值：</strong>
+字典，按地区和产品维度聚合的总销售额
+键格式：(region, product)
+值：销售额总和
+
+<strong>示例：</strong>
+输入：
+[
+  {'region': '华东', 'product': '手机', 'channel': '线上', 'amount': 10000},
+  {'region': '华东', 'product': '手机', 'channel': '线下', 'amount': 5000},
+  {'region': '华北', 'product': '电脑', 'channel': '线上', 'amount': 15000}
+]
+输出：
+{
+  ('华东', '手机'): 15000,
+  ('华北', '电脑'): 15000
+}`,
+        difficulty: "easy",
+        time: "15分钟",
+        code: `def multi_dimension_analysis(sales_data):
+    """
+    多维度销售分析
+    
+    Args:
+        sales_data: 销售数据列表
+    
+    Returns:
+        字典，按地区和产品聚合的销售额
+    """
+    # 请编写代码
+    # 使用字典进行分组聚合
+    pass`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 创建空字典存储结果</p>
+<p>2. 遍历销售数据</p>
+<p>3. 使用(region, product)元组作为键</p>
+<p>4. 累加每个组合的销售额</p>
+
+<h4>参考解答</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre class="text-cyan-300">
+def multi_dimension_analysis(sales_data):
+    result = {}
+    
+    for sale in sales_data:
+        key = (sale['region'], sale['product'])
+        if key in result:
+            result[key] += sale['amount']
+        else:
+            result[key] = sale['amount']
+    
+    return result
+</pre>
+</div>
+
+<h4>知识点关联</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter2')">第2章：维度拆解</a></li>
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter9')">第9章：Python数据处理</a></li>
+</ul>`
+      },
+      {
+        id: 7,
+        title: "SQL子查询：找出高价值客户",
+        description: `编写SQL查询，找出消费金额高于平均值的客户及其订单信息。
+
+<strong>题目背景：</strong>
+识别高价值客户是客户分析的基础，帮助企业制定针对性的营销策略。
+
+<strong>假设表结构：</strong>
+- customers(customer_id, name)
+- orders(order_id, customer_id, amount)
+
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>计算每个客户的消费总额</li>
+  <li>筛选消费总额高于平均值的客户</li>
+  <li>输出：客户名称、消费总额、订单数量</li>
+  <li>按消费总额降序排列</li>
+</ul>`,
+        difficulty: "medium",
+        time: "15分钟",
+        code: `-- 请编写SQL查询
+SELECT 
+    c.name,
+    -- 消费总额,
+    -- 订单数量
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+-- 分组统计
+-- 筛选消费总额高于平均值
+ORDER BY 消费总额 DESC
+;`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 先计算所有客户的平均消费总额（子查询）</p>
+<p>2. 关联customers和orders表</p>
+<p>3. 按客户分组，计算消费总额和订单数量</p>
+<p>4. 使用HAVING或WHERE筛选高于平均值的结果</p>
+
+<h4>参考解答</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre class="text-cyan-300">
+SELECT 
+    c.name,
+    SUM(o.amount) AS total_amount,
+    COUNT(o.order_id) AS order_count
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+GROUP BY c.customer_id, c.name
+HAVING SUM(o.amount) > (
+    SELECT AVG(customer_avg)
+    FROM (
+        SELECT SUM(amount) AS customer_avg
+        FROM orders
+        GROUP BY customer_id
+    ) t
+)
+ORDER BY total_amount DESC;
+</pre>
+</div>
+
+<h4>知识点关联</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter3')">第3章：子查询</a></li>
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter2')">第2章：客户分析思维</a></li>
+</ul>`
+      },
+      {
+        id: 8,
+        title: "Python时间序列分析：移动平均",
+        description: `编写Python函数 moving_average，计算移动平均值。
+
+<strong>题目背景：</strong>
+移动平均是时间序列分析中的基础方法，用于平滑数据波动，发现趋势。
+
+<strong>参数说明：</strong>
+- data: 数据列表（如每日销售额）
+- window: 窗口大小
+
+<strong>返回值：</strong>
+列表，包含移动平均值（与输入数据等长）
+- 前(window-1)个元素为None（无法计算完整的窗口）
+- 之后的元素为窗口内的平均值
+
+<strong>示例：</strong>
+输入：[100, 120, 130, 140, 150], window=3
+处理过程：
+- 前2个：None（数据不足）
+- 第3个：avg(100, 120, 130) = 116.67
+- 第4个：avg(120, 130, 140) = 130.00
+- 第5个：avg(130, 140, 150) = 140.00
+输出：[None, None, 116.67, 130.0, 140.0]`,
+        difficulty: "medium",
+        time: "15分钟",
+        code: `def moving_average(data, window):
+    """
+    计算移动平均值
+    
+    Args:
+        data: 数据列表
+        window: 窗口大小
+    
+    Returns:
+        移动平均值列表
+    """
+    # 请编写代码
+    pass`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 初始化结果列表</p>
+<p>2. 遍历数据列表</p>
+<p>3. 对于前(window-1)个元素，添加None</p>
+<p>4. 对于其他元素，计算当前元素及前面(window-1)个元素的平均值</p>
+
+<h4>参考解答</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre class="text-cyan-300">
+def moving_average(data, window):
+    result = []
+    
+    for i in range(len(data)):
+        if i < window - 1:
+            result.append(None)
+        else:
+            window_data = data[i-window+1:i+1]
+            avg = sum(window_data) / window
+            result.append(round(avg, 2))
+    
+    return result
+</pre>
+</div>
+
+<h4>知识点关联</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter7')">第7章：时间序列分析</a></li>
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter9')">第9章：Python数据处理</a></li>
+</ul>`
+      }
+    ]
+
+    // 选择题数据
+    const choiceQuestions = [
+      {
+        id: 'bi-cq1',
+        question: '商务智能（BI）的核心目标是什么？',
+        options: [
+          '收集海量数据',
+          '将数据转化为知识，帮助做出明智的业务决策',
+          '开发数据分析软件',
+          '建立数据库系统'
+        ],
+        answer: 1,
+        explanation: '商务智能的核心目标是将企业数据转化为知识，帮助企业做出明智的业务经营决策。'
+      },
+      {
+        id: 'bi-cq2',
+        question: '在数据→信息→知识→决策的价值链条中，哪个环节体现了从经验决策到科学决策的转变？',
+        options: [
+          '数据到信息',
+          '信息到知识',
+          '知识到决策',
+          '数据到决策'
+        ],
+        answer: 2,
+        explanation: '知识到决策的环节体现了从经验决策到科学决策的转变，因为决策是基于已发现的规律和模式。'
+      },
+      {
+        id: 'bi-cq3',
+        question: 'BI核心架构中，ETL代表什么？',
+        options: [
+          'Extract, Transform, Load',
+          'Execute, Transfer, Log',
+          'Extract, Transfer, Load',
+          'Execute, Transform, Log'
+        ],
+        answer: 0,
+        explanation: 'ETL代表Extract（抽取）、Transform（转换）、Load（加载），是数据仓库建设中的核心流程。'
+      },
+      {
+        id: 'bi-cq4',
+        question: '以下哪个不是描述性分析的特点？',
+        options: [
+          '回答发生了什么',
+          '汇总历史数据',
+          '预测未来趋势',
+          '生成报表和图表'
+        ],
+        answer: 2,
+        explanation: '预测未来趋势属于预测性分析的范畴，不是描述性分析的特点。'
+      },
+      {
+        id: 'bi-cq5',
+        question: '在维度拆解中，哪个维度用于分析不同地区的销售表现？',
+        options: [
+          '时间维度',
+          '地区维度',
+          '产品维度',
+          '渠道维度'
+        ],
+        answer: 1,
+        explanation: '地区维度用于分析不同地理区域的销售数据，如华东、华南、华北等。'
+      },
+      {
+        id: 'bi-cq6',
+        question: 'SQL中用于去重的关键字是？',
+        options: [
+          'UNIQUE',
+          'DISTINCT',
+          'GROUP BY',
+          'WHERE'
+        ],
+        answer: 1,
+        explanation: 'DISTINCT关键字用于去除查询结果中的重复记录。'
+      },
+      {
+        id: 'bi-cq7',
+        question: 'LEFT JOIN和INNER JOIN的主要区别是什么？',
+        options: [
+          'LEFT JOIN返回左表全部记录，INNER JOIN只返回匹配的记录',
+          '性能不同',
+          '语法不同',
+          '没有区别'
+        ],
+        answer: 0,
+        explanation: 'LEFT JOIN会返回左表的全部记录以及右表匹配的记录，而INNER JOIN只返回两表都匹配的记录。'
+      },
+      {
+        id: 'bi-cq8',
+        question: '窗口函数ROW_NUMBER()的作用是什么？',
+        options: [
+          '计算总和',
+          '为每一行分配唯一的序号',
+          '计算平均值',
+          '分组统计'
+        ],
+        answer: 1,
+        explanation: 'ROW_NUMBER()为查询结果的每一行分配一个唯一的序号，可用于排名、分页等场景。'
+      },
+      {
+        id: 'bi-cq9',
+        question: '在数据仓库维度建模中，星型模型的特点是？',
+        options: [
+          '只有一张表',
+          '事实表在中心，连接多个维度表',
+          '所有表都是维度表',
+          '表之间没有关联'
+        ],
+        answer: 1,
+        explanation: '星型模型由一个事实表和多个维度表组成，事实表在中心，维度表围绕在四周，形似星星。'
+      },
+      {
+        id: 'bi-cq10',
+        question: '数据仓库中的ODS层是指？',
+        options: [
+          '汇总数据层',
+          '明细数据层',
+          '操作数据层',
+          '应用数据层'
+        ],
+        answer: 2,
+        explanation: 'ODS（Operational Data Store）是操作数据层，存放原始数据，基本不做清洗转换。'
+      },
+      {
+        id: 'bi-cq11',
+        question: 'Excel中哪个函数用于多条件求和？',
+        options: [
+          'VLOOKUP',
+          'SUMIF',
+          'SUMIFS',
+          'COUNT'
+        ],
+        answer: 2,
+        explanation: 'SUMIFS函数用于根据多个条件对指定区域求和。'
+      },
+      {
+        id: 'bi-cq12',
+        question: 'RFM模型中，R代表什么？',
+        options: [
+          '消费金额',
+          '消费频率',
+          '最近一次消费时间',
+          '客户等级'
+        ],
+        answer: 2,
+        explanation: 'RFM模型中，R代表Recency（最近一次消费时间），用于衡量客户的活跃度。'
+      },
+      {
+        id: 'bi-cq13',
+        question: 'ABC分类法中，A类商品通常占销售额的比例是？',
+        options: [
+          '50%',
+          '60%',
+          '80%',
+          '20%'
+        ],
+        answer: 2,
+        explanation: 'ABC分类法中，A类商品通常占销售总额的80%，但数量只占20%，需要重点管理。'
+      },
+      {
+        id: 'bi-cq14',
+        question: 'Power BI中，DAX是指什么？',
+        options: [
+          '数据清洗语言',
+          '数据分析表达式',
+          '数据库查询语言',
+          '数据可视化语言'
+        ],
+        answer: 1,
+        explanation: 'DAX（Data Analysis Expressions）是Power BI中的数据分析表达式语言，用于创建计算列和度量值。'
+      },
+      {
+        id: 'bi-cq15',
+        question: 'Python中用于数据处理的核心库是？',
+        options: [
+          'NumPy',
+          'Pandas',
+          'Matplotlib',
+          'Scikit-learn'
+        ],
+        answer: 1,
+        explanation: 'Pandas是Python中用于数据处理和分析的核心库，提供了DataFrame数据结构。'
+      },
+      {
+        id: 'bi-cq16',
+        question: '同比增长率的计算公式是？',
+        options: [
+          '(本期值 - 上期值) / 上期值 × 100%',
+          '(本期值 - 上期值) / 本期值 × 100%',
+          '上期值 / 本期值 × 100%',
+          '本期值 / 上期值 × 100%'
+        ],
+        answer: 0,
+        explanation: '同比增长率 = (本期值 - 上期值) / 上期值 × 100%，反映与去年同期相比的增长情况。'
+      },
+      {
+        id: 'bi-cq17',
+        question: '在SQL聚合函数中，哪个函数用于计算平均值？',
+        options: [
+          'SUM',
+          'COUNT',
+          'AVG',
+          'MAX'
+        ],
+        answer: 2,
+        explanation: 'AVG函数用于计算指定字段的平均值。'
+      },
+      {
+        id: 'bi-cq18',
+        question: '数据可视化的首要原则是？',
+        options: [
+          '使用最复杂的图表',
+          '使用多种颜色',
+          '清晰准确地传达信息',
+          '展示所有数据'
+        ],
+        answer: 2,
+        explanation: '数据可视化的首要原则是清晰准确地传达信息，让观众快速理解数据背后的含义。'
+      },
+      {
+        id: 'bi-cq19',
+        question: '在窗口函数中，LAG函数的作用是？',
+        options: [
+          '获取前N行的值',
+          '获取后N行的值',
+          '计算排名',
+          '计算聚合值'
+        ],
+        answer: 0,
+        explanation: 'LAG函数用于获取当前行之前的第N行数据，常用于计算同比、环比等。'
+      },
+      {
+        id: 'bi-cq20',
+        question: '数据治理的主要目标是什么？',
+        options: [
+          '收集更多数据',
+          '建立数据标准，确保数据质量和安全',
+          '开发数据系统',
+          '培训数据人才'
+        ],
+        answer: 1,
+        explanation: '数据治理的主要目标是建立数据标准、规范数据管理流程，确保数据质量和安全。'
+      }
+    ]
+
+    // 全局变量
+    let currentProblem = 1;
+    let pyodide = null;
+    let editor = null;
+    let timerInterval = null;
+    let seconds = 0;
+    let isCodeEditorCollapsed = false;
+
+    // 切换代码编辑器折叠状态
+    function toggleCodeEditor() {
+      const container = document.getElementById('code-editor-container');
+      const icon = document.getElementById('toggle-code-icon');
+      
+      if (isCodeEditorCollapsed) {
+        container.style.display = 'block';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+        isCodeEditorCollapsed = false;
+      } else {
+        container.style.display = 'none';
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+        isCodeEditorCollapsed = true;
+      }
+    }
+
+
+    // 初始化函数
+    document.addEventListener('DOMContentLoaded', function() {
+      // 初始化代码编辑器
+      editor = ace.edit('codeEditor');
+      editor.setTheme('ace/theme/tomorrow_night');
+      editor.getSession().setMode('ace/mode/python');
+      editor.setOptions({
+        fontSize: '14px',
+        tabSize: 4,
+        useSoftTabs: true,
+        wrap: true
+      });
+      
+      // 设置初始占位符文本
+      editor.setValue('# 请编写代码');
+      editor.clearSelection();
+
+      // 加载Pyodide
+      initPyodide();
+
+      // 加载第一个问题
+      loadProgrammingProblem(1);
+
+      // 绑定按钮事件
+      document.getElementById('runCode').addEventListener('click', runCode);
+      document.getElementById('resetCode').addEventListener('click', resetCode);
+
+      // 绑定知识点导航事件
+      document.querySelectorAll('.knowledge-nav').forEach((button, index) => {
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // 更新按钮状态
+          document.querySelectorAll('.knowledge-nav').forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          
+          // 获取目标模块ID
+          const target = this.getAttribute('data-target');
+          
+          // 隐藏所有模块
+          document.querySelectorAll('.knowledge-section').forEach(section => {
+            section.classList.add('hidden');
+          });
+          
+          // 显示目标模块
+          const targetElement = document.getElementById(target);
+          if (targetElement) {
+            targetElement.classList.remove('hidden');
+          }
+        });
+      });
+    });
+
+    // 加载Pyodide
+    async function initPyodide() {
+      const statusEl = document.getElementById('pyodide-status');
+      const cdns = [
+        "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/",
+        "https://unpkg.com/pyodide@0.24.1/full/",
+        "https://cdnjs.cloudflare.com/ajax/libs/pyodide/0.24.1/full/"
+      ];
+      let currentCDN = 0;
+      let retryCount = 0;
+      const maxRetries = 3;
+      
+      statusEl.innerHTML = '<i class="fa fa-spinner fa-spin text-amber-400"></i> 正在加载Python解释器...';
+
+      async function switchCDN() {
+        currentCDN++;
+        if (currentCDN >= cdns.length) {
+          currentCDN = 0;
+          retryCount++;
+          if (retryCount >= maxRetries) {
+            throw new Error('所有CDN均无法访问');
+          }
+        }
+      }
+
+      async function loadWithTimeout(indexURL) {
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('加载超时')), 30000);
+        });
+        const loadPromise = loadPyodide({ indexURL });
+        return Promise.race([loadPromise, timeoutPromise]);
+      }
+
+      while (retryCount < maxRetries) {
+        try {
+          pyodide = await loadWithTimeout(cdns[currentCDN]);
+          statusEl.innerHTML = '<i class="fa fa-check text-emerald-400"></i> Python解释器加载成功';
+          await pyodide.loadPackage(['pandas', 'numpy']);
+          return;
+        } catch (error) {
+          console.warn(`CDN ${cdns[currentCDN]} 加载失败:`, error);
+          await switchCDN();
+        }
+      }
+      
+      statusEl.innerHTML = '<i class="fa fa-exclamation-triangle text-red-400"></i> Python解释器加载失败';
+      console.error('Pyodide load error:', error);
+    }
+
+    // 切换标签页
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.add('hidden');
+      });
+      document.getElementById(tabId).classList.remove('hidden');
+      
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        // 找到对应的导航链接并激活
+        if(link.getAttribute('onclick') && link.getAttribute('onclick').includes("'" + tabId + "'")) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    // 切换章节
+    function toggleChapter(chapterId) {
+      const content = document.getElementById(chapterId + '-content');
+      const icon = document.getElementById(chapterId + '-icon');
+      
+      if (content.classList.contains('collapsed')) {
+        content.classList.remove('collapsed');
+        icon.classList.remove('fa-chevron-right');
+        icon.classList.add('fa-chevron-down');
+      } else {
+        content.classList.add('collapsed');
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-right');
+      }
+    }
+
+
+    // 加载编程题
+    function loadProgrammingProblem(problemId) {
+      currentProblem = problemId;
+      const problem = problems.find(p => p.id === problemId);
+      
+      if (!problem) return
+      showTab("question-bank");;
+      
+      // 确保在题库标签页
+      showTab('question-bank');
+      
+      // 更新问题信息
+      document.getElementById('problem-title').textContent = problem.title;
+      document.getElementById('problem-description').innerHTML = problem.description;
+      
+      // 更新难度标签
+      const difficultyTag = document.getElementById('difficulty-tag');
+      difficultyTag.className = 'difficulty-tag';
+      difficultyTag.classList.add('difficulty-' + problem.difficulty);
+      difficultyTag.textContent = problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难';
+      
+      // 显示代码编辑器和运行结果区域
+      const codeContainer = document.getElementById('code-editor-container');
+      codeContainer.style.display = 'block';
+      if (isCodeEditorCollapsed) {
+        isCodeEditorCollapsed = false;
+        document.getElementById('toggle-code-icon').classList.remove('fa-chevron-down');
+        document.getElementById('toggle-code-icon').classList.add('fa-chevron-up');
+      }
+      document.getElementById('code-output').parentElement.parentElement.style.display = 'block';
+      
+      // 更新代码编辑器
+      editor.setValue(problem.code);
+      editor.clearSelection();
+      
+      // 更新答案解析
+      document.getElementById('answer-analysis').innerHTML = problem.analysis;
+      
+      // 重置计时器
+      resetTimer();
+      
+      // 更新问题项状态
+      document.querySelectorAll('.problem-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      // 给当前点击的问题项添加 active 类
+      const allProblemItems = document.querySelectorAll('.problem-item');
+      allProblemItems.forEach(item => {
+        const onclickAttr = item.getAttribute('onclick');
+        if (onclickAttr && onclickAttr.includes('loadProgrammingProblem(' + problemId + ')')) {
+          item.classList.add('active');
+        }
+      });
+    }
+
+    // 运行代码
+    async function runCode() {
+      const code = editor.getValue();
+      const outputDiv = document.getElementById('code-output');
+      const executionTimeDiv = document.getElementById('execution-time');
+      
+      if (!pyodide) {
+        outputDiv.textContent = 'Python解释器尚未加载完成，请稍候...';
+        return;
+      }
+      
+      let currentOutput = '';
+      const appendOutput = (text, type = 'normal') => {
+        currentOutput += text;
+        outputDiv.innerHTML = currentOutput.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      };
+      
+      outputDiv.textContent = '运行中...';
+      executionTimeDiv.textContent = '执行时间：计算中...';
+      
+      try {
+        const startTime = performance.now();
+        
+        // 运行代码，重定向stdout和stderr
+        await pyodide.runPythonAsync(code, {
+          stdout: (text) => appendOutput(text),
+          stderr: (text) => appendOutput(text, 'error')
+        });
+        
+        const endTime = performance.now();
+        const executionTime = (endTime - startTime).toFixed(2);
+        
+        if (!currentOutput) {
+          outputDiv.textContent = '代码执行成功，无输出';
+        }
+        executionTimeDiv.textContent = `执行时间：${executionTime}ms`;
+      } catch (error) {
+        outputDiv.textContent = `错误：${error.message}`;
+        executionTimeDiv.textContent = '执行时间：0ms';
+      }
+    }
+
+    // 重置代码
+    function resetCode() {
+      const problem = problems.find(p => p.id === currentProblem);
+      if (problem) {
+        editor.setValue(problem.code);
+        editor.clearSelection();
+      }
+    }
+
+    // 切换收藏状态
+    function toggleFavorite(problemId) {
+      const btn = document.getElementById('favorite-btn');
+      if (btn.innerHTML.includes('fa-star-o')) {
+        btn.innerHTML = '<i class="fa fa-star text-yellow-400"></i>';
+      } else {
+        btn.innerHTML = '<i class="fa fa-star-o"></i>';
+      }
+    }
+
+    // 重置计时器
+    function resetTimer() {
+      clearInterval(timerInterval);
+      seconds = 0;
+      updateTimer();
+      timerInterval = setInterval(() => {
+        seconds++;
+        updateTimer();
+      }, 1000);
+    }
+
+    // 更新计时器
+    function updateTimer() {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    // 滚动到指定知识点
+    function scrollToKnowledge(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // 选择题相关变量和函数
+    let currentChoiceQuestion = null;
+    let selectedAnswer = null;
+    let answeredQuestions = {};
+
+    // 加载选择题
+    function loadChoiceQuestion(questionId) {
+      currentChoiceQuestion = choiceQuestions.find(q => q.id === questionId);
+      showTab("question-bank");
+      if (!currentChoiceQuestion) return;
+
+      // 自动切换到题库标签页
+      showTab('question-bank');
+      
+      selectedAnswer = answeredQuestions[questionId] || null;
+      
+      // 更新问题信息
+      document.getElementById('problem-title').textContent = currentChoiceQuestion.title;
+      
+      // 更新难度标签
+      const difficultyTag = document.getElementById('difficulty-tag');
+      difficultyTag.className = 'difficulty-tag';
+      difficultyTag.classList.add('difficulty-' + currentChoiceQuestion.difficulty);
+      difficultyTag.textContent = currentChoiceQuestion.difficulty === 'easy' ? '简单' : currentChoiceQuestion.difficulty === 'medium' ? '中等' : '困难';
+      
+      // 构建选择题HTML
+      let optionsHtml = currentChoiceQuestion.options.map(opt => {
+        let optionClass = 'choice-option';
+        if (selectedAnswer === opt.label) {
+          optionClass += ' selected';
+        }
+        if (answeredQuestions[questionId]) {
+          optionClass += ' disabled';
+          if (opt.label === currentChoiceQuestion.answer) {
+            optionClass += ' correct';
+          } else if (opt.label === selectedAnswer && selectedAnswer !== currentChoiceQuestion.answer) {
+            optionClass += ' wrong';
+          }
+        }
+        return `
+          <div class="${optionClass}" onclick="selectChoice('${opt.label}')" data-label="${opt.label}">
+            <div class="choice-label">${opt.label}</div>
+            <div class="flex-1 text-gray-200">${opt.text}</div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('problem-description').innerHTML = `
+        <div class="mb-6">
+          <p class="text-lg text-gray-200">${currentChoiceQuestion.question}</p>
+        </div>
+        <div class="space-y-3" id="choice-options">
+          ${optionsHtml}
+        </div>
+        <div class="mt-6 flex gap-3">
+          <button class="btn-primary" onclick="submitChoice()" id="submit-choice-btn" ${answeredQuestions[questionId] ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>
+            <i class="fa fa-check"></i> 提交答案
+          </button>
+          <button class="btn-secondary" onclick="showChoiceAnalysis()" id="show-analysis-btn" ${!answeredQuestions[questionId] ? 'style="display:none"' : ''}>
+            <i class="fa fa-lightbulb-o"></i> 查看解析
+          </button>
+        </div>
+      `;
+
+      // 隐藏代码编辑器和运行结果区域
+      document.getElementById('code-editor-container').style.display = 'none';
+      document.getElementById('code-output').parentElement.parentElement.style.display = 'none';
+      
+      // 更新答案解析
+      updateChoiceAnalysis();
+      
+      // 滚动到问题描述区域
+      document.getElementById('problem-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      // 重置计时器
+      resetTimer();
+      
+      // 更新问题项状态
+      document.querySelectorAll('.problem-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      // 给当前点击的问题项添加 active 类
+      const allProblemItems = document.querySelectorAll('.problem-item');
+      allProblemItems.forEach(item => {
+        const onclickAttr = item.getAttribute('onclick');
+        if (onclickAttr && onclickAttr.includes('loadChoiceQuestion(\'' + questionId + '\')')) {
+          item.classList.add('active');
+        }
+      });
+    }
+
+    // 选择答案
+    function selectChoice(label) {
+      if (answeredQuestions[currentChoiceQuestion.id]) return;
+      
+      selectedAnswer = label;
+      
+      // 更新选项样式
+      document.querySelectorAll('.choice-option').forEach(opt => {
+        opt.classList.remove('selected');
+        if (opt.dataset.label === label) {
+          opt.classList.add('selected');
+        }
+      });
+    }
+
+    // 提交选择题答案
+    function submitChoice() {
+      if (!selectedAnswer) {
+        alert('请先选择一个答案');
+        return;
+      }
+      
+      answeredQuestions[currentChoiceQuestion.id] = selectedAnswer;
+      
+      // 更新选项样式
+      document.querySelectorAll('.choice-option').forEach(opt => {
+        opt.classList.add('disabled');
+        if (opt.dataset.label === currentChoiceQuestion.answer) {
+          opt.classList.add('correct');
+        } else if (opt.dataset.label === selectedAnswer && selectedAnswer !== currentChoiceQuestion.answer) {
+          opt.classList.add('wrong');
+        }
+      });
+      
+      // 禁用提交按钮，显示解析按钮
+      document.getElementById('submit-choice-btn').disabled = true;
+      document.getElementById('submit-choice-btn').style.opacity = '0.5';
+      document.getElementById('submit-choice-btn').style.cursor = 'not-allowed';
+      document.getElementById('show-analysis-btn').style.display = 'flex';
+      
+      // 更新答案解析
+      updateChoiceAnalysis();
+      
+      // 更新进度
+      updateChoiceProgress();
+    }
+
+    // 显示选择题解析
+    function showChoiceAnalysis() {
+      if (!answeredQuestions[currentChoiceQuestion.id]) {
+        alert('请先提交答案');
+        return;
+      }
+      document.getElementById('answer-analysis').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // 更新选择题解析内容
+    function updateChoiceAnalysis() {
+      if (!currentChoiceQuestion) return;
+      
+      const isAnswered = !!answeredQuestions[currentChoiceQuestion.id];
+      const isCorrect = selectedAnswer === currentChoiceQuestion.answer;
+      
+      let contentHtml;
+      if (!isAnswered) {
+        contentHtml = `
+          <div class="bg-amber-900 bg-opacity-20 border border-amber-700 rounded-lg p-4 mb-4">
+            <p class="text-amber-400"><i class="fa fa-info-circle"></i> 请先选择一个答案，然后点击"提交答案"查看解析</p>
+          </div>
+        `;
+      } else {
+        contentHtml = `
+          <div class="mb-4">
+            <p class="text-gray-300 mb-2">正确答案：<span class="text-emerald-400 font-bold">${currentChoiceQuestion.answer}</span></p>
+            <p class="text-gray-300">您的答案：<span class="${isCorrect ? 'text-emerald-400' : 'text-red-400'} font-bold">${selectedAnswer || '未作答'}</span></p>
+          </div>
+          <div class="bg-dark p-4 rounded-lg mb-4">
+            <h5 class="text-cyan-400 font-semibold mb-2">解析</h5>
+            <p class="text-gray-300">${currentChoiceQuestion.analysis}</p>
+          </div>
+          <h4>相关知识点</h4>
+          <ul class="list-disc list-inside space-y-1 mt-2">
+            <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('${getKnowledgeSection(currentChoiceQuestion.chapter)}')">${getChapterName(currentChoiceQuestion.chapter)}</a></li>
+          </ul>
+        `;
+      }
+      
+      document.getElementById('answer-analysis').innerHTML = `
+        <h4>答案解析</h4>
+        ${contentHtml}
+      `;
+    }
+
+    // 获取知识点章节ID
+    function getKnowledgeSection(chapter) {
+      const sections = {
+        1: 'module1-overview',
+        2: 'module2-demand',
+        3: 'module3-inventory',
+        4: 'module4-logistics',
+        5: 'module5-analysis',
+        6: 'module6-risk'
+      };
+      return sections[chapter] || 'module1-overview';
+    }
+
+    // 获取章节名称
+    function getChapterName(chapter) {
+      const names = {
+        1: '供应链概述',
+        2: '需求预测',
+        3: '库存管理',
+        4: '物流优化',
+        5: '供应链数据分析',
+        6: '供应链风险与优化'
+      };
+      return names[chapter] || '商务智能分析';
+    }
+
+    // 更新选择题进度
+    function updateChoiceProgress() {
+      const totalChoice = choiceQuestions.length;
+      const answeredChoice = Object.keys(answeredQuestions).length;
+      const correctChoice = Object.entries(answeredQuestions).filter(([id, ans]) => {
+        const q = choiceQuestions.find(q => q.id === id);
+        return q && q.answer === ans;
+      }).length;
+      
+      // 可以在这里更新总体进度显示
+      console.log(`选择题进度: ${answeredChoice}/${totalChoice}, 正确: ${correctChoice}`);
+    }
+  </script>
+</body>
+</html>

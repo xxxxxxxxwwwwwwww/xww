@@ -1,0 +1,521 @@
+
+    // 问题数据
+    const problems = [
+      {
+        id: 1,
+        title: "问题1：数据库表设计",
+        description: `设计一个学生选课系统的数据库表结构。
+&lt;strong&gt;要求：&lt;/strong&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;创建学生表students（包含学号、姓名、性别、班级等字段）&lt;/li&gt;
+  &lt;li&gt;创建课程表courses（包含课程号、课程名、学分等字段）&lt;/li&gt;
+  &lt;li&gt;创建选课表enrollments（关联学生和课程，包含成绩字段）&lt;/li&gt;
+  &lt;li&gt;设置合适的主键和外键约束&lt;/li&gt;
+&lt;/ul&gt;`,
+        difficulty: "medium",
+        time: "25分钟",
+        code: `-- 请编写创建表的SQL语句
+-- 提示：使用MySQL语法
+
+-- 学生表
+CREATE TABLE students (
+    -- 请补充
+);
+
+-- 课程表
+CREATE TABLE courses (
+    -- 请补充
+);
+
+-- 选课表
+CREATE TABLE enrollments (
+    -- 请补充
+);`,
+        analysis: `
+&lt;h4&gt;解题思路&lt;/h4&gt;
+&lt;p&gt;1. 学生表使用学号作为主键，课程表使用课程号作为主键&lt;/p&gt;
+&lt;p&gt;2. 选课表使用学生号和课程号作为联合主键，同时设置外键关联到学生表和课程表&lt;/p&gt;
+&lt;p&gt;3. 成绩字段可以设置为DECIMAL类型，允许NULL（表示未考试）&lt;/p&gt;
+&lt;h4&gt;代码示例&lt;/h4&gt;
+&lt;div class="bg-dark p-3 rounded-lg font-mono text-sm"&gt;
+  &lt;pre class="text-cyan-300"&gt;
+CREATE TABLE students (
+    student_id INT PRIMARY KEY AUTO_INCREMENT,
+    student_name VARCHAR(50) NOT NULL,
+    gender CHAR(1),
+    class_name VARCHAR(20),
+    enrollment_date DATE
+);
+
+CREATE TABLE courses (
+    course_id INT PRIMARY KEY AUTO_INCREMENT,
+    course_name VARCHAR(100) NOT NULL,
+    credit DECIMAL(3,1) NOT NULL,
+    teacher VARCHAR(50)
+);
+
+CREATE TABLE enrollments (
+    student_id INT,
+    course_id INT,
+    score DECIMAL(5,2),
+    enrollment_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+  &lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4&gt;知识点&lt;/h4&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;&lt;a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module2-theory')"&gt;模块2：关系数据库理论&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;数据库表设计&lt;/li&gt;
+  &lt;li&gt;主键和外键约束&lt;/li&gt;
+&lt;/ul&gt;`
+      },
+      {
+        id: 2,
+        title: "问题2：SQL查询练习",
+        description: `基于学生选课系统，编写SQL查询语句完成以下任务。
+&lt;strong&gt;要求：&lt;/strong&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;查询所有学生的姓名和班级&lt;/li&gt;
+  &lt;li&gt;查询选修了"数据库原理"课程的学生姓名和成绩&lt;/li&gt;
+  &lt;li&gt;查询每个学生的平均成绩&lt;/li&gt;
+  &lt;li&gt;查询平均分在80分以上的学生&lt;/li&gt;
+&lt;/ul&gt;`,
+        difficulty: "medium",
+        time: "30分钟",
+        code: `-- 1. 查询所有学生的姓名和班级
+-- 请编写SQL
+
+-- 2. 查询选修了"数据库原理"课程的学生姓名和成绩
+-- 请编写SQL
+
+-- 3. 查询每个学生的平均成绩
+-- 请编写SQL
+
+-- 4. 查询平均分在80分以上的学生
+-- 请编写SQL`,
+        analysis: `
+&lt;h4&gt;解题思路&lt;/h4&gt;
+&lt;p&gt;1. 第一个查询直接从students表查询即可&lt;/p&gt;
+&lt;p&gt;2. 第二个查询需要连接students、courses和enrollments三个表&lt;/p&gt;
+&lt;p&gt;3. 第三个查询使用GROUP BY和AVG聚合函数&lt;/p&gt;
+&lt;p&gt;4. 第四个查询在第三个基础上添加HAVING子句过滤&lt;/p&gt;
+&lt;h4&gt;代码示例&lt;/h4&gt;
+&lt;div class="bg-dark p-3 rounded-lg font-mono text-sm"&gt;
+  &lt;pre class="text-cyan-300"&gt;
+-- 1. 查询所有学生的姓名和班级
+SELECT student_name, class_name FROM students;
+
+-- 2. 查询选修了"数据库原理"课程的学生姓名和成绩
+SELECT s.student_name, e.score
+FROM students s
+JOIN enrollments e ON s.student_id = e.student_id
+JOIN courses c ON e.course_id = c.course_id
+WHERE c.course_name = '数据库原理';
+
+-- 3. 查询每个学生的平均成绩
+SELECT s.student_id, s.student_name, AVG(e.score) AS avg_score
+FROM students s
+JOIN enrollments e ON s.student_id = e.student_id
+GROUP BY s.student_id, s.student_name;
+
+-- 4. 查询平均分在80分以上的学生
+SELECT s.student_id, s.student_name, AVG(e.score) AS avg_score
+FROM students s
+JOIN enrollments e ON s.student_id = e.student_id
+GROUP BY s.student_id, s.student_name
+HAVING AVG(e.score) &gt; 80;
+  &lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4&gt;知识点&lt;/h4&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;&lt;a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module3-sql')"&gt;模块3：SQL语言&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;多表连接查询&lt;/li&gt;
+  &lt;li&gt;聚合函数与分组&lt;/li&gt;
+&lt;/ul&gt;`
+      },
+      {
+        id: 3,
+        title: "问题3：事务处理",
+        description: `模拟银行转账的事务处理过程，确保数据一致性。
+&lt;strong&gt;场景：&lt;/strong&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;从账户A转账1000元到账户B&lt;/li&gt;
+  &lt;li&gt;如果任一操作失败，整个事务回滚&lt;/li&gt;
+  &lt;li&gt;所有操作成功后才提交&lt;/li&gt;
+&lt;/ul&gt;
+&lt;strong&gt;要求：&lt;/strong&gt;
+编写SQL事务实现此功能。`,
+        difficulty: "hard",
+        time: "25分钟",
+        code: `-- 创建账户表
+CREATE TABLE accounts (
+    account_id INT PRIMARY KEY,
+    account_name VARCHAR(50),
+    balance DECIMAL(10,2) NOT NULL
+);
+
+-- 插入测试数据
+INSERT INTO accounts VALUES (1, '账户A', 5000.00);
+INSERT INTO accounts VALUES (2, '账户B', 3000.00);
+
+-- 实现转账事务
+START TRANSACTION;
+
+-- 请补充事务处理代码
+
+-- 1. 检查账户A余额是否足够
+-- 请补充
+
+-- 2. 从账户A扣除1000元
+-- 请补充
+
+-- 3. 向账户B增加1000元
+-- 请补充
+
+-- 提交事务
+COMMIT;
+
+-- 如果出错，使用 ROLLBACK 回滚`,
+        analysis: `
+&lt;h4&gt;解题思路&lt;/h4&gt;
+&lt;p&gt;1. 使用START TRANSACTION开始事务&lt;/p&gt;
+&lt;p&gt;2. 先查询账户余额是否足够&lt;/p&gt;
+&lt;p&gt;3. 执行扣款和存款操作&lt;/p&gt;
+&lt;p&gt;4. 所有操作成功后COMMIT，否则ROLLBACK&lt;/p&gt;
+&lt;h4&gt;代码示例&lt;/h4&gt;
+&lt;div class="bg-dark p-3 rounded-lg font-mono text-sm"&gt;
+  &lt;pre class="text-cyan-300"&gt;
+-- 实现转账事务
+START TRANSACTION;
+
+-- 检查余额
+SELECT balance FROM accounts WHERE account_id = 1 FOR UPDATE;
+
+-- 扣除金额
+UPDATE accounts SET balance = balance - 1000 WHERE account_id = 1;
+
+-- 增加金额
+UPDATE accounts SET balance = balance + 1000 WHERE account_id = 2;
+
+-- 验证结果
+SELECT balance FROM accounts WHERE account_id IN (1, 2);
+
+-- 提交
+COMMIT;
+
+-- 出错时回滚
+-- ROLLBACK;
+  &lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4&gt;知识点&lt;/h4&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;&lt;a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module5-management')"&gt;模块5：数据库管理&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;事务ACID特性&lt;/li&gt;
+  &lt;li&gt;并发控制&lt;/li&gt;
+&lt;/ul&gt;`
+      },
+      {
+        id: 4,
+        title: "问题4：索引优化",
+        description: `为查询优化创建合适的索引。
+&lt;strong&gt;场景：&lt;/strong&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;订单表有100万条数据&lt;/li&gt;
+  &lt;li&gt;经常按客户ID和订单日期查询&lt;/li&gt;
+  &lt;li&gt;需要提高查询速度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;strong&gt;要求：&lt;/strong&gt;
+创建合适的索引并分析其效果。`,
+        difficulty: "medium",
+        time: "20分钟",
+        code: `-- 创建订单表
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT,
+    order_date DATE,
+    total_amount DECIMAL(10,2),
+    status VARCHAR(20)
+);
+
+-- 1. 创建普通索引
+-- 请编写SQL
+
+-- 2. 创建复合索引
+-- 请编写SQL
+
+-- 3. 查看执行计划，分析索引使用情况
+-- 请编写SQL`,
+        analysis: `
+&lt;h4&gt;解题思路&lt;/h4&gt;
+&lt;p&gt;1. 为经常查询的列创建索引&lt;/p&gt;
+&lt;p&gt;2. 复合索引的顺序很重要，区分度高的列放前面&lt;/p&gt;
+&lt;p&gt;3. 使用EXPLAIN查看执行计划&lt;/p&gt;
+&lt;h4&gt;代码示例&lt;/h4&gt;
+&lt;div class="bg-dark p-3 rounded-lg font-mono text-sm"&gt;
+  &lt;pre class="text-cyan-300"&gt;
+-- 1. 为customer_id创建普通索引
+CREATE INDEX idx_customer ON orders(customer_id);
+
+-- 2. 创建复合索引（customer_id + order_date）
+CREATE INDEX idx_customer_date ON orders(customer_id, order_date);
+
+-- 3. 查看执行计划
+EXPLAIN SELECT * FROM orders 
+WHERE customer_id = 1001 
+AND order_date &gt; '2024-01-01';
+
+-- 查看索引
+SHOW INDEX FROM orders;
+  &lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4&gt;知识点&lt;/h4&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;&lt;a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module6-development')"&gt;模块6：数据库应用开发&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;索引原理与设计&lt;/li&gt;
+  &lt;li&gt;查询优化&lt;/li&gt;
+&lt;/ul&gt;`
+      },
+      {
+        id: 5,
+        title: "问题5：Python数据库操作",
+        description: `使用Python连接MySQL数据库，实现学生信息的增删改查操作。
+&lt;strong&gt;要求：&lt;/strong&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;使用mysql-connector或pymysql连接数据库&lt;/li&gt;
+  &lt;li&gt;实现添加学生功能&lt;/li&gt;
+  &lt;li&gt;实现查询所有学生功能&lt;/li&gt;
+  &lt;li&gt;使用参数化查询防止SQL注入&lt;/li&gt;
+&lt;/ul&gt;`,
+        difficulty: "medium",
+        time: "30分钟",
+        code: `# 请编写代码
+import mysql.connector
+from mysql.connector import Error
+
+class StudentDB:
+    def __init__(self, host, user, password, database):
+        """初始化数据库连接"""
+        # 请补充
+    
+    def add_student(self, name, gender, class_name):
+        """添加学生信息"""
+        # 请补充
+    
+    def get_all_students(self):
+        """获取所有学生"""
+        # 请补充
+    
+    def close(self):
+        """关闭连接"""
+        # 请补充
+
+# 测试代码
+if __name__ == "__main__":
+    db = StudentDB('localhost', 'root', 'password', 'school')
+    # 测试功能
+    db.close()`,
+        analysis: `
+&lt;h4&gt;解题思路&lt;/h4&gt;
+&lt;p&gt;1. 使用mysql.connector建立连接&lt;/p&gt;
+&lt;p&gt;2. 使用参数化查询（%s占位符）防止SQL注入&lt;/p&gt;
+&lt;p&gt;3. 执行查询后获取结果集&lt;/p&gt;
+&lt;h4&gt;代码示例&lt;/h4&gt;
+&lt;div class="bg-dark p-3 rounded-lg font-mono text-sm"&gt;
+  &lt;pre class="text-cyan-300"&gt;
+import mysql.connector
+from mysql.connector import Error
+
+class StudentDB:
+    def __init__(self, host, user, password, database):
+        try:
+            self.conn = mysql.connector.connect(
+                host=host,
+                user=user,
+                password=password,
+                database=database
+            )
+            self.cursor = self.conn.cursor(dictionary=True)
+        except Error as e:
+            print(f"连接错误: {e}")
+    
+    def add_student(self, name, gender, class_name):
+        sql = "INSERT INTO students (student_name, gender, class_name) VALUES (%s, %s, %s)"
+        self.cursor.execute(sql, (name, gender, class_name))
+        self.conn.commit()
+        return self.cursor.lastrowid
+    
+    def get_all_students(self):
+        self.cursor.execute("SELECT * FROM students")
+        return self.cursor.fetchall()
+    
+    def close(self):
+        if self.conn.is_connected():
+            self.cursor.close()
+            self.conn.close()
+  &lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4&gt;知识点&lt;/h4&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;&lt;a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module6-development')"&gt;模块6：数据库应用开发&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Python数据库连接&lt;/li&gt;
+  &lt;li&gt;SQL注入防护&lt;/li&gt;
+&lt;/ul&gt;`
+      }
+    ];
+
+    // 选择题数据
+    const choiceQuestions = [
+      {
+        id: 'c1',
+        chapter: 1,
+        title: "选择题1：数据库基础",
+        question: "数据库（DB）、数据库管理系统（DBMS）和数据库系统（DBS）的关系是？",
+        options: [
+          { label: 'A', text: 'DB包含DBMS和DBS' },
+          { label: 'B', text: 'DBS包含DB和DBMS' },
+          { label: 'C', text: 'DBMS包含DB和DBS' },
+          { label: 'D', text: '三者相互独立' }
+        ],
+        answer: 'B',
+        analysis: "数据库系统（DBS）是一个完整的系统，包括数据库（DB）、数据库管理系统（DBMS）、应用程序、数据库管理员等。DBMS是DBS的核心软件，用于管理DB。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c2',
+        chapter: 1,
+        title: "选择题2：数据模型",
+        question: "关系数据库使用的数据模型是？",
+        options: [
+          { label: 'A', text: '层次模型' },
+          { label: 'B', text: '网状模型' },
+          { label: 'C', text: '关系模型' },
+          { label: 'D', text: '面向对象模型' }
+        ],
+        answer: 'C',
+        analysis: "关系数据库使用关系模型，用二维表（表格）来表示实体和实体之间的联系。层次模型用树形结构，网状模型用图结构。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c3',
+        chapter: 2,
+        title: "选择题3：关系代数",
+        question: "从一个关系中选取满足条件的元组的操作称为？",
+        options: [
+          { label: 'A', text: '选择（Selection）' },
+          { label: 'B', text: '投影（Projection）' },
+          { label: 'C', text: '连接（Join）' },
+          { label: 'D', text: '笛卡尔积' }
+        ],
+        answer: 'A',
+        analysis: "选择（Selection）是从关系中选取满足条件的行（元组）。投影是选取列，连接是将两个关系按条件连接起来。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c4',
+        chapter: 2,
+        title: "选择题4：范式",
+        question: "如果一个关系模式R的所有属性都是不可再分的基本数据项，则R满足？",
+        options: [
+          { label: 'A', text: '1NF' },
+          { label: 'B', text: '2NF' },
+          { label: 'C', text: '3NF' },
+          { label: 'D', text: 'BCNF' }
+        ],
+        answer: 'A',
+        analysis: "第一范式（1NF）要求属性具有原子性，即每个属性都是不可再分的基本数据项。这是对关系模式最基本的要求。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c5',
+        chapter: 3,
+        title: "选择题5：SQL语句",
+        question: "SQL中用于修改表结构的语句是？",
+        options: [
+          { label: 'A', text: 'UPDATE' },
+          { label: 'B', text: 'ALTER' },
+          { label: 'C', text: 'MODIFY' },
+          { label: 'D', text: 'CHANGE' }
+        ],
+        answer: 'B',
+        analysis: "ALTER TABLE用于修改表结构。UPDATE用于修改数据，MODIFY和CHANGE不是标准SQL的关键字（某些数据库方言中使用）。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c6',
+        chapter: 3,
+        title: "选择题6：SQL查询",
+        question: "在SQL中，用于分组的关键字是？",
+        options: [
+          { label: 'A', text: 'ORDER BY' },
+          { label: 'B', text: 'GROUP BY' },
+          { label: 'C', text: 'HAVING' },
+          { label: 'D', text: 'WHERE' }
+        ],
+        answer: 'B',
+        analysis: "GROUP BY用于分组，ORDER BY用于排序，HAVING用于过滤分组结果，WHERE用于过滤行。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c7',
+        chapter: 4,
+        title: "选择题7：E-R图",
+        question: "在E-R图中，菱形表示什么？",
+        options: [
+          { label: 'A', text: '实体' },
+          { label: 'B', text: '属性' },
+          { label: 'C', text: '联系' },
+          { label: 'D', text: '主键' }
+        ],
+        answer: 'C',
+        analysis: "在E-R图中：矩形表示实体，椭圆表示属性，菱形表示联系。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c8',
+        chapter: 5,
+        title: "选择题8：事务特性",
+        question: "事务的ACID特性中，I代表什么？",
+        options: [
+          { label: 'A', text: '完整性（Integrity）' },
+          { label: 'B', text: '隔离性（Isolation）' },
+          { label: 'C', text: '独立性（Independence）' },
+          { label: 'D', text: '一致性（Consistency）' }
+        ],
+        answer: 'B',
+        analysis: "ACID是事务的四个特性：原子性（Atomicity）、一致性（Consistency）、隔离性（Isolation）、持久性（Durability）。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c9',
+        chapter: 5,
+        title: "选择题9：并发控制",
+        question: "解决并发操作导致的"丢失修改"问题，常用的技术是？",
+        options: [
+          { label: 'A', text: '索引' },
+          { label: 'B', text: '封锁' },
+          { label: 'C', text: '日志' },
+          { label: 'D', text: '备份' }
+        ],
+        answer: 'B',
+        analysis: "封锁（Locking）是并发控制的主要技术，通过给数据对象加锁，防止多个事务同时修改同一数据而导致丢失修改。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c10',
+        chapter: 6,
+        title: "选择题10：SQL注入",
+        question: "防止SQL注入最有效的方法是？",
+        options: [
+          { label: 'A', text: '过滤特殊字符' },
+          { label: 'B', text: '使用存储过程' },
+          { label: 'C', text: '参数化查询（预编译语句）' },
+          { label: 'D', text: '使用视图' }
+        ],
+        answer: 'C',
+        analysis: "参数化查询（Prepared Statement）将SQL语句和数据分开处理，数据被当作纯数据而不是SQL代码的一部分，是防止SQL注入最有效的方法。",
+        difficulty: "medium"
+      }
+    ];

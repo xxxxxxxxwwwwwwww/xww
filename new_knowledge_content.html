@@ -1,0 +1,1098 @@
+<div class="space-y-8">
+            <!-- 第一章：数据分析概述 -->
+            <div id="chapter1-basics" class="knowledge-section" style="display: block;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-database"></i> 第一章：数据分析概述（6学时）
+                </h3>
+                
+                <div class="space-y-6">
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-lightbulb text-yellow-400"></i> 1.1 数据分析的概念与价值
+                    </h4>
+                    <p class="text-gray-300 mb-4 leading-relaxed">数据分析是通过收集、清洗、转换和建模数据，从中发现规律、提取洞察、支持决策的过程。在当今数据驱动的时代，数据分析已经成为企业和组织核心竞争力的重要组成部分。本节将详细介绍数据分析的定义、内涵和外延，帮助您建立对数据分析的全面认知。</p>
+                    
+                    <div class="space-y-6">
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-4">📚 数据分析的系统性定义</h5>
+                        <div class="bg-dark p-5 rounded">
+                          <p class="text-gray-200 font-medium mb-3 text-lg">什么是数据分析？</p>
+                          <p class="text-gray-300 leading-relaxed mb-4">数据分析（Data Analysis）是指用适当的统计分析方法对收集来的大量数据进行分析，将它们加以汇总、理解并消化，以求最大化地开发数据的功能，发挥数据的作用。数据分析是为了提取有用信息和形成结论，而对数据加以详细研究和概括总结的过程。</p>
+                          <div class="border-l-4 border-cyan-500 pl-4 mt-4">
+                            <p class="text-cyan-300 font-medium mb-2">核心要点：</p>
+                            <ul class="text-gray-300 text-sm space-y-2">
+                              <li>✓ 数据分析是一种系统性的方法论，不是简单的数据计算</li>
+                              <li>✓ 分析过程需要遵循科学的方法和流程</li>
+                              <li>✓ 最终目标是为决策提供支持，创造实际价值</li>
+                              <li>✓ 需要结合业务理解和技术能力</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-4">💰 数据分析的四大核心价值</h5>
+                        <p class="text-gray-400 text-sm mb-4">数据分析在现代企业中发挥着不可替代的作用，主要体现在以下四个核心维度：</p>
+                        
+                        <div class="space-y-4">
+                          <div class="bg-dark p-5 rounded-lg border-l-4 border-emerald-500">
+                            <p class="text-gray-200 font-bold text-lg mb-3">🎯 价值一：业务优化</p>
+                            <p class="text-gray-300 text-sm mb-3">数据分析能够帮助企业发现运营中的问题和机会，实现精细化管理和持续优化。</p>
+                            <div class="grid md:grid-cols-2 gap-3 text-sm">
+                              <div class="bg-gray-800 p-3 rounded">
+                                <p class="text-cyan-400 font-medium mb-2">发现业务问题</p>
+                                <p class="text-gray-400 text-xs">通过数据分析发现运营中的异常和问题，如销售额下降、用户流失、转化率降低等。</p>
+                                <div class="mt-2 text-xs text-gray-500">
+                                  <p>• 监控核心指标，发现异常波动</p>
+                                  <p>• 对比同期、环比、同类发现差异</p>
+                                  <p>• 拆解指标到最小维度定位问题</p>
+                                </div>
+                              </div>
+                              <div class="bg-gray-800 p-3 rounded">
+                                <p class="text-cyan-400 font-medium mb-2">优化业务流程</p>
+                                <p class="text-gray-400 text-xs">识别效率瓶颈，改进工作流程，提升运营效率。</p>
+                                <div class="mt-2 text-xs text-gray-500">
+                                  <p>• 分析流程各环节耗时</p>
+                                  <p>• 识别等待和浪费环节</p>
+                                  <p>• 提出流程优化建议</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div class="bg-dark p-5 rounded-lg border-l-4 border-blue-500">
+                            <p class="text-gray-200 font-bold text-lg mb-3">📊 价值二：决策支持</p>
+                            <p class="text-gray-300 text-sm mb-3">数据分析为企业决策提供客观依据，从"经验驱动"转向"数据驱动"。</p>
+                            <div class="grid md:grid-cols-2 gap-3 text-sm">
+                              <div class="bg-gray-800 p-3 rounded">
+                                <p class="text-cyan-400 font-medium mb-2">数据驱动决策</p>
+                                <p class="text-gray-400 text-xs">用数据说话，避免主观判断和偏见，提高决策的科学性。</p>
+                                <div class="mt-2 text-xs text-gray-500">
+                                  <p>• 建立决策支持指标体系</p>
+                                  <p>• 设置预警阈值</p>
+                                  <p>• 提供多维度数据对比</p>
+                                </div>
+                              </div>
+                              <div class="bg-gray-800 p-3 rounded">
+                                <p class="text-cyan-400 font-medium mb-2">预测未来趋势</p>
+                                <p class="text-gray-400 text-xs">基于历史数据预测趋势和结果，提前做好规划和准备。</p>
+                                <div class="mt-2 text-xs text-gray-500">
+                                  <p>• 需求预测</p>
+                                  <p>• 销售预测</p>
+                                  <p>• 风险预警</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div class="bg-dark p-5 rounded-lg border-l-4 border-purple-500">
+                            <p class="text-gray-200 font-bold text-lg mb-3">🚀 价值三：创新驱动</p>
+                            <p class="text-gray-300 text-sm mb-3">通过数据分析发现新的市场机会和业务模式，驱动产品和服务创新。</p>
+                            <div class="grid md:grid-cols-2 gap-3 text-sm">
+                              <div class="bg-gray-800 p-3 rounded">
+                                <p class="text-cyan-400 font-medium mb-2">发现市场机会</p>
+                                <p class="text-gray-400 text-xs">分析市场趋势和用户需求，发现未被满足的市场需求。</p>
+                              </div>
+                              <div class="bg-gray-800 p-3 rounded">
+                                <p class="text-cyan-400 font-medium mb-2">产品优化创新</p>
+                                <p class="text-gray-400 text-xs">基于用户行为数据优化产品体验，驱动产品迭代创新。</p>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div class="bg-dark p-5 rounded-lg border-l-4 border-orange-500">
+                            <p class="text-gray-200 font-bold text-lg mb-3">💡 价值四：客户洞察</p>
+                            <p class="text-gray-300 text-sm mb-3">深入了解客户需求和行为，提升客户满意度和忠诚度。</p>
+                            <div class="grid md:grid-cols-2 gap-3 text-sm">
+                              <div class="bg-gray-800 p-3 rounded">
+                                <p class="text-cyan-400 font-medium mb-2">客户画像分析</p>
+                                <p class="text-gray-400 text-xs">构建客户画像，了解客户特征和偏好。</p>
+                              </div>
+                              <div class="bg-gray-800 p-3 rounded">
+                                <p class="text-cyan-400 font-medium mb-2">客户生命周期管理</p>
+                                <p class="text-gray-400 text-xs">分析客户生命周期价值，优化客户获取和留存策略。</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-sitemap text-blue-400"></i> 1.2 数据分析的流程与方法论
+                    </h4>
+                    <p class="text-gray-300 mb-4 leading-relaxed">数据分析不是随机的探索，而是遵循系统化的流程和方法论。掌握这些方法论能够帮助您更高效地开展数据分析工作，确保分析过程的科学性和结果的可靠性。</p>
+                    
+                    <div class="space-y-6">
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-4">🔄 CRISP-DM方法论</h5>
+                        <p class="text-gray-400 text-sm mb-4">CRISP-DM（Cross-Industry Standard Process for Data Mining）是数据挖掘领域最广泛使用的方法论框架。它定义了数据挖掘项目的标准流程，适用于各种行业和数据挖掘任务。</p>
+                        <div class="space-y-3">
+                          <div class="bg-dark p-4 rounded-lg border-l-4 border-cyan-500">
+                            <p class="text-gray-200 font-medium mb-1">📋 业务理解（Business Understanding）</p>
+                            <p class="text-gray-400 text-sm">理解业务目标和需求，将业务问题转化为数据挖掘问题。</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded-lg border-l-4 border-cyan-500">
+                            <p class="text-gray-200 font-medium mb-1">📊 数据理解（Data Understanding）</p>
+                            <p class="text-gray-400 text-sm">收集数据，了解数据的结构、质量和特征。</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded-lg border-l-4 border-cyan-500">
+                            <p class="text-gray-200 font-medium mb-1">🧹 数据准备（Data Preparation）</p>
+                            <p class="text-gray-400 text-sm">数据清洗、转换、整合，为建模做准备。</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded-lg border-l-4 border-cyan-500">
+                            <p class="text-gray-200 font-medium mb-1">🔧 建模（Modeling）</p>
+                            <p class="text-gray-400 text-sm">选择和应用适当的建模技术，建立预测或描述模型。</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded-lg border-l-4 border-cyan-500">
+                            <p class="text-gray-200 font-medium mb-1">✅ 评估（Evaluation）</p>
+                            <p class="text-gray-400 text-sm">评估模型的效果，验证模型是否满足业务需求。</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded-lg border-l-4 border-cyan-500">
+                            <p class="text-gray-200 font-medium mb-1">🚀 部署（Deployment）</p>
+                            <p class="text-gray-400 text-sm">将模型部署到生产环境，实现业务价值。</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-4">📈 数据分析流程详解</h5>
+                        <div class="bg-dark p-4 rounded">
+                          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            <div class="text-center p-4">
+                              <div class="text-4xl mb-2">1️⃣</div>
+                              <p class="text-cyan-400 font-medium">明确问题</p>
+                              <p class="text-gray-400 text-xs mt-1">定义分析目标</p>
+                            </div>
+                            <div class="text-center p-4">
+                              <div class="text-4xl mb-2">2️⃣</div>
+                              <p class="text-cyan-400 font-medium">数据收集</p>
+                              <p class="text-gray-400 text-xs mt-1">获取相关数据</p>
+                            </div>
+                            <div class="text-center p-4">
+                              <div class="text-4xl mb-2">3️⃣</div>
+                              <p class="text-cyan-400 font-medium">数据清洗</p>
+                              <p class="text-gray-400 text-xs mt-1">处理异常缺失</p>
+                            </div>
+                            <div class="text-center p-4">
+                              <div class="text-4xl mb-2">4️⃣</div>
+                              <p class="text-cyan-400 font-medium">分析建模</p>
+                              <p class="text-gray-400 text-xs mt-1">探索与建模</p>
+                            </div>
+                          </div>
+                          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
+                            <div class="text-center p-4">
+                              <div class="text-4xl mb-2">5️⃣</div>
+                              <p class="text-cyan-400 font-medium">结果解释</p>
+                              <p class="text-gray-400 text-xs mt-1">解读分析结果</p>
+                            </div>
+                            <div class="text-center p-4">
+                              <div class="text-4xl mb-2">6️⃣</div>
+                              <p class="text-cyan-400 font-medium">可视化</p>
+                              <p class="text-gray-400 text-xs mt-1">呈现分析结果</p>
+                            </div>
+                            <div class="text-center p-4">
+                              <div class="text-4xl mb-2">7️⃣</div>
+                              <p class="text-cyan-400 font-medium">报告撰写</p>
+                              <p class="text-gray-400 text-xs mt-1">输出分析报告</p>
+                            </div>
+                            <div class="text-center p-4">
+                              <div class="text-4xl mb-2">8️⃣</div>
+                              <p class="text-cyan-400 font-medium">决策支持</p>
+                              <p class="text-gray-400 text-xs mt-1">落地业务应用</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-users text-purple-400"></i> 1.3 数据分析师的技能体系
+                    </h4>
+                    <p class="text-gray-300 mb-4 leading-relaxed">成为一名优秀的数据分析师需要具备多方面的技能，包括业务理解、技术能力、分析思维等。本节将介绍数据分析师所需的核心技能体系。</p>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <div class="text-4xl text-center mb-4">📊</div>
+                        <h5 class="text-emerald-400 font-semibold mb-3 text-center">技术技能</h5>
+                        <ul class="text-gray-300 text-sm space-y-2">
+                          <li>• 数据处理工具（Excel、SQL、Python）</li>
+                          <li>• 数据可视化工具（Tableau、Power BI）</li>
+                          <li>• 统计分析方法</li>
+                          <li>• 机器学习基础</li>
+                          <li>• 数据仓库概念</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <div class="text-4xl text-center mb-4">🧠</div>
+                        <h5 class="text-blue-400 font-semibold mb-3 text-center">分析思维</h5>
+                        <ul class="text-gray-300 text-sm space-y-2">
+                          <li>• 结构化思维（MECE原则）</li>
+                          <li>• 批判性思维</li>
+                          <li>• 量化思维</li>
+                          <li>• 逻辑推理能力</li>
+                          <li>• 问题解决能力</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <div class="text-4xl text-center mb-4">💬</div>
+                        <h5 class="text-purple-400 font-semibold mb-3 text-center">业务能力</h5>
+                        <ul class="text-gray-300 text-sm space-y-2">
+                          <li>• 业务理解能力</li>
+                          <li>• 沟通表达能力</li>
+                          <li>• 报告撰写能力</li>
+                          <li>• 跨部门协作</li>
+                          <li>• 商业敏感度</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 第二章：数据准备与清洗 -->
+            <div id="chapter2-preprocessing" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-filter"></i> 第二章：数据准备与清洗（8学时）
+                </h3>
+                
+                <div class="space-y-6">
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-database text-yellow-400"></i> 2.1 数据类型与数据质量评估
+                    </h4>
+                    <p class="text-gray-300 mb-4 leading-relaxed">数据质量是数据分析的基础，"垃圾输入，垃圾输出"（Garbage In, Garbage Out）。在进行数据分析之前，必须先评估和确保数据质量。本节将介绍数据类型的识别和数据质量的评估方法。</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-4">📦 数据类型分类</h5>
+                        <div class="space-y-3">
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">🔢 数值型数据</p>
+                            <p class="text-gray-400 text-sm">用于测量和计算，包括整数、小数等。</p>
+                            <div class="mt-2 text-xs text-gray-500">
+                              <p>• 离散型：如用户数量、订单数</p>
+                              <p>• 连续型：如销售额、身高体重</p>
+                            </div>
+                          </div>
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">📝 分类型数据</p>
+                            <p class="text-gray-400 text-sm">用于分类和标签，表示类别属性。</p>
+                            <div class="mt-2 text-xs text-gray-500">
+                              <p>• 名义型：如性别、产品类别</p>
+                              <p>• 有序型：如满意度评分、学历</p>
+                            </div>
+                          </div>
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">📅 时间型数据</p>
+                            <p class="text-gray-400 text-sm">表示时间点或时间段的数据。</p>
+                            <div class="mt-2 text-xs text-gray-500">
+                              <p>• 日期格式：YYYY-MM-DD</p>
+                              <p>• 时间格式：HH:MM:SS</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-4">✅ 数据质量评估维度</h5>
+                        <div class="space-y-3">
+                          <div class="bg-dark p-4 rounded border-l-4 border-emerald-500">
+                            <p class="text-gray-200 font-medium mb-1">🔍 完整性</p>
+                            <p class="text-gray-400 text-sm">数据是否存在缺失值或空值</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded border-l-4 border-blue-500">
+                            <p class="text-gray-200 font-medium mb-1">🔢 准确性</p>
+                            <p class="text-gray-400 text-sm">数据是否准确反映真实情况</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded border-l-4 border-purple-500">
+                            <p class="text-gray-200 font-medium mb-1">⏰ 时效性</p>
+                            <p class="text-gray-400 text-sm">数据是否及时更新</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded border-l-4 border-orange-500">
+                            <p class="text-gray-200 font-medium mb-1">🔗 一致性</p>
+                            <p class="text-gray-400 text-sm">数据格式和标准是否统一</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded border-l-4 border-pink-500">
+                            <p class="text-gray-200 font-medium mb-1">🔒 唯一性</p>
+                            <p class="text-gray-400 text-sm">数据是否存在重复记录</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-trash text-red-400"></i> 2.2 缺失值处理方法
+                    </h4>
+                    <p class="text-gray-300 mb-4 leading-relaxed">缺失值是数据中常见的问题，处理不当会严重影响分析结果。本节将介绍多种缺失值处理方法，并通过Python代码示例演示如何实际处理缺失值。</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-4">🔧 缺失值处理策略</h5>
+                        <div class="space-y-3">
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">🗑️ 删除法</p>
+                            <p class="text-gray-400 text-sm">直接删除包含缺失值的行或列。适用于缺失比例较低的情况。</p>
+                            <div class="mt-2 text-xs text-gray-500">
+                              <p>优点：简单快捷</p>
+                              <p>缺点：可能丢失重要信息</p>
+                            </div>
+                          </div>
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">🔄 填充法</p>
+                            <p class="text-gray-400 text-sm">用特定值填充缺失值，包括均值、中位数、众数等。</p>
+                            <div class="mt-2 text-xs text-gray-500">
+                              <p>• 数值型：均值/中位数</p>
+                              <p>• 分类型：众数/特殊标记</p>
+                            </div>
+                          </div>
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">📈 插值法</p>
+                            <p class="text-gray-400 text-sm">根据相邻数据点进行插值估算。适用于时间序列数据。</p>
+                            <div class="mt-2 text-xs text-gray-500">
+                              <p>• 线性插值</p>
+                              <p>• 多项式插值</p>
+                            </div>
+                          </div>
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">🤖 模型预测法</p>
+                            <p class="text-gray-400 text-sm">使用机器学习模型预测缺失值。适用于缺失比例较高的情况。</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-4">💻 Python实战：缺失值处理</h5>
+                        <div class="bg-dark p-4 rounded font-mono text-sm overflow-x-auto">
+                          <pre class="text-cyan-300">import pandas as pd
+import numpy as np
+
+# 创建包含缺失值的示例数据
+data = {
+    '姓名': ['张三', '李四', '王五', np.nan, '赵六'],
+    '年龄': [25, 30, np.nan, 35, 40],
+    '性别': ['男', '女', '男', np.nan, '女'],
+    '工资': [5000, 6000, 5500, np.nan, 7000]
+}
+df = pd.DataFrame(data)
+
+print("原始数据:")
+print(df)
+print("\n缺失值统计:")
+print(df.isnull().sum())
+
+# 方法1: 删除缺失值
+df_drop = df.dropna()
+print("\n删除缺失值后:")
+print(df_drop)
+
+# 方法2: 填充缺失值
+df_fill = df.copy()
+df_fill['年龄'] = df_fill['年龄'].fillna(df_fill['年龄'].mean())
+df_fill['工资'] = df_fill['工资'].fillna(df_fill['工资'].median())
+df_fill['性别'] = df_fill['性别'].fillna(df_fill['性别'].mode()[0])
+df_fill['姓名'] = df_fill['姓名'].fillna('未知')
+print("\n填充缺失值后:")
+print(df_fill)</pre>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-exclamation-triangle text-orange-400"></i> 2.3 异常值检测与处理
+                    </h4>
+                    <p class="text-gray-300 mb-4 leading-relaxed">异常值是指与其他数据点显著不同的值，可能是数据录入错误或真实的极端情况。识别和处理异常值是数据清洗的重要环节。</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-4">🔍 异常值检测方法</h5>
+                        <div class="space-y-3">
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">📊 统计方法</p>
+                            <p class="text-gray-400 text-sm">基于统计分布识别异常值。</p>
+                            <div class="mt-2 text-xs text-gray-500">
+                              <p>• Z-score方法：|Z| > 3</p>
+                              <p>• IQR方法：超出四分位距1.5倍范围</p>
+                            </div>
+                          </div>
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">📈 可视化方法</p>
+                            <p class="text-gray-400 text-sm">通过图表直观识别异常值。</p>
+                            <div class="mt-2 text-xs text-gray-500">
+                              <p>• 箱线图</p>
+                              <p>• 散点图</p>
+                              <p>• 直方图</p>
+                            </div>
+                          </div>
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">🤖 模型方法</p>
+                            <p class="text-gray-400 text-sm">使用机器学习模型检测异常值。</p>
+                            <div class="mt-2 text-xs text-gray-500">
+                              <p>• Isolation Forest</p>
+                              <p>• One-Class SVM</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-4">💻 Python实战：异常值检测</h5>
+                        <div class="bg-dark p-4 rounded font-mono text-sm overflow-x-auto">
+                          <pre class="text-cyan-300">import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 创建包含异常值的示例数据
+np.random.seed(42)
+data = np.random.normal(100, 10, 100)
+data = np.append(data, [50, 180, 185])  # 添加异常值
+df = pd.DataFrame({'数值': data})
+
+# 方法1: Z-score检测
+z_scores = np.abs((df - df.mean()) / df.std())
+outliers_z = df[z_scores > 3]
+print("Z-score异常值:")
+print(outliers_z)
+
+# 方法2: IQR检测
+Q1 = df.quantile(0.25)
+Q3 = df.quantile(0.75)
+IQR = Q3 - Q1
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+outliers_iqr = df[(df < lower_bound) | (df > upper_bound)]
+print("\nIQR异常值:")
+print(outliers_iqr)
+
+# 方法3: 可视化检测
+plt.figure(figsize=(10, 4))
+plt.boxplot(df['数值'])
+plt.title('箱线图检测异常值')
+plt.show()</pre>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-refresh text-green-400"></i> 2.4 数据格式转换与标准化
+                    </h4>
+                    <p class="text-gray-300 mb-4 leading-relaxed">数据格式转换和标准化是数据分析前的必要准备工作，包括数据类型转换、日期格式处理、数据归一化等。</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-4">🔄 数据格式转换</h5>
+                        <div class="bg-dark p-4 rounded font-mono text-sm overflow-x-auto">
+                          <pre class="text-cyan-300">import pandas as pd
+
+# 创建示例数据
+df = pd.DataFrame({
+    '日期': ['2023-01-01', '2023-01-02', '2023-01-03'],
+    '销售额': ['1000', '2000', '1500'],
+    '利润率': ['0.25', '0.30', '0.28']
+})
+
+print("原始数据类型:")
+print(df.dtypes)
+
+# 数据类型转换
+df['日期'] = pd.to_datetime(df['日期'])
+df['销售额'] = df['销售额'].astype(float)
+df['利润率'] = df['利润率'].astype(float)
+
+print("\n转换后数据类型:")
+print(df.dtypes)
+print("\n转换后数据:")
+print(df)</pre>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-4">📐 数据标准化</h5>
+                        <div class="bg-dark p-4 rounded font-mono text-sm overflow-x-auto">
+                          <pre class="text-cyan-300">import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+
+# 创建示例数据
+data = {
+    '年龄': [25, 30, 35, 40, 45],
+    '收入': [5000, 8000, 12000, 15000, 20000],
+    '消费': [1000, 2000, 3000, 4000, 5000]
+}
+df = pd.DataFrame(data)
+
+print("原始数据:")
+print(df)
+
+# 标准化 (Z-score)
+scaler_std = StandardScaler()
+df_std = pd.DataFrame(scaler_std.fit_transform(df), columns=df.columns)
+print("\nZ-score标准化:")
+print(df_std)
+
+# 归一化 (Min-Max)
+scaler_minmax = MinMaxScaler()
+df_minmax = pd.DataFrame(scaler_minmax.fit_transform(df), columns=df.columns)
+print("\nMin-Max归一化:")
+print(df_minmax)</pre>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 第三章：核心工具实操 -->
+            <div id="chapter3-tools" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-wrench"></i> 第三章：核心工具实操（12学时）
+                </h3>
+                
+                <div class="space-y-6">
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-table text-green-400"></i> 3.1 Excel数据分析技巧
+                    </h4>
+                    <p class="text-gray-300 mb-4 leading-relaxed">Excel是最常用的数据分析工具之一，掌握Excel的高级功能能够显著提升数据分析效率。本节将介绍Excel的核心数据分析技巧。</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-4">📊 常用函数</h5>
+                        <div class="space-y-3">
+                          <div class="bg-dark p-3 rounded">
+                            <p class="text-cyan-400 font-medium mb-1">SUMIF/SUMIFS</p>
+                            <p class="text-gray-400 text-sm">条件求和，根据指定条件对单元格求和</p>
+                          </div>
+                          <div class="bg-dark p-3 rounded">
+                            <p class="text-cyan-400 font-medium mb-1">COUNTIF/COUNTIFS</p>
+                            <p class="text-gray-400 text-sm">条件计数，统计满足条件的单元格数量</p>
+                          </div>
+                          <div class="bg-dark p-3 rounded">
+                            <p class="text-cyan-400 font-medium mb-1">VLOOKUP/HLOOKUP</p>
+                            <p class="text-gray-400 text-sm">垂直/水平查找，在表格中查找匹配值</p>
+                          </div>
+                          <div class="bg-dark p-3 rounded">
+                            <p class="text-cyan-400 font-medium mb-1">INDEX/MATCH</p>
+                            <p class="text-gray-400 text-sm">组合查找，更灵活的查找方式</p>
+                          </div>
+                          <div class="bg-dark p-3 rounded">
+                            <p class="text-cyan-400 font-medium mb-1">PivotTable</p>
+                            <p class="text-gray-400 text-sm">数据透视表，快速汇总和分析数据</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-4">⚡ 高效技巧</h5>
+                        <div class="space-y-3">
+                          <div class="bg-dark p-3 rounded">
+                            <p class="text-cyan-400 font-medium mb-1">快捷键操作</p>
+                            <p class="text-gray-400 text-sm">Ctrl+C/V/X复制粘贴剪切，Ctrl+S保存</p>
+                          </div>
+                          <div class="bg-dark p-3 rounded">
+                            <p class="text-cyan-400 font-medium mb-1">数据验证</p>
+                            <p class="text-gray-400 text-sm">设置数据格式和范围限制</p>
+                          </div>
+                          <div class="bg-dark p-3 rounded">
+                            <p class="text-cyan-400 font-medium mb-1">条件格式</p>
+                            <p class="text-gray-400 text-sm">根据条件自动设置单元格格式</p>
+                          </div>
+                          <div class="bg-dark p-3 rounded">
+                            <p class="text-cyan-400 font-medium mb-1">图表制作</p>
+                            <p class="text-gray-400 text-sm">创建专业的数据可视化图表</p>
+                          </div>
+                          <div class="bg-dark p-3 rounded">
+                            <p class="text-cyan-400 font-medium mb-1">Power Query</p>
+                            <p class="text-gray-400 text-sm">强大的数据清洗和转换工具</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-database text-yellow-400"></i> 3.2 SQL数据查询实战
+                    </h4>
+                    <p class="text-gray-300 mb-4 leading-relaxed">SQL是数据分析师必备的技能，用于从数据库中提取和处理数据。本节将通过实战案例介绍SQL的核心查询语法。</p>
+                    
+                    <div class="bg-dark-gray p-5 rounded-lg">
+                      <h5 class="text-emerald-400 font-semibold mb-4">💡 SQL基础语法</h5>
+                      <div class="bg-dark p-4 rounded font-mono text-sm overflow-x-auto">
+                        <pre class="text-cyan-300">-- 1. 基本查询
+SELECT column1, column2 
+FROM table_name 
+WHERE condition;
+
+-- 2. 排序
+SELECT * 
+FROM sales 
+ORDER BY amount DESC;
+
+-- 3. 分组聚合
+SELECT category, COUNT(*) as count, SUM(amount) as total
+FROM products
+GROUP BY category
+HAVING COUNT(*) > 10;
+
+-- 4. 多表连接
+SELECT o.order_id, c.name, o.amount
+FROM orders o
+JOIN customers c ON o.customer_id = c.id
+WHERE o.order_date >= '2023-01-01';
+
+-- 5. 子查询
+SELECT *
+FROM products
+WHERE price > (SELECT AVG(price) FROM products);
+
+-- 6. 窗口函数
+SELECT 
+    name, 
+    department, 
+    salary,
+    RANK() OVER(PARTITION BY department ORDER BY salary DESC) as rank
+FROM employees;</pre>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-code text-purple-400"></i> 3.3 Python数据分析库
+                    </h4>
+                    <p class="text-gray-300 mb-4 leading-relaxed">Python是数据分析的主流工具，拥有丰富的数据分析库。本节将介绍Pandas、NumPy、Matplotlib等核心库的使用方法。</p>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-4">🐼 Pandas</h5>
+                        <div class="bg-dark p-4 rounded font-mono text-sm overflow-x-auto">
+                          <pre class="text-cyan-300">import pandas as pd
+
+# 读取数据
+df = pd.read_csv('data.csv')
+
+# 查看数据
+print(df.head())
+print(df.info())
+print(df.describe())
+
+# 数据筛选
+filtered = df[df['category'] == 'A']
+
+# 数据分组
+grouped = df.groupby('category')['sales'].sum()
+
+# 数据合并
+df1 = pd.merge(df_a, df_b, on='id')</pre>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-4">📐 NumPy</h5>
+                        <div class="bg-dark p-4 rounded font-mono text-sm overflow-x-auto">
+                          <pre class="text-cyan-300">import numpy as np
+
+# 创建数组
+arr = np.array([1, 2, 3, 4, 5])
+
+# 数组运算
+result = arr * 2 + 1
+
+# 统计计算
+mean = np.mean(arr)
+std = np.std(arr)
+max_val = np.max(arr)
+
+# 矩阵操作
+matrix = np.array([[1, 2], [3, 4]])
+inv_matrix = np.linalg.inv(matrix)</pre>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-purple-400 font-semibold mb-4">📊 Matplotlib</h5>
+                        <div class="bg-dark p-4 rounded font-mono text-sm overflow-x-auto">
+                          <pre class="text-cyan-300">import matplotlib.pyplot as plt
+
+# 折线图
+plt.plot(x, y)
+plt.title('折线图')
+plt.xlabel('X轴')
+plt.ylabel('Y轴')
+plt.show()
+
+# 柱状图
+plt.bar(categories, values)
+plt.title('柱状图')
+plt.show()
+
+# 散点图
+plt.scatter(x, y)
+plt.title('散点图')
+plt.show()
+
+# 直方图
+plt.hist(data, bins=10)
+plt.title('直方图')
+plt.show()</pre>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-chart-line text-orange-400"></i> 3.4 数据读取与导出
+                    </h4>
+                    <p class="text-gray-300 mb-4 leading-relaxed">掌握各种数据格式的读写操作是数据分析师的基本技能。本节将介绍如何使用Python读取和导出常见的数据格式。</p>
+                    
+                    <div class="bg-dark-gray p-5 rounded-lg">
+                      <h5 class="text-emerald-400 font-semibold mb-4">📁 数据读写实战</h5>
+                      <div class="bg-dark p-4 rounded font-mono text-sm overflow-x-auto">
+                        <pre class="text-cyan-300">import pandas as pd
+
+# 读取CSV文件
+df_csv = pd.read_csv('data.csv')
+
+# 读取Excel文件
+df_excel = pd.read_excel('data.xlsx', sheet_name='Sheet1')
+
+# 读取JSON文件
+df_json = pd.read_json('data.json')
+
+# 读取SQL数据库
+import sqlite3
+conn = sqlite3.connect('database.db')
+df_sql = pd.read_sql('SELECT * FROM table_name', conn)
+
+# 导出CSV
+df_csv.to_csv('output.csv', index=False)
+
+# 导出Excel
+df_excel.to_excel('output.xlsx', sheet_name='Data', index=False)
+
+# 导出JSON
+df_json.to_json('output.json', orient='records')
+
+# 导出到SQL数据库
+df_sql.to_sql('new_table', conn, if_exists='replace')</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 第四章：统计分析方法 -->
+            <div id="chapter4-statistics" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-bar-chart"></i> 第四章：统计分析方法（10学时）
+                </h3>
+                
+                <div class="space-y-6">
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-pie-chart text-green-400"></i> 4.1 描述性统计分析
+                    </h4>
+                    <p class="text-gray-300 mb-4 leading-relaxed">描述性统计是数据分析的基础，用于概括和描述数据的基本特征。本节将介绍集中趋势、离散程度、分布形态等核心概念。</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-4">📊 集中趋势</h5>
+                        <div class="space-y-3">
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">📈 均值（Mean）</p>
+                            <p class="text-gray-400 text-sm">所有数据值的平均值，受极端值影响较大。</p>
+                            <p class="text-cyan-300 text-xs mt-2">公式：μ = (x₁ + x₂ + ... + xₙ) / n</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">📊 中位数（Median）</p>
+                            <p class="text-gray-400 text-sm">数据排序后位于中间位置的值，不受极端值影响。</p>
+                            <p class="text-cyan-300 text-xs mt-2">位置：(n+1)/2（奇数）或n/2与n/2+1的平均（偶数）</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">🔄 众数（Mode）</p>
+                            <p class="text-gray-400 text-sm">出现次数最多的值，适用于分类型数据。</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-4">📐 离散程度</h5>
+                        <div class="space-y-3">
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">📏 极差（Range）</p>
+                            <p class="text-gray-400 text-sm">最大值与最小值之差，反映数据的波动范围。</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">📊 方差（Variance）</p>
+                            <p class="text-gray-400 text-sm">各数据值与均值差的平方的平均值。</p>
+                            <p class="text-cyan-300 text-xs mt-2">σ² = Σ(xᵢ - μ)² / n</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">📈 标准差（Standard Deviation）</p>
+                            <p class="text-gray-400 text-sm">方差的平方根，与原始数据单位相同。</p>
+                            <p class="text-cyan-300 text-xs mt-2">σ = √σ²</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark-gray p-5 rounded-lg mt-6">
+                      <h5 class="text-purple-400 font-semibold mb-4">💻 Python实战：描述性统计</h5>
+                      <div class="bg-dark p-4 rounded font-mono text-sm overflow-x-auto">
+                        <pre class="text-cyan-300">import pandas as pd
+import numpy as np
+
+# 创建示例数据
+data = pd.DataFrame({
+    '销售额': [1000, 1500, 1200, 1800, 2000, 1600, 1400, 1700],
+    '客户年龄': [25, 30, 35, 40, 45, 30, 35, 40],
+    '购买次数': [1, 2, 1, 3, 2, 1, 2, 3]
+})
+
+print("数据基本统计:")
+print(data.describe())
+
+print("\n均值:")
+print(data.mean())
+
+print("\n中位数:")
+print(data.median())
+
+print("\n众数:")
+print(data.mode())
+
+print("\n标准差:")
+print(data.std())
+
+print("\n方差:")
+print(data.var())
+
+print("\n极差:")
+print(data.max() - data.min())</pre>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-search text-yellow-400"></i> 4.2 推断统计分析
+                    </h4>
+                    <p class="text-gray-300 mb-4 leading-relaxed">推断统计是从样本数据推断总体特征的方法，包括参数估计和假设检验。本节将介绍置信区间和假设检验的基本概念和应用。</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-4">🎯 参数估计</h5>
+                        <div class="space-y-3">
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">📊 点估计</p>
+                            <p class="text-gray-400 text-sm">用样本统计量直接估计总体参数，如用样本均值估计总体均值。</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">🎯 区间估计</p>
+                            <p class="text-gray-400 text-sm">给出参数估计的置信区间，说明估计的可靠性。</p>
+                            <p class="text-cyan-300 text-xs mt-2">置信区间 = 点估计 ± 边际误差</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">📈 置信水平</p>
+                            <p class="text-gray-400 text-sm">置信区间包含真实参数的概率，常用95%或99%。</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-4">🔍 假设检验</h5>
+                        <div class="space-y-3">
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">❓ 原假设与备择假设</p>
+                            <p class="text-gray-400 text-sm">原假设(H₀)：默认成立的假设；备择假设(H₁)：我们想要证明的假设。</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">📊 P值</p>
+                            <p class="text-gray-400 text-sm">在原假设成立的情况下，观察到当前数据或更极端数据的概率。</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded">
+                            <p class="text-gray-200 font-medium mb-2">✅ 显著性水平</p>
+                            <p class="text-gray-400 text-sm">拒绝原假设的阈值，常用α=0.05。</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark-gray p-5 rounded-lg mt-6">
+                      <h5 class="text-purple-400 font-semibold mb-4">💻 Python实战：假设检验</h5>
+                      <div class="bg-dark p-4 rounded font-mono text-sm overflow-x-auto">
+                        <pre class="text-cyan-300">import scipy.stats as stats
+import numpy as np
+
+# 单样本t检验
+np.random.seed(42)
+sample = np.random.normal(100, 15, 50)
+t_stat, p_value = stats.ttest_1samp(sample, 100)
+print(f"单样本t检验: t={t_stat:.4f}, p={p_value:.4f}")
+
+# 独立样本t检验
+group1 = np.random.normal(50, 10, 30)
+group2 = np.random.normal(55, 10, 30)
+t_stat, p_value = stats.ttest_ind(group1, group2)
+print(f"独立样本t检验: t={t_stat:.4f}, p={p_value:.4f}")
+
+# 配对样本t检验
+before = np.array([80, 85, 90, 75, 82, 88, 92, 78])
+after = np.array([78, 83, 88, 73, 80, 85, 90, 76])
+t_stat, p_value = stats.ttest_rel(before, after)
+print(f"配对样本t检验: t={t_stat:.4f}, p={p_value:.4f}")
+
+# 卡方检验
+observed = np.array([[20, 30], [15, 35]])
+chi2_stat, p_value, dof, expected = stats.chi2_contingency(observed)
+print(f"卡方检验: chi2={chi2_stat:.4f}, p={p_value:.4f}")</pre>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-line-chart text-orange-400"></i> 4.3 回归分析方法
+                    </h4>
+                    <p class="text-gray-300 mb-4 leading-relaxed">回归分析是研究变量之间关系的统计方法，用于预测和解释变量之间的关联。本节将介绍线性回归和多元回归的基本原理和应用。</p>
+                    
+                    <div class="bg-dark-gray p-5 rounded-lg">
+                      <h5 class="text-emerald-400 font-semibold mb-4">📈 线性回归实战</h5>
+                      <div class="bg-dark p-4 rounded font-mono text-sm overflow-x-auto">
+                        <pre class="text-cyan-300">import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+import matplotlib.pyplot as plt
+
+# 创建示例数据
+np.random.seed(42)
+data = pd.DataFrame({
+    '广告投入': np.linspace(1, 10, 50),
+    '销售额': np.linspace(10, 100, 50) + np.random.normal(0, 5, 50)
+})
+
+X = data[['广告投入']].values
+y = data['销售额'].values
+
+# 划分训练集和测试集
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# 创建并训练模型
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# 预测
+y_pred = model.predict(X_test)
+
+# 评估模型
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f"回归系数: {model.coef_[0]:.2f}")
+print(f"截距: {model.intercept_:.2f}")
+print(f"MSE: {mse:.2f}")
+print(f"R²: {r2:.2f}")
+
+# 可视化
+plt.scatter(X, y, color='blue', label='实际数据')
+plt.plot(X, model.predict(X), color='red', label='回归直线')
+plt.xlabel('广告投入')
+plt.ylabel('销售额')
+plt.legend()
+plt.show()</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 第五章：高级数据分析方法 -->
+            <div id="chapter5-advanced" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-cogs"></i> 第五章：高级数据分析方法（12学时）
+                </h3>
+                
+                <div class="space-y-6">
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-brain text-green-400"></i> 5.1 机器学习基础
+                    </h4>
+                    <p class="text-gray-300 mb-4 leading-relaxed">机器学习是数据分析的高级技术，能够让计算机从数据中学习模式并做出预测。本节将介绍机器学习的基本概念和常用算法。</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-4">📚 机器学习类型</h5>
+                        <div class="space-y-3">
+                          <div class="bg-dark p-4 rounded border-l-4 border-emerald-500">
+                            <p class="text-gray-200 font-medium mb-1">📊 监督学习</p>
+                            <p class="text-gray-400 text-sm">使用标注数据训练模型，包括分类和回归任务。</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded border-l-4 border-blue-500">
+                            <p class="text-gray-200 font-medium mb-1">🔍 无监督学习</p>
+                            <p class="text-gray-400 text-sm">从未标注数据中发现模式，如聚类分析。</p>
+                          </div>
+                          <div class="bg-dark p-4 rounded border-l-4 border-purple-500">
+                            <p class="text-gray-200 font-medium mb-1">🎮 强化学习</p>
+                            <p class="text-gray-400 text-sm">通过与环境交互学习最优策略。</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-dark-gray p-5 rounded-lg">
+                        <h5 class="text-blue-400 font-semibold mb-4">⚡ 常用算法</h5>
+                        <div class="space-y-3">
+                          <div class="bg-dark p-3 rounded">
+                            <p class="text-cyan-400 font-medium">📈 线性回归</p>
+                            <p class="text-gray-400 text-xs">用于预测连续数值</p>
+                          </div>
+                          <div class="bg-dark p-3 rounded">
+                            <p class="text-cyan-400 font-medium">🔘 逻辑回归</p>
+                            <p class="text-gray-400 text-xs">用于二分类问题</p>
+                          </div>
+                          <div class="bg-dark p-3 rounded">
+                            <p class="text-cyan-400 font-medium">🌳 决策树</p>
+                            <p class="text-gray-400 text-xs">用于分类和回归</p>
+                          </div>
+                          <div class="bg-dark p-3 rounded">
+                            <p class="text-cyan-400 font-medium">🌲 随机森林</p>
+                            <p class="text-gray-400 text-xs">集成学习算法，提高准确性</p>
+                          </div>
+                          <div class="bg-dark p-3 rounded">
+                            <p class="text-cyan-400 font-medium">📊 K-Means</p>
+                            <p class="text-gray-400 text-xs">聚类算法</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-users text-yellow-400"></i> 5.2 聚类分析
+                    </h4>
+                    <p class="text-gray-300 mb-4 leading-relaxed">聚类分析是无监督学习的重要方法，用于将数据分组到不同的簇中，使得同一簇内的数据相似度较高，不同簇之间的数据相似度较低。</p>
+                    
+                    <div class="bg-dark

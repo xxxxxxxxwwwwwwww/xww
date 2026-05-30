@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>测试点击功能</title>
+</head>
+<body>
+    <h1>题库测试</h1>
+    
+    <div id="sidebar">
+        <h3>题目列表</h3>
+        <div onclick="testClick(1)">题目1</div>
+        <div onclick="testClick(2)">题目2</div>
+        <div onclick="testClick(3)">题目3</div>
+    </div>
+    
+    <div id="content">
+        <h2 id="title">标题</h2>
+        <div id="desc">描述</div>
+    </div>
+    
+    <script>
+        const problems = [
+            { id: 1, title: "问题1", description: "这是问题1的描述" },
+            { id: 2, title: "问题2", description: "这是问题2的描述" },
+            { id: 3, title: "问题3", description: "这是问题3的描述" }
+        ];
+        
+        function testClick(id) {
+            console.log('testClick called with id:', id);
+            const problem = problems.find(p => p.id === id);
+            if (problem) {
+                document.getElementById('title').textContent = problem.title;
+                document.getElementById('desc').textContent = problem.description;
+                alert('加载成功: ' + problem.title);
+            } else {
+                alert('问题未找到: ' + id);
+            }
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded');
+            alert('页面加载完成');
+        });
+    </script>
+</body>
+</html>

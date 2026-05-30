@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>测试题库点击功能</title>
+    <script>
+        const problems = [
+            { id: 1, title: "问题1：测试", description: "这是测试问题1", code: "# 代码1", analysis: "解析1" },
+            { id: 2, title: "问题2：测试", description: "这是测试问题2", code: "# 代码2", analysis: "解析2" },
+            { id: 3, title: "问题3：测试", description: "这是测试问题3", code: "# 代码3", analysis: "解析3" }
+        ];
+        
+        let currentProblem = 1;
+        
+        function loadProgrammingProblem(problemId) {
+            console.log('加载问题:', problemId);
+            const problem = problems.find(p => p.id === problemId);
+            if (problem) {
+                document.getElementById('title').textContent = problem.title;
+                document.getElementById('desc').innerHTML = problem.description;
+                document.getElementById('code').textContent = problem.code;
+                
+                // 更新高亮
+                document.querySelectorAll('.problem-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                const items = document.querySelectorAll('.problem-item');
+                items.forEach(item => {
+                    const onclick = item.getAttribute('onclick');
+                    if (onclick && onclick.includes('loadProgrammingProblem(' + problemId + ')')) {
+                        item.classList.add('active');
+                    }
+                });
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgrammingProblem(1);
+        });
+    </script>
+    <style>
+        .problem-item { cursor: pointer; padding: 10px; border: 1px solid #ccc; margin: 5px; }
+        .problem-item:hover { background-color: #f0f0f0; }
+        .problem-item.active { background-color: #4CAF50; color: white; }
+    </style>
+</head>
+<body>
+    <h1>题库测试</h1>
+    
+    <div style="float:left; width: 30%;">
+        <h3>题目列表</h3>
+        <div class="problem-item active" onclick="loadProgrammingProblem(1)">问题1</div>
+        <div class="problem-item" onclick="loadProgrammingProblem(2)">问题2</div>
+        <div class="problem-item" onclick="loadProgrammingProblem(3)">问题3</div>
+    </div>
+    
+    <div style="float:right; width: 65%;">
+        <h2 id="title">标题</h2>
+        <div id="desc">描述</div>
+        <pre id="code">代码</pre>
+    </div>
+</body>
+</html>

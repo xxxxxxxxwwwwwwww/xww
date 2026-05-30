@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>测试点击功能</title>
+    <script>
+        // 问题数据（全局）
+        const problems = [
+            { id: 1, title: "问题1：测试", description: "描述1", code: "# 代码1" },
+            { id: 2, title: "问题2：测试", description: "描述2", code: "# 代码2" },
+            { id: 3, title: "问题3：测试", description: "描述3", code: "# 代码3" }
+        ];
+        
+        // 全局函数
+        function loadProgrammingProblem(problemId) {
+            console.log('点击了问题:', problemId);
+            const problem = problems.find(p => p.id === problemId);
+            if (problem) {
+                document.getElementById('title').textContent = problem.title;
+                document.getElementById('desc').innerHTML = problem.description;
+                document.getElementById('code').textContent = problem.code;
+                
+                // 更新高亮
+                document.querySelectorAll('.problem-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                const items = document.querySelectorAll('.problem-item');
+                items.forEach(item => {
+                    const onclick = item.getAttribute('onclick');
+                    if (onclick && onclick.includes('loadProgrammingProblem(' + problemId + ')')) {
+                        item.classList.add('active');
+                    }
+                });
+            } else {
+                console.error('问题未找到:', problemId);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化第一个问题
+            loadProgrammingProblem(1);
+        });
+    </script>
+    <style>
+        .problem-item { 
+            cursor: pointer; 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            margin: 5px; 
+            border-radius: 5px;
+        }
+        .problem-item:hover { background-color: #f0f0f0; }
+        .problem-item.active { background-color: #4CAF50; color: white; }
+        body { font-family: Arial; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        #content { margin-left: 320px; }
+        #sidebar { float: left; width: 300px; }
+    </style>
+</head>
+<body>
+    <h1>题库测试</h1>
+    
+    <div id="sidebar">
+        <h3>题目列表</h3>
+        <div class="problem-item active" onclick="loadProgrammingProblem(1)">问题1：测试</div>
+        <div class="problem-item" onclick="loadProgrammingProblem(2)">问题2：测试</div>
+        <div class="problem-item" onclick="loadProgrammingProblem(3)">问题3：测试</div>
+    </div>
+    
+    <div id="content">
+        <h2 id="title">标题</h2>
+        <div id="desc">描述</div>
+        <pre id="code">代码</pre>
+    </div>
+</body>
+</html>

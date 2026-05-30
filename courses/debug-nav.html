@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>章节导航测试</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #0f172a; color: white; }
+    .nav-btn { 
+      padding: 8px 16px; 
+      margin: 4px; 
+      background: #334155; 
+      border: none; 
+      color: white; 
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    .nav-btn.active { background: #06b6d4; color: black; }
+    .chapter { 
+      display: none; 
+      padding: 20px; 
+      margin-top: 20px; 
+      background: #1e293b; 
+      border-radius: 8px;
+    }
+    .chapter.active { display: block; }
+    h1 { color: #06b6d4; }
+    h2 { color: #10b981; }
+    .debug { 
+      margin-top: 40px; 
+      padding: 20px; 
+      background: #1a1a2e; 
+      border: 1px solid #333;
+      border-radius: 8px;
+      font-family: monospace;
+    }
+    .debug h3 { color: #f59e0b; }
+  </style>
+</head>
+<body>
+  <h1>🖥️ 章节导航测试</h1>
+  
+  <div id="nav-container">
+    <button class="nav-btn active" data-target="chapter1">第一章：数据分析基础</button>
+    <button class="nav-btn" data-target="chapter2">第二章：数据获取与预处理</button>
+    <button class="nav-btn" data-target="chapter3">第三章：核心工具实操</button>
+    <button class="nav-btn" data-target="chapter4">第四章：统计分析方法</button>
+    <button class="nav-btn" data-target="chapter5">第五章：高级数据分析方法</button>
+    <button class="nav-btn" data-target="chapter6">第六章：数据可视化与报告</button>
+    <button class="nav-btn" data-target="chapter7">第七章：行业实战案例</button>
+    <button class="nav-btn" data-target="chapter8">第八章：课程总结</button>
+  </div>
+  
+  <div id="chapters-container">
+    <div id="chapter1" class="chapter active">
+      <h2>第一章：数据分析基础</h2>
+      <p>✅ 本章介绍数据分析的基本概念和思维方法...</p>
+      <ul>
+        <li>数据分析概述</li>
+        <li>数据基础概念</li>
+        <li>分析思维与方法</li>
+      </ul>
+    </div>
+    
+    <div id="chapter2" class="chapter">
+      <h2>第二章：数据获取与预处理</h2>
+      <p>✅ 本章介绍数据的获取方法和预处理技术...</p>
+      <ul>
+        <li>数据来源与采集</li>
+        <li>数据清洗与整合</li>
+        <li>数据变换与编码</li>
+      </ul>
+    </div>
+    
+    <div id="chapter3" class="chapter">
+      <h2>第三章：核心工具实操</h2>
+      <p>✅ 本章介绍Excel、SQL和Python等核心工具...</p>
+      <ul>
+        <li>Excel数据分析</li>
+        <li>SQL数据查询</li>
+        <li>Python数据分析</li>
+      </ul>
+    </div>
+    
+    <div id="chapter4" class="chapter">
+      <h2>第四章：统计分析方法</h2>
+      <p>✅ 本章介绍统计学的基本方法和应用...</p>
+      <ul>
+        <li>描述性统计分析</li>
+        <li>推断统计基础</li>
+        <li>常用假设检验</li>
+      </ul>
+    </div>
+    
+    <div id="chapter5" class="chapter">
+      <h2>第五章：高级数据分析方法</h2>
+      <p>✅ 本章介绍回归分析、聚类分析等高级方法...</p>
+      <ul>
+        <li>相关与回归分析</li>
+        <li>聚类分析</li>
+        <li>降维与因子分析</li>
+        <li>时间序列分析</li>
+      </ul>
+    </div>
+    
+    <div id="chapter6" class="chapter">
+      <h2>第六章：数据可视化与报告呈现</h2>
+      <p>✅ 本章介绍数据可视化的原则和工具...</p>
+      <ul>
+        <li>可视化原则与图表选择</li>
+        <li>高级可视化工具</li>
+        <li>数据分析报告撰写</li>
+      </ul>
+    </div>
+    
+    <div id="chapter7" class="chapter">
+      <h2>第七章：行业实战案例与项目落地</h2>
+      <p>✅ 本章结合电商、金融、运营等行业案例...</p>
+      <ul>
+        <li>电商零售数据分析</li>
+        <li>金融数据分析</li>
+        <li>运营与市场分析</li>
+        <li>综合项目实战</li>
+      </ul>
+    </div>
+    
+    <div id="chapter8" class="chapter">
+      <h2>第八章：课程总结与职业发展</h2>
+      <p>✅ 本章总结整个课程的学习内容...</p>
+      <ul>
+        <li>知识体系梳理</li>
+        <li>职业路径与发展</li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="debug">
+    <h3>🔍 调试信息</h3>
+    <div id="debug-log">等待加载...</div>
+  </div>
+  
+  <script>
+    const debugLog = document.getElementById('debug-log');
+    
+    function log(message) {
+      const timestamp = new Date().toLocaleTimeString();
+      debugLog.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+      console.log(message);
+    }
+    
+    log('✅ 脚本开始执行');
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      log('✅ DOMContentLoaded 事件触发');
+      
+      // 获取导航按钮
+      const navButtons = document.querySelectorAll('.nav-btn');
+      log(`✅ 找到导航按钮数量: ${navButtons.length}`);
+      
+      // 绑定点击事件
+      navButtons.forEach((button, index) => {
+        log(`✅ 绑定事件到按钮 ${index + 1}: ${button.textContent}`);
+        
+        button.addEventListener('click', function() {
+          log(`📍 点击了: ${this.textContent}`);
+          
+          // 更新导航按钮样式
+          navButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          log('✅ 导航按钮样式更新完成');
+          
+          // 获取目标章节ID
+          const targetId = this.dataset.target;
+          log(`📌 目标章节ID: ${targetId}`);
+          
+          // 隐藏所有章节
+          const chapters = document.querySelectorAll('.chapter');
+          chapters.forEach(chapter => chapter.classList.remove('active'));
+          log(`✅ 隐藏了 ${chapters.length} 个章节`);
+          
+          // 显示目标章节
+          const targetChapter = document.getElementById(targetId);
+          if (targetChapter) {
+            targetChapter.classList.add('active');
+            log(`✅ 显示章节: ${targetId}`);
+          } else {
+            log(`❌ 错误：未找到章节 ${targetId}`);
+          }
+        });
+      });
+      
+      log('✅ 所有事件绑定完成');
+    });
+  </script>
+</body>
+</html>

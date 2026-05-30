@@ -1,0 +1,656 @@
+
+    // 问题数据
+    const problems = [
+      {
+        id: 1,
+        title: "问题1：需求预测",
+        description: `使用时间序列方法进行产品需求预测。
+&lt;strong&gt;要求：&lt;/strong&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;加载历史销售数据&lt;/li&gt;
+  &lt;li&gt;使用移动平均方法预测&lt;/li&gt;
+  &lt;li&gt;使用指数平滑方法预测&lt;/li&gt;
+  &lt;li&gt;对比两种方法的结果&lt;/li&gt;
+&lt;/ul&gt;`,
+        difficulty: "medium",
+        time: "25分钟",
+        code: `# 请编写需求预测代码
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 模拟历史销售数据
+dates = pd.date_range(start='2023-01-01', end='2023-12-31', freq='M')
+np.random.seed(42)
+sales = 100 + np.arange(len(dates)) * 5 + np.random.randn(len(dates)) * 15
+data = pd.DataFrame({'date': dates, 'sales': sales})
+data.set_index('date', inplace=True)
+
+# 1. 移动平均预测（3个月窗口）
+# 请补充
+
+# 2. 指数平滑预测（alpha=0.3）
+# 请补充
+
+# 3. 可视化对比
+# 请补充`,
+        analysis: `
+&lt;h4&gt;解题思路&lt;/h4&gt;
+&lt;p&gt;1. 使用rolling()计算移动平均&lt;/p&gt;
+&lt;p&gt;2. 实现简单指数平滑&lt;/p&gt;
+&lt;p&gt;3. 绘制预测结果对比图&lt;/p&gt;
+&lt;h4&gt;代码示例&lt;/h4&gt;
+&lt;div class="bg-dark p-3 rounded-lg font-mono text-sm"&gt;
+  &lt;pre class="text-cyan-300"&gt;
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 设置中文显示
+plt.rcParams['font.sans-serif'] = ['SimHei']
+
+# 模拟历史销售数据
+dates = pd.date_range(start='2023-01-01', end='2023-12-31', freq='M')
+np.random.seed(42)
+sales = 100 + np.arange(len(dates)) * 5 + np.random.randn(len(dates)) * 15
+data = pd.DataFrame({'date': dates, 'sales': sales})
+data.set_index('date', inplace=True)
+
+# 1. 移动平均预测（3个月窗口）
+data['ma3'] = data['sales'].rolling(window=3).mean()
+
+# 2. 指数平滑预测（alpha=0.3）
+alpha = 0.3
+data['es'] = data['sales'].ewm(alpha=alpha, adjust=False).mean()
+
+# 3. 可视化对比
+plt.figure(figsize=(12, 6))
+plt.plot(data.index, data['sales'], label='实际销售', marker='o')
+plt.plot(data.index, data['ma3'], label='移动平均预测', linestyle='--')
+plt.plot(data.index, data['es'], label='指数平滑预测', linestyle=':')
+plt.title('需求预测方法对比')
+plt.xlabel('日期')
+plt.ylabel('销量')
+plt.legend()
+plt.grid(True)
+plt.show()
+  &lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4&gt;知识点&lt;/h4&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;&lt;a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('demand-forecasting')"&gt;模块2：需求预测分析&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;时间序列预测&lt;/li&gt;
+  &lt;li&gt;移动平均与指数平滑&lt;/li&gt;
+&lt;/ul&gt;`
+      },
+      {
+        id: 2,
+        title: "问题2：库存管理",
+        description: `计算经济订货批量（EOQ）和安全库存。
+&lt;strong&gt;场景：&lt;/strong&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;年需求量：10000件&lt;/li&gt;
+  &lt;li&gt;每次订货成本：50元&lt;/li&gt;
+  &lt;li&gt;单位年持有成本：10元&lt;/li&gt;
+  &lt;li&gt;服务水平：95%（Z=1.645）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;strong&gt;要求：&lt;/strong&gt;
+计算EOQ、安全库存和再订货点。`,
+        difficulty: "easy",
+        time: "20分钟",
+        code: `# 请编写库存管理计算代码
+import math
+
+def calculate_eoq(demand, ordering_cost, holding_cost):
+    """计算经济订货批量"""
+    # 请补充
+
+def calculate_safety_stock(demand_std, lead_time, z_score):
+    """计算安全库存"""
+    # 请补充
+
+def calculate_reorder_point(avg_daily_demand, lead_time, safety_stock):
+    """计算再订货点"""
+    # 请补充
+
+# 参数
+annual_demand = 10000
+ordering_cost = 50
+holding_cost = 10
+demand_std = 20  # 日需求标准差
+lead_time = 7  # 提前期（天）
+z_score = 1.645  # 95%服务水平
+
+# 计算并输出结果
+# 请补充`,
+        analysis: `
+&lt;h4&gt;解题思路&lt;/h4&gt;
+&lt;p&gt;1. EOQ公式：√(2DS/H)，其中D=年需求，S=订货成本，H=持有成本&lt;/p&gt;
+&lt;p&gt;2. 安全库存：Z × σ × √L，其中σ=日需求标准差，L=提前期&lt;/p&gt;
+&lt;p&gt;3. 再订货点：平均日需求×提前期 + 安全库存&lt;/p&gt;
+&lt;h4&gt;代码示例&lt;/h4&gt;
+&lt;div class="bg-dark p-3 rounded-lg font-mono text-sm"&gt;
+  &lt;pre class="text-cyan-300"&gt;
+import math
+
+def calculate_eoq(demand, ordering_cost, holding_cost):
+    """计算经济订货批量"""
+    return math.sqrt((2 * demand * ordering_cost) / holding_cost)
+
+def calculate_safety_stock(demand_std, lead_time, z_score):
+    """计算安全库存"""
+    return z_score * demand_std * math.sqrt(lead_time)
+
+def calculate_reorder_point(avg_daily_demand, lead_time, safety_stock):
+    """计算再订货点"""
+    return avg_daily_demand * lead_time + safety_stock
+
+# 参数
+annual_demand = 10000
+ordering_cost = 50
+holding_cost = 10
+demand_std = 20  # 日需求标准差
+lead_time = 7  # 提前期（天）
+z_score = 1.645  # 95%服务水平
+avg_daily_demand = annual_demand / 365
+
+# 计算
+eoq = calculate_eoq(annual_demand, ordering_cost, holding_cost)
+safety_stock = calculate_safety_stock(demand_std, lead_time, z_score)
+rop = calculate_reorder_point(avg_daily_demand, lead_time, safety_stock)
+
+# 输出结果
+print("=" * 50)
+print("库存管理计算结果")
+print("=" * 50)
+print(f"经济订货批量（EOQ）: {eoq:.0f} 件")
+print(f"安全库存: {safety_stock:.0f} 件")
+print(f"再订货点: {rop:.0f} 件")
+print(f"年订货次数: {annual_demand/eoq:.1f} 次")
+print(f"订货周期: {365/(annual_demand/eoq):.0f} 天")
+print(f"年订货成本: {(annual_demand/eoq)*ordering_cost:.2f} 元")
+print(f"年持有成本: {(eoq/2)*holding_cost:.2f} 元")
+print(f"年总成本: {(annual_demand/eoq)*ordering_cost + (eoq/2)*holding_cost:.2f} 元")
+  &lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4&gt;知识点&lt;/h4&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;&lt;a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('inventory-optimization')"&gt;模块3：库存优化&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;经济订货批量&lt;/li&gt;
+  &lt;li&gt;安全库存计算&lt;/li&gt;
+&lt;/ul&gt;`
+      },
+      {
+        id: 3,
+        title: "问题3：供应商评估",
+        description: `使用多指标评估供应商。
+&lt;strong&gt;要求：&lt;/strong&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;从价格、质量、交付期、服务四个维度评估&lt;/li&gt;
+  &lt;li&gt;设置权重：价格30%、质量30%、交付期25%、服务15%&lt;/li&gt;
+  &lt;li&gt;计算各供应商综合得分&lt;/li&gt;
+  &lt;li&gt;排名并推荐最优供应商&lt;/li&gt;
+&lt;/ul&gt;`,
+        difficulty: "medium",
+        time: "25分钟",
+        code: `# 请编写供应商评估代码
+import pandas as pd
+
+# 供应商数据
+suppliers_data = {
+    '供应商': ['A', 'B', 'C', 'D', 'E'],
+    '价格得分': [85, 90, 75, 88, 80],
+    '质量得分': [88, 82, 95, 80, 85],
+    '交付期得分': [90, 85, 80, 92, 88],
+    '服务得分': [80, 88, 90, 78, 85]
+}
+
+# 权重设置
+weights = {
+    '价格得分': 0.30,
+    '质量得分': 0.30,
+    '交付期得分': 0.25,
+    '服务得分': 0.15
+}
+
+# 1. 创建DataFrame
+# 请补充
+
+# 2. 计算综合得分
+# 请补充
+
+# 3. 排名并输出结果
+# 请补充`,
+        analysis: `
+&lt;h4&gt;解题思路&lt;/h4&gt;
+&lt;p&gt;1. 创建DataFrame存储供应商数据&lt;/p&gt;
+&lt;p&gt;2. 使用加权平均计算综合得分&lt;/p&gt;
+&lt;p&gt;3. 按综合得分排序并输出排名&lt;/p&gt;
+&lt;h4&gt;代码示例&lt;/h4&gt;
+&lt;div class="bg-dark p-3 rounded-lg font-mono text-sm"&gt;
+  &lt;pre class="text-cyan-300"&gt;
+import pandas as pd
+
+# 供应商数据
+suppliers_data = {
+    '供应商': ['A', 'B', 'C', 'D', 'E'],
+    '价格得分': [85, 90, 75, 88, 80],
+    '质量得分': [88, 82, 95, 80, 85],
+    '交付期得分': [90, 85, 80, 92, 88],
+    '服务得分': [80, 88, 90, 78, 85]
+}
+
+# 权重设置
+weights = {
+    '价格得分': 0.30,
+    '质量得分': 0.30,
+    '交付期得分': 0.25,
+    '服务得分': 0.15
+}
+
+# 1. 创建DataFrame
+df = pd.DataFrame(suppliers_data)
+
+# 2. 计算综合得分
+df['综合得分'] = (
+    df['价格得分'] * weights['价格得分'] +
+    df['质量得分'] * weights['质量得分'] +
+    df['交付期得分'] * weights['交付期得分'] +
+    df['服务得分'] * weights['服务得分']
+)
+
+# 3. 排名
+df = df.sort_values('综合得分', ascending=False).reset_index(drop=True)
+df['排名'] = df.index + 1
+
+# 输出结果
+print("=" * 60)
+print("供应商评估结果")
+print("=" * 60)
+print(df[['排名', '供应商', '价格得分', '质量得分', '交付期得分', '服务得分', '综合得分']].to_string(index=False))
+print("\\n推荐供应商：", df.loc[0, '供应商'])
+print("综合得分：", f"{df.loc[0, '综合得分']:.1f}")
+  &lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4&gt;知识点&lt;/h4&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;&lt;a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('supplier-evaluation')"&gt;模块4：供应商评估&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;多指标评估&lt;/li&gt;
+  &lt;li&gt;加权评分法&lt;/li&gt;
+&lt;/ul&gt;`
+      },
+      {
+        id: 4,
+        title: "问题4：物流优化",
+        description: `使用简单方法优化配送路线。
+&lt;strong&gt;场景：&lt;/strong&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;从仓库出发给5个客户配送&lt;/li&gt;
+  &lt;li&gt;已知各点之间的距离矩阵&lt;/li&gt;
+  &lt;li&gt;使用最近邻法寻找较优路线&lt;/li&gt;
+&lt;/ul&gt;
+&lt;strong&gt;要求：&lt;/strong&gt;
+实现最近邻算法并计算总距离。`,
+        difficulty: "hard",
+        time: "30分钟",
+        code: `# 请编写物流优化代码
+import numpy as np
+
+# 距离矩阵：0=仓库，1-5=客户
+distance_matrix = np.array([
+    [0, 10, 15, 20, 12, 18],
+    [10, 0, 8, 15, 10, 12],
+    [15, 8, 0, 10, 8, 15],
+    [20, 15, 10, 0, 12, 10],
+    [12, 10, 8, 12, 0, 14],
+    [18, 12, 15, 10, 14, 0]
+])
+
+def nearest_neighbor_tsp(dist_matrix, start=0):
+    """最近邻算法求解TSP"""
+    n = len(dist_matrix)
+    visited = [False] * n
+    route = [start]
+    visited[start] = True
+    total_distance = 0
+    
+    # 请补充算法逻辑
+    
+    return route, total_distance
+
+# 执行并输出结果
+# 请补充`,
+        analysis: `
+&lt;h4&gt;解题思路&lt;/h4&gt;
+&lt;p&gt;1. 从起点开始，每次选择最近的未访问点&lt;/p&gt;
+&lt;p&gt;2. 重复直到所有点都访问过&lt;/p&gt;
+&lt;p&gt;3. 最后返回起点&lt;/p&gt;
+&lt;h4&gt;代码示例&lt;/h4&gt;
+&lt;div class="bg-dark p-3 rounded-lg font-mono text-sm"&gt;
+  &lt;pre class="text-cyan-300"&gt;
+import numpy as np
+
+# 距离矩阵：0=仓库，1-5=客户
+distance_matrix = np.array([
+    [0, 10, 15, 20, 12, 18],
+    [10, 0, 8, 15, 10, 12],
+    [15, 8, 0, 10, 8, 15],
+    [20, 15, 10, 0, 12, 10],
+    [12, 10, 8, 12, 0, 14],
+    [18, 12, 15, 10, 14, 0]
+])
+
+def nearest_neighbor_tsp(dist_matrix, start=0):
+    """最近邻算法求解TSP"""
+    n = len(dist_matrix)
+    visited = [False] * n
+    route = [start]
+    visited[start] = True
+    total_distance = 0
+    
+    current = start
+    for _ in range(n - 1):
+        min_dist = float('inf')
+        nearest = -1
+        # 寻找最近的未访问点
+        for i in range(n):
+            if not visited[i] and dist_matrix[current][i] &lt; min_dist:
+                min_dist = dist_matrix[current][i]
+                nearest = i
+        # 移动到最近点
+        route.append(nearest)
+        visited[nearest] = True
+        total_distance += min_dist
+        current = nearest
+    
+    # 返回起点
+    total_distance += dist_matrix[current][start]
+    route.append(start)
+    
+    return route, total_distance
+
+# 执行
+route, total_dist = nearest_neighbor_tsp(distance_matrix)
+
+# 输出结果
+print("=" * 50)
+print("配送路线优化结果（最近邻法）")
+print("=" * 50)
+print("配送路线:", " → ".join([str(x) if x != 0 else "仓库" for x in route]))
+print("总距离:", total_dist, "公里")
+
+# 节点名称映射
+node_names = {0: '仓库', 1: '客户A', 2: '客户B', 3: '客户C', 4: '客户D', 5: '客户E'}
+print("详细路线:", " → ".join([node_names[x] for x in route]))
+  &lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4&gt;知识点&lt;/h4&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;&lt;a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('logistics-optimization')"&gt;模块5：物流优化&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;路径优化&lt;/li&gt;
+  &lt;li&gt;TSP问题&lt;/li&gt;
+&lt;/ul&gt;`
+      },
+      {
+        id: 5,
+        title: "问题5：供应链数据分析",
+        description: `综合分析供应链绩效数据。
+&lt;strong&gt;要求：&lt;/strong&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;计算订单准时交付率&lt;/li&gt;
+  &lt;li&gt;计算库存周转率&lt;/li&gt;
+  &lt;li&gt;分析供应商交付绩效&lt;/li&gt;
+  &lt;li&gt;生成简单分析报告&lt;/li&gt;
+&lt;/ul&gt;`,
+        difficulty: "medium",
+        time: "25分钟",
+        code: `# 请编写供应链数据分析代码
+import pandas as pd
+import numpy as np
+
+# 模拟数据
+np.random.seed(42)
+orders_data = pd.DataFrame({
+    '订单号': [f'ORD{i:03d}' for i in range(1, 101)],
+    '供应商': np.random.choice(['供应商A', '供应商B', '供应商C'], 100),
+    '订购日期': pd.date_range('2023-01-01', periods=100, freq='D'),
+    '承诺交付日期': pd.date_range('2023-01-08', periods=100, freq='D'),
+    '实际交付日期': pd.date_range('2023-01-07', periods=100, freq='D') + pd.to_timedelta(np.random.randint(-3, 5, 100), unit='D'),
+    '订单金额': np.random.randint(1000, 10000, 100),
+    '是否准时': None
+})
+
+# 1. 计算是否准时交付
+# 请补充
+
+# 2. 计算整体准时交付率
+# 请补充
+
+# 3. 计算各供应商准时交付率
+# 请补充
+
+# 4. 输出分析报告
+# 请补充`,
+        analysis: `
+&lt;h4&gt;解题思路&lt;/h4&gt;
+&lt;p&gt;1. 比较实际交付日期和承诺交付日期判断是否准时&lt;/p&gt;
+&lt;p&gt;2. 使用聚合函数计算准时率&lt;/p&gt;
+&lt;p&gt;3. 按供应商分组分析绩效&lt;/p&gt;
+&lt;h4&gt;代码示例&lt;/h4&gt;
+&lt;div class="bg-dark p-3 rounded-lg font-mono text-sm"&gt;
+  &lt;pre class="text-cyan-300"&gt;
+import pandas as pd
+import numpy as np
+
+# 模拟数据
+np.random.seed(42)
+orders_data = pd.DataFrame({
+    '订单号': [f'ORD{i:03d}' for i in range(1, 101)],
+    '供应商': np.random.choice(['供应商A', '供应商B', '供应商C'], 100),
+    '订购日期': pd.date_range('2023-01-01', periods=100, freq='D'),
+    '承诺交付日期': pd.date_range('2023-01-08', periods=100, freq='D'),
+    '实际交付日期': pd.date_range('2023-01-07', periods=100, freq='D') + pd.to_timedelta(np.random.randint(-3, 5, 100), unit='D'),
+    '订单金额': np.random.randint(1000, 10000, 100)
+})
+
+# 1. 计算是否准时交付
+orders_data['是否准时'] = orders_data['实际交付日期'] &lt;= orders_data['承诺交付日期']
+
+# 2. 计算整体准时交付率
+overall_on_time = orders_data['是否准时'].mean() * 100
+
+# 3. 计算各供应商准时交付率
+supplier_performance = orders_data.groupby('供应商').agg({
+    '是否准时': ['mean', 'sum', 'count'],
+    '订单金额': 'sum'
+}).round(2)
+supplier_performance.columns = ['准时率', '准时订单数', '总订单数', '总金额']
+supplier_performance['准时率'] = supplier_performance['准时率'] * 100
+supplier_performance = supplier_performance.sort_values('准时率', ascending=False)
+
+# 4. 输出分析报告
+print("=" * 60)
+print("供应链绩效分析报告")
+print("=" * 60)
+print(f"\\n【整体绩效】")
+print(f"总订单数: {len(orders_data)}")
+print(f"准时交付率: {overall_on_time:.1f}%")
+print(f"总订单金额: {orders_data['订单金额'].sum():,.0f} 元")
+
+print(f"\\n【供应商绩效】")
+print(supplier_performance.to_string())
+
+print(f"\\n【最佳供应商】")
+print(f"{supplier_performance.index[0]} - 准时率: {supplier_performance.iloc[0, 0]:.1f}%")
+
+print(f"\\n【预警】")
+late_suppliers = supplier_performance[supplier_performance['准时率'] &lt; 80]
+if len(late_suppliers) &gt; 0:
+    for supplier in late_suppliers.index:
+        print(f"⚠️  {supplier} 准时率仅为 {late_suppliers.loc[supplier, '准时率']:.1f}%，需要关注")
+else:
+    print("所有供应商准时率均达标")
+  &lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4&gt;知识点&lt;/h4&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;&lt;a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('comprehensive-project')"&gt;模块6：综合案例分析&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;供应链绩效分析&lt;/li&gt;
+  &lt;li&gt;供应商管理&lt;/li&gt;
+&lt;/ul&gt;`
+      }
+    ];
+
+    // 选择题数据
+    const choiceQuestions = [
+      {
+        id: 'c1',
+        chapter: 1,
+        title: "选择题1：供应链基础",
+        question: "供应链管理的核心目标是什么？",
+        options: [
+          { label: 'A', text: '降低成本，提高服务水平' },
+          { label: 'B', text: '增加库存，确保不缺货' },
+          { label: 'C', text: '减少供应商数量' },
+          { label: 'D', text: '最大化销售额' }
+        ],
+        answer: 'A',
+        analysis: "供应链管理的核心目标是在成本和服务水平之间取得平衡，以最低的总成本满足客户需求。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c2',
+        chapter: 1,
+        title: "选择题2：SCOR模型",
+        question: "SCOR模型不包括以下哪个流程？",
+        options: [
+          { label: 'A', text: '计划（Plan）' },
+          { label: 'B', text: '采购（Source）' },
+          { label: 'C', text: '营销（Market）' },
+          { label: 'D', text: '交付（Deliver）' }
+        ],
+        answer: 'C',
+        analysis: "SCOR模型包括：计划（Plan）、采购（Source）、生产（Make）、交付（Deliver）、退货（Return）。营销不在其中。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c3',
+        chapter: 2,
+        title: "选择题3：需求预测",
+        question: "以下哪种方法适用于平稳时间序列的短期预测？",
+        options: [
+          { label: 'A', text: '移动平均法' },
+          { label: 'B', text: '线性回归法' },
+          { label: 'C', text: '德尔菲法' },
+          { label: 'D', text: '专家判断法' }
+        ],
+        answer: 'A',
+        analysis: "移动平均法适用于平稳时间序列的短期预测。线性回归适用于有趋势的数据，德尔菲法是定性预测方法。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c4',
+        chapter: 2,
+        title: "选择题4：预测误差",
+        question: "MAPE代表什么？",
+        options: [
+          { label: 'A', text: '平均绝对误差' },
+          { label: 'B', text: '平均绝对百分比误差' },
+          { label: 'C', text: '均方误差' },
+          { label: 'D', text: '平均误差' }
+        ],
+        answer: 'B',
+        analysis: "MAPE是Mean Absolute Percentage Error（平均绝对百分比误差）的缩写。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c5',
+        chapter: 3,
+        title: "选择题5：EOQ模型",
+        question: "经济订货批量（EOQ）模型假设什么？",
+        options: [
+          { label: 'A', text: '需求是随机的' },
+          { label: 'B', text: '提前期是可变的' },
+          { label: 'C', text: '需求是已知且恒定的' },
+          { label: 'D', text: '允许缺货' }
+        ],
+        answer: 'C',
+        analysis: "经典EOQ模型假设需求是已知且恒定的，提前期固定，不允许缺货等。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c6',
+        chapter: 3,
+        title: "选择题6：安全库存",
+        question: "安全库存的主要目的是什么？",
+        options: [
+          { label: 'A', text: '降低订货成本' },
+          { label: 'B', text: '应对需求和供应的不确定性' },
+          { label: 'C', text: '增加库存周转率' },
+          { label: 'D', text: '减少仓储空间' }
+        ],
+        answer: 'B',
+        analysis: "安全库存是为了应对需求不确定性、供应延迟等风险而持有的缓冲库存。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c7',
+        chapter: 4,
+        title: "选择题7：供应商选择",
+        question: "以下哪个不是供应商选择的主要考虑因素？",
+        options: [
+          { label: 'A', text: '价格和成本' },
+          { label: 'B', text: '质量和交付' },
+          { label: 'C', text: '供应商老板的个人爱好' },
+          { label: 'D', text: '服务和技术能力' }
+        ],
+        answer: 'C',
+        analysis: "供应商选择主要考虑质量、成本、交付、服务、技术能力等因素，老板个人爱好不是业务考虑因素。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c8',
+        chapter: 5,
+        title: "选择题8：3PL",
+        question: "3PL代表什么？",
+        options: [
+          { label: 'A', text: '第三方物流（Third-Party Logistics）' },
+          { label: 'B', text: '三方支付（Third-Party Payment）' },
+          { label: 'C', text: '三级包装（Three-Level Packaging）' },
+          { label: 'D', text: '三次验证（Third-Party Verification）' }
+        ],
+        answer: 'A',
+        analysis: "3PL是Third-Party Logistics（第三方物流）的缩写，指由专业物流公司提供物流服务。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c9',
+        chapter: 5,
+        title: "选择题9：牛鞭效应",
+        question: "牛鞭效应是指什么现象？",
+        options: [
+          { label: 'A', text: '需求信息在供应链上游被放大' },
+          { label: 'B', text: '产品价格波动' },
+          { label: 'C', text: '供应商数量增加' },
+          { label: 'D', text: '物流成本上升' }
+        ],
+        answer: 'A',
+        analysis: "牛鞭效应指需求信息从客户端向供应商端传递时被逐级放大的现象。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c10',
+        chapter: 6,
+        title: "选择题10：KPI指标",
+        question: "以下哪个不是供应链常用的KPI？",
+        options: [
+          { label: 'A', text: '准时交付率（OTD）' },
+          { label: 'B', text: '库存周转率（ITO）' },
+          { label: 'C', text: '员工满意度（ESAT）' },
+          { label: 'D', text: '订单履行周期（OFC）' }
+        ],
+        answer: 'C',
+        analysis: "员工满意度是HR相关的KPI，不是供应链专用KPI。供应链常用KPI包括OTD、ITO、OFC等。",
+        difficulty: "medium"
+      }
+    ];

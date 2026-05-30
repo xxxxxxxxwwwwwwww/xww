@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>调试题库</title>
+    <script>
+        // 确保问题数据在全局作用域
+        console.log('脚本加载开始');
+        
+        const problems = [
+            { id: 1, title: "问题1：测试", description: "描述1", code: "# 代码1" },
+            { id: 2, title: "问题2：测试", description: "描述2", code: "# 代码2" },
+            { id: 3, title: "问题3：测试", description: "描述3", code: "# 代码3" }
+        ];
+        
+        console.log('problems数组已定义:', problems.length, '个问题');
+        console.log('problems[2]:', problems[1]);
+        
+        function loadProgrammingProblem(problemId) {
+            console.log('loadProgrammingProblem 被调用, ID:', problemId);
+            console.log('当前problems数组:', problems.length);
+            
+            const problem = problems.find(p => p.id === problemId);
+            console.log('找到的问题:', problem);
+            
+            if (problem) {
+                console.log('更新内容:', problem.title);
+                document.getElementById('title').textContent = problem.title;
+                document.getElementById('desc').innerHTML = problem.description;
+                document.getElementById('code').textContent = problem.code;
+                
+                document.querySelectorAll('.problem-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                const items = document.querySelectorAll('.problem-item');
+                items.forEach(item => {
+                    const onclick = item.getAttribute('onclick');
+                    if (onclick && onclick.includes('loadProgrammingProblem(' + problemId + ')')) {
+                        item.classList.add('active');
+                    }
+                });
+            } else {
+                console.error('问题未找到:', problemId);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOMContentLoaded');
+            loadProgrammingProblem(1);
+        });
+        
+        // 添加全局检查
+        window.addEventListener('load', function() {
+            console.log('页面完全加载');
+            console.log('全局problems:', window.problems);
+            console.log('全局函数:', typeof window.loadProgrammingProblem);
+        });
+    </script>
+    <style>
+        .problem-item { 
+            cursor: pointer; 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            margin: 5px; 
+            border-radius: 5px;
+        }
+        .problem-item:hover { background-color: #f0f0f0; }
+        .problem-item.active { background-color: #4CAF50; color: white; }
+        body { font-family: Arial; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        #content { margin-left: 320px; }
+        #sidebar { float: left; width: 300px; }
+        #console { 
+            background: #333; 
+            color: #fff; 
+            padding: 10px; 
+            margin-top: 20px; 
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>题库调试</h1>
+    
+    <div id="sidebar">
+        <h3>题目列表</h3>
+        <div class="problem-item active" onclick="loadProgrammingProblem(1)">问题1：测试</div>
+        <div class="problem-item" onclick="loadProgrammingProblem(2)">问题2：测试</div>
+        <div class="problem-item" onclick="loadProgrammingProblem(3)">问题3：测试</div>
+    </div>
+    
+    <div id="content">
+        <h2 id="title">标题</h2>
+        <div id="desc">描述</div>
+        <pre id="code">代码</pre>
+    </div>
+    
+    <div id="console">
+        <strong>控制台输出：</strong><br>
+    </div>
+    
+    <script>
+        // 捕获console.log
+        const originalLog = console.log;
+        const consoleDiv = document.getElementById('console');
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const text = args.map(arg => {
+                if (typeof arg === 'object') return JSON.stringify(arg, null, 2);
+                return String(arg);
+            }).join(' ');
+            consoleDiv.innerHTML += text + '<br>';
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        };
+    </script>
+</body>
+</html>

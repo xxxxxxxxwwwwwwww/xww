@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>测试章节导航</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .knowledge-nav {
+      padding: 8px 16px;
+      background: #1f2937;
+      color: #9ca3af;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .knowledge-nav:hover {
+      background: #374151;
+    }
+    .knowledge-nav.active {
+      background: #06b6d4;
+      color: #1f2937;
+    }
+    .knowledge-section {
+      display: none;
+      padding: 20px;
+      background: #1f2937;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .knowledge-section.active {
+      display: block;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white p-8">
+  <h1 class="text-2xl font-bold mb-6">测试章节导航</h1>
+  
+  <!-- 导航按钮 -->
+  <div class="flex gap-4 mb-8">
+    <button class="knowledge-nav active" data-target="chapter1">第一章：数据分析基础</button>
+    <button class="knowledge-nav" data-target="chapter2">第二章：数据获取与预处理</button>
+    <button class="knowledge-nav" data-target="chapter3">第三章：核心工具实操</button>
+    <button class="knowledge-nav" data-target="chapter4">第四章：统计分析方法</button>
+  </div>
+  
+  <!-- 章节内容 -->
+  <div id="chapter1" class="knowledge-section active">
+    <h2 class="text-xl font-semibold text-cyan-400 mb-4">第一章：数据分析基础</h2>
+    <p>本章介绍数据分析的基本概念和思维方法...</p>
+    <ul class="list-disc list-inside mt-4">
+      <li>数据分析概述</li>
+      <li>数据基础概念</li>
+      <li>分析思维与方法</li>
+    </ul>
+  </div>
+  
+  <div id="chapter2" class="knowledge-section">
+    <h2 class="text-xl font-semibold text-cyan-400 mb-4">第二章：数据获取与预处理</h2>
+    <p>本章介绍数据的获取方法和预处理技术...</p>
+    <ul class="list-disc list-inside mt-4">
+      <li>数据来源与采集</li>
+      <li>数据清洗与整合</li>
+      <li>数据变换与编码</li>
+    </ul>
+  </div>
+  
+  <div id="chapter3" class="knowledge-section">
+    <h2 class="text-xl font-semibold text-cyan-400 mb-4">第三章：核心工具实操</h2>
+    <p>本章介绍Excel、SQL和Python等核心工具...</p>
+    <ul class="list-disc list-inside mt-4">
+      <li>Excel数据分析</li>
+      <li>SQL数据查询</li>
+      <li>Python数据分析</li>
+    </ul>
+  </div>
+  
+  <div id="chapter4" class="knowledge-section">
+    <h2 class="text-xl font-semibold text-cyan-400 mb-4">第四章：统计分析方法</h2>
+    <p>本章介绍统计学的基本方法和应用...</p>
+    <ul class="list-disc list-inside mt-4">
+      <li>描述性统计分析</li>
+      <li>推断统计基础</li>
+      <li>常用假设检验</li>
+    </ul>
+  </div>
+  
+  <script>
+    // 确保DOM加载完成后执行
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM加载完成，开始绑定事件');
+      
+      // 获取所有导航按钮
+      const navButtons = document.querySelectorAll('.knowledge-nav');
+      console.log('找到导航按钮数量:', navButtons.length);
+      
+      // 为每个按钮绑定点击事件
+      navButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          console.log('点击了按钮:', this.textContent);
+          
+          // 移除所有按钮的active状态
+          navButtons.forEach(btn => btn.classList.remove('active'));
+          // 添加当前按钮的active状态
+          this.classList.add('active');
+          
+          // 获取目标章节ID
+          const targetId = this.dataset.target;
+          console.log('目标章节ID:', targetId);
+          
+          // 隐藏所有章节
+          document.querySelectorAll('.knowledge-section').forEach(section => {
+            section.classList.remove('active');
+          });
+          
+          // 显示目标章节
+          const targetSection = document.getElementById(targetId);
+          if (targetSection) {
+            targetSection.classList.add('active');
+            console.log('成功显示章节:', targetId);
+          } else {
+            console.error('未找到章节:', targetId);
+          }
+        });
+      });
+      
+      console.log('事件绑定完成');
+    });
+  </script>
+</body>
+</html>

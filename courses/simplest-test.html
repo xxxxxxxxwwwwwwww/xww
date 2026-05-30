@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>最简单的测试</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #0f172a; color: white; }
+    .nav-btn { padding: 10px 20px; margin: 5px; background: #334155; color: white; border: none; cursor: pointer; border-radius: 5px; }
+    .nav-btn.active { background: #06b6d4; color: #0f172a; font-weight: bold; }
+    .chapter { display: none; padding: 20px; margin-top: 20px; background: #1e293b; border-radius: 8px; }
+    .chapter.active { display: block; }
+    h1 { color: #06b6d4; }
+    h2 { color: #10b981; }
+  </style>
+</head>
+<body>
+  <h1>🧪 最简化测试</h1>
+  <p>这个文件是为了测试最基础的功能</p>
+  
+  <div id="nav-buttons">
+    <button class="nav-btn active" onclick="showChapter('chap1')">第一章</button>
+    <button class="nav-btn" onclick="showChapter('chap2')">第二章</button>
+    <button class="nav-btn" onclick="showChapter('chap3')">第三章</button>
+    <button class="nav-btn" onclick="showChapter('chap4')">第四章</button>
+  </div>
+  
+  <div id="chap1" class="chapter active">
+    <h2>第一章内容</h2>
+    <p>这是第一章的内容</p>
+    <ul>
+      <li>第一点</li>
+      <li>第二点</li>
+      <li>第三点</li>
+    </ul>
+  </div>
+  
+  <div id="chap2" class="chapter">
+    <h2>第二章内容</h2>
+    <p>这是第二章的内容</p>
+    <ul>
+      <li>第一点</li>
+      <li>第二点</li>
+      <li>第三点</li>
+    </ul>
+  </div>
+  
+  <div id="chap3" class="chapter">
+    <h2>第三章内容</h2>
+    <p>这是第三章的内容</p>
+    <ul>
+      <li>第一点</li>
+      <li>第二点</li>
+      <li>第三点</li>
+    </ul>
+  </div>
+  
+  <div id="chap4" class="chapter">
+    <h2>第四章内容</h2>
+    <p>这是第四章的内容</p>
+    <ul>
+      <li>第一点</li>
+      <li>第二点</li>
+      <li>第三点</li>
+    </ul>
+  </div>
+
+  <script>
+    console.log('JS开始加载');
+    
+    function showChapter(chapterId) {
+      console.log('点击了，目标是:' + chapterId);
+      
+      // 更新按钮状态
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      // 更新章节显示
+      document.querySelectorAll('.chapter').forEach(chap => chap.classList.remove('active'));
+      const target = document.getElementById(chapterId);
+      if(target) {
+        target.classList.add('active');
+        console.log('✅ 成功显示章节');
+      } else {
+        console.log('❌ 找不到章节');
+      }
+    }
+    
+    console.log('✅ JS加载完成');
+  </script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据库原理 - Xww的课程页面</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/ace.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/mode-sql.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/theme-tomorrow_night.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#06b6d4',
+                        secondary: '#1e293b',
+                        accent: '#10b981',
+                        dark: '#111827',
+                        'dark-gray': '#1f2937',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .btn-primary {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .btn-primary:hover { transform: translateY(-2px); }
+        
+        .problem-item {
+            padding: 12px;
+            background: #1e293b;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 8px;
+        }
+        .problem-item:hover { background: #334155; }
+        .problem-item.active { background: #0ea5e9; }
+        
+        .difficulty-tag { padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+        .difficulty-easy { background: #10b981; color: white; }
+        .difficulty-medium { background: #f59e0b; color: white; }
+        .difficulty-hard { background: #ef4444; color: white; }
+        
+        .code-editor { height: 300px; border-radius: 8px; }
+        .code-output { background: #0f172a; border-radius: 8px; padding: 12px; min-height: 150px; }
+        .nav-link { color: #94a3b8; text-decoration: none; padding: 8px 16px; border-radius: 8px; }
+        .nav-link:hover { color: #e2e8f0; background: #1e293b; }
+        .nav-link.active { color: #06b6d4; background: rgba(6, 182, 212, 0.2); }
+    </style>
+</head>
+<body class="bg-dark text-gray-200 min-h-screen">
+    <nav class="fixed top-0 left-0 right-0 bg-dark-gray border-b border-gray-700 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <h1 class="text-xl font-bold text-cyan-400">
+                    <i class="fa fa-database mr-2"></i>数据库原理题库
+                </h1>
+                <div class="flex items-center gap-4">
+                    <a href="#" class="nav-link active">
+                        <i class="fa fa-book"></i> 题库
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-graduation-cap"></i> 知识点
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-24 container mx-auto px-4">
+        <div class="flex gap-6">
+            <div class="w-1/4 bg-dark-gray rounded-xl p-4 h-[calc(100vh-8rem)] overflow-y-auto">
+                <h2 class="text-lg font-bold mb-4">📚 数据库原理题库</h2>
+                
+                <div onclick="loadProblem(1)" class="problem-item active">
+                    <div class="font-medium">问题1：SELECT查询</div>
+                    <span class="difficulty-tag difficulty-easy">简单</span>
+                </div>
+                
+                <div onclick="loadProblem(2)" class="problem-item">
+                    <div class="font-medium">问题2：JOIN操作</div>
+                    <span class="difficulty-tag difficulty-medium">中等</span>
+                </div>
+                
+                <div onclick="loadProblem(3)" class="problem-item">
+                    <div class="font-medium">问题3：聚合函数</div>
+                    <span class="difficulty-tag difficulty-medium">中等</span>
+                </div>
+                
+                <div onclick="loadProblem(4)" class="problem-item">
+                    <div class="font-medium">问题4：子查询</div>
+                    <span class="difficulty-tag difficulty-hard">困难</span>
+                </div>
+            </div>
+            
+            <div class="w-3/4 space-y-6">
+                <div class="bg-dark-gray rounded-xl p-6">
+                    <h3 class="text-xl font-bold mb-4" id="problem-title">问题1：SELECT查询</h3>
+                    <div id="problem-desc">编写SQL查询语句。</div>
+                </div>
+                
+                <div class="bg-dark-gray rounded-xl p-6">
+                    <div class="flex justify-between mb-4">
+                        <h3 class="text-lg">SQL编辑器</h3>
+                        <button class="btn-primary" onclick="runCode()">
+                            <i class="fa fa-play"></i> 执行
+                        </button>
+                    </div>
+                    <div id="codeEditor" class="code-editor"></div>
+                </div>
+                
+                <div class="bg-dark-gray rounded-xl p-6">
+                    <h3 class="text-lg mb-4">执行结果</h3>
+                    <div id="code-output" class="code-output">输入SQL查看结果</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const problems = [
+            {
+                id: 1,
+                title: "问题1：SELECT查询",
+                desc: "编写SQL查询从users表中获取所有数据。<br><strong>要求：</strong><ul><li>使用SELECT *</li><li>查询users表</li></ul>",
+                code: "-- SELECT查询\nSELECT * FROM users;"
+            },
+            {
+                id: 2,
+                title: "问题2：JOIN操作",
+                desc: "使用JOIN连接users和orders表。<br><strong>要求：</strong><ul><li>内连接</li><li>连接条件</li></ul>",
+                code: "-- JOIN操作\nSELECT u.name, o.amount\nFROM users u\nINNER JOIN orders o ON u.id = o.user_id;"
+            },
+            {
+                id: 3,
+                title: "问题3：聚合函数",
+                desc: "使用COUNT和SUM统计订单。<br><strong>要求：</strong><ul><li>计算订单总数</li><li>计算总金额</li></ul>",
+                code: "-- 聚合函数\nSELECT COUNT(*) as order_count, SUM(amount) as total_amount\nFROM orders;"
+            },
+            {
+                id: 4,
+                title: "问题4：子查询",
+                desc: "使用子查询找出最高工资员工。<br><strong>要求：</strong><ul><li>使用子查询</li><li>找出最大值</li></ul>",
+                code: "-- 子查询\nSELECT name, salary\nFROM employees\nWHERE salary = (SELECT MAX(salary) FROM employees);"
+            }
+        ];
+
+        let editor = null;
+
+        function loadProblem(id) {
+            console.log('loadProblem called:', id);
+            const problem = problems.find(p => p.id === id);
+            if (!problem) {
+                console.error('Problem not found:', id);
+                return;
+            }
+            
+            document.getElementById('problem-title').textContent = problem.title;
+            document.getElementById('problem-desc').innerHTML = problem.desc;
+            
+            if (editor) {
+                editor.setValue(problem.code);
+                editor.clearSelection();
+            }
+            
+            document.querySelectorAll('.problem-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.problem-item')[id - 1].classList.add('active');
+        }
+
+        function runCode() {
+            const code = editor.getValue();
+            document.getElementById('code-output').textContent = 'SQL已复制: ' + code;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Initializing...');
+            
+            editor = ace.edit('codeEditor');
+            editor.setTheme('ace/theme/tomorrow_night');
+            editor.getSession().setMode('ace/mode/sql');
+            editor.setValue(problems[0].code);
+            
+            loadProblem(1);
+        });
+    </script>
+</body>
+</html>

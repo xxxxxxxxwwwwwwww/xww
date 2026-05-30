@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>测试一下</title>
+</head>
+<body>
+  <h1>测试点击问题！</h1>
+  <div id="test1" onclick="testFunc(1)">点击我试试1</div>
+  <div id="test2" onclick="testFunc(2)">点击我试试2</div>
+  <div id="test3" onclick="testFunc(3)">点击我试试3</div>
+  <h2 id="showArea"></h2>
+  <script>
+    console.log('开始执行脚本');
+    
+    function testFunc(n) {
+      console.log('点击了:', n);
+      document.getElementById('showArea').innerHTML = '你点击了' + n;
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM加载完成');
+      
+      const items = document.querySelectorAll('[onclick*="testFunc"]');
+      console.log('找到元素:', items.length);
+      
+      items.forEach(item => {
+        console.log(item);
+        item.addEventListener('click', function() {
+          console.log('addEventListener 也触发了');
+          console.log('item:', this);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

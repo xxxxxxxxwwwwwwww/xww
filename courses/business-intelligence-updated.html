@@ -1,0 +1,610 @@
+
+    // 问题数据
+    const problems = [
+      {
+        id: 1,
+        title: "问题1：数据仓库维度建模",
+        description: `为电商销售分析设计星型模型。
+&lt;strong&gt;要求：&lt;/strong&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;设计事实表sales_fact（包含度量值：销量、金额等）&lt;/li&gt;
+  &lt;li&gt;设计维度表：日期、产品、客户、商店&lt;/li&gt;
+  &lt;li&gt;说明各维度与事实表的关系&lt;/li&gt;
+  &lt;li&gt;写出建表SQL语句&lt;/li&gt;
+&lt;/ul&gt;`,
+        difficulty: "medium",
+        time: "30分钟",
+        code: `-- 请编写数据仓库星型模型的建表SQL
+
+-- 日期维度表
+CREATE TABLE dim_date (
+    -- 请补充字段
+);
+
+-- 产品维度表
+CREATE TABLE dim_product (
+    -- 请补充字段
+);
+
+-- 客户维度表
+CREATE TABLE dim_customer (
+    -- 请补充字段
+);
+
+-- 商店维度表
+CREATE TABLE dim_store (
+    -- 请补充字段
+);
+
+-- 销售事实表
+CREATE TABLE fact_sales (
+    -- 请补充字段
+);`,
+        analysis: `
+&lt;h4&gt;解题思路&lt;/h4&gt;
+&lt;p&gt;1. 事实表包含外键关联到各个维度表，以及数值度量&lt;/p&gt;
+&lt;p&gt;2. 维度表包含描述性属性&lt;/p&gt;
+&lt;p&gt;3. 日期维度通常包含各种日期属性（年、季、月、周等）&lt;/p&gt;
+&lt;h4&gt;代码示例&lt;/h4&gt;
+&lt;div class="bg-dark p-3 rounded-lg font-mono text-sm"&gt;
+  &lt;pre class="text-cyan-300"&gt;
+-- 日期维度表
+CREATE TABLE dim_date (
+    date_key INT PRIMARY KEY,
+    full_date DATE,
+    year INT,
+    quarter INT,
+    month INT,
+    month_name VARCHAR(20),
+    week INT,
+    day_of_week INT,
+    is_weekend BOOLEAN
+);
+
+-- 产品维度表
+CREATE TABLE dim_product (
+    product_key INT PRIMARY KEY,
+    product_id INT,
+    product_name VARCHAR(100),
+    category VARCHAR(50),
+    brand VARCHAR(50),
+    price DECIMAL(10,2)
+);
+
+-- 客户维度表
+CREATE TABLE dim_customer (
+    customer_key INT PRIMARY KEY,
+    customer_id INT,
+    customer_name VARCHAR(100),
+    city VARCHAR(50),
+    region VARCHAR(50),
+    customer_segment VARCHAR(20)
+);
+
+-- 销售事实表
+CREATE TABLE fact_sales (
+    sale_key INT PRIMARY KEY AUTO_INCREMENT,
+    date_key INT,
+    product_key INT,
+    customer_key INT,
+    store_key INT,
+    quantity INT,
+    amount DECIMAL(10,2),
+    cost DECIMAL(10,2),
+    FOREIGN KEY (date_key) REFERENCES dim_date(date_key),
+    FOREIGN KEY (product_key) REFERENCES dim_product(product_key),
+    FOREIGN KEY (customer_key) REFERENCES dim_customer(customer_key),
+    FOREIGN KEY (store_key) REFERENCES dim_store(store_key)
+);
+  &lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4&gt;知识点&lt;/h4&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;&lt;a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-warehouse')"&gt;模块2：数据仓库设计&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;维度建模&lt;/li&gt;
+  &lt;li&gt;星型模型&lt;/li&gt;
+&lt;/ul&gt;`
+      },
+      {
+        id: 2,
+        title: "问题2：ETL数据抽取与清洗",
+        description: `使用Python编写一个简单的ETL流程。
+&lt;strong&gt;场景：&lt;/strong&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;从CSV文件读取原始销售数据&lt;/li&gt;
+  &lt;li&gt;清洗数据（处理缺失值、异常值）&lt;/li&gt;
+  &lt;li&gt;转换数据格式&lt;/li&gt;
+  &lt;li&gt;加载到数据仓库&lt;/li&gt;
+&lt;/ul&gt;`,
+        difficulty: "medium",
+        time: "30分钟",
+        code: `# 请编写ETL代码
+import pandas as pd
+import numpy as np
+from datetime import datetime
+
+def extract_data(file_path):
+    """从CSV提取数据"""
+    # 请补充
+
+def transform_data(df):
+    """数据清洗与转换"""
+    # 请补充
+    # 1. 处理缺失值
+    # 2. 处理异常值
+    # 3. 格式转换
+
+def load_data(df, table_name):
+    """加载到数据库"""
+    # 请补充
+
+# 执行ETL流程
+if __name__ == "__main__":
+    # 请补充完整流程`,
+        analysis: `
+&lt;h4&gt;解题思路&lt;/h4&gt;
+&lt;p&gt;1. Extract：使用pandas.read_csv读取数据&lt;/p&gt;
+&lt;p&gt;2. Transform：处理缺失值、过滤异常值、转换格式&lt;/p&gt;
+&lt;p&gt;3. Load：使用SQLAlchemy或数据库连接库写入数据库&lt;/p&gt;
+&lt;h4&gt;代码示例&lt;/h4&gt;
+&lt;div class="bg-dark p-3 rounded-lg font-mono text-sm"&gt;
+  &lt;pre class="text-cyan-300"&gt;
+import pandas as pd
+import numpy as np
+
+def extract_data(file_path):
+    return pd.read_csv(file_path)
+
+def transform_data(df):
+    # 处理缺失值
+    df = df.dropna(subset=['order_id', 'product_id', 'amount'])
+    
+    # 处理异常值：金额不能为负
+    df = df[df['amount'] &gt;= 0]
+    
+    # 转换日期格式
+    df['order_date'] = pd.to_datetime(df['order_date'])
+    
+    # 生成日期代理键：YYYYMMDD
+    df['date_key'] = df['order_date'].dt.strftime('%Y%m%d').astype(int)
+    
+    return df
+
+def load_data(df, table_name):
+    print(f"加载 {len(df)} 条记录到 {table_name}")
+    # 实际项目中会连接数据库写入
+    print(df.head())
+
+# 执行ETL流程
+if __name__ == "__main__":
+    raw_data = extract_data('sales.csv')
+    clean_data = transform_data(raw_data)
+    load_data(clean_data, 'fact_sales')
+  &lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4&gt;知识点&lt;/h4&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;&lt;a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-warehouse')"&gt;模块2：数据仓库设计&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;ETL流程&lt;/li&gt;
+  &lt;li&gt;数据清洗&lt;/li&gt;
+&lt;/ul&gt;`
+      },
+      {
+        id: 3,
+        title: "问题3：OLAP多维分析",
+        description: `编写SQL实现常见的OLAP分析查询。
+&lt;strong&gt;要求：&lt;/strong&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;按年份和产品类别汇总销售数据&lt;/li&gt;
+  &lt;li&gt;计算各商店的月度销售趋势&lt;/li&gt;
+  &lt;li&gt;找出销量前10的产品&lt;/li&gt;
+  &lt;li&gt;使用ROLLUP计算小计和总计&lt;/li&gt;
+&lt;/ul&gt;`,
+        difficulty: "hard",
+        time: "30分钟",
+        code: `-- 基于星型模型的OLAP查询
+
+-- 1. 按年份和产品类别汇总销售数据
+-- 请编写SQL
+
+-- 2. 计算各商店的月度销售趋势
+-- 请编写SQL
+
+-- 3. 找出销量前10的产品
+-- 请编写SQL
+
+-- 4. 使用ROLLUP计算小计和总计（按年、季度、月）
+-- 请编写SQL`,
+        analysis: `
+&lt;h4&gt;解题思路&lt;/h4&gt;
+&lt;p&gt;1. 连接事实表和维度表进行多维分析&lt;/p&gt;
+&lt;p&gt;2. 使用GROUP BY进行聚合&lt;/p&gt;
+&lt;p&gt;3. 使用ROLLUP计算多级汇总&lt;/p&gt;
+&lt;h4&gt;代码示例&lt;/h4&gt;
+&lt;div class="bg-dark p-3 rounded-lg font-mono text-sm"&gt;
+  &lt;pre class="text-cyan-300"&gt;
+-- 1. 按年份和产品类别汇总销售数据
+SELECT d.year, p.category, 
+       SUM(f.quantity) AS total_quantity,
+       SUM(f.amount) AS total_amount
+FROM fact_sales f
+JOIN dim_date d ON f.date_key = d.date_key
+JOIN dim_product p ON f.product_key = p.product_key
+GROUP BY d.year, p.category
+ORDER BY d.year, total_amount DESC;
+
+-- 2. 计算各商店的月度销售趋势
+SELECT s.store_name, d.year, d.month,
+       SUM(f.amount) AS monthly_sales
+FROM fact_sales f
+JOIN dim_date d ON f.date_key = d.date_key
+JOIN dim_store s ON f.store_key = s.store_key
+GROUP BY s.store_name, d.year, d.month
+ORDER BY s.store_name, d.year, d.month;
+
+-- 3. 找出销量前10的产品
+SELECT p.product_name,
+       SUM(f.quantity) AS total_quantity,
+       SUM(f.amount) AS total_amount
+FROM fact_sales f
+JOIN dim_product p ON f.product_key = p.product_key
+GROUP BY p.product_name
+ORDER BY total_quantity DESC
+LIMIT 10;
+
+-- 4. 使用ROLLUP计算小计和总计
+SELECT d.year, d.quarter, d.month,
+       SUM(f.amount) AS sales_amount
+FROM fact_sales f
+JOIN dim_date d ON f.date_key = d.date_key
+GROUP BY d.year, d.quarter, d.month WITH ROLLUP
+ORDER BY d.year, d.quarter, d.month;
+  &lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4&gt;知识点&lt;/h4&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;&lt;a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('olap-analysis')"&gt;模块3：OLAP分析&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;多维分析&lt;/li&gt;
+  &lt;li&gt;OLAP查询&lt;/li&gt;
+&lt;/ul&gt;`
+      },
+      {
+        id: 4,
+        title: "问题4：数据可视化仪表盘",
+        description: `使用Python创建销售数据可视化。
+&lt;strong&gt;要求：&lt;/strong&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;创建年度销售额趋势图&lt;/li&gt;
+  &lt;li&gt;创建产品类别销售额占比饼图&lt;/li&gt;
+  &lt;li&gt;创建各区域销售对比柱状图&lt;/li&gt;
+  &lt;li&gt;组合成简易仪表盘&lt;/li&gt;
+&lt;/ul&gt;`,
+        difficulty: "medium",
+        time: "30分钟",
+        code: `# 请编写数据可视化代码
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+
+# 模拟数据
+data = pd.DataFrame({
+    'year': [2021, 2021, 2021, 2022, 2022, 2022, 2023, 2023, 2023],
+    'category': ['电子产品', '服装', '食品', '电子产品', '服装', '食品', '电子产品', '服装', '食品'],
+    'region': ['华东', '华南', '华北', '华东', '华南', '华北', '华东', '华南', '华北'],
+    'sales': [500, 300, 200, 600, 350, 250, 750, 400, 300]
+})
+
+# 请创建以下图表：
+# 1. 年度销售额趋势图
+# 2. 产品类别销售额占比饼图
+# 3. 各区域销售对比柱状图`,
+        analysis: `
+&lt;h4&gt;解题思路&lt;/h4&gt;
+&lt;p&gt;1. 使用matplotlib和seaborn创建各种图表&lt;/p&gt;
+&lt;p&gt;2. 使用subplot组合多个图表&lt;/p&gt;
+&lt;p&gt;3. 添加标题、标签等元素使图表清晰易读&lt;/p&gt;
+&lt;h4&gt;代码示例&lt;/h4&gt;
+&lt;div class="bg-dark p-3 rounded-lg font-mono text-sm"&gt;
+  &lt;pre class="text-cyan-300"&gt;
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# 设置中文显示
+plt.rcParams['font.sans-serif'] = ['SimHei']
+plt.rcParams['axes.unicode_minus'] = False
+
+# 模拟数据
+data = pd.DataFrame({
+    'year': [2021, 2021, 2021, 2022, 2022, 2022, 2023, 2023, 2023],
+    'category': ['电子产品', '服装', '食品', '电子产品', '服装', '食品', '电子产品', '服装', '食品'],
+    'region': ['华东', '华南', '华北', '华东', '华南', '华北', '华东', '华南', '华北'],
+    'sales': [500, 300, 200, 600, 350, 250, 750, 400, 300]
+})
+
+# 创建仪表盘布局
+fig = plt.figure(figsize=(16, 10))
+fig.suptitle('销售数据分析仪表盘', fontsize=16, fontweight='bold')
+
+# 1. 年度销售额趋势图
+ax1 = plt.subplot(2, 2, 1)
+yearly_sales = data.groupby('year')['sales'].sum().reset_index()
+sns.lineplot(x='year', y='sales', data=yearly_sales, marker='o', ax=ax1)
+ax1.set_title('年度销售额趋势')
+ax1.set_xlabel('年份')
+ax1.set_ylabel('销售额')
+
+# 2. 产品类别销售额占比饼图
+ax2 = plt.subplot(2, 2, 2)
+category_sales = data.groupby('category')['sales'].sum()
+category_sales.plot.pie(autopct='%1.1f%%', ax=ax2)
+ax2.set_title('产品类别销售额占比')
+ax2.set_ylabel('')
+
+# 3. 各区域销售对比柱状图
+ax3 = plt.subplot(2, 2, 3)
+region_sales = data.groupby('region')['sales'].sum().reset_index()
+sns.barplot(x='region', y='sales', data=region_sales, ax=ax3)
+ax3.set_title('各区域销售对比')
+ax3.set_xlabel('区域')
+ax3.set_ylabel('销售额')
+
+plt.tight_layout()
+plt.show()
+  &lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4&gt;知识点&lt;/h4&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;&lt;a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data-visualization-bi')"&gt;模块4：数据可视化&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;数据可视化&lt;/li&gt;
+  &lt;li&gt;仪表盘设计&lt;/li&gt;
+&lt;/ul&gt;`
+      },
+      {
+        id: 5,
+        title: "问题5：销售预测",
+        description: `使用时间序列分析预测未来销售。
+&lt;strong&gt;要求：&lt;/strong&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;使用历史销售数据&lt;/li&gt;
+  &lt;li&gt;进行时间序列分解&lt;/li&gt;
+  &lt;li&gt;使用简单方法预测未来6个月&lt;/li&gt;
+  &lt;li&gt;可视化预测结果&lt;/li&gt;
+&lt;/ul&gt;`,
+        difficulty: "hard",
+        time: "30分钟",
+        code: `# 请编写销售预测代码
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from statsmodels.tsa.seasonal import seasonal_decompose
+
+# 创建模拟数据
+dates = pd.date_range(start='2022-01-01', end='2023-12-31', freq='M')
+np.random.seed(42)
+sales = 1000 + np.arange(len(dates)) * 20 + np.random.randn(len(dates)) * 100
+data = pd.DataFrame({'date': dates, 'sales': sales})
+data.set_index('date', inplace=True)
+
+# 1. 时间序列分解
+# 请补充
+
+# 2. 简单预测（移动平均、趋势外推等）
+# 请补充
+
+# 3. 可视化预测结果
+# 请补充`,
+        analysis: `
+&lt;h4&gt;解题思路&lt;/h4&gt;
+&lt;p&gt;1. 使用seasonal_decompose进行时间序列分解&lt;/p&gt;
+&lt;p&gt;2. 可以用趋势外推、移动平均等简单方法预测&lt;/p&gt;
+&lt;p&gt;3. 绘制历史数据和预测数据对比图&lt;/p&gt;
+&lt;h4&gt;代码示例&lt;/h4&gt;
+&lt;div class="bg-dark p-3 rounded-lg font-mono text-sm"&gt;
+  &lt;pre class="text-cyan-300"&gt;
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from statsmodels.tsa.seasonal import seasonal_decompose
+
+# 设置中文显示
+plt.rcParams['font.sans-serif'] = ['SimHei']
+
+# 创建模拟数据
+dates = pd.date_range(start='2022-01-01', end='2023-12-31', freq='M')
+np.random.seed(42)
+sales = 1000 + np.arange(len(dates)) * 20 + np.random.randn(len(dates)) * 100
+data = pd.DataFrame({'date': dates, 'sales': sales})
+data.set_index('date', inplace=True)
+
+# 1. 时间序列分解
+decomposition = seasonal_decompose(data['sales'], model='additive', period=12)
+fig = decomposition.plot()
+fig.set_size_inches(12, 8)
+plt.show()
+
+# 2. 简单预测（趋势外推）
+# 提取趋势
+trend = decomposition.trend.dropna()
+# 拟合一阶线性趋势
+z = np.polyfit(range(len(trend)), trend.values, 1)
+p = np.poly1d(z)
+# 预测未来6个月
+future_dates = pd.date_range(start='2024-01-01', periods=6, freq='M')
+future_trend = p(range(len(trend), len(trend)+6))
+
+# 3. 可视化预测结果
+plt.figure(figsize=(12, 6))
+plt.plot(data.index, data['sales'], label='历史销售', marker='o')
+plt.plot(future_dates, future_trend, label='预测趋势', marker='s', color='red', linestyle='--')
+plt.title('销售预测')
+plt.xlabel('日期')
+plt.ylabel('销售额')
+plt.legend()
+plt.grid(True)
+plt.show()
+  &lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4&gt;知识点&lt;/h4&gt;
+&lt;ul class="list-disc list-inside space-y-1 mt-2"&gt;
+  &lt;li&gt;&lt;a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('decision-support')"&gt;模块5：商业决策支持&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;预测分析&lt;/li&gt;
+  &lt;li&gt;时间序列分析&lt;/li&gt;
+&lt;/ul&gt;`
+      }
+    ];
+
+    // 选择题数据
+    const choiceQuestions = [
+      {
+        id: 'c1',
+        chapter: 1,
+        title: "选择题1：商务智能基础",
+        question: "商务智能（BI）的核心目标是什么？",
+        options: [
+          { label: 'A', text: '存储大量数据' },
+          { label: 'B', text: '将数据转化为知识，支持决策' },
+          { label: 'C', text: '替代人工决策' },
+          { label: 'D', text: '自动化业务流程' }
+        ],
+        answer: 'B',
+        analysis: "商务智能的核心目标是将数据转化为洞察和知识，帮助企业做出更好的决策。存储数据是手段而非目标，BI辅助而非替代人工决策。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c2',
+        chapter: 1,
+        title: "选择题2：BI发展历程",
+        question: "以下哪个不是商务智能的主要发展阶段？",
+        options: [
+          { label: 'A', text: '报表系统阶段' },
+          { label: 'B', text: 'OLAP阶段' },
+          { label: 'C', text: '大数据与AI融合阶段' },
+          { label: 'D', text: '完全自动化阶段' }
+        ],
+        answer: 'D',
+        analysis: "BI的发展经历了报表系统、OLAP、大数据与AI融合等阶段，但完全自动化（无需人工参与）还不是现实，BI仍然需要人类决策。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c3',
+        chapter: 2,
+        title: "选择题3：数据仓库",
+        question: "数据仓库的主要特点是什么？",
+        options: [
+          { label: 'A', text: '面向主题、集成、相对稳定、反映历史变化' },
+          { label: 'B', text: '面向应用、分散、易变、实时更新' },
+          { label: 'C', text: '仅存储当前数据、高性能、事务性' },
+          { label: 'D', text: '专门用于备份、只读、大容量' }
+        ],
+        answer: 'A',
+        analysis: "数据仓库的四大特点：面向主题（Subject-oriented）、集成（Integrated）、相对稳定（Non-volatile）、反映历史变化（Time-variant）。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c4',
+        chapter: 2,
+        title: "选择题4：维度建模",
+        question: "星型模型由什么组成？",
+        options: [
+          { label: 'A', text: '一个事实表和多个维度表' },
+          { label: 'B', text: '多个事实表和一个维度表' },
+          { label: 'C', text: '只有事实表，没有维度表' },
+          { label: 'D', text: '多个维度表互相连接' }
+        ],
+        answer: 'A',
+        analysis: "星型模型由一个中心事实表和多个维度表组成，维度表直接连接到事实表，形状像星星。雪花模型是星型模型的扩展，维度表可以有子维度表。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c5',
+        chapter: 2,
+        title: "选择题5：ETL",
+        question: "ETL三个字母分别代表什么？",
+        options: [
+          { label: 'A', text: 'Extract, Transform, Load' },
+          { label: 'B', text: 'Explore, Test, Learn' },
+          { label: 'C', text: 'Enter, Transfer, Leave' },
+          { label: 'D', text: 'Extend, Tune, Lift' }
+        ],
+        answer: 'A',
+        analysis: "ETL是数据仓库的核心流程：Extract（数据抽取）、Transform（数据转换）、Load（数据加载）。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c6',
+        chapter: 3,
+        title: "选择题6：OLAP",
+        question: "OLAP代表什么？",
+        options: [
+          { label: 'A', text: 'Online Analytical Processing（联机分析处理）' },
+          { label: 'B', text: 'Online Transaction Processing（联机事务处理）' },
+          { label: 'C', text: 'Object Linking and Processing（对象链接处理）' },
+          { label: 'D', text: 'Open Language Access Protocol（开放语言访问协议）' }
+        ],
+        answer: 'A',
+        analysis: "OLAP是Online Analytical Processing（联机分析处理），用于复杂的数据分析查询。OLTP是联机事务处理，用于日常业务操作。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c7',
+        chapter: 3,
+        title: "选择题7：OLAP操作",
+        question: "从汇总数据向下查看更详细数据的操作称为？",
+        options: [
+          { label: 'A', text: '上卷（Roll-up）' },
+          { label: 'B', text: '下钻（Drill-down）' },
+          { label: 'C', text: '切片（Slice）' },
+          { label: 'D', text: '旋转（Pivot）' }
+        ],
+        answer: 'B',
+        analysis: "下钻（Drill-down）是从汇总数据向下查看更详细数据。上卷（Roll-up）相反，是从明细数据向汇总数据聚合。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c8',
+        chapter: 4,
+        title: "选择题8：数据可视化",
+        question: "展示数据随时间变化趋势最合适的图表类型是？",
+        options: [
+          { label: 'A', text: '饼图' },
+          { label: 'B', text: '折线图' },
+          { label: 'C', text: '散点图' },
+          { label: 'D', text: '热力图' }
+        ],
+        answer: 'B',
+        analysis: "折线图最适合展示数据随时间的变化趋势。饼图适合展示占比，散点图适合展示两个变量的关系，热力图适合展示矩阵数据。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c9',
+        chapter: 5,
+        title: "选择题9：KPI",
+        question: "KPI代表什么？",
+        options: [
+          { label: 'A', text: 'Key Performance Indicator（关键绩效指标）' },
+          { label: 'B', text: 'Knowledge Processing Interface（知识处理接口）' },
+          { label: 'C', text: 'Key Process Improvement（关键流程改进）' },
+          { label: 'D', text: 'Knowledge Performance Index（知识绩效指数）' }
+        ],
+        answer: 'A',
+        analysis: "KPI是Key Performance Indicator（关键绩效指标），是衡量组织、部门或个人绩效的重要指标。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c10',
+        chapter: 6,
+        title: "选择题10：BI工具",
+        question: "以下哪个不是主流的BI工具？",
+        options: [
+          { label: 'A', text: 'Tableau' },
+          { label: 'B', text: 'Power BI' },
+          { label: 'C', text: 'MySQL' },
+          { label: 'D', text: 'Superset' }
+        ],
+        answer: 'C',
+        analysis: "MySQL是数据库，不是BI工具。Tableau、Power BI、Superset都是主流的BI可视化工具。",
+        difficulty: "medium"
+      }
+    ];
