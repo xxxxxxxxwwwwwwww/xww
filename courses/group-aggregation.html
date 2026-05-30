@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>分组聚合分析 - Xww的课程页面</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/ace.js"></script>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#06b6d4',
+            secondary: '#1e293b',
+            accent: '#10b981',
+            code: '#1e293b',
+            codeText: '#e2e8f0',
+            dark: '#111827',
+            'dark-gray': '#1f2937',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto { content-visibility: auto; }
+      .code-editor { @apply w-full h-96 bg-dark rounded-lg overflow-hidden border border-gray-700; }
+      .code-output { @apply w-full h-64 bg-dark rounded-lg p-4 font-mono text-sm overflow-auto border border-gray-700; }
+      .btn-primary { @apply bg-cyan-500 hover:bg-cyan-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2; }
+      .btn-secondary { @apply bg-dark-gray hover:bg-gray-700 text-gray-200 px-4 py-2 rounded-lg transition-all duration-300 border border-gray-700 flex items-center gap-2; }
+      .btn-accent { @apply bg-emerald-500 hover:bg-emerald-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2; }
+      .nav-link { @apply relative text-gray-300 hover:text-cyan-400 transition-colors px-4 py-2 rounded-lg hover:bg-dark-gray flex items-center gap-2; }
+      .nav-link.active { @apply text-cyan-400 bg-dark-gray; }
+      .nav-link::after { content: ''; @apply absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300; }
+      .nav-link:hover::after { @apply w-full; }
+      .problem-item { @apply flex items-center gap-3 p-3 rounded-lg hover:bg-dark-gray transition-colors cursor-pointer border border-gray-700; }
+      .problem-item.active { @apply bg-dark-gray border-cyan-500; }
+      .problem-item.solved { @apply border-emerald-500; }
+      .problem-item.attempted { @apply border-yellow-500; }
+      .section-title { @apply text-xl font-bold text-gray-200 mb-4 relative pb-2; }
+      .section-title::after { content: ''; @apply absolute bottom-0 left-0 w-16 h-1 bg-cyan-500 rounded-full; }
+      .topic-title { @apply text-lg font-semibold text-gray-300 mb-3 flex items-center gap-2 cursor-pointer; }
+      .topic-title:hover { @apply text-cyan-400; }
+      .problem-description { @apply text-gray-300 space-y-4; }
+      .problem-description code { @apply bg-dark-gray px-2 py-1 rounded text-cyan-400; }
+      .answer-analysis { @apply text-gray-300 space-y-3; }
+      .answer-analysis h4 { @apply text-lg font-semibold text-emerald-400 mb-2; }
+      .run-info { @apply flex justify-between items-center mb-2 text-xs text-gray-400; }
+      .difficulty-tag { @apply text-xs px-2 py-1 rounded-full; }
+      .difficulty-easy { @apply bg-emerald-900 text-emerald-300; }
+      .difficulty-medium { @apply bg-yellow-900 text-yellow-300; }
+      .difficulty-hard { @apply bg-red-900 text-red-300; }
+      .chapter-item { @apply mb-6; }
+      .chapter-content { @apply space-y-2 ml-4 transition-all duration-300; }
+      .chapter-content.collapsed { @apply hidden; }
+      .scrollbar-thin { scrollbar-width: thin; }
+      .scrollbar-thin::-webkit-scrollbar { width: 6px; }
+      .scrollbar-thin::-webkit-scrollbar-track { @apply bg-dark; }
+      .scrollbar-thin::-webkit-scrollbar-thumb { @apply bg-gray-700 rounded-full; }
+      .scrollbar-thin::-webkit-scrollbar-thumb:hover { @apply bg-gray-600; }
+      .knowledge-nav.active { @apply bg-cyan-500 text-gray-900; }
+      .knowledge-nav:not(.active) { @apply bg-gray-600 text-gray-200 hover:bg-gray-500; }
+      .choice-option { @apply flex items-center gap-3 p-4 rounded-lg border border-gray-700 cursor-pointer transition-all duration-200 hover:border-cyan-500 hover:bg-dark-gray; }
+      .choice-option.selected { @apply border-cyan-500 bg-cyan-900 bg-opacity-30; }
+      .choice-option.correct { @apply border-emerald-500 bg-emerald-900 bg-opacity-30; }
+      .choice-option.wrong { @apply border-red-500 bg-red-900 bg-opacity-30; }
+      .choice-option.disabled { @apply cursor-not-allowed opacity-70; }
+      .choice-label { @apply w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold text-sm; }
+      .choice-option.selected .choice-label { @apply bg-cyan-500 text-gray-900; }
+      .choice-option.correct .choice-label { @apply bg-emerald-500 text-gray-900; }
+      .choice-option.wrong .choice-label { @apply bg-red-500 text-gray-900; }
+    }
+  </style>
+</head>
+<body class="bg-dark min-h-screen text-gray-200">
+  <nav class="bg-dark-gray shadow-lg fixed w-full z-10">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center flex-wrap gap-4">
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="text-cyan-400 font-bold text-xl flex items-center gap-2">
+          <i class="fa fa-arrow-left mr-2"></i> Xww的课程页面
+        </a>
+      </div>
+      <div class="flex items-center gap-2 flex-wrap">
+        <a href="#" class="nav-link active" onclick="showTab('question-bank')">
+          <i class="fa fa-list"></i> 题库
+        </a>
+        <a href="#" class="nav-link" onclick="showTab('wrong-questions')">
+          <i class="fa fa-times-circle"></i> 错题
+        </a>
+        <a href="#" class="nav-link" onclick="showTab('favorites')">
+          <i class="fa fa-star"></i> 收藏
+        </a>
+        <a href="#" class="nav-link" onclick="showTab('knowledge')">
+          <i class="fa fa-book"></i> 知识点
+        </a>
+        <a href="group-aggregation-exam.html" class="nav-link">
+          <i class="fa fa-pencil-square-o"></i> 考试
+        </a>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="text-sm text-gray-300">完成进度：<span id="overall-progress" class="text-cyan-400 font-bold">0%</span></div>
+        <div class="w-48 bg-gray-700 rounded-full h-2.5"><div id="progress-bar" class="bg-cyan-500 h-2.5 rounded-full" style="width: 0%"></div></div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="pt-24 min-h-screen">
+    <div class="container mx-auto px-4">
+      <div id="question-bank" class="tab-content">
+        <div class="flex flex-col lg:flex-row gap-6 py-6">
+          <div class="lg:w-1/4 bg-dark-gray rounded-xl p-4 border border-gray-700 h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin">
+            <h2 class="section-title">分组聚合分析题库</h2>
+            <div class="space-y-6">
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter1')">
+                  <i class="fa fa-chevron-down text-gray-400 transition-transform duration-300" id="chapter1-icon"></i>
+                  分组聚合基础
+                  <span class="ml-auto text-xs text-gray-400"><span class="chapter-progress">0/5</span><span class="progress-percentage">(0%)</span></span>
+                </h3>
+                <div class="chapter-content" id="chapter1-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
+                  <div class="problem-item active" onclick="loadProgrammingProblem(1)">
+                    <div class="w-8 h-8 rounded-full bg-cyan-500 flex items-center justify-center text-gray-900 font-bold">1</div>
+                    <div class="flex-1">
+                      <div class="font-medium">groupby基础操作</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(2)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">2</div>
+                    <div class="flex-1">
+                      <div class="font-medium">多列分组聚合</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">25分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c1')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">A</div>
+                    <div class="flex-1">
+                      <div class="font-medium">groupby概念</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c2')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">B</div>
+                    <div class="flex-1">
+                      <div class="font-medium">聚合函数使用</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c3')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">C</div>
+                    <div class="flex-1">
+                      <div class="font-medium">多级索引</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter2')">
+                  <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter2-icon"></i>
+                  高级聚合分析
+                  <span class="ml-auto text-xs text-gray-400"><span class="chapter-progress">0/4</span><span class="progress-percentage">(0%)</span></span>
+                </h3>
+                <div class="chapter-content collapsed" id="chapter2-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(3)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">3</div>
+                    <div class="flex-1">
+                      <div class="font-medium">自定义聚合函数</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">30分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(4)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">4</div>
+                    <div class="flex-1">
+                      <div class="font-medium">分组统计与排序</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-hard">困难</span>
+                        <span class="text-xs text-gray-400">35分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c4')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">D</div>
+                    <div class="flex-1">
+                      <div class="font-medium">agg函数使用</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c5')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">E</div>
+                    <div class="flex-1">
+                      <div class="font-medium">transform应用</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="lg:w-3/4 space-y-6">
+            <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
+                <h3 class="text-xl font-bold text-gray-200" id="problem-title">问题1：groupby基础操作</h3>
+                <div class="flex items-center gap-4 flex-wrap">
+                  <div class="flex items-center gap-2"><i class="fa fa-clock-o text-cyan-400"></i><span id="timer" class="text-gray-200 font-mono">00:00</span></div>
+                  <span class="difficulty-tag difficulty-easy" id="difficulty-tag">简单</span>
+                  <button class="text-gray-400 hover:text-yellow-400 transition-colors" onclick="toggleFavorite(1)" id="favorite-btn"><i class="fa fa-star-o"></i></button>
+                </div>
+              </div>
+              <div class="problem-description" id="problem-description">
+                <p>使用Pandas的groupby功能对数据进行分组和聚合操作。</p>
+                <p><strong>输入：</strong>零售订单数据</p>
+                <p><strong>输出：</strong>按类别统计的汇总数据</p>
+                <p><strong>要求：</strong>
+                <ul class="list-disc list-inside space-y-1 mt-2">
+                  <li>使用groupby按产品类别分组</li>
+                  <li>计算每个类别的销售总额</li>
+                  <li>计算每个类别的订单数量</li>
+                </ul></p>
+              </div>
+            </div>
+            
+            <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
+                <h3 class="text-lg font-semibold text-gray-200">代码编辑器</h3>
+                <div class="flex gap-2">
+                  <button class="btn-secondary text-sm" onclick="toggleCodeEditor()" id="toggle-code-btn" title="折叠代码编辑器"><i class="fa fa-chevron-up" id="toggle-code-icon"></i></button>
+                  <button id="resetCode" class="btn-secondary text-sm"><i class="fa fa-refresh"></i> 重置</button>
+                  <button id="runCode" class="btn-primary"><i class="fa fa-play"></i> 运行代码</button>
+                </div>
+              </div>
+              <div id="code-editor-container">
+                <div id="codeEditor" class="code-editor"></div>
+                <div id="pyodide-status" class="mt-2 text-sm text-yellow-400"><i class="fa fa-spinner fa-spin"></i> 正在加载Python解释器...</div>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">运行结果</h3>
+                <div class="run-info"><span id="execution-time">执行时间：0ms</span><span id="memory-usage">内存：0MB</span></div>
+                <div id="code-output" class="code-output">运行代码查看输出...</div>
+              </div>
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">答案解析</h3>
+                <div class="answer-analysis" id="answer-analysis">
+                  <h4>解题思路</h4>
+                  <p>1. 使用groupby()按类别分组</p>
+                  <p>2. 使用agg()进行多指标聚合</p>
+                  <p>3. 重置索引得到DataFrame</p>
+                  <h4>代码示例</h4>
+                  <div class="bg-dark p-3 rounded-lg font-mono text-sm">
+                    <pre class="text-cyan-300">
+import pandas as pd
+
+data = {
+    'category': ['电子产品', '服装', '电子产品', '食品', '服装'],
+    'product': ['手机', 'T恤', '电脑', '面包', '裤子'],
+    'price': [3000, 200, 5000, 15, 300],
+    'quantity': [1, 2, 1, 5, 1]
+}
+df = pd.DataFrame(data)
+
+result = df.groupby('category').agg({
+    'price': 'sum',
+    'quantity': 'sum',
+    'product': 'count'
+}).rename(columns={'product': 'order_count'})
+
+print("按类别分组统计:")
+print(result)
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="wrong-questions" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">错题本</h2>
+          <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+            <div class="text-center py-12">
+              <i class="fa fa-times-circle text-4xl text-red-500 mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无错题</h3>
+              <p class="text-gray-400">当你在练习中答错题目时，它们会自动添加到这里</p>
+              <button class="btn-primary mt-6" onclick="showTab('question-bank')"><i class="fa fa-list"></i> 开始练习</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="favorites" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">收藏题目</h2>
+          <div class="bg-dark-gray rounded-xl p-6 border border-gray-700" id="favorites-container">
+            <div class="text-center py-12">
+              <i class="fa fa-star-o text-4xl text-yellow-500 mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无收藏</h3>
+              <p class="text-gray-400">在题库中点击题目旁边的星标图标来收藏题目</p>
+              <button class="btn-primary mt-6" onclick="showTab('question-bank')"><i class="fa fa-list"></i> 浏览题库</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="knowledge" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">📚 知识点学习</h2>
+          <div class="flex flex-wrap gap-3 mb-8 bg-dark-gray p-4 rounded-xl border border-gray-700">
+            <button class="knowledge-nav active px-4 py-2 rounded-lg font-semibold transition" data-target="module1-basics">模块1：分组聚合基础</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module2-advanced">模块2：高级聚合分析</button>
+          </div>
+          <div class="space-y-8">
+            <div id="module1-basics" class="knowledge-section">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2"><i class="fa fa-object-group"></i> 模块1：分组聚合基础</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2"><i class="fa fa-lightbulb-o text-yellow-400"></i> groupby概述</h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">groupby是Pandas中用于数据分组和聚合的核心功能，类似于SQL中的GROUP BY语句。它允许你将数据按照一个或多个列进行分组，然后对每个组应用聚合函数。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+df.groupby('category')
+  .agg({'sales': 'sum'})
+                      </pre>
+                    </div>
+                  </div>
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2"><i class="fa fa-calculator text-emerald-400"></i> 常用聚合函数</h4>
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📊 sum()</h5>
+                        <p class="text-gray-400 text-sm">计算总和</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📈 mean()</h5>
+                        <p class="text-gray-400 text-sm">计算平均值</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-pink-400 font-semibold mb-1">📉 count()</h5>
+                        <p class="text-gray-400 text-sm">计算数量</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="module2-advanced" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2"><i class="fa fa-star"></i> 模块2：高级聚合分析</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2"><i class="fa fa-magic text-yellow-400"></i> agg()自定义聚合</h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">agg()函数允许你对不同的列应用不同的聚合函数，实现更灵活的统计分析。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+df.groupby('category').agg({
+    'sales': ['sum', 'mean'],
+    'quantity': 'max'
+})
+                      </pre>
+                    </div>
+                  </div>
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2"><i class="fa fa-arrows-alt text-emerald-400"></i> transform()</h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">transform()函数可以对分组后的数据进行转换，保持原数据的结构。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+df['category_mean'] = df.groupby(
+    'category')['price'].transform('mean')
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const problems = [
+      {
+        id: 1,
+        title: "问题1：groupby基础操作",
+        description: `<p>使用Pandas的groupby功能对数据进行分组和聚合操作。</p>
+<p><strong>输入：</strong>零售订单数据</p>
+<p><strong>输出：</strong>按类别统计的汇总数据</p>
+<p><strong>要求：</strong></p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>使用groupby按产品类别分组</li>
+  <li>计算每个类别的销售总额</li>
+  <li>计算每个类别的订单数量</li>
+</ul>`,
+        difficulty: "easy",
+        time: "20分钟",
+        code: `# 请编写代码`,
+        analysis: `<h4>解题思路</h4>
+<p>1. 使用groupby()按类别分组</p>
+<p>2. 使用agg()进行多指标聚合</p>
+<p>3. 重置索引得到DataFrame</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">
+import pandas as pd
+
+data = {
+    'category': ['电子产品', '服装', '电子产品', '食品', '服装'],
+    'product': ['手机', 'T恤', '电脑', '面包', '裤子'],
+    'price': [3000, 200, 5000, 15, 300],
+    'quantity': [1, 2, 1, 5, 1]
+}
+df = pd.DataFrame(data)
+
+result = df.groupby('category').agg({
+    'price': 'sum',
+    'quantity': 'sum',
+    'product': 'count'
+}).rename(columns={'product': 'order_count'})
+
+print("按类别分组统计:")
+print(result)
+  </pre>
+</div>`
+      },
+      {
+        id: 2,
+        title: "问题2：多列分组聚合",
+        description: `<p>对数据进行多列分组和聚合分析。</p>
+<p><strong>输入：</strong>包含日期、类别和销售额的数据</p>
+<p><strong>输出：</strong>按月份和类别统计的销售数据</p>
+<p><strong>要求：</strong></p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>使用多列进行groupby</li>
+  <li>计算销售额的总和和平均值</li>
+  <li>排序输出结果</li>
+</ul>`,
+        difficulty: "medium",
+        time: "25分钟",
+        code: `# 请编写代码`,
+        analysis: `<h4>解题思路</h4>
+<p>1. 按月份和类别分组</p>
+<p>2. 使用agg同时计算总和和平均值</p>
+<p>3. 使用sort_values排序</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">
+import pandas as pd
+
+data = {
+    'month': ['1月', '1月', '2月', '2月', '1月'],
+    'category': ['电子产品', '服装', '电子产品', '服装', '食品'],
+    'sales': [5000, 800, 6000, 900, 300]
+}
+df = pd.DataFrame(data)
+
+result = df.groupby(['month', 'category']).agg({
+    'sales': ['sum', 'mean']
+}).round(2)
+result.columns = ['sales_sum', 'sales_mean']
+result = result.sort_values('sales_sum', ascending=False)
+
+print("按月份和类别统计:")
+print(result)
+  </pre>
+</div>`
+      },
+      {
+        id: 3,
+        title: "问题3：自定义聚合函数",
+        description: `<p>使用自定义聚合函数进行数据分析。</p>
+<p><strong>输入：</strong>销售数据</p>
+<p><strong>输出：</strong>包含自定义统计指标的分组结果</p>
+<p><strong>要求：</strong></p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>定义计算变异系数的函数</li>
+  <li>使用agg应用自定义函数</li>
+  <li>组合使用内置函数和自定义函数</li>
+</ul>`,
+        difficulty: "medium",
+        time: "30分钟",
+        code: `# 请编写代码`,
+        analysis: `<h4>解题思路</h4>
+<p>1. 定义计算变异系数的函数</p>
+<p>2. 使用agg应用自定义函数</p>
+<p>3. 组合使用内置和自定义函数</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+
+def coefficient_of_variation(x):
+    return x.std() / x.mean() * 100
+
+data = {
+    'category': ['A', 'A', 'B', 'B', 'A', 'B'],
+    'sales': [100, 120, 80, 90, 110, 85]
+}
+df = pd.DataFrame(data)
+
+result = df.groupby('category')['sales'].agg([
+    'sum', 'mean', 'std', coefficient_of_variation
+])
+result.columns = ['总和', '均值', '标准差', '变异系数']
+
+print("分组统计结果:")
+print(result)
+  </pre>
+</div>`
+      },
+      {
+        id: 4,
+        title: "问题4：分组统计与排序",
+        description: `<p>进行复杂的分组统计并对结果进行排序分析。</p>
+<p><strong>输入：</strong>客户订单数据</p>
+<p><strong>输出：</strong>按客户分组的统计数据，按消费额排序</p>
+<p><strong>要求：</strong></p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>按客户分组统计订单数和消费总额</li>
+  <li>计算平均订单金额</li>
+  <li>按消费总额降序排序</li>
+  <li>找出消费最高的Top3客户</li>
+</ul>`,
+        difficulty: "hard",
+        time: "35分钟",
+        code: `# 请编写代码`,
+        analysis: `<h4>解题思路</h4>
+<p>1. 按客户ID分组统计</p>
+<p>2. 使用agg计算多个指标</p>
+<p>3. 计算平均订单金额</p>
+<p>4. 按总额排序并取Top3</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">
+import pandas as pd
+
+data = {
+    'customer_id': [1, 1, 2, 2, 2, 3, 1, 3],
+    'order_id': [101, 102, 201, 202, 203, 301, 103, 302],
+    'amount': [150, 200, 300, 250, 180, 400, 180, 350]
+}
+df = pd.DataFrame(data)
+
+result = df.groupby('customer_id').agg({
+    'order_id': 'count',
+    'amount': ['sum', 'mean']
+})
+result.columns = ['order_count', 'total_amount', 'avg_amount']
+result = result.sort_values('total_amount', ascending=False)
+result['avg_amount'] = result['avg_amount'].round(2)
+
+print("客户消费排名:")
+print(result)
+print("\n消费最高的Top3客户:")
+print(result.head(3))
+  </pre>
+</div>`
+      }
+    ];
+
+    const choiceQuestions = [
+      { id: 'c1', chapter: 1, title: "选择题1：groupby概念", question: "Pandas中groupby的作用是什么？", options: [{ label: 'A', text: '对数据进行排序' }, { label: 'B', text: '将数据按列分组进行聚合分析' }, { label: 'C', text: '过滤数据' }, { label: 'D', text: '合并数据' }], answer: 'B', analysis: "groupby用于将数据按照一个或多个列进行分组，然后对每个组应用聚合函数进行分析。", difficulty: "easy" },
+      { id: 'c2', chapter: 1, title: "选择题2：聚合函数使用", question: "以下哪个不是Pandas的常用聚合函数？", options: [{ label: 'A', text: 'sum()' }, { label: 'B', text: 'mean()' }, { label: 'C', text: 'sort()' }, { label: 'D', text: 'count()' }], answer: 'C', analysis: "sort()是排序函数，不是聚合函数。sum()、mean()、count()都是常用的聚合函数。", difficulty: "medium" },
+      { id: 'c3', chapter: 1, title: "选择题3：多级索引", question: "使用多列进行groupby时，生成的结果索引类型是什么？", options: [{ label: 'A', text: '普通索引' }, { label: 'B', text: '多级索引(MultiIndex)' }, { label: 'C', text: '日期索引' }, { label: 'D', text: '无索引' }], answer: 'B', analysis: "使用多列进行groupby时，结果会使用MultiIndex（多级索引）作为行索引。", difficulty: "easy" },
+      { id: 'c4', chapter: 2, title: "选择题4：agg函数使用", question: "agg函数可以同时对同一列应用多个聚合操作吗？", options: [{ label: 'A', text: '不可以，只能应用一个' }, { label: 'B', text: '可以，用列表形式' }, { label: 'C', text: '只能对不同列操作' }, { label: 'D', text: '需要循环使用' }], answer: 'B', analysis: "agg函数可以对同一列应用多个聚合操作，例如：df.groupby('col').agg({'sales': ['sum', 'mean']})", difficulty: "medium" },
+      { id: 'c5', chapter: 2, title: "选择题5：transform应用", question: "transform函数和agg函数的主要区别是什么？", options: [{ label: 'A', text: '两者完全相同' }, { label: 'B', text: 'transform保持原数据形状，agg返回聚合结果' }, { label: 'C', text: 'transform只能用于分组后' }, { label: 'D', text: 'agg可以保持原形状' }], answer: 'B', analysis: "transform返回与原数据行数相同的结果，而agg返回分组后的聚合结果。", difficulty: "medium" }
+    ];
+
+    let currentProblem = 1;
+    let pyodide = null;
+    let editor = null;
+    let timerInterval = null;
+    let seconds = 0;
+    let isCodeEditorCollapsed = false;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      editor = ace.edit('codeEditor');
+      editor.setTheme('ace/theme/tomorrow_night');
+      editor.getSession().setMode('ace/mode/python');
+      editor.setOptions({ fontSize: '14px', tabSize: 4, useSoftTabs: true, wrap: true });
+      editor.setValue('# 请编写代码');
+      editor.clearSelection();
+      initPyodide();
+      loadProgrammingProblem(1);
+      document.getElementById('runCode').addEventListener('click', runCode);
+      document.getElementById('resetCode').addEventListener('click', resetCode);
+      document.querySelectorAll('.knowledge-nav').forEach((button) => {
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          document.querySelectorAll('.knowledge-nav').forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          const target = this.getAttribute('data-target');
+          document.querySelectorAll('.knowledge-section').forEach(section => section.classList.add('hidden'));
+          const targetElement = document.getElementById(target);
+          if (targetElement) targetElement.classList.remove('hidden');
+        });
+      });
+    });
+
+    async function initPyodide() {
+      const statusEl = document.getElementById('pyodide-status');
+      statusEl.innerHTML = '<i class="fa fa-spinner fa-spin text-amber-400"></i> 正在加载Python解释器...';
+      try {
+        pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/" });
+        await pyodide.loadPackage(['pandas', 'numpy']);
+        statusEl.innerHTML = '<i class="fa fa-check text-emerald-400"></i> Python解释器加载成功';
+      } catch (error) {
+        statusEl.innerHTML = '<i class="fa fa-exclamation-triangle text-red-400"></i> Python解释器加载失败';
+        console.error('Pyodide load error:', error);
+      }
+    }
+
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+      document.getElementById(tabId).classList.remove('hidden');
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+      document.querySelectorAll(`.nav-link[onclick*="${tabId}"]`).forEach(link => link.classList.add('active'));
+    }
+
+    function toggleChapter(chapterId) {
+      const content = document.getElementById(chapterId + '-content');
+      const icon = document.getElementById(chapterId + '-icon');
+      content.classList.toggle('collapsed');
+      if (content.classList.contains('collapsed')) {
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-right');
+      } else {
+        icon.classList.remove('fa-chevron-right');
+        icon.classList.add('fa-chevron-down');
+      }
+    }
+
+    function loadProgrammingProblem(id) {
+      const problem = problems.find(p => p.id === id);
+      if (!problem) return;
+      currentProblem = id;
+      document.getElementById('problem-title').textContent = problem.title;
+      document.getElementById('problem-description').innerHTML = problem.description;
+      document.getElementById('difficulty-tag').textContent = problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难';
+      document.getElementById('difficulty-tag').className = `difficulty-tag difficulty-${problem.difficulty === 'easy' ? 'easy' : problem.difficulty === 'medium' ? 'medium' : 'hard'}`;
+      document.getElementById('answer-analysis').innerHTML = problem.analysis;
+      editor.setValue(problem.code);
+      editor.clearSelection();
+      resetTimer();
+      startTimer();
+      document.querySelectorAll('.problem-item').forEach(item => item.classList.remove('active'));
+      event.target.closest('.problem-item')?.classList.add('active');
+    }
+
+    function loadChoiceQuestion(id) {
+      const question = choiceQuestions.find(q => q.id === id);
+      if (!question) return;
+      document.getElementById('problem-title').textContent = question.title;
+      document.getElementById('difficulty-tag').textContent = question.difficulty === 'easy' ? '简单' : '中等';
+      document.getElementById('difficulty-tag').className = `difficulty-tag difficulty-${question.difficulty === 'easy' ? 'easy' : 'medium'}`;
+      let html = `<p class="text-lg mb-4">${question.question}</p><div class="space-y-3">`;
+      question.options.forEach(opt => {
+        html += `<div class="choice-option" onclick="selectOption(this, '${opt.label}')"><span class="choice-label">${opt.label}</span><span>${opt.text}</span></div>`;
+      });
+      html += '</div>';
+      document.getElementById('problem-description').innerHTML = html;
+      document.getElementById('answer-analysis').innerHTML = `<h4>答案解析</h4><p>${question.analysis}</p>`;
+      editor.setValue('# 选择题无需编写代码');
+      editor.setReadOnly(true);
+      resetTimer();
+      startTimer();
+    }
+
+    function selectOption(element, label) {
+      document.querySelectorAll('.choice-option').forEach(opt => opt.classList.remove('selected'));
+      element.classList.add('selected');
+    }
+
+    function toggleFavorite(id) {
+      const btn = document.getElementById('favorite-btn');
+      const icon = btn.querySelector('i');
+      if (icon.classList.contains('fa-star-o')) {
+        icon.classList.remove('fa-star-o');
+        icon.classList.add('fa-star');
+        btn.classList.add('text-yellow-400');
+      } else {
+        icon.classList.remove('fa-star');
+        icon.classList.add('fa-star-o');
+        btn.classList.remove('text-yellow-400');
+      }
+    }
+
+    function startTimer() {
+      seconds = 0;
+      timerInterval = setInterval(() => {
+        seconds++;
+        const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+        const secs = (seconds % 60).toString().padStart(2, '0');
+        document.getElementById('timer').textContent = `${mins}:${secs}`;
+      }, 1000);
+    }
+
+    function resetTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      seconds = 0;
+      document.getElementById('timer').textContent = '00:00';
+    }
+
+    function toggleCodeEditor() {
+      const container = document.getElementById('code-editor-container');
+      const icon = document.getElementById('toggle-code-icon');
+      if (isCodeEditorCollapsed) {
+        container.style.display = 'block';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+        isCodeEditorCollapsed = false;
+      } else {
+        container.style.display = 'none';
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+        isCodeEditorCollapsed = true;
+      }
+    }
+
+    async function runCode() {
+      if (!pyodide) {
+        document.getElementById('code-output').innerHTML = '<span class="text-red-400">Python解释器未加载完成，请稍候...</span>';
+        return;
+      }
+      const code = editor.getValue();
+      const startTime = performance.now();
+      document.getElementById('code-output').innerHTML = '<span class="text-cyan-400"><i class="fa fa-spinner fa-spin"></i> 运行中...</span>';
+      try {
+        const result = await pyodide.runPythonAsync(code);
+        const endTime = performance.now();
+        document.getElementById('execution-time').textContent = `执行时间：${Math.round(endTime - startTime)}ms`;
+        document.getElementById('code-output').innerHTML = result ? `<pre class="text-gray-300 whitespace-pre-wrap">${result}</pre>` : '<span class="text-emerald-400">代码执行完成，无输出</span>';
+      } catch (error) {
+        document.getElementById('code-output').innerHTML = `<span class="text-red-400">错误: ${error.message}</span>`;
+      }
+    }
+
+    function resetCode() {
+      const problem = problems.find(p => p.id === currentProblem);
+      if (problem) editor.setValue(problem.code);
+      else editor.setValue('# 请编写代码');
+      editor.clearSelection();
+    }
+  </script>
+</body>
+</html>

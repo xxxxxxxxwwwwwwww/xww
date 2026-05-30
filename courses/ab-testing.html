@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A/B测试分析 - Xww的课程页面</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/ace.js"></script>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#06b6d4',
+            secondary: '#1e293b',
+            accent: '#10b981',
+            code: '#1e293b',
+            codeText: '#e2e8f0',
+            dark: '#111827',
+            'dark-gray': '#1f2937',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto { content-visibility: auto; }
+      .code-editor { @apply w-full h-96 bg-dark rounded-lg overflow-hidden border border-gray-700; }
+      .code-output { @apply w-full h-64 bg-dark rounded-lg p-4 font-mono text-sm overflow-auto border border-gray-700; }
+      .btn-primary { @apply bg-cyan-500 hover:bg-cyan-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2; }
+      .btn-secondary { @apply bg-dark-gray hover:bg-gray-700 text-gray-200 px-4 py-2 rounded-lg transition-all duration-300 border border-gray-700 flex items-center gap-2; }
+      .btn-accent { @apply bg-emerald-500 hover:bg-emerald-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2; }
+      .nav-link { @apply relative text-gray-300 hover:text-cyan-400 transition-colors px-4 py-2 rounded-lg hover:bg-dark-gray flex items-center gap-2; }
+      .nav-link.active { @apply text-cyan-400 bg-dark-gray; }
+      .nav-link::after { content: ''; @apply absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300; }
+      .nav-link:hover::after { @apply w-full; }
+      .problem-item { @apply flex items-center gap-3 p-3 rounded-lg hover:bg-dark-gray transition-colors cursor-pointer border border-gray-700; }
+      .problem-item.active { @apply bg-dark-gray border-cyan-500; }
+      .problem-item.solved { @apply border-emerald-500; }
+      .problem-item.attempted { @apply border-yellow-500; }
+      .section-title { @apply text-xl font-bold text-gray-200 mb-4 relative pb-2; }
+      .section-title::after { content: ''; @apply absolute bottom-0 left-0 w-16 h-1 bg-cyan-500 rounded-full; }
+      .topic-title { @apply text-lg font-semibold text-gray-300 mb-3 flex items-center gap-2 cursor-pointer; }
+      .topic-title:hover { @apply text-cyan-400; }
+      .problem-description { @apply text-gray-300 space-y-4; }
+      .problem-description code { @apply bg-dark-gray px-2 py-1 rounded text-cyan-400; }
+      .answer-analysis { @apply text-gray-300 space-y-3; }
+      .answer-analysis h4 { @apply text-lg font-semibold text-emerald-400 mb-2; }
+      .run-info { @apply flex justify-between items-center mb-2 text-xs text-gray-400; }
+      .difficulty-tag { @apply text-xs px-2 py-1 rounded-full; }
+      .difficulty-easy { @apply bg-emerald-900 text-emerald-300; }
+      .difficulty-medium { @apply bg-yellow-900 text-yellow-300; }
+      .difficulty-hard { @apply bg-red-900 text-red-300; }
+      .chapter-item { @apply mb-6; }
+      .chapter-content { @apply space-y-2 ml-4 transition-all duration-300; }
+      .chapter-content.collapsed { @apply hidden; }
+      .scrollbar-thin { scrollbar-width: thin; }
+      .scrollbar-thin::-webkit-scrollbar { width: 6px; }
+      .scrollbar-thin::-webkit-scrollbar-track { @apply bg-dark; }
+      .scrollbar-thin::-webkit-scrollbar-thumb { @apply bg-gray-700 rounded-full; }
+      .scrollbar-thin::-webkit-scrollbar-thumb:hover { @apply bg-gray-600; }
+      .knowledge-nav.active { @apply bg-cyan-500 text-gray-900; }
+      .knowledge-nav:not(.active) { @apply bg-gray-600 text-gray-200 hover:bg-gray-500; }
+      .choice-option { @apply flex items-center gap-3 p-4 rounded-lg border border-gray-700 cursor-pointer transition-all duration-200 hover:border-cyan-500 hover:bg-dark-gray; }
+      .choice-option.selected { @apply border-cyan-500 bg-cyan-900 bg-opacity-30; }
+      .choice-option.correct { @apply border-emerald-500 bg-emerald-900 bg-opacity-30; }
+      .choice-option.wrong { @apply border-red-500 bg-red-900 bg-opacity-30; }
+      .choice-option.disabled { @apply cursor-not-allowed opacity-70; }
+      .choice-label { @apply w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold text-sm; }
+      .choice-option.selected .choice-label { @apply bg-cyan-500 text-gray-900; }
+      .choice-option.correct .choice-label { @apply bg-emerald-500 text-gray-900; }
+      .choice-option.wrong .choice-label { @apply bg-red-500 text-gray-900; }
+    }
+  </style>
+</head>
+<body class="bg-dark min-h-screen text-gray-200">
+  <nav class="bg-dark-gray shadow-lg fixed w-full z-10">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center flex-wrap gap-4">
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="text-cyan-400 font-bold text-xl flex items-center gap-2">
+          <i class="fa fa-arrow-left mr-2"></i> Xww的课程页面
+        </a>
+      </div>
+      <div class="flex items-center gap-2 flex-wrap">
+        <a href="#" class="nav-link active" onclick="showTab('question-bank')">
+          <i class="fa fa-list"></i> 题库
+        </a>
+        <a href="#" class="nav-link" onclick="showTab('wrong-questions')">
+          <i class="fa fa-times-circle"></i> 错题
+        </a>
+        <a href="#" class="nav-link" onclick="showTab('favorites')">
+          <i class="fa fa-star"></i> 收藏
+        </a>
+        <a href="#" class="nav-link" onclick="showTab('knowledge')">
+          <i class="fa fa-book"></i> 知识点
+        </a>
+        <a href="ab-testing-exam.html" class="nav-link">
+          <i class="fa fa-pencil-square-o"></i> 考试
+        </a>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="text-sm text-gray-300">完成进度：<span id="overall-progress" class="text-cyan-400 font-bold">0%</span></div>
+        <div class="w-48 bg-gray-700 rounded-full h-2.5"><div id="progress-bar" class="bg-cyan-500 h-2.5 rounded-full" style="width: 0%"></div></div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="pt-24 min-h-screen">
+    <div class="container mx-auto px-4">
+      <div id="question-bank" class="tab-content">
+        <div class="flex flex-col lg:flex-row gap-6 py-6">
+          <div class="lg:w-1/4 bg-dark-gray rounded-xl p-4 border border-gray-700 h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin">
+            <h2 class="section-title">A/B测试分析题库</h2>
+            <div class="space-y-6">
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter1')">
+                  <i class="fa fa-chevron-down text-gray-400 transition-transform duration-300" id="chapter1-icon"></i>
+                  A/B测试基础
+                  <span class="ml-auto text-xs text-gray-400"><span class="chapter-progress">0/5</span><span class="progress-percentage">(0%)</span></span>
+                </h3>
+                <div class="chapter-content" id="chapter1-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
+                  <div class="problem-item active" onclick="loadProgrammingProblem(1)">
+                    <div class="w-8 h-8 rounded-full bg-cyan-500 flex items-center justify-center text-gray-900 font-bold">1</div>
+                    <div class="flex-1">
+                      <div class="font-medium">转化率计算</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-gray-400">25分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(2)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">2</div>
+                    <div class="flex-1">
+                      <div class="font-medium">卡方检验</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">30分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c1')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">A</div>
+                    <div class="flex-1">
+                      <div class="font-medium">A/B测试概念</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c2')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">B</div>
+                    <div class="flex-1">
+                      <div class="font-medium">统计显著性</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c3')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">C</div>
+                    <div class="flex-1">
+                      <div class="font-medium">置信区间</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter2')">
+                  <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter2-icon"></i>
+                  高级A/B测试
+                  <span class="ml-auto text-xs text-gray-400"><span class="chapter-progress">0/4</span><span class="progress-percentage">(0%)</span></span>
+                </h3>
+                <div class="chapter-content collapsed" id="chapter2-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(3)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">3</div>
+                    <div class="flex-1">
+                      <div class="font-medium">样本量计算</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">35分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(4)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">4</div>
+                    <div class="flex-1">
+                      <div class="font-medium">综合分析报告</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-hard">困难</span>
+                        <span class="text-xs text-gray-400">40分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c4')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">D</div>
+                    <div class="flex-1">
+                      <div class="font-medium">假设检验</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c5')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">E</div>
+                    <div class="flex-1">
+                      <div class="font-medium">p值理解</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="lg:w-3/4 space-y-6">
+            <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
+                <h3 class="text-xl font-bold text-gray-200" id="problem-title">问题1：转化率计算</h3>
+                <div class="flex items-center gap-4 flex-wrap">
+                  <div class="flex items-center gap-2"><i class="fa fa-clock-o text-cyan-400"></i><span id="timer" class="text-gray-200 font-mono">00:00</span></div>
+                  <span class="difficulty-tag difficulty-easy" id="difficulty-tag">简单</span>
+                  <button class="text-gray-400 hover:text-yellow-400 transition-colors" onclick="toggleFavorite(1)" id="favorite-btn"><i class="fa fa-star-o"></i></button>
+                </div>
+              </div>
+              <div class="problem-description" id="problem-description">
+                <p>计算A/B测试中各组的转化率。</p>
+                <p><strong>输入：</strong>A组和B组的访问人数和转化人数</p>
+                <p><strong>输出：</strong>各组的转化率和相对提升</p>
+                <p><strong>要求：</strong>
+                <ul class="list-disc list-inside space-y-1 mt-2">
+                  <li>计算A组转化率</li>
+                  <li>计算B组转化率</li>
+                  <li>计算相对提升</li>
+                  <li>输出对比结果</li>
+                </ul></p>
+              </div>
+            </div>
+            
+            <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
+                <h3 class="text-lg font-semibold text-gray-200">代码编辑器</h3>
+                <div class="flex gap-2">
+                  <button class="btn-secondary text-sm" onclick="toggleCodeEditor()" id="toggle-code-btn" title="折叠代码编辑器"><i class="fa fa-chevron-up" id="toggle-code-icon"></i></button>
+                  <button id="resetCode" class="btn-secondary text-sm"><i class="fa fa-refresh"></i> 重置</button>
+                  <button id="runCode" class="btn-primary"><i class="fa fa-play"></i> 运行代码</button>
+                </div>
+              </div>
+              <div id="code-editor-container">
+                <div id="codeEditor" class="code-editor"></div>
+                <div id="pyodide-status" class="mt-2 text-sm text-yellow-400"><i class="fa fa-spinner fa-spin"></i> 正在加载Python解释器...</div>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">运行结果</h3>
+                <div class="run-info"><span id="execution-time">执行时间：0ms</span><span id="memory-usage">内存：0MB</span></div>
+                <div id="code-output" class="code-output">运行代码查看输出...</div>
+              </div>
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">答案解析</h3>
+                <div class="answer-analysis" id="answer-analysis">
+                  <h4>解题思路</h4>
+                  <p>1. 计算转化率 = 转化人数 / 访问人数</p>
+                  <p>2. 计算相对提升 = (B转化率 - A转化率) / A转化率</p>
+                  <p>3. 格式化输出结果</p>
+                  <h4>代码示例</h4>
+                  <div class="bg-dark p-3 rounded-lg font-mono text-sm">
+                    <pre class="text-cyan-300">
+import pandas as pd
+
+data = {
+    'group': ['A', 'B'],
+    'visitors': [10000, 10000],
+    'conversions': [320, 380]
+}
+df = pd.DataFrame(data)
+
+df['conversion_rate'] = df['conversions'] / df['visitors'] * 100
+
+control_rate = df[df['group'] == 'A']['conversion_rate'].values[0]
+treatment_rate = df[df['group'] == 'B']['conversion_rate'].values[0]
+lift = (treatment_rate - control_rate) / control_rate * 100
+
+print("A/B测试结果:")
+print(df)
+print(f"\\n相对提升: {lift:.2f}%")
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="wrong-questions" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">错题本</h2>
+          <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+            <div class="text-center py-12">
+              <i class="fa fa-times-circle text-4xl text-red-500 mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无错题</h3>
+              <p class="text-gray-400">当你在练习中答错题目时，它们会自动添加到这里</p>
+              <button class="btn-primary mt-6" onclick="showTab('question-bank')"><i class="fa fa-list"></i> 开始练习</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="favorites" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">收藏题目</h2>
+          <div class="bg-dark-gray rounded-xl p-6 border border-gray-700" id="favorites-container">
+            <div class="text-center py-12">
+              <i class="fa fa-star-o text-4xl text-yellow-500 mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无收藏</h3>
+              <p class="text-gray-400">在题库中点击题目旁边的星标图标来收藏题目</p>
+              <button class="btn-primary mt-6" onclick="showTab('question-bank')"><i class="fa fa-list"></i> 浏览题库</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="knowledge" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">📚 知识点学习</h2>
+          <div class="flex flex-wrap gap-3 mb-8 bg-dark-gray p-4 rounded-xl border border-gray-700">
+            <button class="knowledge-nav active px-4 py-2 rounded-lg font-semibold transition" data-target="module1-basics">模块1：A/B测试基础</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module2-advanced">模块2：高级A/B测试</button>
+          </div>
+          <div class="space-y-8">
+            <div id="module1-basics" class="knowledge-section">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2"><i class="fa fa-flask"></i> 模块1：A/B测试基础</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2"><i class="fa fa-lightbulb-o text-yellow-400"></i> A/B测试概述</h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">A/B测试是一种对照实验方法，通过将用户随机分组，对比不同方案的效果差异，用于数据驱动的决策。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+A组（对照组）: 原方案
+B组（实验组）: 新方案
+
+转化率A = 320/10000 = 3.2%
+转化率B = 380/10000 = 3.8%
+提升 = (3.8-3.2)/3.2 = 18.75%
+                      </pre>
+                    </div>
+                  </div>
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2"><i class="fa fa-calculator text-emerald-400"></i> 核心指标</h4>
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📊 转化率</h5>
+                        <p class="text-gray-400 text-sm">转化人数 / 访问人数</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📈 相对提升</h5>
+                        <p class="text-gray-400 text-sm">(B-A)/A × 100%</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-pink-400 font-semibold mb-1">🔢 样本量</h5>
+                        <p class="text-gray-400 text-sm">影响结果的统计功效</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="module2-advanced" class="knowledge-section hidden">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2"><i class="fa fa-star"></i> 模块2：高级A/B测试</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2"><i class="fa fa-check-circle text-yellow-400"></i> 统计显著性</h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">统计显著性用于判断观察到的差异是真实存在的还是随机波动产生的。通常要求p值小于0.05。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+p值 < 0.05: 结果显著
+p值 < 0.01: 结果高度显著
+
+95%置信区间不包含0
+= 结果具有统计显著性
+                      </pre>
+                    </div>
+                  </div>
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2"><i class="fa fa-bar-chart text-emerald-400"></i> 卡方检验</h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">卡方检验用于判断两组之间的差异是否具有统计显著性。</p>
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+from scipy.stats import chi2_contingency
+
+table = [[320, 9680], [380, 9620]]
+chi2, p, dof, expected = chi2_contingency(table)
+
+print(f"卡方值: {chi2:.2f}")
+print(f"p值: {p:.4f}")
+print(f"显著性: {'是' if p < 0.05 else '否'}")
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const problems = [
+      {
+        id: 1,
+        title: "问题1：转化率计算",
+        description: `<p>计算A/B测试中各组的转化率。</p>
+<p><strong>输入：</strong>A组和B组的访问人数和转化人数</p>
+<p><strong>输出：</strong>各组的转化率和相对提升</p>
+<p><strong>要求：</strong></p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>计算A组转化率</li>
+  <li>计算B组转化率</li>
+  <li>计算相对提升</li>
+  <li>输出对比结果</li>
+</ul>`,
+        difficulty: "easy",
+        time: "25分钟",
+        code: `# 请编写代码`,
+        analysis: `<h4>解题思路</h4>
+<p>1. 计算转化率 = 转化人数 / 访问人数</p>
+<p>2. 计算相对提升 = (B转化率 - A转化率) / A转化率</p>
+<p>3. 格式化输出结果</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">
+import pandas as pd
+
+data = {
+    'group': ['A', 'B'],
+    'visitors': [10000, 10000],
+    'conversions': [320, 380]
+}
+df = pd.DataFrame(data)
+
+df['conversion_rate'] = df['conversions'] / df['visitors'] * 100
+
+control_rate = df[df['group'] == 'A']['conversion_rate'].values[0]
+treatment_rate = df[df['group'] == 'B']['conversion_rate'].values[0]
+lift = (treatment_rate - control_rate) / control_rate * 100
+
+print("A/B测试结果:")
+print(df)
+print(f"\\n相对提升: {lift:.2f}%")
+  </pre>
+</div>`
+      },
+      {
+        id: 2,
+        title: "问题2：卡方检验",
+        description: `<p>使用卡方检验判断A/B测试结果的统计显著性。</p>
+<p><strong>输入：</strong>A组和B组的转化数据和未转化数据</p>
+<p><strong>输出：</strong>卡方检验结果和显著性判断</p>
+<p><strong>要求：</strong></p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>构建列联表</li>
+  <li>进行卡方检验</li>
+  <li>判断统计显著性（α=0.05）</li>
+  <li>输出结论</li>
+</ul>`,
+        difficulty: "medium",
+        time: "30分钟",
+        code: `# 请编写代码`,
+        analysis: `<h4>解题思路</h4>
+<p>1. 构建列联表</p>
+<p>2. 使用scipy进行卡方检验</p>
+<p>3. 比较p值与显著性水平</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">
+from scipy.stats import chi2_contingency
+import numpy as np
+
+contingency_table = np.array([
+    [320, 9680],
+    [380, 9620]
+])
+
+chi2, p_value, dof, expected = chi2_contingency(contingency_table)
+
+print("列联表:")
+print("      转化  未转化")
+print(f"A组:  {contingency_table[0][0]:4d}  {contingency_table[0][1]:5d}")
+print(f"B组:  {contingency_table[1][0]:4d}  {contingency_table[1][1]:5d}")
+
+print(f"\\n卡方值: {chi2:.4f}")
+print(f"p值: {p_value:.4f}")
+print(f"自由度: {dof}")
+
+alpha = 0.05
+if p_value < alpha:
+    print(f"\\n结论: p值({p_value:.4f}) < {alpha}，差异具有统计显著性")
+else:
+    print(f"\\n结论: p值({p_value:.4f}) >= {alpha}，差异不具有统计显著性")
+  </pre>
+</div>`
+      },
+      {
+        id: 3,
+        title: "问题3：样本量计算",
+        description: `<p>计算A/B测试所需的最小样本量。</p>
+<p><strong>输入：</strong>基线转化率、最小可检测效应、显著性水平和统计功效</p>
+<p><strong>输出：</strong>每组所需最小样本量</p>
+<p><strong>要求：</strong></p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>设置参数</li>
+  <li>计算效应量</li>
+  <li>计算每组样本量</li>
+  <li>输出总样本量需求</li>
+</ul>`,
+        difficulty: "medium",
+        time: "35分钟",
+        code: `# 请编写代码`,
+        analysis: `<h4>解题思路</h4>
+<p>1. 计算标准误</p>
+<p>2. 计算Z值</p>
+<p>3. 计算样本量</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">
+import numpy as np
+from scipy.stats import norm
+
+baseline_rate = 0.03
+mde = 0.02
+alpha = 0.05
+power = 0.8
+
+treatment_rate = baseline_rate * (1 + mde)
+p1 = baseline_rate
+p2 = treatment_rate
+p_bar = (p1 + p2) / 2
+
+effect_size = np.sqrt(2 * (p2 - p1)**2 / p_bar / (1 - p_bar))
+z_alpha = norm.ppf(1 - alpha/2)
+z_beta = norm.ppf(power)
+
+n = 2 * (z_alpha + z_beta)**2 * p_bar * (1 - p_bar) / (p2 - p1)**2
+
+print(f"基线转化率: {baseline_rate*100}%")
+print(f"目标转化率: {treatment_rate*100}%")
+print(f"最小检测效应: {mde*100}%")
+print(f"\\n每组所需样本量: {int(np.ceil(n))}")
+print(f"总样本量需求: {int(np.ceil(n * 2))}")
+  </pre>
+</div>`
+      },
+      {
+        id: 4,
+        title: "问题4：综合分析报告",
+        description: `<p>生成完整的A/B测试分析报告。</p>
+<p><strong>输入：</strong>A/B测试的完整数据</p>
+<p><strong>输出：</strong>包含所有统计指标的综合报告</p>
+<p><strong>要求：</strong></p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>计算转化率指标</li>
+  <li>进行统计检验</li>
+  <li>计算置信区间</li>
+  <li>生成结论建议</li>
+</ul>`,
+        difficulty: "hard",
+        time: "40分钟",
+        code: `# 请编写代码`,
+        analysis: `<h4>解题思路</h4>
+<p>1. 计算核心指标</p>
+<p>2. 进行统计检验</p>
+<p>3. 计算置信区间</p>
+<p>4. 生成报告</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+from scipy.stats import chi2_contingency, norm
+
+data = {
+    'group': ['A', 'B'],
+    'visitors': [10000, 10000],
+    'conversions': [320, 380]
+}
+df = pd.DataFrame(data)
+df['no_conv'] = df['visitors'] - df['conversions']
+df['conv_rate'] = df['conversions'] / df['visitors']
+
+rate_a = df[df['group'] == 'A']['conv_rate'].values[0]
+rate_b = df[df['group'] == 'B']['conv_rate'].values[0]
+lift = (rate_b - rate_a) / rate_a * 100
+
+chi2, p_value, _, _ = chi2_contingency(df[['conversions', 'no_conv']])
+se = np.sqrt(rate_a * (1-rate_a) / 10000 + rate_b * (1-rate_b) / 10000)
+ci_low = (rate_b - rate_a) - 1.96 * se
+ci_high = (rate_b - rate_a) + 1.96 * se
+
+print("=" * 50)
+print("A/B测试分析报告")
+print("=" * 50)
+print(f"\\n转化率对比:")
+print(f"  A组(对照): {rate_a*100:.2f}%")
+print(f"  B组(实验): {rate_b*100:.2f}%")
+print(f"  相对提升: {lift:.2f}%")
+print(f"\\n统计检验:")
+print(f"  卡方值: {chi2:.4f}")
+print(f"  p值: {p_value:.4f}")
+print(f"  结论: {'显著' if p_value < 0.05 else '不显著'}")
+print(f"\\n95%置信区间: [{ci_low*100:.2f}%, {ci_high*100:.2f}%]")
+  </pre>
+</div>`
+      }
+    ];
+
+    const choiceQuestions = [
+      { id: 'c1', chapter: 1, title: "选择题1：A/B测试概念", question: "A/B测试的主要目的是什么？", options: [{ label: 'A', text: '增加用户数量' }, { label: 'B', text: '比较两个方案的效果差异' }, { label: 'C', text: '降低服务器负载' }, { label: 'D', text: '优化数据库' }], answer: 'B', analysis: "A/B测试通过对比实验组和对照组的差异，帮助我们做出数据驱动的决策。", difficulty: "easy" },
+      { id: 'c2', chapter: 1, title: "选择题2：统计显著性", question: "通常情况下，p值小于多少认为结果具有统计显著性？", options: [{ label: 'A', text: '0.01' }, { label: 'B', text: '0.05' }, { label: 'C', text: '0.10' }, { label: 'D', text: '0.20' }], answer: 'B', analysis: "通常使用0.05作为显著性水平，p值小于0.05表示差异具有统计显著性。", difficulty: "medium" },
+      { id: 'c3', chapter: 1, title: "选择题3：置信区间", question: "95%置信区间的含义是什么？", options: [{ label: 'A', text: '有95%的概率包含真实值' }, { label: 'B', text: '如果重复实验100次，大约95次会包含真实值' }, { label: 'C', text: '真实值有95%在这个范围内' }, { label: 'D', text: '这个范围覆盖了95%的数据' }], answer: 'B', analysis: "置信区间是频率学派的概念，95%置信区间意味着如果重复实验很多次，大约95%的区间会包含真实参数值。", difficulty: "easy" },
+      { id: 'c4', chapter: 2, title: "选择题4：假设检验", question: "在A/B测试中，原假设(H0)通常是什么？", options: [{ label: 'A', text: '实验组比对照组好' }, { label: 'B', text: '两组之间没有差异' }, { label: 'C', text: '样本量足够大' }, { label: 'D', text: 'p值小于0.05' }], answer: 'B', analysis: "原假设通常设定为实验组和对照组之间没有差异，我们通过数据来判断是否有足够证据拒绝原假设。", difficulty: "medium" },
+      { id: 'c5', chapter: 2, title: "选择题5：p值理解", question: "p值越小表示什么？", options: [{ label: 'A', text: '差异越大' }, { label: 'B', text: '数据越极端，原假设为真的可能性越小' }, { label: 'C', text: '样本量越大' }, { label: 'D', text: '置信度越高' }], answer: 'B', analysis: "p值表示在原假设为真的条件下，观察到当前或更极端结果的概率。p值越小，说明数据越不支持原假设。", difficulty: "medium" }
+    ];
+
+    let currentProblem = 1;
+    let pyodide = null;
+    let editor = null;
+    let timerInterval = null;
+    let seconds = 0;
+    let isCodeEditorCollapsed = false;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      editor = ace.edit('codeEditor');
+      editor.setTheme('ace/theme/tomorrow_night');
+      editor.getSession().setMode('ace/mode/python');
+      editor.setOptions({ fontSize: '14px', tabSize: 4, useSoftTabs: true, wrap: true });
+      editor.setValue('# 请编写代码');
+      editor.clearSelection();
+      initPyodide();
+      loadProgrammingProblem(1);
+      document.getElementById('runCode').addEventListener('click', runCode);
+      document.getElementById('resetCode').addEventListener('click', resetCode);
+      document.querySelectorAll('.knowledge-nav').forEach((button) => {
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          document.querySelectorAll('.knowledge-nav').forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          const target = this.getAttribute('data-target');
+          document.querySelectorAll('.knowledge-section').forEach(section => section.classList.add('hidden'));
+          const targetElement = document.getElementById(target);
+          if (targetElement) targetElement.classList.remove('hidden');
+        });
+      });
+    });
+
+    async function initPyodide() {
+      const statusEl = document.getElementById('pyodide-status');
+      statusEl.innerHTML = '<i class="fa fa-spinner fa-spin text-amber-400"></i> 正在加载Python解释器...';
+      try {
+        pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/" });
+        await pyodide.loadPackage(['pandas', 'numpy', 'scipy']);
+        statusEl.innerHTML = '<i class="fa fa-check text-emerald-400"></i> Python解释器加载成功';
+      } catch (error) {
+        statusEl.innerHTML = '<i class="fa fa-exclamation-triangle text-red-400"></i> Python解释器加载失败';
+        console.error('Pyodide load error:', error);
+      }
+    }
+
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+      document.getElementById(tabId).classList.remove('hidden');
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+      document.querySelectorAll(`.nav-link[onclick*="${tabId}"]`).forEach(link => link.classList.add('active'));
+    }
+
+    function toggleChapter(chapterId) {
+      const content = document.getElementById(chapterId + '-content');
+      const icon = document.getElementById(chapterId + '-icon');
+      content.classList.toggle('collapsed');
+      if (content.classList.contains('collapsed')) {
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-right');
+      } else {
+        icon.classList.remove('fa-chevron-right');
+        icon.classList.add('fa-chevron-down');
+      }
+    }
+
+    function loadProgrammingProblem(id) {
+      const problem = problems.find(p => p.id === id);
+      if (!problem) return;
+      currentProblem = id;
+      document.getElementById('problem-title').textContent = problem.title;
+      document.getElementById('problem-description').innerHTML = problem.description;
+      document.getElementById('difficulty-tag').textContent = problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难';
+      document.getElementById('difficulty-tag').className = `difficulty-tag difficulty-${problem.difficulty === 'easy' ? 'easy' : problem.difficulty === 'medium' ? 'medium' : 'hard'}`;
+      document.getElementById('answer-analysis').innerHTML = problem.analysis;
+      editor.setValue(problem.code);
+      editor.clearSelection();
+      editor.setReadOnly(false);
+      resetTimer();
+      startTimer();
+      document.querySelectorAll('.problem-item').forEach(item => item.classList.remove('active'));
+      event.target.closest('.problem-item')?.classList.add('active');
+    }
+
+    function loadChoiceQuestion(id) {
+      const question = choiceQuestions.find(q => q.id === id);
+      if (!question) return;
+      document.getElementById('problem-title').textContent = question.title;
+      document.getElementById('difficulty-tag').textContent = question.difficulty === 'easy' ? '简单' : '中等';
+      document.getElementById('difficulty-tag').className = `difficulty-tag difficulty-${question.difficulty === 'easy' ? 'easy' : 'medium'}`;
+      let html = `<p class="text-lg mb-4">${question.question}</p><div class="space-y-3">`;
+      question.options.forEach(opt => {
+        html += `<div class="choice-option" onclick="selectOption(this, '${opt.label}')"><span class="choice-label">${opt.label}</span><span>${opt.text}</span></div>`;
+      });
+      html += '</div>';
+      document.getElementById('problem-description').innerHTML = html;
+      document.getElementById('answer-analysis').innerHTML = `<h4>答案解析</h4><p>${question.analysis}</p>`;
+      editor.setValue('# 选择题无需编写代码');
+      editor.setReadOnly(true);
+      resetTimer();
+      startTimer();
+    }
+
+    function selectOption(element, label) {
+      document.querySelectorAll('.choice-option').forEach(opt => opt.classList.remove('selected'));
+      element.classList.add('selected');
+    }
+
+    function toggleFavorite(id) {
+      const btn = document.getElementById('favorite-btn');
+      const icon = btn.querySelector('i');
+      if (icon.classList.contains('fa-star-o')) {
+        icon.classList.remove('fa-star-o');
+        icon.classList.add('fa-star');
+        btn.classList.add('text-yellow-400');
+      } else {
+        icon.classList.remove('fa-star');
+        icon.classList.add('fa-star-o');
+        btn.classList.remove('text-yellow-400');
+      }
+    }
+
+    function startTimer() {
+      seconds = 0;
+      timerInterval = setInterval(() => {
+        seconds++;
+        const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+        const secs = (seconds % 60).toString().padStart(2, '0');
+        document.getElementById('timer').textContent = `${mins}:${secs}`;
+      }, 1000);
+    }
+
+    function resetTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      seconds = 0;
+      document.getElementById('timer').textContent = '00:00';
+    }
+
+    function toggleCodeEditor() {
+      const container = document.getElementById('code-editor-container');
+      const icon = document.getElementById('toggle-code-icon');
+      if (isCodeEditorCollapsed) {
+        container.style.display = 'block';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+        isCodeEditorCollapsed = false;
+      } else {
+        container.style.display = 'none';
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+        isCodeEditorCollapsed = true;
+      }
+    }
+
+    async function runCode() {
+      if (!pyodide) {
+        document.getElementById('code-output').innerHTML = '<span class="text-red-400">Python解释器未加载完成，请稍候...</span>';
+        return;
+      }
+      const code = editor.getValue();
+      const startTime = performance.now();
+      document.getElementById('code-output').innerHTML = '<span class="text-cyan-400"><i class="fa fa-spinner fa-spin"></i> 运行中...</span>';
+      try {
+        const result = await pyodide.runPythonAsync(code);
+        const endTime = performance.now();
+        document.getElementById('execution-time').textContent = `执行时间：${Math.round(endTime - startTime)}ms`;
+        document.getElementById('code-output').innerHTML = result ? `<pre class="text-gray-300 whitespace-pre-wrap">${result}</pre>` : '<span class="text-emerald-400">代码执行完成，无输出</span>';
+      } catch (error) {
+        document.getElementById('code-output').innerHTML = `<span class="text-red-400">错误: ${error.message}</span>`;
+      }
+    }
+
+    function resetCode() {
+      const problem = problems.find(p => p.id === currentProblem);
+      if (problem) editor.setValue(problem.code);
+      else editor.setValue('# 请编写代码');
+      editor.clearSelection();
+    }
+  </script>
+</body>
+</html>

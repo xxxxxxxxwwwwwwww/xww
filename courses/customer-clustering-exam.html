@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>供应链分析考试 - Xww的课程页面</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/ace.js"></script>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#06b6d4',
+            secondary: '#1e293b',
+            accent: '#10b981',
+            code: '#1e293b',
+            codeText: '#e2e8f0',
+            dark: '#111827',
+            'dark-gray': '#1f2937',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .code-editor {
+        @apply w-full h-96 bg-dark rounded-lg overflow-hidden border border-gray-700;
+      }
+      .code-output {
+        @apply w-full h-64 bg-dark rounded-lg p-4 font-mono text-sm overflow-auto border border-gray-700;
+      }
+      .btn-primary {
+        @apply bg-cyan-500 hover:bg-cyan-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2;
+      }
+      .btn-secondary {
+        @apply bg-dark-gray hover:bg-gray-700 text-gray-200 px-4 py-2 rounded-lg transition-all duration-300 border border-gray-700 flex items-center gap-2;
+      }
+      .btn-accent {
+        @apply bg-emerald-500 hover:bg-emerald-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2;
+      }
+      .nav-link {
+        @apply relative text-gray-300 hover:text-cyan-400 transition-colors px-4 py-2 rounded-lg hover:bg-dark-gray flex items-center gap-2;
+      }
+      .nav-link.active {
+        @apply text-cyan-400 bg-dark-gray;
+      }
+      .problem-item {
+        @apply flex items-center gap-3 p-3 rounded-lg hover:bg-dark-gray transition-colors cursor-pointer border border-gray-700;
+      }
+      .problem-item.active {
+        @apply bg-dark-gray border-cyan-500;
+      }
+      .section-title {
+        @apply text-xl font-bold text-gray-200 mb-4 relative pb-2;
+      }
+      .section-title::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-16 h-1 bg-cyan-500 rounded-full;
+      }
+      .problem-description {
+        @apply text-gray-300 space-y-4;
+      }
+      .problem-description code {
+        @apply bg-dark-gray px-2 py-1 rounded text-cyan-400;
+      }
+      .answer-analysis {
+        @apply text-gray-300 space-y-3;
+      }
+      .answer-analysis h4 {
+        @apply text-lg font-semibold text-emerald-400 mb-2;
+      }
+      .run-info {
+        @apply flex justify-between items-center mb-2 text-xs text-gray-400;
+      }
+      .difficulty-tag {
+        @apply text-xs px-2 py-1 rounded-full;
+      }
+      .difficulty-easy {
+        @apply bg-emerald-900 text-emerald-300;
+      }
+      .difficulty-medium {
+        @apply bg-yellow-900 text-yellow-300;
+      }
+      .difficulty-hard {
+        @apply bg-red-900 text-red-300;
+      }
+      .scrollbar-thin {
+        scrollbar-width: thin;
+      }
+      .scrollbar-thin::-webkit-scrollbar {
+        width: 6px;
+      }
+      .scrollbar-thin::-webkit-scrollbar-track {
+        @apply bg-dark;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb {
+        @apply bg-gray-700 rounded-full;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        @apply bg-gray-600;
+      }
+    }
+  </style>
+</head>
+<body class="bg-dark min-h-screen text-gray-200">
+  <!-- 顶部导航栏 -->
+  <nav class="bg-dark-gray shadow-lg fixed w-full z-10">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <a href="supply-chain-analysis.html" class="text-cyan-400 font-bold text-xl flex items-center gap-2">
+          <i class="fa fa-arrow-left mr-2"></i> 供应链分析
+        </a>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="text-sm text-gray-300">
+          <span id="exam-timer" class="text-cyan-400 font-semibold">30:00</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主要内容区 -->
+  <div class="pt-24 min-h-screen">
+    <div class="container mx-auto px-4">
+      <!-- 考试开始页面 -->
+      <div id="exam-start" class="py-12">
+        <div class="max-w-3xl mx-auto bg-dark-gray rounded-xl p-8 border border-gray-700">
+          <div class="text-center">
+            <h2 class="text-2xl font-bold text-gray-200 mb-6">供应链分析考试</h2>
+            <p class="text-gray-400 mb-8">请输入您的姓名，然后点击开始考试按钮</p>
+            <div class="mb-6">
+              <input type="text" id="student-name" placeholder="请输入您的姓名" class="w-full px-4 py-3 bg-dark border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-200">
+            </div>
+            <div class="bg-dark p-6 rounded-lg mb-6 text-left">
+              <h3 class="text-lg font-semibold text-gray-200 mb-4">考试规则</h3>
+              <ul class="list-disc list-inside space-y-2 text-gray-400">
+                <li>考试时间：30分钟</li>
+                <li>共10道题目，包括1道编程题和9道选择题</li>
+                <li>选择题自动评分，编程题需运行代码后评分</li>
+                <li>请独立完成，不要参考外部资料</li>
+                <li>考试过程中不要刷新页面，否则会丢失进度</li>
+                <li>点击提交按钮后将无法修改答案</li>
+              </ul>
+            </div>
+            <button id="start-exam" class="btn-primary">
+              <i class="fa fa-play"></i> 开始考试
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 考试页面 -->
+      <div id="exam-content" class="hidden">
+        <div class="flex flex-col lg:flex-row gap-6 py-6">
+          <!-- 左侧：题目列表 -->
+          <div class="lg:w-1/4 bg-dark-gray rounded-xl p-4 border border-gray-700 h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin">
+            <h2 class="section-title">考试题目</h2>
+            <div class="space-y-2" id="question-list">
+              <!-- 题目列表将通过JavaScript动态生成 -->
+            </div>
+          </div>
+
+          <!-- 右侧：问题、代码编辑器、运行结果 -->
+          <div class="lg:w-3/4 space-y-6">
+            <!-- 题目描述 -->
+            <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
+                <h3 class="text-xl font-bold text-gray-200" id="exam-problem-title">问题1：供应链数据预处理</h3>
+                <span class="difficulty-tag difficulty-easy" id="exam-difficulty-tag">简单</span>
+              </div>
+              <div class="problem-description" id="exam-problem-description">
+                <!-- 题目描述将通过JavaScript动态生成 -->
+              </div>
+            </div>
+
+            <!-- 选择题区域 -->
+            <div id="exam-choice-area" class="hidden bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
+                <h3 class="text-xl font-bold text-gray-200" id="exam-choice-title">选择题</h3>
+                <span class="difficulty-tag difficulty-easy" id="exam-choice-difficulty-tag">简单</span>
+              </div>
+              
+              <div class="mb-6">
+                <p class="text-lg text-gray-200 mb-4" id="exam-choice-question-text"></p>
+                
+                <div class="space-y-3" id="exam-choice-options">
+                  <!-- 选项将通过JavaScript动态生成 -->
+                </div>
+              </div>
+            </div>
+
+            <!-- 代码编辑框 -->
+            <div id="exam-code-area" class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
+                <h3 class="text-lg font-semibold text-gray-200">代码编辑器</h3>
+                <div class="flex gap-2">
+                  <button id="exam-reset-code" class="btn-secondary text-sm">
+                    <i class="fa fa-refresh"></i> 重置
+                  </button>
+                  <button id="exam-run-code" class="btn-primary">
+                    <i class="fa fa-play"></i> 运行代码
+                  </button>
+                </div>
+              </div>
+              <div id="exam-code-editor" class="code-editor"></div>
+              <div id="exam-pyodide-status" class="mt-2 text-sm text-yellow-400">
+                <i class="fa fa-spinner fa-spin"></i> 正在加载Python解释器...
+              </div>
+            </div>
+
+            <!-- 运行结果 -->
+            <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+              <h3 class="text-lg font-semibold text-gray-200 mb-4">运行结果</h3>
+              <div class="run-info">
+                <span id="exam-execution-time">执行时间：0ms</span>
+                <span id="exam-memory-usage">内存：0MB</span>
+              </div>
+              <div id="exam-code-output" class="code-output">
+                运行代码查看输出...
+              </div>
+            </div>
+
+            <!-- 导航按钮 -->
+            <div class="flex justify-between items-center">
+              <button id="prev-question" class="btn-secondary">
+                <i class="fa fa-arrow-left"></i> 上一题
+              </button>
+              <button id="submit-exam" class="btn-accent">
+                <i class="fa fa-paper-plane"></i> 提交考试
+              </button>
+              <button id="next-question" class="btn-primary">
+                下一题 <i class="fa fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 考试结果页面 -->
+      <div id="exam-result" class="hidden py-12">
+        <div class="max-w-4xl mx-auto bg-dark-gray rounded-xl p-8 border border-gray-700">
+          <div class="text-center mb-8">
+            <h2 class="text-2xl font-bold text-gray-200 mb-2">考试完成！</h2>
+            <p class="text-gray-400" id="result-name"></p>
+          </div>
+          
+          <div class="bg-dark p-6 rounded-lg mb-8">
+            <div class="flex justify-between items-center mb-6">
+              <div>
+                <h3 class="text-xl font-semibold text-gray-200">考试成绩</h3>
+                <p class="text-gray-400">总得分：<span id="total-score" class="text-cyan-400 font-semibold text-2xl">0</span> 分</p>
+              </div>
+              <div class="text-right">
+                <p class="text-gray-400">用时：<span id="used-time" class="text-cyan-400">0</span> 分钟</p>
+                <p class="text-gray-400">完成率：<span id="completion-rate" class="text-cyan-400">0</span>%</p>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              <div class="bg-dark-gray p-4 rounded-lg text-center">
+                <p class="text-gray-400">总题目</p>
+                <p class="text-2xl font-bold text-gray-200">10</p>
+              </div>
+              <div class="bg-dark-gray p-4 rounded-lg text-center">
+                <p class="text-gray-400">已完成</p>
+                <p class="text-2xl font-bold text-emerald-400" id="completed-count">0</p>
+              </div>
+              <div class="bg-dark-gray p-4 rounded-lg text-center">
+                <p class="text-gray-400">正确</p>
+                <p class="text-2xl font-bold text-emerald-400" id="correct-count">0</p>
+              </div>
+              <div class="bg-dark-gray p-4 rounded-lg text-center">
+                <p class="text-gray-400">错误</p>
+                <p class="text-2xl font-bold text-red-400" id="wrong-count">0</p>
+              </div>
+            </div>
+            
+            <div class="space-y-4">
+              <h3 class="text-lg font-semibold text-gray-200">答题情况</h3>
+              <div id="answer-status" class="grid grid-cols-5 gap-2">
+                <!-- 答题状态将通过JavaScript动态生成 -->
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex justify-center gap-4">
+            <button id="review-answers" class="btn-secondary">
+              <i class="fa fa-list"></i> 查看答案
+            </button>
+            <button id="back-to-course" class="btn-primary">
+              <i class="fa fa-home"></i> 返回课程
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 考试题目数据
+    const examProblems = [
+      {
+        id: 1,
+        title: "编程题：供应链数据预处理",
+        description: `<p>编写一个程序，对供应链数据进行预处理，包括缺失值处理、异常值检测等。</p>
+        <p><strong>背景：</strong></p>
+        <p>一家零售公司提供了包含缺失值和异常值的供应链数据。</p>
+        <p><strong>要求：</strong></p>
+        <ul class="list-disc list-inside space-y-1 mt-2">
+          <li>识别并统计缺失值</li>
+          <li>使用合适的方法填充缺失值</li>
+          <li>使用IQR方法检测并处理异常值</li>
+          <li>输出处理后的数据</li>
+        </ul>`,
+        difficulty: "easy",
+        code: `# 请编写代码
+`,
+        answer: `import pandas as pd
+import numpy as np
+
+# 创建示例数据
+data = {
+    'product_id': [1, 2, 3, 4, 5, 6],
+    'demand': [100, 120, np.nan, 150, 200, 1000],
+    'lead_time': [7, 8, 6, np.nan, 9, 8],
+    'supplier': ['A', 'B', 'A', 'C', 'B', 'A']
+}
+df = pd.DataFrame(data)
+
+# 识别缺失值
+print("缺失值统计:")
+print(df.isnull().sum())
+
+# 处理缺失值
+df['demand'] = df['demand'].fillna(df['demand'].mean())
+df['lead_time'] = df['lead_time'].fillna(df['lead_time'].median())
+
+# 检测异常值（IQR方法）
+Q1 = df['demand'].quantile(0.25)
+Q3 = df['demand'].quantile(0.75)
+IQR = Q3 - Q1
+lower = Q1 - 1.5 * IQR
+upper = Q3 + 1.5 * IQR
+outliers = df[(df['demand'] < lower) | (df['demand'] > upper)]
+print("\\n检测到的异常值:")
+print(outliers)
+
+# 处理异常值（截断）
+df['demand'] = df['demand'].clip(lower, upper)
+
+print("\\n处理后的数据:")
+print(df)
+`,
+        score: 10
+      }
+    ];
+
+    // 考试选择题数据
+    const examChoiceQuestions = [
+      {
+        id: 11,
+        type: "choice",
+        title: "选择题1：供应链基本概念",
+        question: "供应链是指从原材料采购到最终客户的整个流程，以下哪个不是供应链的核心要素？",
+        options: {
+          A: "物流（物质流动）",
+          B: "信息流（信息传递）",
+          C: "技术流（技术传播）",
+          D: "资金流（资金往来）"
+        },
+        answer: "C",
+        score: 10
+      },
+      {
+        id: 12,
+        type: "choice",
+        title: "选择题2：供应链核心流程",
+        question: "供应链管理包括五大核心流程，以下哪个顺序是正确的？",
+        options: {
+          A: "计划-采购-制造-配送-退货",
+          B: "采购-计划-制造-配送-退货",
+          C: "计划-制造-采购-配送-退货",
+          D: "采购-制造-计划-配送-退货"
+        },
+        answer: "A",
+        score: 10
+      },
+      {
+        id: 13,
+        type: "choice",
+        title: "选择题3：供应链管理目标",
+        question: "以下哪个不是供应链管理的主要目标？",
+        options: {
+          A: "提高客户满意度",
+          B: "增加运营成本",
+          C: "优化库存水平",
+          D: "增强竞争力"
+        },
+        answer: "B",
+        score: 10
+      },
+      {
+        id: 14,
+        type: "choice",
+        title: "选择题4：预测方法比较",
+        question: "对于有明显趋势和季节性的数据，以下哪种预测方法最适合？",
+        options: {
+          A: "简单移动平均（SMA）",
+          B: "加权移动平均（WMA）",
+          C: "简单指数平滑（SES）",
+          D: "Holt-Winters指数平滑"
+        },
+        answer: "D",
+        score: 10
+      },
+      {
+        id: 15,
+        type: "choice",
+        title: "选择题5：预测误差分析",
+        question: "以下哪个误差指标可以避免正负误差相互抵消，并且对大误差比较敏感？",
+        options: {
+          A: "MAE（平均绝对误差）",
+          B: "MSE（均方误差）",
+          C: "MAPE（平均绝对百分比误差）",
+          D: "以上都不是"
+        },
+        answer: "B",
+        score: 10
+      },
+      {
+        id: 16,
+        type: "choice",
+        title: "选择题6：库存成本分析",
+        question: "EOQ（经济订货量）模型旨在最小化哪种成本？",
+        options: {
+          A: "只最小化订购成本",
+          B: "只最小化持有成本",
+          C: "总库存成本（订购成本+持有成本）",
+          D: "只最小化缺货成本"
+        },
+        answer: "C",
+        score: 10
+      },
+      {
+        id: 17,
+        type: "choice",
+        title: "选择题7：ABC分类法",
+        question: "在ABC分类法中，A类物品通常具有什么特点？",
+        options: {
+          A: "价值高，数量多",
+          B: "价值高，数量少",
+          C: "价值低，数量多",
+          D: "价值低，数量少"
+        },
+        answer: "B",
+        score: 10
+      },
+      {
+        id: 18,
+        type: "choice",
+        title: "选择题8：物流成本分析",
+        question: "运输路线优化的主要目标是？",
+        options: {
+          A: "最大化运输距离",
+          B: "最小化运输成本或时间",
+          C: "增加运输次数",
+          D: "以上都不是"
+        },
+        answer: "B",
+        score: 10
+      },
+      {
+        id: 19,
+        type: "choice",
+        title: "选择题9：供应链风险管理",
+        question: "安全库存主要是为了应对什么风险？",
+        options: {
+          A: "价格波动风险",
+          B: "需求不确定性和供应延迟风险",
+          C: "供应商破产风险",
+          D: "自然灾害风险"
+        },
+        answer: "B",
+        score: 10
+      }
+    ];
+
+    // 合并所有考试题目
+    const allExamQuestions = [...examProblems, ...examChoiceQuestions];
+
+    // 全局变量
+    let currentQuestion = 1;
+    let pyodide = null;
+    let editor = null;
+    let examTimer = null;
+    let examTime = 30 * 60; // 30分钟
+    let studentName = "";
+    let studentAnswers = {};
+    let examStartTime = null;
+
+    // 初始化函数
+    document.addEventListener('DOMContentLoaded', function() {
+      // 绑定开始考试按钮事件
+      document.getElementById('start-exam').addEventListener('click', startExam);
+      
+      // 绑定返回课程按钮事件
+      document.getElementById('back-to-course').addEventListener('click', function() {
+        window.location.href = 'supply-chain-analysis.html';
+      });
+      
+      // 绑定提交考试按钮事件
+      document.getElementById('submit-exam').addEventListener('click', function() {
+        if (confirm('确定要提交考试吗？提交后将无法修改答案。')) {
+          submitExam();
+        }
+      });
+      
+      // 绑定查看答案按钮事件
+      document.getElementById('review-answers').addEventListener('click', function() {
+        showAnswerReview();
+      });
+    });
+    
+    function showAnswerReview() {
+      const resultDiv = document.getElementById('exam-result');
+      
+      let html = `
+        <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold text-gray-200">答案解析</h3>
+            <button onclick="document.getElementById('exam-result').innerHTML = document.getElementById('original-result').innerHTML; initResultEvents();" class="btn-secondary text-sm">
+              <i class="fa fa-arrow-left"></i> 返回
+            </button>
+          </div>
+          
+          <div class="space-y-6 max-h-[70vh] overflow-y-auto pr-2">
+      `;
+      
+      examProblems.forEach((problem, index) => {
+        const studentAnswer = studentAnswers[problem.id];
+        const isCorrect = studentAnswer && studentAnswer.trim() === problem.answer.trim();
+        const isAnswered = studentAnswer && studentAnswer.trim() !== problem.code.trim();
+        
+        html += `
+          <div class="bg-dark p-4 rounded-lg border ${isCorrect ? 'border-emerald-600' : 'border-red-600'}">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-8 h-8 rounded-full ${isCorrect ? 'bg-emerald-600' : 'bg-red-600'} text-white flex items-center justify-center font-bold text-sm">${index + 1}</span>
+              <h4 class="font-semibold text-gray-200">${problem.title}</h4>
+              <span class="${isCorrect ? 'text-emerald-400' : isAnswered ? 'text-red-400' : 'text-gray-400'} text-sm">${isCorrect ? '✓ 正确' : isAnswered ? '✗ 错误' : '○ 未答'}</span>
+            </div>
+            <div class="text-sm text-gray-400 mb-2">
+              <strong>你的答案：</strong>
+              <span class="${isCorrect ? 'text-emerald-400' : 'text-red-400'}">${isAnswered ? (isCorrect ? '正确' : '错误') : '未作答'}</span>
+            </div>
+            <div class="bg-dark-gray p-3 rounded text-sm">
+              <strong class="text-emerald-400">参考答案：</strong>
+              <pre class="mt-2 text-gray-300 whitespace-pre-wrap">${problem.answer || '无'}</pre>
+            </div>
+          </div>
+        `;
+      });
+      
+      examChoiceQuestions.forEach((question, index) => {
+        const studentAnswer = studentAnswers[question.id];
+        const isCorrect = studentAnswer === question.answer;
+        const isAnswered = !!studentAnswer;
+        
+        html += `
+          <div class="bg-dark p-4 rounded-lg border ${isCorrect ? 'border-emerald-600' : 'border-red-600'}">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-8 h-8 rounded-full ${isCorrect ? 'bg-emerald-600' : 'bg-red-600'} text-white flex items-center justify-center font-bold text-sm">选${index + 1}</span>
+              <h4 class="font-semibold text-gray-200">${question.title}</h4>
+              <span class="${isCorrect ? 'text-emerald-400' : isAnswered ? 'text-red-400' : 'text-gray-400'} text-sm">${isCorrect ? '✓ 正确' : isAnswered ? '✗ 错误' : '○ 未答'}</span>
+            </div>
+            <div class="text-sm text-gray-400 mb-2">
+              <strong>你的答案：</strong>
+              <span class="${isCorrect ? 'text-emerald-400' : 'text-red-400'}">${isAnswered ? studentAnswer : '未作答'}</span>
+            </div>
+            <div class="text-sm text-gray-400 mb-2">
+              <strong>正确答案：</strong>
+              <span class="text-emerald-400">${question.answer}</span>
+            </div>
+          </div>
+        `;
+      });
+      
+      html += `
+          </div>
+        </div>
+      `;
+      
+      const originalResult = resultDiv.innerHTML;
+      resultDiv.innerHTML = `
+        <div id="original-result" class="hidden">${originalResult}</div>
+        ${html}
+      `;
+    }
+    
+    function initResultEvents() {
+      document.getElementById('back-to-course').addEventListener('click', function() {
+        window.location.href = 'supply-chain-analysis.html';
+      });
+      document.getElementById('review-answers').addEventListener('click', function() {
+        showAnswerReview();
+      });
+    }
+
+    // 开始考试
+    function startExam() {
+      studentName = document.getElementById('student-name').value.trim();
+      if (!studentName) {
+        alert('请输入您的姓名');
+        return;
+      }
+      
+      // 隐藏开始页面，显示考试页面
+      document.getElementById('exam-start').classList.add('hidden');
+      document.getElementById('exam-content').classList.remove('hidden');
+      
+      // 初始化代码编辑器
+      editor = ace.edit('exam-code-editor');
+      editor.setTheme('ace/theme/tomorrow_night');
+      editor.getSession().setMode('ace/mode/python');
+      editor.setOptions({
+        fontSize: '14px',
+        tabSize: 4,
+        useSoftTabs: true,
+        wrap: true
+      });
+      
+      // 加载Pyodide
+      initPyodide();
+      
+      // 生成题目列表
+      generateQuestionList();
+      
+      // 加载第一个问题
+      loadExamProblem(1);
+      
+      // 绑定按钮事件
+      document.getElementById('exam-run-code').addEventListener('click', runExamCode);
+      document.getElementById('exam-reset-code').addEventListener('click', resetExamCode);
+      document.getElementById('prev-question').addEventListener('click', goToPrevQuestion);
+      document.getElementById('next-question').addEventListener('click', goToNextQuestion);
+      document.getElementById('submit-exam').addEventListener('click', function() {
+        if (confirm('确定要提交考试吗？提交后将无法修改答案。')) {
+          submitExam();
+        }
+      });
+      
+      // 开始考试计时器
+      startExamTimer();
+      
+      // 记录考试开始时间
+      examStartTime = new Date();
+    }
+
+    // 加载Pyodide
+    async function initPyodide() {
+      const statusEl = document.getElementById('exam-pyodide-status');
+      const cdns = [
+        "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/",
+        "https://unpkg.com/pyodide@0.24.1/full/",
+        "https://cdnjs.cloudflare.com/ajax/libs/pyodide/0.24.1/full/"
+      ];
+      let currentCDN = 0;
+      let retryCount = 0;
+      const maxRetries = 3;
+      
+      statusEl.innerHTML = '<i class="fa fa-spinner fa-spin text-amber-400"></i> 正在加载Python解释器...';
+
+      async function switchCDN() {
+        currentCDN++;
+        if (currentCDN >= cdns.length) {
+          currentCDN = 0;
+          retryCount++;
+          if (retryCount >= maxRetries) {
+            throw new Error('所有CDN均无法访问');
+          }
+        }
+      }
+
+      async function loadWithTimeout(indexURL) {
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('加载超时')), 30000);
+        });
+        const loadPromise = loadPyodide({ indexURL });
+        return Promise.race([loadPromise, timeoutPromise]);
+      }
+
+      while (retryCount < maxRetries) {
+        try {
+          pyodide = await loadWithTimeout(cdns[currentCDN]);
+          statusEl.innerHTML = '<i class="fa fa-check text-emerald-400"></i> Python解释器加载成功';
+          await pyodide.loadPackage(['pandas', 'numpy']);
+          return;
+        } catch (error) {
+          console.warn(`CDN ${cdns[currentCDN]} 加载失败:`, error);
+          await switchCDN();
+        }
+      }
+      
+      statusEl.innerHTML = '<i class="fa fa-exclamation-triangle text-red-400"></i> Python解释器加载失败';
+      console.error('Pyodide load error:', error);
+    }
+
+    // 生成题目列表
+    function generateQuestionList() {
+      const questionList = document.getElementById('question-list');
+      questionList.innerHTML = '';
+      
+      allExamQuestions.forEach((question, index) => {
+        const problemItem = document.createElement('div');
+        problemItem.className = 'problem-item';
+        problemItem.onclick = () => loadExamQuestion(question.id);
+        
+        const difficultyClass = question.difficulty === 'easy' ? 'difficulty-easy' : 
+                             question.difficulty === 'medium' ? 'difficulty-medium' : 'difficulty-easy';
+        
+        const isChoice = question.type === 'choice';
+        const iconBg = isChoice ? 'bg-purple-600' : 'bg-gray-700';
+        const typeLabel = isChoice ? '选择题' : (question.difficulty === 'easy' ? '简单' : question.difficulty === 'medium' ? '中等' : '困难');
+        
+        problemItem.innerHTML = `
+          <div class="w-8 h-8 rounded-full ${iconBg} flex items-center justify-center font-bold ${isChoice ? 'text-white text-xs' : ''}">${isChoice ? '选' : (index + 1)}</div>
+          <div class="flex-1">
+            <div class="font-medium">${question.title}</div>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="difficulty-tag ${difficultyClass}">${typeLabel}</span>
+            </div>
+          </div>
+          <div class="text-gray-500" id="status-${question.id}">
+            <i class="fa fa-circle-o"></i>
+          </div>
+        `;
+        
+        questionList.appendChild(problemItem);
+      });
+    }
+
+    // 当前选择题答案
+    let selectedChoiceAnswer = null;
+
+    // 加载考试问题（支持编程题和选择题）
+    function loadExamQuestion(questionId) {
+      const question = allExamQuestions.find(q => q.id === questionId);
+      
+      if (!question) return;
+      
+      // 保存当前编程题答案
+      if (editor && currentQuestion <= 1) {
+        studentAnswers[currentQuestion] = editor.getValue();
+      }
+      
+      currentQuestion = questionId;
+      
+      if (question.type === 'choice') {
+        // 加载选择题
+        loadExamChoiceQuestion(question);
+      } else {
+        // 加载编程题
+        loadExamProgrammingQuestion(question);
+      }
+      
+      // 更新问题项状态
+      document.querySelectorAll('.problem-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      const index = allExamQuestions.findIndex(q => q.id === questionId);
+      document.querySelector(`.problem-item:nth-child(${index + 1})`).classList.add('active');
+    }
+
+    // 加载选择题
+    function loadExamChoiceQuestion(question) {
+      // 隐藏编程题区域，显示选择题区域
+      document.getElementById('exam-code-area').classList.add('hidden');
+      document.getElementById('exam-code-output').parentElement.classList.add('hidden');
+      document.getElementById('exam-choice-area').classList.remove('hidden');
+      
+      // 更新选择题内容
+      document.getElementById('exam-choice-title').textContent = question.title;
+      document.getElementById('exam-choice-question-text').textContent = question.question;
+      document.getElementById('exam-choice-difficulty-tag').textContent = question.difficulty === 'easy' ? '简单' : question.difficulty === 'medium' ? '中等' : '困难';
+      document.getElementById('exam-choice-difficulty-tag').className = 'difficulty-tag difficulty-' + question.difficulty;
+      
+      // 生成选项
+      const optionsContainer = document.getElementById('exam-choice-options');
+      optionsContainer.innerHTML = '';
+      selectedChoiceAnswer = studentAnswers[question.id] || null;
+      
+      ['A', 'B', 'C', 'D'].forEach(letter => {
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'exam-choice-option p-4 rounded-lg border border-gray-700 cursor-pointer hover:border-cyan-500 transition-all';
+        if (selectedChoiceAnswer === letter) {
+          optionDiv.classList.remove('border-gray-700');
+          optionDiv.classList.add('border-cyan-500', 'bg-cyan-900/30');
+        }
+        optionDiv.setAttribute('data-option', letter);
+        optionDiv.onclick = () => selectExamChoiceOption(letter, question.id);
+        optionDiv.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold text-gray-300">${letter}</div>
+            <span class="text-gray-200">${question.options[letter]}</span>
+          </div>
+        `;
+        optionsContainer.appendChild(optionDiv);
+      });
+      
+      // 更新题目描述区域
+      document.getElementById('exam-problem-title').textContent = question.title;
+      document.getElementById('exam-problem-description').innerHTML = `<p class="text-gray-300">请选择正确答案（单选题）</p>`;
+      document.getElementById('exam-difficulty-tag').textContent = question.difficulty === 'easy' ? '简单' : question.difficulty === 'medium' ? '中等' : '困难';
+      document.getElementById('exam-difficulty-tag').className = 'difficulty-tag difficulty-' + question.difficulty;
+    }
+
+    // 选择考试选择题选项
+    function selectExamChoiceOption(option, questionId) {
+      selectedChoiceAnswer = option;
+      studentAnswers[questionId] = option;
+      
+      // 更新选项样式
+      document.querySelectorAll('.exam-choice-option').forEach(opt => {
+        opt.classList.remove('border-cyan-500', 'bg-cyan-900/30');
+        opt.classList.add('border-gray-700');
+      });
+      
+      const selectedOpt = document.querySelector(`.exam-choice-option[data-option="${option}"]`);
+      if (selectedOpt) {
+        selectedOpt.classList.remove('border-gray-700');
+        selectedOpt.classList.add('border-cyan-500', 'bg-cyan-900/30');
+      }
+      
+      // 更新问题状态
+      const statusElement = document.getElementById(`status-${questionId}`);
+      statusElement.innerHTML = '<i class="fa fa-check-circle text-emerald-400"></i>';
+    }
+
+    // 加载编程题
+    function loadExamProgrammingQuestion(question) {
+      // 显示编程题区域，隐藏选择题区域
+      document.getElementById('exam-code-area').classList.remove('hidden');
+      document.getElementById('exam-code-output').parentElement.classList.remove('hidden');
+      document.getElementById('exam-choice-area').classList.add('hidden');
+      
+      // 更新问题信息
+      document.getElementById('exam-problem-title').textContent = question.title;
+      document.getElementById('exam-problem-description').innerHTML = question.description;
+      
+      // 更新难度标签
+      const difficultyTag = document.getElementById('exam-difficulty-tag');
+      difficultyTag.className = 'difficulty-tag';
+      difficultyTag.classList.add('difficulty-' + question.difficulty);
+      difficultyTag.textContent = question.difficulty === 'easy' ? '简单' : question.difficulty === 'medium' ? '中等' : '困难';
+      
+      // 更新代码编辑器
+      editor.setValue(studentAnswers[question.id] || question.code);
+      editor.clearSelection();
+    }
+
+    // 加载考试问题（保留旧函数兼容）
+    function loadExamProblem(problemId) {
+      loadExamQuestion(problemId);
+    }
+
+    // 运行代码
+    async function runExamCode() {
+      const code = editor.getValue();
+      const outputDiv = document.getElementById('exam-code-output');
+      const executionTimeDiv = document.getElementById('exam-execution-time');
+      
+      if (!pyodide) {
+        outputDiv.textContent = 'Python解释器尚未加载完成，请稍候...';
+        return;
+      }
+      
+      outputDiv.textContent = '运行中...';
+      executionTimeDiv.textContent = '执行时间：计算中...';
+      
+      try {
+        const startTime = performance.now();
+        
+        // 运行代码
+        const result = await pyodide.runPythonAsync(code);
+        
+        const endTime = performance.now();
+        const executionTime = (endTime - startTime).toFixed(2);
+        
+        outputDiv.textContent = result || '代码执行成功，无输出';
+        executionTimeDiv.textContent = `执行时间：${executionTime}ms`;
+        
+        // 保存答案
+        studentAnswers[currentQuestion] = code;
+        
+        // 更新问题状态
+        const statusElement = document.getElementById(`status-${currentQuestion}`);
+        statusElement.innerHTML = '<i class="fa fa-check-circle text-emerald-400"></i>';
+      } catch (error) {
+        outputDiv.textContent = `错误：${error.message}`;
+        executionTimeDiv.textContent = '执行时间：0ms';
+      }
+    }
+
+    // 重置代码
+    function resetExamCode() {
+      const question = allExamQuestions.find(q => q.id === currentQuestion);
+      if (question && question.type !== 'choice') {
+        editor.setValue(question.code);
+        editor.clearSelection();
+      }
+    }
+
+    // 上一题
+    function goToPrevQuestion() {
+      const currentIndex = allExamQuestions.findIndex(q => q.id === currentQuestion);
+      if (currentIndex > 0) {
+        loadExamQuestion(allExamQuestions[currentIndex - 1].id);
+      }
+    }
+
+    // 下一题
+    function goToNextQuestion() {
+      const currentIndex = allExamQuestions.findIndex(q => q.id === currentQuestion);
+      if (currentIndex < allExamQuestions.length - 1) {
+        loadExamQuestion(allExamQuestions[currentIndex + 1].id);
+      }
+    }
+
+    // 开始考试计时器
+    function startExamTimer() {
+      updateExamTimer();
+      examTimer = setInterval(() => {
+        examTime--;
+        updateExamTimer();
+        
+        if (examTime <= 0) {
+          clearInterval(examTimer);
+          alert('考试时间到！');
+          submitExam();
+        }
+        
+        // 最后5分钟提醒
+        if (examTime === 300) {
+          alert('注意：考试还剩5分钟！');
+        }
+      }, 1000);
+    }
+
+    // 更新考试计时器
+    function updateExamTimer() {
+      const minutes = Math.floor(examTime / 60);
+      const seconds = examTime % 60;
+      const timerElement = document.getElementById('exam-timer');
+      timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      
+      // 最后5分钟显示红色
+      if (examTime <= 300) {
+        timerElement.classList.add('text-red-400');
+        timerElement.classList.remove('text-cyan-400');
+      }
+    }
+
+    // 提交考试
+    function submitExam() {
+      clearInterval(examTimer);
+      
+      // 保存当前答案
+      if (editor && currentQuestion <= 1) {
+        studentAnswers[currentQuestion] = editor.getValue();
+      }
+      
+      // 计算考试用时
+      const examEndTime = new Date();
+      const usedMinutes = Math.round((examEndTime - examStartTime) / (1000 * 60));
+      
+      // 计算得分
+      let totalScore = 0;
+      let completedCount = 0;
+      let correctCount = 0;
+      let choiceCorrectCount = 0;
+      let programmingCorrectCount = 0;
+      
+      allExamQuestions.forEach(question => {
+        const studentAnswer = studentAnswers[question.id];
+        
+        if (question.type === 'choice') {
+          // 选择题评分
+          if (studentAnswer) {
+            completedCount++;
+            if (studentAnswer === question.answer) {
+              correctCount++;
+              choiceCorrectCount++;
+              totalScore += question.score;
+            }
+          }
+        } else {
+          // 编程题评分
+          if (studentAnswer && studentAnswer.trim() !== question.code.trim()) {
+            completedCount++;
+            if (studentAnswer.trim() === question.answer.trim()) {
+              correctCount++;
+              programmingCorrectCount++;
+              totalScore += question.score;
+            } else {
+              totalScore += Math.floor(question.score * 0.5);
+            }
+          }
+        }
+      });
+      
+      const wrongCount = completedCount - correctCount;
+      const completionRate = Math.round((completedCount / allExamQuestions.length) * 100);
+      
+      // 更新结果页面
+      document.getElementById('result-name').textContent = `姓名：${studentName}`;
+      document.getElementById('total-score').textContent = totalScore;
+      document.getElementById('used-time').textContent = usedMinutes;
+      document.getElementById('completion-rate').textContent = completionRate;
+      document.getElementById('completed-count').textContent = completedCount;
+      document.getElementById('correct-count').textContent = correctCount;
+      document.getElementById('wrong-count').textContent = wrongCount > 0 ? wrongCount : 0;
+      
+      // 生成答题状态
+      const answerStatus = document.getElementById('answer-status');
+      answerStatus.innerHTML = '';
+      
+      let questionNumber = 1;
+      
+      examProblems.forEach(problem => {
+        const statusItem = document.createElement('div');
+        statusItem.className = 'flex flex-col items-center gap-1';
+        
+        const circleDiv = document.createElement('div');
+        circleDiv.className = 'w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm';
+        
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'text-xs text-gray-400';
+        
+        const studentAnswer = studentAnswers[problem.id];
+        const isAnswered = studentAnswer && studentAnswer.trim() !== problem.code.trim();
+        const isCorrect = isAnswered && studentAnswer.trim() === problem.answer.trim();
+        
+        if (!isAnswered) {
+          circleDiv.className += ' bg-gray-700 text-gray-400 border-2 border-gray-600';
+          circleDiv.textContent = questionNumber;
+          labelDiv.textContent = '未答';
+        } else if (isCorrect) {
+          circleDiv.className += ' bg-emerald-600 text-white';
+          circleDiv.innerHTML = '<i class="fa fa-check"></i>';
+          labelDiv.textContent = `题${questionNumber} ✓`;
+          labelDiv.className = 'text-xs text-emerald-400';
+        } else {
+          circleDiv.className += ' bg-yellow-600 text-white';
+          circleDiv.innerHTML = '<i class="fa fa-minus"></i>';
+          labelDiv.textContent = `题${questionNumber} △`;
+          labelDiv.className = 'text-xs text-yellow-400';
+        }
+        
+        statusItem.appendChild(circleDiv);
+        statusItem.appendChild(labelDiv);
+        answerStatus.appendChild(statusItem);
+        questionNumber++;
+      });
+      
+      examChoiceQuestions.forEach(question => {
+        const statusItem = document.createElement('div');
+        statusItem.className = 'flex flex-col items-center gap-1';
+        
+        const circleDiv = document.createElement('div');
+        circleDiv.className = 'w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm';
+        
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'text-xs text-gray-400';
+        
+        const studentAnswer = studentAnswers[question.id];
+        const isAnswered = !!studentAnswer;
+        const isCorrect = studentAnswer === question.answer;
+        
+        if (!isAnswered) {
+          circleDiv.className += ' bg-gray-700 text-gray-400 border-2 border-gray-600';
+          circleDiv.textContent = `选${questionNumber - 10}`;
+          labelDiv.textContent = '未答';
+        } else if (isCorrect) {
+          circleDiv.className += ' bg-emerald-600 text-white';
+          circleDiv.innerHTML = '<i class="fa fa-check"></i>';
+          labelDiv.textContent = `选${questionNumber - 10} ✓`;
+          labelDiv.className = 'text-xs text-emerald-400';
+        } else {
+          circleDiv.className += ' bg-red-600 text-white';
+          circleDiv.innerHTML = '<i class="fa fa-times"></i>';
+          labelDiv.textContent = `选${questionNumber - 10} ✗`;
+          labelDiv.className = 'text-xs text-red-400';
+        }
+        
+        statusItem.appendChild(circleDiv);
+        statusItem.appendChild(labelDiv);
+        answerStatus.appendChild(statusItem);
+        questionNumber++;
+      });
+      
+      // 显示结果页面
+      document.getElementById('exam-content').classList.add('hidden');
+      document.getElementById('exam-result').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
