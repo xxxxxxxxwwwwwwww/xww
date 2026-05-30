@@ -96,6 +96,18 @@
       .difficulty-hard {
         @apply bg-red-900 text-red-300;
       }
+      .option-item {
+        @apply p-4 border border-gray-700 rounded-lg cursor-pointer transition-all duration-200 hover:bg-dark-gray;
+      }
+      .option-item.selected {
+        @apply bg-cyan-900 border-cyan-500;
+      }
+      .option-item.correct {
+        @apply bg-emerald-900 border-emerald-500;
+      }
+      .option-item.incorrect {
+        @apply bg-red-900 border-red-500;
+      }
       .scrollbar-thin {
         scrollbar-width: thin;
       }
@@ -155,7 +167,7 @@
           <div class="mt-8 text-left text-sm text-gray-400">
             <h3 class="font-semibold text-gray-300 mb-2">考试说明：</h3>
             <ul class="list-disc list-inside space-y-1">
-              <li>考试包含10道题目，涵盖Python基础知识</li>
+              <li>考试包含10道题目：3道编程题 + 7道选择题</li>
               <li>考试时间为30分钟</li>
               <li>考试结束后将显示您的得分和答案解析</li>
               <li>请独立完成考试，不要查阅资料</li>
@@ -195,7 +207,8 @@
             <p>如果是偶数，输出 "<code>num 是偶数</code>"；如果是奇数，输出 "<code>num 是奇数</code>"。</p>
           </div>
           
-          <div class="mb-6">
+          <!-- 编程题区域 -->
+          <div id="coding-section" class="mb-6">
             <h4 class="text-lg font-semibold text-gray-300 mb-3">代码编辑器</h4>
             <div id="codeEditor" class="code-editor"></div>
             <div id="pyodide-status" class="mt-2 text-sm text-yellow-400">
@@ -203,7 +216,16 @@
             </div>
           </div>
           
-          <div class="mb-6">
+          <!-- 选择题区域 -->
+          <div id="mcq-section" class="mb-6 hidden">
+            <h4 class="text-lg font-semibold text-gray-300 mb-3">请选择正确答案</h4>
+            <div id="options-container" class="space-y-3">
+              <!-- 选项将通过JS动态生成 -->
+            </div>
+          </div>
+          
+          <!-- 代码运行结果区域 -->
+          <div id="output-section" class="mb-6">
             <h4 class="text-lg font-semibold text-gray-300 mb-3">运行结果</h4>
             <div class="run-info">
               <span id="execution-time">执行时间：0ms</span>
@@ -320,8 +342,10 @@
     // 考试数据
     const examData = {
       questions: [
+        // 编程题1
         {
           id: 1,
+          type: "coding",
           title: "问题1：判断奇偶数",
           difficulty: "easy",
           description: `<p>编写一个程序，输入一个整数，判断它是奇数还是偶数。</p>
@@ -336,71 +360,105 @@
             { input: "17", expected: "17 是奇数" }
           ]
         },
+        // 选择题1
         {
           id: 2,
-          title: "问题2：计算累加和",
+          type: "mcq",
+          title: "问题2：Python注释",
           difficulty: "easy",
-          description: `<p>使用循环计算1到100的累加和。</p>
-                      <p><strong>输入格式：</strong></p>
-                      <p>无</p>
-                      <p><strong>输出格式：</strong></p>
-                      <p>输出1到100的累加和。</p>`,
-          defaultCode: `# 请编写代码
-`,
-          testCases: [
-            { input: "", expected: "5050" }
-          ]
+          description: `<p>在Python中，以下哪个符号用于单行注释？</p>`,
+          options: [
+            "//",
+            "#",
+            "/*",
+            "--"
+          ],
+          correct: 1
         },
+        // 选择题2
         {
           id: 3,
-          title: "问题3：打印乘法表",
-          difficulty: "medium",
-          description: `<p>使用嵌套循环打印99乘法表。</p>
-                      <p><strong>输入格式：</strong></p>
-                      <p>无</p>
-                      <p><strong>输出格式：</strong></p>
-                      <p>输出99乘法表。</p>`,
-          defaultCode: `# 请编写代码
-`,
-          testCases: [
-            { input: "", expected: "1 × 1 = 1" }
-          ]
+          type: "mcq",
+          title: "问题3：数据类型",
+          difficulty: "easy",
+          description: `<p>Python中，以下哪个不是基本数据类型？</p>`,
+          options: [
+            "int",
+            "string",
+            "float",
+            "boolean"
+          ],
+          correct: 3
         },
+        // 编程题2
         {
           id: 4,
-          title: "问题4：判断质数",
-          difficulty: "medium",
-          description: `<p>编写一个程序，输入一个整数，判断它是否是质数。</p>
+          type: "coding",
+          title: "问题4：计算累加和",
+          difficulty: "easy",
+          description: `<p>使用循环计算1到n的累加和。</p>
                       <p><strong>输入格式：</strong></p>
-                      <p>一个整数 <code>num</code></p>
+                      <p>一个整数n</p>
                       <p><strong>输出格式：</strong></p>
-                      <p>如果是质数，输出 "<code>num 是质数</code>"；否则输出 "<code>num 不是质数</code>"。</p>`,
+                      <p>输出1到n的累加和。</p>`,
           defaultCode: `# 请编写代码
 `,
           testCases: [
-            { input: "17", expected: "17 是质数" },
-            { input: "4", expected: "4 不是质数" }
+            { input: "100", expected: "5050" },
+            { input: "10", expected: "55" }
           ]
         },
+        // 选择题3
         {
           id: 5,
-          title: "问题5：斐波那契数列",
-          difficulty: "medium",
-          description: `<p>编写一个程序，输出斐波那契数列的前n项。</p>
-                      <p><strong>输入格式：</strong></p>
-                      <p>一个整数 <code>n</code>（n ≥ 1）</p>
-                      <p><strong>输出格式：</strong></p>
-                      <p>输出斐波那契数列的前n项，用空格分隔。</p>`,
-          defaultCode: `# 请编写代码
-`,
-          testCases: [
-            { input: "5", expected: "0 1 1 2 3" }
-          ]
+          type: "mcq",
+          title: "问题5：列表操作",
+          difficulty: "easy",
+          description: `<p>在Python中，如何获取列表的长度？</p>`,
+          options: [
+            "list.size()",
+            "list.length",
+            "len(list)",
+            "count(list)"
+          ],
+          correct: 2
         },
+        // 选择题4
         {
           id: 6,
-          title: "问题6：列表去重",
-          difficulty: "easy",
+          type: "mcq",
+          title: "问题6：循环语句",
+          difficulty: "medium",
+          description: `<p>以下哪个不是Python的循环语句？</p>`,
+          options: [
+            "for",
+            "while",
+            "do-while",
+            "以上都是"
+          ],
+          correct: 2
+        },
+        // 选择题5
+        {
+          id: 7,
+          type: "mcq",
+          title: "问题7：函数定义",
+          difficulty: "medium",
+          description: `<p>在Python中，定义函数使用哪个关键字？</p>`,
+          options: [
+            "function",
+            "def",
+            "fun",
+            "fn"
+          ],
+          correct: 1
+        },
+        // 编程题3
+        {
+          id: 8,
+          type: "coding",
+          title: "问题8：列表去重",
+          difficulty: "medium",
           description: `<p>编写一个程序，去除列表中的重复元素。</p>
                       <p><strong>输入格式：</strong></p>
                       <p>输入一个列表（用空格分隔）。</p>
@@ -412,65 +470,35 @@
             { input: "1 2 3 2 1 4 5 4", expected: "1 2 3 4 5" }
           ]
         },
-        {
-          id: 7,
-          title: "问题7：字典操作",
-          difficulty: "medium",
-          description: `<p>编写一个程序，统计字符串中每个字符出现的次数。</p>
-                      <p><strong>输入格式：</strong></p>
-                      <p>输入一个字符串。</p>
-                      <p><strong>输出格式：</strong></p>
-                      <p>输出每个字符及其出现次数。</p>`,
-          defaultCode: `# 请编写代码
-`,
-          testCases: [
-            { input: "hello", expected: "h: 1" }
-          ]
-        },
-        {
-          id: 8,
-          title: "问题8：计算阶乘",
-          difficulty: "medium",
-          description: `<p>编写一个函数，计算一个整数的阶乘。</p>
-                      <p><strong>输入格式：</strong></p>
-                      <p>一个非负整数 <code>n</code></p>
-                      <p><strong>输出格式：</strong></p>
-                      <p>输出 <code>n</code> 的阶乘。</p>`,
-          defaultCode: `# 请编写代码
-`,
-          testCases: [
-            { input: "5", expected: "120" }
-          ]
-        },
+        // 选择题6
         {
           id: 9,
-          title: "问题9：字符串操作",
-          difficulty: "easy",
-          description: `<p>编写一个程序，将字符串中的每个单词首字母大写。</p>
-                      <p><strong>输入格式：</strong></p>
-                      <p>输入一个字符串。</p>
-                      <p><strong>输出格式：</strong></p>
-                      <p>输出首字母大写后的字符串。</p>`,
-          defaultCode: `# 请编写代码
-`,
-          testCases: [
-            { input: "hello world", expected: "Hello World" }
-          ]
+          type: "mcq",
+          title: "问题9：字典操作",
+          difficulty: "medium",
+          description: `<p>在Python中，字典的键必须满足什么条件？</p>`,
+          options: [
+            "必须是字符串",
+            "必须是不可变类型",
+            "必须是数字",
+            "没有限制"
+          ],
+          correct: 1
         },
+        // 选择题7
         {
           id: 10,
-          title: "问题10：二分查找",
+          type: "mcq",
+          title: "问题10：异常处理",
           difficulty: "hard",
-          description: `<p>编写一个函数，使用二分查找算法在有序列表中查找目标值。</p>
-                      <p><strong>输入格式：</strong></p>
-                      <p>第一行输入一个有序列表（用空格分隔），第二行输入目标值。</p>
-                      <p><strong>输出格式：</strong></p>
-                      <p>如果找到目标值，输出其索引；否则输出-1。</p>`,
-          defaultCode: `# 请编写代码
-`,
-          testCases: [
-            { input: "1 3 5 7 9\n5", expected: "2" }
-          ]
+          description: `<p>在Python中，用于捕获异常的关键字是？</p>`,
+          options: [
+            "try-catch",
+            "try-except",
+            "catch",
+            "except"
+          ],
+          correct: 1
         }
       ]
     };
@@ -492,6 +520,7 @@
     ];
     let answers = [];
     let editor = null;
+    let selectedOption = -1;
 
     // 初始化代码编辑器
     function initEditor() {
@@ -587,13 +616,54 @@
       document.getElementById('question-difficulty').textContent = question.difficulty === 'easy' ? '简单' : question.difficulty === 'medium' ? '中等' : '困难';
       document.getElementById('question-progress').textContent = `${index + 1}/${examData.questions.length}`;
 
-      // 更新代码编辑器
-      editor.setValue(question.defaultCode);
+      // 根据题目类型显示不同区域
+      const codingSection = document.getElementById('coding-section');
+      const mcqSection = document.getElementById('mcq-section');
+      const outputSection = document.getElementById('output-section');
+      const runBtn = document.getElementById('run-code');
 
-      // 清空输出
-      clearOutput();
-      document.getElementById('execution-time').textContent = '执行时间：0ms';
-      document.getElementById('memory-usage').textContent = '内存：0MB';
+      if (question.type === 'coding') {
+        codingSection.classList.remove('hidden');
+        mcqSection.classList.add('hidden');
+        outputSection.classList.remove('hidden');
+        runBtn.classList.remove('hidden');
+        
+        // 更新代码编辑器
+        editor.setValue(question.defaultCode);
+        clearOutput();
+        document.getElementById('execution-time').textContent = '执行时间：0ms';
+        document.getElementById('memory-usage').textContent = '内存：0MB';
+      } else {
+        codingSection.classList.add('hidden');
+        mcqSection.classList.remove('hidden');
+        outputSection.classList.add('hidden');
+        runBtn.classList.add('hidden');
+        
+        // 生成选择题选项
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+        selectedOption = -1;
+        
+        question.options.forEach((option, optIndex) => {
+          const optionDiv = document.createElement('div');
+          optionDiv.className = 'option-item';
+          optionDiv.innerHTML = `
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold text-gray-300">
+                ${String.fromCharCode(65 + optIndex)}
+              </div>
+              <div class="text-gray-200">${option}</div>
+            </div>
+          `;
+          optionDiv.addEventListener('click', () => selectOption(optIndex));
+          optionsContainer.appendChild(optionDiv);
+        });
+
+        // 加载之前的答案
+        if (answers[index] !== undefined) {
+          selectOption(answers[index]);
+        }
+      }
 
       // 更新按钮状态
       document.getElementById('prev-question').disabled = index === 0;
@@ -601,16 +671,35 @@
       document.getElementById('next-question').innerHTML = index === examData.questions.length - 1 ? '完成 <i class="fa fa-check"></i>' : '下一题 <i class="fa fa-arrow-right"></i>';
 
       // 保存当前答案
-      if (index > 0) {
-        answers[currentQuestion] = editor.getValue();
+      if (index > 0 && currentQuestion < answers.length) {
+        const prevQuestion = examData.questions[currentQuestion];
+        if (prevQuestion.type === 'coding') {
+          answers[currentQuestion] = editor.getValue();
+        }
       }
 
-      // 加载之前的答案
-      if (answers[index]) {
+      // 加载之前的答案（编程题）
+      if (question.type === 'coding' && answers[index]) {
         editor.setValue(answers[index]);
       }
 
       currentQuestion = index;
+    }
+
+    // 选择选项
+    function selectOption(index) {
+      selectedOption = index;
+      const options = document.querySelectorAll('#options-container .option-item');
+      options.forEach((opt, i) => {
+        if (i === index) {
+          opt.classList.add('selected');
+        } else {
+          opt.classList.remove('selected');
+        }
+      });
+      
+      // 保存答案
+      answers[currentQuestion] = index;
     }
 
     // 运行代码
@@ -619,6 +708,9 @@
         appendOutput('Python解释器还在加载中，请稍等...');
         return;
       }
+
+      const question = examData.questions[currentQuestion];
+      if (question.type !== 'coding') return;
 
       const code = editor.getValue();
       clearOutput();
@@ -631,7 +723,6 @@
       try {
         // 替换input函数为模拟输入
         let inputIndex = 0;
-        const question = examData.questions[currentQuestion];
         const testCase = question.testCases[0];
         const inputs = testCase.input.split('\n');
         
@@ -715,7 +806,10 @@
     // 提交考试
     function submitExam() {
       // 保存最后一题的答案
-      answers[currentQuestion] = editor.getValue();
+      const lastQuestion = examData.questions[currentQuestion];
+      if (lastQuestion.type === 'coding') {
+        answers[currentQuestion] = editor.getValue();
+      }
 
       // 停止计时器
       clearInterval(examTimer);
@@ -726,17 +820,18 @@
 
       // 计算得分
       let score = 0;
-      const answersSummary = document.getElementById('answers-summary');
-      answersSummary.innerHTML = '';
-
-      // 计算得分
-      let score = 0;
       
       examData.questions.forEach((question, index) => {
         const answer = answers[index];
-        const isAnswered = answer && answer.trim() !== '' && answer.trim() !== question.defaultCode.trim();
+        let isCorrect = false;
         
-        if (isAnswered) score++;
+        if (question.type === 'mcq') {
+          isCorrect = answer === question.correct;
+        } else {
+          isCorrect = answer && answer.trim() !== '' && answer.trim() !== question.defaultCode.trim();
+        }
+        
+        if (isCorrect) score++;
       });
       
       // 更新结果
@@ -755,7 +850,16 @@
       
       examData.questions.forEach((question, index) => {
         const answer = answers[index];
-        const isAnswered = answer && answer.trim() !== '' && answer.trim() !== question.defaultCode.trim();
+        let isCorrect = false;
+        let isAnswered = false;
+        
+        if (question.type === 'mcq') {
+          isAnswered = answer !== undefined && answer !== -1;
+          isCorrect = answer === question.correct;
+        } else {
+          isAnswered = answer && answer.trim() !== '' && answer.trim() !== question.defaultCode.trim();
+          isCorrect = isAnswered;
+        }
         
         if (!isAnswered) {
           statusHtml += `
@@ -764,11 +868,18 @@
               <span class="text-xs text-gray-400">未答</span>
             </div>
           `;
-        } else {
+        } else if (isCorrect) {
           statusHtml += `
             <div class="flex flex-col items-center gap-1 p-2 bg-gray-800 rounded-lg">
               <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm bg-emerald-600 text-white"><i class="fa fa-check"></i></div>
               <span class="text-xs text-emerald-400">题${index + 1} ✓</span>
+            </div>
+          `;
+        } else {
+          statusHtml += `
+            <div class="flex flex-col items-center gap-1 p-2 bg-gray-800 rounded-lg">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm bg-red-600 text-white"><i class="fa fa-times"></i></div>
+              <span class="text-xs text-red-400">题${index + 1} ✗</span>
             </div>
           `;
         }
