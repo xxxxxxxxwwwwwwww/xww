@@ -6,7 +6,7 @@
   <title>购物篮分析 - Xww的课程页面</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/ace.js"></script>
+  <script src="https://cdn.jsdelivr.net/ace-builds@1.32.3/src-noconflict/ace.js"></script>
   <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
   <script>
     tailwind.config = {
@@ -175,7 +175,6 @@
   </style>
 </head>
 <body class="bg-dark min-h-screen text-gray-200">
-  <!-- 顶部导航栏 -->
   <nav class="bg-dark-gray shadow-lg fixed w-full z-10">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center flex-wrap gap-4">
       <div class="flex items-center gap-4">
@@ -208,25 +207,20 @@
     </div>
   </nav>
 
-  <!-- 主要内容区 -->
   <div class="pt-24 min-h-screen">
     <div class="container mx-auto px-4">
-      <!-- 题库标签页 -->
       <div id="question-bank" class="tab-content">
         <div class="flex flex-col lg:flex-row gap-6 py-6">
-          <!-- 左侧：题目列表/章节目录 -->
           <div class="lg:w-1/4 bg-dark-gray rounded-xl p-4 border border-gray-700 h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin">
             <h2 class="section-title">购物篮分析题库</h2>
             
-            <!-- 章节列表 -->
             <div class="space-y-6">
-              <!-- 章节1：购物篮分析基础 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter1')">
                   <i class="fa fa-chevron-down text-gray-400 transition-transform duration-300" id="chapter1-icon"></i>
                   购物篮分析基础
                   <span class="ml-auto text-xs text-gray-400">
-                    <span class="chapter-progress">0/4</span>
+                    <span class="chapter-progress">0/5</span>
                     <span class="progress-percentage">(0%)</span>
                   </span>
                 </h3>
@@ -239,6 +233,16 @@
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-easy">简单</span>
                         <span class="text-xs text-gray-400">15分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(2)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">2</div>
+                    <div class="flex-1">
+                      <div class="font-medium">商品组合统计</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
                       </div>
                     </div>
                   </div>
@@ -263,46 +267,65 @@
                       </div>
                     </div>
                   </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c3')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">C</div>
+                    <div class="flex-1">
+                      <div class="font-medium">支持度与置信度</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               
-              <!-- 章节2：Apriori算法 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter2')">
                   <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter2-icon"></i>
                   Apriori算法
                   <span class="ml-auto text-xs text-gray-400">
-                    <span class="chapter-progress">0/3</span>
+                    <span class="chapter-progress">0/4</span>
                     <span class="progress-percentage">(0%)</span>
                   </span>
                 </h3>
                 <div class="chapter-content collapsed" id="chapter2-content">
                   <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
-                  <div class="problem-item" onclick="loadProgrammingProblem(2)">
-                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">2</div>
-                    <div class="flex-1">
-                      <div class="font-medium">商品组合统计</div>
-                      <div class="flex items-center gap-2 mt-1">
-                        <span class="difficulty-tag difficulty-easy">简单</span>
-                        <span class="text-xs text-gray-400">15分钟</span>
-                      </div>
-                    </div>
-                  </div>
                   <div class="problem-item" onclick="loadProgrammingProblem(3)">
                     <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">3</div>
                     <div class="flex-1">
                       <div class="font-medium">频繁项集挖掘</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
-                        <span class="text-xs text-gray-400">20分钟</span>
+                        <span class="text-xs text-gray-400">25分钟</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(4)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">4</div>
+                    <div class="flex-1">
+                      <div class="font-medium">关联规则生成</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-hard">困难</span>
+                        <span class="text-xs text-gray-400">30分钟</span>
                       </div>
                     </div>
                   </div>
                   <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c3')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">C</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c4')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">D</div>
                     <div class="flex-1">
                       <div class="font-medium">Apriori原理</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c5')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">E</div>
+                    <div class="flex-1">
+                      <div class="font-medium">算法流程</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-purple-400">选择题</span>
@@ -312,7 +335,6 @@
                 </div>
               </div>
               
-              <!-- 章节3：结果可视化与应用 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter3')">
                   <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter3-icon"></i>
@@ -323,20 +345,9 @@
                   </span>
                 </h3>
                 <div class="chapter-content collapsed" id="chapter3-content">
-                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
-                  <div class="problem-item" onclick="loadProgrammingProblem(4)">
-                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">4</div>
-                    <div class="flex-1">
-                      <div class="font-medium">关联规则可视化</div>
-                      <div class="flex items-center gap-2 mt-1">
-                        <span class="difficulty-tag difficulty-medium">中等</span>
-                        <span class="text-xs text-gray-400">20分钟</span>
-                      </div>
-                    </div>
-                  </div>
                   <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c4')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">D</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c6')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">F</div>
                     <div class="flex-1">
                       <div class="font-medium">业务应用场景</div>
                       <div class="flex items-center gap-2 mt-1">
@@ -345,10 +356,20 @@
                       </div>
                     </div>
                   </div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c5')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">E</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c7')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">G</div>
                     <div class="flex-1">
                       <div class="font-medium">营销策略优化</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c8')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">H</div>
+                    <div class="flex-1">
+                      <div class="font-medium">可视化方法</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-purple-400">选择题</span>
@@ -360,9 +381,7 @@
             </div>
           </div>
           
-          <!-- 右侧：问题、代码编辑器、运行结果、答案解析 -->
           <div class="lg:w-3/4 space-y-6">
-            <!-- 问题描述 -->
             <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
               <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
                 <h3 class="text-xl font-bold text-gray-200" id="problem-title">问题1：数据加载与探索</h3>
@@ -378,22 +397,20 @@
                 </div>
               </div>
               <div class="problem-description" id="problem-description">
-                <p>编写一个程序，加载购物篮数据并进行基本探索性分析。</p>
+                <p>编写一个程序，加载购物篮交易数据并进行基本探索分析。</p>
                 <p><strong>输入：</strong></p>
-                <p>购物篮交易数据，格式为列表的列表，每个子列表代表一次交易包含的商品</p>
+                <p>购物篮交易数据集（每行代表一次交易，商品用ID或名称表示）</p>
                 <p><strong>输出：</strong></p>
-                <p>数据的基本统计信息，包括交易次数、商品总数、最频繁商品等</p>
+                <p>数据集基本信息统计</p>
                 <p><strong>要求：</strong></p>
                 <ul class="list-disc list-inside space-y-1 mt-2">
-                  <li>统计总交易次数</li>
-                  <li>统计商品总种类数</li>
-                  <li>统计每个商品出现的频率</li>
-                  <li>找出Top 10最频繁商品</li>
+                  <li>加载数据集并查看基本结构</li>
+                  <li>统计交易数量和商品数量</li>
+                  <li>计算平均每笔交易的商品数量</li>
                 </ul>
               </div>
             </div>
             
-            <!-- 代码编辑框 -->
             <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
               <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
                 <h3 class="text-lg font-semibold text-gray-200">代码编辑器</h3>
@@ -417,9 +434,7 @@
               </div>
             </div>
             
-            <!-- 运行结果和答案解析 -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <!-- 运行结果 -->
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-lg font-semibold text-gray-200 mb-4">运行结果</h3>
                 <div class="run-info">
@@ -431,54 +446,48 @@
                 </div>
               </div>
               
-              <!-- 答案解析 -->
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-lg font-semibold text-gray-200 mb-4">答案解析</h3>
                 <div class="answer-analysis" id="answer-analysis">
                   <h4>解题思路</h4>
-                  <p>1. 使用Python字典统计每个商品出现的频率</p>
-                  <p>2. 使用collections.Counter进行高效统计</p>
-                  <p>3. 排序后提取Top 10商品</p>
+                  <p>1. 使用pandas读取交易数据，可以是CSV格式或列表格式</p>
+                  <p>2. 将数据转换为适合频繁项集挖掘的格式</p>
+                  <p>3. 统计基本指标：交易数、商品数、平均交易长度</p>
                   <h4>代码示例</h4>
                   <div class="bg-dark p-3 rounded-lg font-mono text-sm">
                     <pre class="text-cyan-300">
-from collections import Counter, defaultdict
+import pandas as pd
+from collections import Counter
 
-# 示例购物篮数据
 transactions = [
-    ['面包', '牛奶', '鸡蛋'],
-    ['牛奶', '鸡蛋', '啤酒'],
-    ['面包', '牛奶', '啤酒', '薯片'],
-    ['面包', '薯片'],
-    ['牛奶', '鸡蛋', '面包'],
-    ['啤酒', '薯片'],
-    ['面包', '牛奶', '鸡蛋', '薯片'],
-    ['牛奶', '鸡蛋'],
-    ['面包', '啤酒'],
-    ['鸡蛋', '薯片']
+    ['面包', '牛奶', '啤酒'],
+    ['面包', '尿布', '啤酒', '鸡蛋'],
+    ['牛奶', '尿布', '鸡蛋', '可乐'],
+    ['面包', '牛奶', '尿布', '鸡蛋'],
+    ['面包', '牛奶', '可乐', '啤酒'],
 ]
 
-print("=== 购物篮数据探索 ===")
-print(f"总交易次数: {len(transactions)}")
+print("交易数据概览:")
+print(f"总交易数: {len(transactions)}")
 
-# 统计所有商品
-all_items = [item for transaction in transactions for item in transaction]
+all_items = [item for trans in transactions for item in trans]
+unique_items = set(all_items)
+print(f"商品种类数: {len(unique_items)}")
+print(f"商品列表: {unique_items}")
+
+avg_items = len(all_items) / len(transactions)
+print(f"平均每笔交易商品数: {avg_items:.2f}")
+
 item_counts = Counter(all_items)
-
-print(f"商品总种类数: {len(item_counts)}")
-print("\n商品频率统计:")
-for item, count in item_counts.items():
+print("\n商品出现频率:")
+for item, count in item_counts.most_common():
     print(f"  {item}: {count}次 ({count/len(transactions)*100:.1f}%)")
-
-print("\nTop 5 最频繁商品:")
-for item, count in item_counts.most_common(5):
-    print(f"  {item}: {count}次")
                     </pre>
                   </div>
                   <h4>知识点</h4>
                   <ul class="list-disc list-inside space-y-1 mt-2">
-                    <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module1-basics')">购物篮分析基础</a></li>
-                    <li>数据探索与统计</li>
+                    <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module1-overview')">购物篮分析概述</a></li>
+                    <li>数据预处理</li>
                   </ul>
                 </div>
               </div>
@@ -487,7 +496,6 @@ for item, count in item_counts.most_common(5):
         </div>
       </div>
       
-      <!-- 错题标签页 -->
       <div id="wrong-questions" class="tab-content hidden">
         <div class="py-6">
           <h2 class="section-title">错题本</h2>
@@ -504,7 +512,6 @@ for item, count in item_counts.most_common(5):
         </div>
       </div>
       
-      <!-- 收藏标签页 -->
       <div id="favorites" class="tab-content hidden">
         <div class="py-6">
           <h2 class="section-title">收藏题目</h2>
@@ -521,235 +528,306 @@ for item, count in item_counts.most_common(5):
         </div>
       </div>
       
-      <!-- 知识点标签页 -->
       <div id="knowledge" class="tab-content hidden">
         <div class="py-6">
           <h2 class="section-title">📚 知识点学习</h2>
           
-          <!-- 导航栏 -->
           <div class="flex flex-wrap gap-3 mb-8 bg-dark-gray p-4 rounded-xl border border-gray-700">
-            <button class="knowledge-nav active px-4 py-2 rounded-lg font-semibold transition" data-target="module1-basics">模块1：购物篮分析基础</button>
+            <button class="knowledge-nav active px-4 py-2 rounded-lg font-semibold transition" data-target="module1-overview">模块1：购物篮分析基础</button>
             <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module2-apriori">模块2：Apriori算法</button>
             <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module3-visualization">模块3：结果可视化与应用</button>
           </div>
 
           <div class="space-y-8">
-            <!-- 模块1：购物篮分析基础 -->
-            <div id="module1-basics" class="knowledge-section">
+            <div id="module1-overview" class="knowledge-section">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-shopping-basket"></i> 模块1：购物篮分析基础
+                  <i class="fa fa-shopping-cart"></i> 模块1：购物篮分析基础（8学时）
                 </h3>
                 
                 <div class="grid md:grid-cols-2 gap-6">
-                  <!-- 什么是购物篮分析 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-lightbulb-o text-yellow-400"></i> 什么是购物篮分析
+                      <i class="fa fa-lightbulb-o text-yellow-400"></i> 购物篮分析概述
                     </h4>
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">购物篮分析（Market Basket Analysis）是数据挖掘技术在零售业的典型应用，通过分析顾客购物篮中的商品组合，发现商品之间的关联关系，从而制定营销策略。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">购物篮分析（Market Basket Analysis）是零售业中一种重要的数据分析技术，通过分析顾客购买行为中的商品关联，发现商品之间的关联规律，为商品陈列、促销策略、交叉销售等提供数据支持。</p>
                     
                     <div class="space-y-3 mb-4">
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-emerald-400 font-semibold mb-1">🎯 核心目标</h5>
-                        <p class="text-gray-400 text-sm">找出哪些商品经常被一起购买，发现商品间的关联规则。</p>
+                        <h5 class="text-emerald-400 font-semibold mb-1">📊 核心目标</h5>
+                        <p class="text-gray-400 text-sm">发现商品之间的关联关系，帮助零售商优化商品布局和营销策略。</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-yellow-400 font-semibold mb-1">📊 典型应用</h5>
-                        <p class="text-gray-400 text-sm">商品摆放优化、交叉销售推荐、促销策略制定。</p>
+                        <h5 class="text-yellow-400 font-semibold mb-1">🎯 应用场景</h5>
+                        <p class="text-gray-400 text-sm">商品推荐、货架优化、促销设计、库存管理、用户画像。</p>
                       </div>
                     </div>
                     
                     <div class="bg-dark p-3 rounded font-mono text-sm">
                       <pre class="text-cyan-300">
-# 购物篮分析示例数据
-# 每条记录代表一次交易
 transactions = [
-    ['面包', '牛奶', '鸡蛋'],
-    ['牛奶', '鸡蛋', '啤酒'],
-    ['面包', '牛奶', '啤酒', '薯片'],
-    # ... 更多交易记录
+    ['面包', '牛奶', '啤酒'],
+    ['面包', '尿布', '啤酒', '鸡蛋'],
+    ['牛奶', '尿布', '鸡蛋', '可乐'],
+    ['面包', '牛奶', '尿布', '鸡蛋'],
+    ['面包', '牛奶', '可乐', '啤酒'],
 ]
 
-# 经典案例："啤酒与尿布"
-# 发现：购买尿布的顾客常购买啤酒
-# 原因：年轻父亲周末购物，顺便买啤酒
+print("购物篮分析示例:")
+print("交易1: 面包, 牛奶, 啤酒")
+print("交易2: 面包, 尿布, 啤酒, 鸡蛋")
+print("...")
+print("\n发现规律: 购买面包的顾客通常也会购买牛奶")
                       </pre>
                     </div>
                   </div>
 
-                  <!-- 关联规则基本概念 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-link text-emerald-400"></i> 关联规则基本概念
+                      <i class="fa fa-calculator text-emerald-400"></i> 关联规则指标
                     </h4>
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">关联规则表示为 A → B，表示购买了A的顾客很可能也会购买B。需要通过三个指标来评估规则的质量。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">关联规则用于描述商品之间的关联关系，主要有三个核心指标：支持度、置信度和提升度。</p>
                     
                     <div class="space-y-3 mb-4">
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-emerald-400 font-semibold mb-1">📌 支持度（Support）</h5>
-                        <p class="text-gray-400 text-sm">Support(A→B) = 同时包含A和B的交易数 / 总交易数</p>
-                        <p class="text-gray-500 text-xs mt-1">表示商品组合的流行程度</p>
+                        <h5 class="text-emerald-400 font-semibold mb-1">📈 支持度 (Support)</h5>
+                        <p class="text-gray-400 text-sm">Support(A→B) = P(A∪B) = 包含A和B的交易数 / 总交易数</p>
+                        <p class="text-gray-400 text-sm">表示A和B同时出现的概率。</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-yellow-400 font-semibold mb-1">📌 置信度（Confidence）</h5>
-                        <p class="text-gray-400 text-sm">Confidence(A→B) = 同时包含A和B的交易数 / 包含A的交易数</p>
-                        <p class="text-gray-500 text-xs mt-1">表示购买A时购买B的条件概率</p>
+                        <h5 class="text-yellow-400 font-semibold mb-1">📊 置信度 (Confidence)</h5>
+                        <p class="text-gray-400 text-sm">Confidence(A→B) = P(B|A) = P(A∪B) / P(A)</p>
+                        <p class="text-gray-400 text-sm">表示购买A的顾客中购买B的比例。</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-pink-400 font-semibold mb-1">📌 提升度（Lift）</h5>
-                        <p class="text-gray-400 text-sm">Lift(A→B) = Confidence(A→B) / Support(B)</p>
-                        <p class="text-gray-500 text-xs mt-1">Lift>1表示A对B有正向促进作用</p>
+                        <h5 class="text-pink-400 font-semibold mb-1">🎯 提升度 (Lift)</h5>
+                        <p class="text-gray-400 text-sm">Lift(A→B) = Confidence(A→B) / P(B)</p>
+                        <p class="text-gray-400 text-sm">表示关联规则的强度，>1表示正相关。</p>
                       </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+transactions = [
+    ['面包', '牛奶'],
+    ['面包', '牛奶', '啤酒'],
+    ['牛奶', '尿布'],
+]
+
+support_A_B = 1/3  # 0.333
+confidence_A_B = 1/2  # 0.5 (面包→牛奶)
+support_B = 2/3
+lift_A_B = 0.5 / (2/3)  # 0.75
+
+print(f"支持度: {support_A_B:.3f}")
+print(f"置信度: {confidence_A_B:.3f}")
+print(f"提升度: {lift_A_B:.3f}")
+                      </pre>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- 模块2：Apriori算法 -->
             <div id="module2-apriori" class="knowledge-section hidden">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-cogs"></i> 模块2：Apriori算法
+                  <i class="fa fa-magic"></i> 模块2：Apriori算法（10学时）
                 </h3>
                 
                 <div class="grid md:grid-cols-2 gap-6">
-                  <!-- Apriori原理 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-lightbulb-o text-yellow-400"></i> Apriori原理
+                      <i class="fa fa-lightbulb-o text-yellow-400"></i> Apriori先验原理
                     </h4>
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">Apriori算法是最经典的频繁项集挖掘算法，利用先验知识（Apriori原理）来减少搜索空间。</p>
-                    
-                    <div class="space-y-3 mb-4">
-                      <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-emerald-400 font-semibold mb-1">🔑 核心原理</h5>
-                        <p class="text-gray-400 text-sm">如果一个项集是频繁的，那么它的所有非空子集也必须是频繁的。</p>
-                      </div>
-                      <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-yellow-400 font-semibold mb-1">💡 逆否命题</h5>
-                        <p class="text-gray-400 text-sm">如果一个项集是非频繁的，那么它的所有超集也一定是非频繁的。</p>
-                      </div>
-                    </div>
-                    
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-# Apriori原理示例
-# 假设最小支持度为 2/5 = 40%
-
-transactions = [
-    ['A', 'B', 'C'],
-    ['A', 'B'],
-    ['A', 'C'],
-    ['A', 'B', 'D'],
-    ['B', 'C']
-]
-
-# 如果 {'A', 'B', 'C'} 是频繁的
-# 那么其子集 {'A','B'}, {'A','C'}, {'B','C'} 也必须是频繁的
-
-# 如果 {'D'} 不频繁（支持度1/5=20%）
-# 那么包含D的所有超集都不频繁
-                      </pre>
-                    </div>
-                  </div>
-
-                  <!-- 算法步骤 -->
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-list-ol text-emerald-400"></i> 算法步骤
-                    </h4>
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">Apriori算法分为两个主要阶段：找出所有频繁项集，然后从频繁项集中生成强关联规则。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">Apriori算法是最经典的频繁项集挖掘算法，其核心思想基于先验性质：如果一个项集是频繁的，那么它的所有子集也一定是频繁的。反过来，如果一个项集是非频繁的，那么它的所有超集也一定是非频繁的。</p>
                     
                     <div class="space-y-3 mb-4">
                       <div class="bg-dark-gray p-3 rounded-lg">
                         <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
-                          <span>1️⃣</span> 找出频繁项集
+                          <span>🔑</span> 先验性质
                         </h5>
-                        <p class="text-gray-400 text-sm mb-2">从1-项集开始，逐步迭代，利用Apriori原理剪枝。</p>
+                        <p class="text-gray-400 text-sm">频繁项集的所有非空子集也必须是频繁的。</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
                         <h5 class="text-yellow-400 font-semibold mb-2 flex items-center gap-2">
-                          <span>2️⃣</span> 生成关联规则
+                          <span>✂️</span> 剪枝策略
                         </h5>
-                        <p class="text-gray-400 text-sm mb-2">从每个频繁项集生成所有可能的规则，筛选满足最小置信度的规则。</p>
+                        <p class="text-gray-400 text-sm">利用先验性质进行剪枝，减少候选项集数量。</p>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-pink-400 font-semibold mb-2 flex items-center gap-2">
-                          <span>3️⃣</span> 评估规则质量
-                        </h5>
-                        <p class="text-gray-400 text-sm mb-2">使用提升度等指标进一步筛选有意义的规则。</p>
-                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+def has_infrequent_subset(candidate, frequent_itemsets):
+    """检查候选集的子集是否都是频繁的"""
+    subsets = generate_subsets(candidate)
+    for subset in subsets:
+        if subset not in frequent_itemsets:
+            return True
+    return False
+
+# 示例：{面包, 牛奶, 啤酒}
+# 如果{面包, 牛奶}不是频繁项集
+# 则{面包, 牛奶, 啤酒}也不可能是频繁项集
+print("先验性质应用:")
+print("频繁项集: {面包}, {牛奶}, {啤酒}")
+print("候选项集: {面包, 牛奶} → 检查通过")
+print("候选项集: {面包, 啤酒} → 检查通过")
+print("候选项集: {牛奶, 啤酒} → 检查通过")
+                      </pre>
+                    </div>
+                  </div>
+
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-code text-emerald-400"></i> 关联规则生成
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">从频繁项集中生成关联规则，计算每条规则的支持度、置信度和提升度，筛选出满足阈值的强关联规则。</p>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+from itertools import combinations
+
+def generate_association_rules(frequent_itemset, transactions, min_confidence):
+    """生成关联规则"""
+    rules = []
+    items = list(frequent_itemset)
+    
+    for i in range(1, len(items)):
+        for antecedent in combinations(items, i):
+            antecedent = set(antecedent)
+            consequent = frequent_itemset - antecedent
+            
+            support_XY = count_support(frequent_itemset, transactions)
+            support_X = count_support(antecedent, transactions)
+            
+            if support_X > 0:
+                confidence = support_XY / support_X
+                if confidence >= min_confidence:
+                    rules.append({
+                        'antecedent': antecedent,
+                        'consequent': consequent,
+                        'confidence': confidence
+                    })
+    
+    return rules
+
+# 示例：频繁项集 {面包, 牛奶, 啤酒}
+rules = [
+    {'面包} → {牛奶, 啤酒}', confidence: 0.67},
+    {'牛奶} → {面包, 啤酒}', confidence: 0.75},
+    {'啤酒} → {面包, 牛奶}', confidence: 0.50},
+]
+print("生成的关联规则:")
+for rule in rules:
+    print(f"  {rule}")
+                      </pre>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- 模块3：结果可视化与应用 -->
             <div id="module3-visualization" class="knowledge-section hidden">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-chart-bar"></i> 模块3：结果可视化与应用
+                  <i class="fa fa-pie-chart"></i> 模块3：结果可视化与应用（6学时）
                 </h3>
                 
                 <div class="grid md:grid-cols-2 gap-6">
-                  <!-- 可视化方法 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-paint-brush text-yellow-400"></i> 可视化方法
+                      <i class="fa fa-bar-chart text-yellow-400"></i> 可视化方法
                     </h4>
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">购物篮分析结果的可视化有助于直观理解商品间的关系，常见的可视化方式包括：</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">关联规则和频繁项集可以通过多种可视化方法展示，帮助业务人员理解分析结果。</p>
                     
                     <div class="space-y-3 mb-4">
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-emerald-400 font-semibold mb-1">📊 散点图</h5>
-                        <p class="text-gray-400 text-sm">横轴支持度，纵轴置信度，点大小表示提升度。</p>
+                        <h5 class="text-emerald-400 font-semibold mb-1">📊 热力图</h5>
+                        <p class="text-gray-400 text-sm">展示商品之间的关联强度。</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-yellow-400 font-semibold mb-1">🕸️ 网络图</h5>
-                        <p class="text-gray-400 text-sm">节点表示商品，边表示关联规则，边粗细表示强度。</p>
+                        <h5 class="text-yellow-400 font-semibold mb-1">🔗 网络图</h5>
+                        <p class="text-gray-400 text-sm">展示商品之间的关联关系网络。</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-pink-400 font-semibold mb-1">📈 柱状图</h5>
-                        <p class="text-gray-400 text-sm">展示频繁商品或强规则的排名。</p>
+                        <h5 class="text-pink-400 font-semibold mb-1">📈 气泡图</h5>
+                        <p class="text-gray-400 text-sm">支持度、置信度、提升度三维展示。</p>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-blue-400 font-semibold mb-1">🔥 热力图</h5>
-                        <p class="text-gray-400 text-sm">展示商品两两共同出现的频率矩阵。</p>
-                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+import pandas as pd
+import numpy as np
+
+rules_data = {
+    'antecedent': ['面包', '牛奶', '啤酒'],
+    'consequent': ['牛奶', '面包', '面包'],
+    'support': [0.33, 0.33, 0.33],
+    'confidence': [0.67, 0.50, 0.67],
+    'lift': [1.0, 0.75, 1.0]
+}
+
+df_rules = pd.DataFrame(rules_data)
+print("关联规则表:")
+print(df_rules)
+print("\n可视化: 热力图显示商品关联强度")
+                      </pre>
                     </div>
                   </div>
 
-                  <!-- 业务应用 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-briefcase text-emerald-400"></i> 业务应用
                     </h4>
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">购物篮分析的结果可以应用于零售业的多个方面，帮助提升销售和客户体验。</p>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">购物篮分析的结果可以广泛应用于零售业的各个环节，提升运营效率和客户满意度。</p>
                     
                     <div class="space-y-3 mb-4">
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-emerald-400 font-semibold mb-1">🛒 商品陈列优化</h5>
-                        <p class="text-gray-400 text-sm">将强关联商品放在一起，增加交叉销售机会。</p>
+                        <h5 class="text-emerald-400 font-semibold mb-1">🛒 商品推荐</h5>
+                        <p class="text-gray-400 text-sm">基于关联规则为用户推荐相关商品。</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-yellow-400 font-semibold mb-1">🎁 捆绑销售策略</h5>
-                        <p class="text-gray-400 text-sm">将频繁一起购买的商品组合成套餐，优惠销售。</p>
+                        <h5 class="text-yellow-400 font-semibold mb-1">📦 货架优化</h5>
+                        <p class="text-gray-400 text-sm">将关联商品摆放在一起或相邻位置。</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-pink-400 font-semibold mb-1">💡 个性化推荐</h5>
-                        <p class="text-gray-400 text-sm">根据顾客当前购物车商品，推荐关联商品。</p>
+                        <h5 class="text-pink-400 font-semibold mb-1">🏷️ 促销策略</h5>
+                        <p class="text-gray-400 text-sm">设计捆绑促销、买一送一等活动。</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-blue-400 font-semibold mb-1">📢 促销活动设计</h5>
-                        <p class="text-gray-400 text-sm">针对关联商品设计促销，A打折时B不打折。</p>
+                        <h5 class="text-blue-400 font-semibold mb-1">📋 库存管理</h5>
+                        <p class="text-gray-400 text-sm">预测关联商品的协同需求。</p>
                       </div>
-                      <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-purple-400 font-semibold mb-1">📦 库存管理优化</h5>
-                        <p class="text-gray-400 text-sm">关联商品的库存协调管理。</p>
-                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">
+recommendations = {
+    '面包': ['牛奶', '啤酒', '鸡蛋'],
+    '牛奶': ['面包', '鸡蛋'],
+    '啤酒': ['面包', '尿布'],
+}
+
+def recommend_products(cart_items, recommendations):
+    suggestions = set()
+    for item in cart_items:
+        if item in recommendations:
+            suggestions.update(recommendations[item])
+    return suggestions - set(cart_items)
+
+cart = ['面包']
+suggestions = recommend_products(cart, recommendations)
+print(f"购买 {cart} 的用户还可能购买:")
+print(f"  推荐: {suggestions}")
+
+cart = ['尿布', '啤酒']
+suggestions = recommend_products(cart, recommendations)
+print(f"\n购买 {cart} 的用户还可能购买:")
+print(f"  推荐: {suggestions}")
+                      </pre>
                     </div>
                   </div>
                 </div>
@@ -762,615 +840,430 @@ transactions = [
   </div>
 
   <script>
-    // 编程题数据
     const problems = [
       {
         id: 1,
         title: "问题1：数据加载与探索",
-        description: `
-<p>编写一个程序，加载购物篮数据并进行基本探索性分析。</p>
-<p><strong>输入：</strong></p>
-<p>购物篮交易数据，格式为列表的列表，每个子列表代表一次交易包含的商品</p>
-<p><strong>输出：</strong></p>
-<p>数据的基本统计信息，包括交易次数、商品总数、最频繁商品等</p>
-<p><strong>要求：</strong></p>
+        description: `编写一个程序，加载购物篮交易数据并进行基本探索分析。
+<strong>输入：</strong>
+购物篮交易数据集（每行代表一次交易，商品用ID或名称表示）
+<strong>输出：</strong>
+数据集基本信息统计
+<strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>统计总交易次数</li>
-  <li>统计商品总种类数</li>
-  <li>统计每个商品出现的频率</li>
-  <li>找出Top 10最频繁商品</li>
-</ul>
-        `,
+  <li>加载数据集并查看基本结构</li>
+  <li>统计交易数量和商品数量</li>
+  <li>计算平均每笔交易的商品数量</li>
+</ul>`,
         difficulty: "easy",
         time: "15分钟",
-        code: `from collections import Counter
-
-# 示例购物篮数据
-transactions = [
-    ['面包', '牛奶', '鸡蛋'],
-    ['牛奶', '鸡蛋', '啤酒'],
-    ['面包', '牛奶', '啤酒', '薯片'],
-    ['面包', '薯片'],
-    ['牛奶', '鸡蛋', '面包'],
-    ['啤酒', '薯片'],
-    ['面包', '牛奶', '鸡蛋', '薯片'],
-    ['牛奶', '鸡蛋'],
-    ['面包', '啤酒'],
-    ['鸡蛋', '薯片']
-]
-
-# 请在此编写代码
-        `,
+        code: `# 请编写代码`,
         analysis: `
 <h4>解题思路</h4>
-<p>1. 使用Python字典统计每个商品出现的频率</p>
-<p>2. 使用collections.Counter进行高效统计</p>
-<p>3. 排序后提取Top 10商品</p>
+<p>1. 使用pandas读取交易数据，可以是CSV格式或列表格式</p>
+<p>2. 将数据转换为适合频繁项集挖掘的格式</p>
+<p>3. 统计基本指标：交易数、商品数、平均交易长度</p>
 <h4>代码示例</h4>
 <div class="bg-dark p-3 rounded-lg font-mono text-sm">
   <pre class="text-cyan-300">
+import pandas as pd
 from collections import Counter
 
-# 示例购物篮数据
 transactions = [
-    ['面包', '牛奶', '鸡蛋'],
-    ['牛奶', '鸡蛋', '啤酒'],
-    ['面包', '牛奶', '啤酒', '薯片'],
-    ['面包', '薯片'],
-    ['牛奶', '鸡蛋', '面包'],
-    ['啤酒', '薯片'],
-    ['面包', '牛奶', '鸡蛋', '薯片'],
-    ['牛奶', '鸡蛋'],
-    ['面包', '啤酒'],
-    ['鸡蛋', '薯片']
+    ['面包', '牛奶', '啤酒'],
+    ['面包', '尿布', '啤酒', '鸡蛋'],
+    ['牛奶', '尿布', '鸡蛋', '可乐'],
+    ['面包', '牛奶', '尿布', '鸡蛋'],
+    ['面包', '牛奶', '可乐', '啤酒'],
 ]
 
-print("=== 购物篮数据探索 ===")
-print(f"总交易次数: {len(transactions)}")
+print("交易数据概览:")
+print(f"总交易数: {len(transactions)}")
 
-# 统计所有商品
-all_items = [item for transaction in transactions for item in transaction]
+all_items = [item for trans in transactions for item in trans]
+unique_items = set(all_items)
+print(f"商品种类数: {len(unique_items)}")
+print(f"商品列表: {unique_items}")
+
+avg_items = len(all_items) / len(transactions)
+print(f"平均每笔交易商品数: {avg_items:.2f}")
+
 item_counts = Counter(all_items)
-
-print(f"商品总种类数: {len(item_counts)}")
-print("\\n商品频率统计:")
-for item, count in item_counts.items():
+print("\n商品出现频率:")
+for item, count in item_counts.most_common():
     print(f"  {item}: {count}次 ({count/len(transactions)*100:.1f}%)")
-
-print("\\nTop 5 最频繁商品:")
-for item, count in item_counts.most_common(5):
-    print(f"  {item}: {count}次")
   </pre>
 </div>
 <h4>知识点</h4>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module1-basics')">购物篮分析基础</a></li>
-  <li>数据探索与统计</li>
-</ul>
-        `
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module1-overview')">购物篮分析概述</a></li>
+  <li>数据预处理</li>
+</ul>`
       },
       {
         id: 2,
         title: "问题2：商品组合统计",
-        description: `
-<p>编写一个程序，统计购物篮中常见的商品组合（二元组合）。</p>
-<p><strong>输入：</strong></p>
-<p>购物篮交易数据</p>
-<p><strong>输出：</strong></p>
-<p>二元商品组合的频率统计</p>
-<p><strong>要求：</strong></p>
+        description: `编写一个程序，统计商品组合的出现频次。
+<strong>输入：</strong>
+购物篮交易数据集
+<strong>输出：</strong>
+商品组合及其出现次数统计
+<strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>生成所有可能的二元商品组合</li>
-  <li>统计每个组合出现的频率</li>
-  <li>按频率降序排列</li>
-  <li>输出Top 10组合</li>
-</ul>
-        `,
-        difficulty: "easy",
-        time: "15分钟",
-        code: `from collections import Counter
-from itertools import combinations
-
-# 示例购物篮数据
-transactions = [
-    ['面包', '牛奶', '鸡蛋'],
-    ['牛奶', '鸡蛋', '啤酒'],
-    ['面包', '牛奶', '啤酒', '薯片'],
-    ['面包', '薯片'],
-    ['牛奶', '鸡蛋', '面包'],
-    ['啤酒', '薯片'],
-    ['面包', '牛奶', '鸡蛋', '薯片'],
-    ['牛奶', '鸡蛋'],
-    ['面包', '啤酒'],
-    ['鸡蛋', '薯片']
-]
-
-# 请在此编写代码
-        `,
+  <li>统计所有两商品组合的出现次数</li>
+  <li>支持自定义组合大小（2-4个商品）</li>
+  <li>按出现次数降序排列输出</li>
+</ul>`,
+        difficulty: "medium",
+        time: "20分钟",
+        code: `# 请编写代码`,
         analysis: `
 <h4>解题思路</h4>
-<p>1. 使用itertools.combinations生成二元组合</p>
-<p>2. 对每个交易生成所有可能的二元组合</p>
-<p>3. 使用Counter统计频率</p>
-<p>4. 排序输出Top组合</p>
+<p>1. 遍历所有交易，生成商品组合</p>
+<p>2. 使用Counter统计各组合出现次数</p>
+<p>3. 按频次降序排列</p>
 <h4>代码示例</h4>
 <div class="bg-dark p-3 rounded-lg font-mono text-sm">
   <pre class="text-cyan-300">
-from collections import Counter
 from itertools import combinations
+from collections import Counter
 
-# 示例购物篮数据
 transactions = [
-    ['面包', '牛奶', '鸡蛋'],
-    ['牛奶', '鸡蛋', '啤酒'],
-    ['面包', '牛奶', '啤酒', '薯片'],
-    ['面包', '薯片'],
-    ['牛奶', '鸡蛋', '面包'],
-    ['啤酒', '薯片'],
-    ['面包', '牛奶', '鸡蛋', '薯片'],
-    ['牛奶', '鸡蛋'],
-    ['面包', '啤酒'],
-    ['鸡蛋', '薯片']
+    ['面包', '牛奶', '啤酒'],
+    ['面包', '尿布', '啤酒', '鸡蛋'],
+    ['牛奶', '尿布', '鸡蛋', '可乐'],
+    ['面包', '牛奶', '尿布', '鸡蛋'],
+    ['面包', '牛奶', '可乐', '啤酒'],
 ]
 
-print("=== 二元商品组合统计 ===")
+def count_item_combinations(transactions, k):
+    """统计k商品组合的出现次数"""
+    combos = []
+    for trans in transactions:
+        if len(trans) >= k:
+            for combo in combinations(sorted(trans), k):
+                combos.append(combo)
+    return Counter(combos)
 
-# 统计二元组合
-pair_counts = Counter()
-for transaction in transactions:
-    # 生成所有二元组合
-    pairs = combinations(sorted(transaction), 2)
-    pair_counts.update(pairs)
+# 统计两商品组合
+two_combos = count_item_combinations(transactions, 2)
+print("两商品组合统计:")
+for combo, count in two_combos.most_common():
+    print(f"  {combo}: {count}次")
 
-print(f"总二元组合数: {len(pair_counts)}")
-print("\\nTop 10 二元组合:")
-for i, (pair, count) in enumerate(pair_counts.most_common(10), 1):
-    support = count / len(transactions) * 100
-    print(f"  {i}. {pair[0]} & {pair[1]}: {count}次 ({support:.1f}%)")
+# 统计三商品组合
+three_combos = count_item_combinations(transactions, 3)
+print("\n三商品组合统计:")
+for combo, count in three_combos.most_common():
+    print(f"  {combo}: {count}次")
   </pre>
 </div>
 <h4>知识点</h4>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module2-apriori')">Apriori算法</a></li>
-  <li>频繁项集</li>
-  <li>组合数学</li>
-</ul>
-        `
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module1-overview')">关联规则指标</a></li>
+  <li>组合统计</li>
+</ul>`
       },
       {
         id: 3,
         title: "问题3：频繁项集挖掘",
-        description: `
-<p>实现一个简化版的Apriori算法，找出所有频繁项集。</p>
-<p><strong>输入：</strong></p>
-<p>购物篮交易数据和最小支持度</p>
-<p><strong>输出：</strong></p>
-<p>所有满足最小支持度的频繁项集</p>
-<p><strong>要求：</strong></p>
+        description: `编写一个程序，使用Apriori算法挖掘频繁项集。
+<strong>输入：</strong>
+交易数据集和最小支持度阈值
+<strong>输出：</strong>
+所有满足最小支持度的频繁项集
+<strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>从1-项集开始逐步迭代</li>
-  <li>利用Apriori原理剪枝</li>
-  <li>输出所有频繁项集及其支持度</li>
-</ul>
-        `,
+  <li>实现Apriori算法的核心逻辑</li>
+  <li>使用先验性质进行剪枝</li>
+  <li>输出各阶频繁项集及其支持度</li>
+</ul>`,
         difficulty: "medium",
-        time: "20分钟",
-        code: `from collections import Counter
-from itertools import combinations
-
-# 示例购物篮数据
-transactions = [
-    ['面包', '牛奶', '鸡蛋'],
-    ['牛奶', '鸡蛋', '啤酒'],
-    ['面包', '牛奶', '啤酒', '薯片'],
-    ['面包', '薯片'],
-    ['牛奶', '鸡蛋', '面包'],
-    ['啤酒', '薯片'],
-    ['面包', '牛奶', '鸡蛋', '薯片'],
-    ['牛奶', '鸡蛋'],
-    ['面包', '啤酒'],
-    ['鸡蛋', '薯片']
-]
-
-min_support = 0.3  # 最小支持度30%
-
-# 请在此编写代码
-        `,
+        time: "25分钟",
+        code: `# 请编写代码`,
         analysis: `
 <h4>解题思路</h4>
-<p>1. 先找出所有频繁1-项集</p>
-<p>2. 从k-项集生成k+1-项集候选</p>
-<p>3. 利用Apriori原理剪枝</p>
-<p>4. 计算候选集的支持度，筛选频繁项集</p>
-<p>5. 重复直到没有新的频繁项集</p>
+<p>1. 扫描数据集，计算1-项集的支持度</p>
+<p>2. 根据最小支持度筛选频繁1-项集</p>
+<p>3. 使用频繁k-项集生成候选k+1-项集</p>
+<p>4. 利用先验性质剪枝：任何非频繁项集的子集都不能是频繁的</p>
+<p>5. 扫描数据集计算候选支持度，重复直到没有新的频繁项集</p>
 <h4>代码示例</h4>
 <div class="bg-dark p-3 rounded-lg font-mono text-sm">
   <pre class="text-cyan-300">
-from collections import Counter
 from itertools import combinations
+from collections import Counter
 
-def create_candidates(prev_itemsets, k):
-    \"\"\"从k-1项集生成k项集候选\"\"\"
-    candidates = set()
-    prev_list = list(prev_itemsets)
-    for i in range(len(prev_list)):
-        for j in range(i + 1, len(prev_list)):
-            itemset1 = prev_list[i]
-            itemset2 = prev_list[j]
-            # 前k-2个元素相同则合并
-            if sorted(itemset1)[:-1] == sorted(itemset2)[:-1]:
-                candidate = tuple(sorted(itemset1.union(itemset2)))
-                candidates.add(candidate)
-    return candidates
-
-def prune_candidates(candidates, prev_itemsets, k):
-    \"\"\"Apriori剪枝：如果任一个k-1子集非频繁，则剪枝\"\"\"
-    pruned = []
-    for candidate in candidates:
-        # 检查所有k-1子集
-        all_subsets_frequent = True
-        for subset in combinations(candidate, k-1):
-            if frozenset(subset) not in prev_itemsets:
-                all_subsets_frequent = False
-                break
-        if all_subsets_frequent:
-            pruned.append(candidate)
-    return pruned
-
-def apriori(transactions, min_support):
-    \"\"\"Apriori算法主函数\"\"\"
-    n_transactions = len(transactions)
-    min_count = int(min_support * n_transactions)
-    
-    # 找出频繁1-项集
-    all_items = [item for tx in transactions for item in tx]
-    item_counts = Counter(all_items)
-    itemsets_1 = {frozenset([item]): count for item, count in item_counts.items() if count >= min_count}
-    
-    all_frequent = itemsets_1.copy()
-    current_itemsets = itemsets_1
-    k = 1
-    
-    while current_itemsets:
-        k += 1
-        # 生成候选集
-        candidates = create_candidates(current_itemsets.keys(), k)
-        if not candidates:
-            break
-        # 剪枝
-        candidates = prune_candidates(candidates, current_itemsets.keys(), k)
-        if not candidates:
-            break
-        # 统计候选集频率
-        candidate_counts = Counter()
-        for tx in transactions:
-            tx_set = set(tx)
-            for candidate in candidates:
-                if set(candidate).issubset(tx_set):
-                    candidate_counts[candidate] += 1
-        # 筛选频繁项集
-        current_itemsets = {frozenset(itemset): count for itemset, count in candidate_counts.items() if count >= min_count}
-        # 添加到结果
-        all_frequent.update(current_itemsets)
-    
-    return all_frequent
-
-# 示例数据
 transactions = [
-    ['面包', '牛奶', '鸡蛋'],
-    ['牛奶', '鸡蛋', '啤酒'],
-    ['面包', '牛奶', '啤酒', '薯片'],
-    ['面包', '薯片'],
-    ['牛奶', '鸡蛋', '面包'],
-    ['啤酒', '薯片'],
-    ['面包', '牛奶', '鸡蛋', '薯片'],
-    ['牛奶', '鸡蛋'],
-    ['面包', '啤酒'],
-    ['鸡蛋', '薯片']
+    ['面包', '牛奶', '啤酒'],
+    ['面包', '尿布', '啤酒', '鸡蛋'],
+    ['牛奶', '尿布', '鸡蛋', '可乐'],
+    ['面包', '牛奶', '尿布', '鸡蛋'],
+    ['面包', '牛奶', '可乐', '啤酒'],
 ]
 
-min_support = 0.3  # 30%
-frequent_itemsets = apriori(transactions, min_support)
+def apriori(transactions, min_support):
+    n_transactions = len(transactions)
+    
+    # 1-项集
+    item_counts = Counter([item for trans in transactions for item in trans])
+    frequent_1 = {frozenset([item]): count/n_transactions 
+                  for item, count in item_counts.items() 
+                  if count/n_transactions >= min_support}
+    
+    frequent_itemsets = dict(frequent_1)
+    all_frequent = [set(item) for item in frequent_1.keys()]
+    
+    k = 2
+    while all_frequent:
+        # 生成k项候选集
+        candidates = set()
+        for i in range(len(all_frequent)):
+            for j in range(i+1, len(all_frequent)):
+                union = all_frequent[i] | all_frequent[j]
+                if len(union) == k:
+                    # 先验性质剪枝
+                    is_valid = True
+                    for item in union:
+                        if set(union - {item}) not in all_frequent:
+                            is_valid = False
+                            break
+                    if is_valid:
+                        candidates.add(frozenset(union))
+        
+        # 计算支持度
+        freq_itemsets_k = {}
+        for candidate in candidates:
+            count = sum(1 for trans in transactions if candidate.issubset(trans))
+            support = count / n_transactions
+            if support >= min_support:
+                freq_itemsets_k[candidate] = support
+        
+        frequent_itemsets.update(freq_itemsets_k)
+        all_frequent = [set(item) for item in freq_itemsets_k.keys()]
+        k += 1
+    
+    return frequent_itemsets
 
-print("=== 频繁项集挖掘结果 ===")
-print(f"最小支持度: {min_support*100}%")
-print(f"共发现 {len(frequent_itemsets)} 个频繁项集\\n")
-
-# 按项集大小分组
-itemsets_by_size = {}
-for itemset, count in frequent_itemsets.items():
-    size = len(itemset)
-    if size not in itemsets_by_size:
-        itemsets_by_size[size] = []
-    itemsets_by_size[size].append((sorted(itemset), count))
-
-for size in sorted(itemsets_by_size.keys()):
-    print(f"{size}-项集:")
-    for itemset, count in itemsets_by_size[size]:
-        support = count / len(transactions) * 100
-        print(f"  {itemset}: {count}次 ({support:.1f}%)")
-    print()
+frequent = apriori(transactions, 0.3)
+print("频繁项集:")
+for itemset, support in sorted(frequent.items(), key=lambda x: -x[1]):
+    print(f"  {set(itemset)}: 支持度={support:.2f}")
   </pre>
 </div>
 <h4>知识点</h4>
 <ul class="list-disc list-inside space-y-1 mt-2">
   <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module2-apriori')">Apriori算法</a></li>
   <li>频繁项集挖掘</li>
-  <li>Apriori原理</li>
-</ul>
-        `
+</ul>`
       },
       {
         id: 4,
-        title: "问题4：关联规则可视化",
-        description: `
-<p>编写一个程序，从频繁项集中生成关联规则并展示结果。</p>
-<p><strong>输入：</strong></p>
-<p>购物篮交易数据、最小支持度、最小置信度</p>
-<p><strong>输出：</strong></p>
-<p>强关联规则列表（包含支持度、置信度、提升度）</p>
-<p><strong>要求：</strong></p>
+        title: "问题4：关联规则生成",
+        description: `编写一个程序，从频繁项集生成关联规则。
+<strong>输入：</strong>
+频繁项集及其支持度，最小置信度阈值
+<strong>输出：</strong>
+满足最小置信度的关联规则
+<strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>从频繁项集生成所有可能的规则</li>
-  <li>计算规则的支持度、置信度、提升度</li>
-  <li>筛选满足最小置信度的规则</li>
-  <li>按提升度降序排列输出</li>
-</ul>
-        `,
-        difficulty: "medium",
-        time: "20分钟",
-        code: `from collections import Counter
-from itertools import combinations
-
-# 示例购物篮数据
-transactions = [
-    ['面包', '牛奶', '鸡蛋'],
-    ['牛奶', '鸡蛋', '啤酒'],
-    ['面包', '牛奶', '啤酒', '薯片'],
-    ['面包', '薯片'],
-    ['牛奶', '鸡蛋', '面包'],
-    ['啤酒', '薯片'],
-    ['面包', '牛奶', '鸡蛋', '薯片'],
-    ['牛奶', '鸡蛋'],
-    ['面包', '啤酒'],
-    ['鸡蛋', '薯片']
-]
-
-min_support = 0.3  # 最小支持度30%
-min_confidence = 0.6  # 最小置信度60%
-
-# 请在此编写代码
-        `,
+  <li>生成所有可能的关联规则</li>
+  <li>计算每条规则的支持度、置信度和提升度</li>
+  <li>按提升度降序输出结果</li>
+</ul>`,
+        difficulty: "hard",
+        time: "30分钟",
+        code: `# 请编写代码`,
         analysis: `
 <h4>解题思路</h4>
-<p>1. 先用Apriori找到所有频繁项集</p>
-<p>2. 对每个频繁项集（大小>=2），生成所有可能的规则 A→B</p>
-<p>3. 计算每个规则的支持度、置信度、提升度</p>
-<p>4. 筛选满足条件的强规则并排序</p>
+<p>1. 从频繁项集生成所有非空子集作为前件</p>
+<p>2. 对每条规则，计算置信度 = 项集支持度 / 前件支持度</p>
+<p>3. 计算提升度 = 置信度 / 后件支持度</p>
+<p>4. 筛选满足最小置信度的规则</p>
 <h4>代码示例</h4>
 <div class="bg-dark p-3 rounded-lg font-mono text-sm">
   <pre class="text-cyan-300">
-from collections import Counter
 from itertools import combinations
+from collections import Counter
 
-def get_itemset_support(itemset, transactions):
-    \"\"\"计算项集支持度\"\"\"
-    count = 0
-    itemset_set = set(itemset)
-    for tx in transactions:
-        if itemset_set.issubset(tx):
-            count += 1
-    return count / len(transactions), count
-
-def generate_rules(frequent_itemsets, min_confidence, transactions):
-    \"\"\"从频繁项集生成关联规则\"\"\"
-    rules = []
-    n = len(transactions)
-    
-    for itemset in frequent_itemsets.keys():
-        k = len(itemset)
-        if k < 2:
-            continue
-        # 生成所有非空真子集作为前件
-        for size in range(1, k):
-            for antecedent in combinations(itemset, size):
-                antecedent = frozenset(antecedent)
-                consequent = itemset - antecedent
-                if not consequent:
-                    continue
-                # 计算指标
-                support_antecedent, _ = get_itemset_support(antecedent, transactions)
-                support_consequent, _ = get_itemset_support(consequent, transactions)
-                support_itemset, count_itemset = get_itemset_support(itemset, transactions)
-                confidence = support_itemset / support_antecedent if support_antecedent > 0 else 0
-                lift = confidence / support_consequent if support_consequent > 0 else 0
-                # 筛选满足最小置信度的规则
-                if confidence >= min_confidence:
-                    rules.append({
-                        'antecedent': sorted(antecedent),
-                        'consequent': sorted(consequent),
-                        'support': support_itemset,
-                        'confidence': confidence,
-                        'lift': lift,
-                        'count': count_itemset
-                    })
-    
-    # 按提升度降序排列
-    rules.sort(key=lambda x: x['lift'], reverse=True)
-    return rules
-
-def apriori(transactions, min_support):
-    \"\"\"简化的Apriori，这里直接统计所有项集\"\"\"
-    n = len(transactions)
-    min_count = int(min_support * n)
-    
-    # 统计所有可能的项集（简化版本）
-    all_items = set(item for tx in transactions for item in tx)
-    itemsets = {}
-    
-    # 先统计1-项集
-    item_counts = Counter(item for tx in transactions for item in tx)
-    itemsets.update({frozenset([item]): count for item, count in item_counts.items() if count >= min_count})
-    
-    # 统计更大的项集
-    for k in range(2, len(all_items) + 1):
-        k_itemsets = {}
-        # 从已有k-1项集生成候选
-        prev_items = list(itemsets.keys())
-        candidates = set()
-        for i in range(len(prev_items)):
-            for j in range(i + 1, len(prev_items)):
-                itemset1 = prev_items[i]
-                itemset2 = prev_items[j]
-                if len(itemset1) == k-1 and len(itemset2) == k-1:
-                    union = itemset1.union(itemset2)
-                    if len(union) == k:
-                        candidates.add(frozenset(union))
-        # 统计候选
-        for tx in transactions:
-            tx_set = set(tx)
-            for candidate in candidates:
-                if candidate.issubset(tx_set):
-                    k_itemsets[candidate] = k_itemsets.get(candidate, 0) + 1
-        # 筛选频繁项集
-        k_itemsets = {itemset: count for itemset, count in k_itemsets.items() if count >= min_count}
-        if not k_itemsets:
-            break
-        itemsets.update(k_itemsets)
-    
-    return itemsets
-
-# 示例数据
 transactions = [
-    ['面包', '牛奶', '鸡蛋'],
-    ['牛奶', '鸡蛋', '啤酒'],
-    ['面包', '牛奶', '啤酒', '薯片'],
-    ['面包', '薯片'],
-    ['牛奶', '鸡蛋', '面包'],
-    ['啤酒', '薯片'],
-    ['面包', '牛奶', '鸡蛋', '薯片'],
-    ['牛奶', '鸡蛋'],
-    ['面包', '啤酒'],
-    ['鸡蛋', '薯片']
+    ['面包', '牛奶', '啤酒'],
+    ['面包', '尿布', '啤酒', '鸡蛋'],
+    ['牛奶', '尿布', '鸡蛋', '可乐'],
+    ['面包', '牛奶', '尿布', '鸡蛋'],
+    ['面包', '牛奶', '可乐', '啤酒'],
 ]
 
-min_support = 0.3
-min_confidence = 0.6
+n_transactions = len(transactions)
+item_counts = Counter([item for trans in transactions for item in trans])
 
-print("=== 关联规则挖掘结果 ===")
-print(f"最小支持度: {min_support*100}%")
-print(f"最小置信度: {min_confidence*100}%\\n")
+def generate_rules(frequent_itemset, item_counts, n_transactions, min_confidence):
+    rules = []
+    items = list(frequent_itemset)
+    
+    for i in range(1, len(items)):
+        for antecedent in combinations(items, i):
+            antecedent = frozenset(antecedent)
+            consequent = frequent_itemset - antecedent
+            
+            support_XY = item_counts[frequent_itemset] / n_transactions
+            support_X = item_counts[antecedent] / n_transactions
+            support_Y = item_counts[consequent] / n_transactions
+            
+            confidence = support_XY / support_X
+            lift = confidence / support_Y if support_Y > 0 else 0
+            
+            if confidence >= min_confidence:
+                rules.append({
+                    'antecedent': set(antecedent),
+                    'consequent': set(consequent),
+                    'support': support_XY,
+                    'confidence': confidence,
+                    'lift': lift
+                })
+    
+    return rules
 
-# 找出频繁项集
-frequent_itemsets = apriori(transactions, min_support)
+frequent_itemset = frozenset(['面包', '牛奶', '啤酒'])
+rules = generate_rules(frequent_itemset, item_counts, n_transactions, 0.3)
 
-# 生成规则
-rules = generate_rules(frequent_itemsets, min_confidence, transactions)
-
-if not rules:
-    print("未发现满足条件的规则")
-else:
-    print(f"发现 {len(rules)} 条强关联规则:\\n")
-    for i, rule in enumerate(rules, 1):
-        ant = ", ".join(rule['antecedent'])
-        con = ", ".join(rule['consequent'])
-        print(f"规则 {i}: {{{ant}}} → {{{con}}}")
-        print(f"  支持度: {rule['support']*100:.1f}% ({rule['count']}次)")
-        print(f"  置信度: {rule['confidence']*100:.1f}%")
-        print(f"  提升度: {rule['lift']:.2f}")
-        print()
+print("关联规则:")
+for rule in sorted(rules, key=lambda x: -x['lift']):
+    print(f"  {rule['antecedent']} → {rule['consequent']}")
+    print(f"    支持度: {rule['support']:.2f}, 置信度: {rule['confidence']:.2f}, 提升度: {rule['lift']:.2f}")
   </pre>
 </div>
 <h4>知识点</h4>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module3-visualization')">结果可视化与应用</a></li>
-  <li>关联规则生成</li>
-  <li>支持度、置信度、提升度</li>
-</ul>
-        `
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module2-apriori')">关联规则生成</a></li>
+  <li>提升度计算</li>
+</ul>`
       }
     ];
 
-    // 选择题数据
     const choiceQuestions = [
       {
         id: 'c1',
         chapter: 1,
         title: "选择题1：购物篮分析概念",
-        question: "购物篮分析的主要目标是什么？",
+        question: "购物篮分析的主要目的是什么？",
         options: [
-          { label: 'A', text: '预测单个商品的销量' },
+          { label: 'A', text: '分析顾客的购买频率' },
           { label: 'B', text: '发现商品之间的关联关系' },
-          { label: 'C', text: '优化仓库存储位置' },
-          { label: 'D', text: '分析顾客人口统计特征' }
+          { label: 'C', text: '预测商品价格走势' },
+          { label: 'D', text: '计算库存周转率' }
         ],
         answer: 'B',
-        analysis: "购物篮分析通过分析顾客购物篮中的商品组合，发现哪些商品经常被一起购买，从而找出商品之间的关联关系。",
+        analysis: "购物篮分析的核心目的是发现商品之间的关联关系，通过分析顾客购买行为中的商品组合，为商品推荐、货架布局、促销策略等提供数据支持。",
         difficulty: "easy"
       },
       {
         id: 'c2',
         chapter: 1,
         title: "选择题2：关联规则指标",
-        question: "如果规则 A→B 的提升度(Lift)为1.0，这意味着什么？",
+        question: "在关联规则中，支持度表示的是什么？",
         options: [
-          { label: 'A', text: '购买A的顾客极有可能购买B' },
-          { label: 'B', text: 'A和B之间没有关联，是独立事件' },
-          { label: 'C', text: '购买A的顾客不太可能购买B' },
-          { label: 'D', text: '规则的置信度为100%' }
+          { label: 'A', text: '购买A的顾客中购买B的比例' },
+          { label: 'B', text: 'A和B同时出现的概率' },
+          { label: 'C', text: 'A出现时B出现的概率与B单独出现概率的比值' },
+          { label: 'D', text: '包含A的交易数量' }
         ],
         answer: 'B',
-        analysis: "提升度(Lift) = 1表示A和B是独立事件，购买A对购买B没有影响；Lift > 1表示正相关；Lift < 1表示负相关。",
+        analysis: "支持度(Support)表示项集A和项集B同时出现在所有交易中的概率，即Support(A→B) = P(A∪B)。这反映了规则的普遍性。",
         difficulty: "medium"
       },
       {
         id: 'c3',
-        chapter: 2,
-        title: "选择题3：Apriori原理",
-        question: "根据Apriori原理，下列说法正确的是？",
+        chapter: 1,
+        title: "选择题3：支持度与置信度",
+        question: "以下关于支持度和置信度的说法，正确的是？",
         options: [
-          { label: 'A', text: '如果一个项集是频繁的，那么它的所有超集也是频繁的' },
-          { label: 'B', text: '如果一个项集是非频繁的，那么它的所有子集也是非频繁的' },
-          { label: 'C', text: '如果一个项集是频繁的，那么它的所有子集也是频繁的' },
-          { label: 'D', text: 'Apriori原理只适用于2-项集' }
+          { label: 'A', text: '高支持度的规则一定有高置信度' },
+          { label: 'B', text: '高置信度的规则一定有高支持度' },
+          { label: 'C', text: '高置信度可能反映的是商品本身的热门程度' },
+          { label: 'D', text: '支持度和置信度没有关联' }
         ],
         answer: 'C',
-        analysis: "Apriori原理：如果一个项集是频繁的，那么它的所有非空子集也必须是频繁的。逆否命题：如果一个项集是非频繁的，那么它的所有超集也一定是非频繁的。",
-        difficulty: "medium"
+        analysis: "高置信度可能反映的是商品本身的热门程度。例如，如果商品B在80%的交易中出现，那么任何商品与B的规则都会有很高的置信度，但这并不意味着它们之间有真正的关联。提升度可以解决这个问题。",
+        difficulty: "easy"
       },
       {
         id: 'c4',
-        chapter: 3,
-        title: "选择题4：业务应用场景",
-        question: "购物篮分析结果最适合用于以下哪种场景？",
+        chapter: 2,
+        title: "选择题4：Apriori原理",
+        question: "Apriori算法的先验性质是指？",
         options: [
-          { label: 'A', text: '商品定价策略' },
-          { label: 'B', text: '商品陈列优化' },
-          { label: 'C', text: '员工排班计划' },
-          { label: 'D', text: '供应商选择' }
+          { label: 'A', text: '频繁项集的所有超集都是频繁的' },
+          { label: 'B', text: '非频繁项集的所有子集都是非频繁的' },
+          { label: 'C', text: '频繁项集的所有非空子集都是频繁的' },
+          { label: 'D', text: '非频繁项集的所有超集都是频繁的' }
         ],
-        answer: 'B',
-        analysis: "购物篮分析发现的关联规则最适合用于商品陈列优化，将强关联商品放在一起可以增加交叉销售机会。",
+        answer: 'C',
+        analysis: "Apriori算法的先验性质是：如果一个项集是频繁的，那么它的所有非空子集也必须是频繁的。反过来，如果一个项集是非频繁的，那么它的所有超集也一定是非频繁的。利用这个性质可以有效剪枝。",
         difficulty: "easy"
       },
       {
         id: 'c5',
-        chapter: 3,
-        title: "选择题5：营销策略优化",
-        question: "如果发现规则 {牛奶} → {饼干} 的置信度很高但提升度仅为1.2，应该如何制定促销策略？",
+        chapter: 2,
+        title: "选择题5：算法流程",
+        question: "Apriori算法的主要步骤不包括以下哪一项？",
         options: [
-          { label: 'A', text: '牛奶和饼干都打5折' },
-          { label: 'B', text: '买牛奶送饼干' },
-          { label: 'C', text: '牛奶打折，饼干不打折' },
-          { label: 'D', text: '饼干打折，牛奶不打折' }
+          { label: 'A', text: '扫描数据集，计算项的支持度' },
+          { label: 'B', text: '使用频繁项集生成候选项集' },
+          { label: 'C', text: '计算商品的利润贡献度' },
+          { label: 'D', text: '根据最小支持度筛选频繁项集' }
         ],
         answer: 'C',
-        analysis: "提升度不高说明两者相关性有限，但置信度高说明买牛奶的人常买饼干。所以应该对牛奶打折吸引顾客，饼干不打折保证利润。",
+        analysis: "Apriori算法的主要步骤是：1)扫描数据集计算支持度；2)筛选频繁项集；3)生成候选项集；4)剪枝。不包括计算商品利润贡献度。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c6',
+        chapter: 3,
+        title: "选择题6：业务应用场景",
+        question: "购物篮分析结果不适用于以下哪个场景？",
+        options: [
+          { label: 'A', text: '商品推荐系统' },
+          { label: 'B', text: '货架布局优化' },
+          { label: 'C', text: '预测股票价格' },
+          { label: 'D', text: '促销活动设计' }
+        ],
+        answer: 'C',
+        analysis: "购物篮分析主要用于零售业场景，如商品推荐、货架优化、促销设计、库存管理等。股票价格预测不属于购物篮分析的应用范围。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c7',
+        chapter: 3,
+        title: "选择题7：营销策略优化",
+        question: "以下哪种营销策略最不适合基于关联规则？",
+        options: [
+          { label: 'A', text: '捆绑销售' },
+          { label: 'B', text: '买一送一' },
+          { label: 'C', text: '限时折扣' },
+          { label: 'D', text: '基于提升度的定向推荐' }
+        ],
+        answer: 'C',
+        analysis: "限时折扣是一种通用的促销手段，不涉及商品之间的关联关系。而捆绑销售、买一送一和基于提升度的定向推荐都直接利用了商品之间的关联规则。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c8',
+        chapter: 3,
+        title: "选择题8：可视化方法",
+        question: "以下哪种可视化方法最适合展示商品之间的网络关联关系？",
+        options: [
+          { label: 'A', text: '柱状图' },
+          { label: 'B', text: '饼图' },
+          { label: 'C', text: '网络图' },
+          { label: 'D', text: '折线图' }
+        ],
+        answer: 'C',
+        analysis: "网络图可以清晰地展示商品之间的关联关系网络，节点代表商品，边代表关联强度或规则。柱状图和饼图适合展示分布，折线图适合展示趋势变化。",
         difficulty: "medium"
       }
     ];
 
-    // 全局变量
     let currentProblem = 1;
     let pyodide = null;
     let editor = null;
@@ -1378,7 +1271,6 @@ else:
     let seconds = 0;
     let isCodeEditorCollapsed = false;
 
-    // 切换代码编辑器折叠状态
     function toggleCodeEditor() {
       const container = document.getElementById('code-editor-container');
       const icon = document.getElementById('toggle-code-icon');
@@ -1396,10 +1288,7 @@ else:
       }
     }
 
-
-    // 初始化函数
     document.addEventListener('DOMContentLoaded', function() {
-      // 初始化代码编辑器
       editor = ace.edit('codeEditor');
       editor.setTheme('ace/theme/tomorrow_night');
       editor.getSession().setMode('ace/mode/python');
@@ -1410,39 +1299,29 @@ else:
         wrap: true
       });
       
-      // 设置初始占位符文本
       editor.setValue('# 请编写代码');
       editor.clearSelection();
 
-      // 加载Pyodide
       initPyodide();
-
-      // 加载第一个问题
       loadProgrammingProblem(1);
 
-      // 绑定按钮事件
       document.getElementById('runCode').addEventListener('click', runCode);
       document.getElementById('resetCode').addEventListener('click', resetCode);
 
-      // 绑定知识点导航事件
       document.querySelectorAll('.knowledge-nav').forEach((button, index) => {
         button.addEventListener('click', function(e) {
           e.preventDefault();
           e.stopPropagation();
           
-          // 更新按钮状态
           document.querySelectorAll('.knowledge-nav').forEach(btn => btn.classList.remove('active'));
           this.classList.add('active');
           
-          // 获取目标模块ID
           const target = this.getAttribute('data-target');
           
-          // 隐藏所有模块
           document.querySelectorAll('.knowledge-section').forEach(section => {
             section.classList.add('hidden');
           });
           
-          // 显示目标模块
           const targetElement = document.getElementById(target);
           if (targetElement) {
             targetElement.classList.remove('hidden');
@@ -1451,7 +1330,6 @@ else:
       });
     });
 
-    // 加载Pyodide
     async function initPyodide() {
       const statusEl = document.getElementById('pyodide-status');
       const cdns = [
@@ -1488,6 +1366,7 @@ else:
         try {
           pyodide = await loadWithTimeout(cdns[currentCDN]);
           statusEl.innerHTML = '<i class="fa fa-check text-emerald-400"></i> Python解释器加载成功';
+          await pyodide.loadPackage(['pandas', 'numpy']);
           return;
         } catch (error) {
           console.warn(`CDN ${cdns[currentCDN]} 加载失败:`, error);
@@ -1499,7 +1378,6 @@ else:
       console.error('Pyodide load error:', error);
     }
 
-    // 切换标签页
     function showTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(tab => {
         tab.classList.add('hidden');
@@ -1508,14 +1386,12 @@ else:
       
       document.querySelectorAll('.nav-link').forEach(link => {
         link.classList.remove('active');
-        // 找到对应的导航链接并激活
         if(link.getAttribute('onclick') && link.getAttribute('onclick').includes("'" + tabId + "'")) {
           link.classList.add('active');
         }
       });
     }
 
-    // 切换章节
     function toggleChapter(chapterId) {
       const content = document.getElementById(chapterId + '-content');
       const icon = document.getElementById(chapterId + '-icon');
@@ -1531,29 +1407,24 @@ else:
       }
     }
 
-
-    // 加载编程题
     function loadProgrammingProblem(problemId) {
       currentProblem = problemId;
       const problem = problems.find(p => p.id === problemId);
       
       if (!problem) return
-      showTab("question-bank");
       
-      // 确保在题库标签页
+      showTab("question-bank");;
+      
       showTab('question-bank');
       
-      // 更新问题信息
       document.getElementById('problem-title').textContent = problem.title;
       document.getElementById('problem-description').innerHTML = problem.description;
       
-      // 更新难度标签
       const difficultyTag = document.getElementById('difficulty-tag');
       difficultyTag.className = 'difficulty-tag';
       difficultyTag.classList.add('difficulty-' + problem.difficulty);
       difficultyTag.textContent = problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难';
       
-      // 显示代码编辑器和运行结果区域
       const codeContainer = document.getElementById('code-editor-container');
       codeContainer.style.display = 'block';
       if (isCodeEditorCollapsed) {
@@ -1563,21 +1434,16 @@ else:
       }
       document.getElementById('code-output').parentElement.parentElement.style.display = 'block';
       
-      // 更新代码编辑器
       editor.setValue(problem.code);
       editor.clearSelection();
       
-      // 更新答案解析
       document.getElementById('answer-analysis').innerHTML = problem.analysis;
       
-      // 重置计时器
       resetTimer();
       
-      // 更新问题项状态
       document.querySelectorAll('.problem-item').forEach(item => {
         item.classList.remove('active');
       });
-      // 给当前点击的问题项添加 active 类
       const allProblemItems = document.querySelectorAll('.problem-item');
       allProblemItems.forEach(item => {
         const onclickAttr = item.getAttribute('onclick');
@@ -1587,7 +1453,6 @@ else:
       });
     }
 
-    // 运行代码
     async function runCode() {
       const code = editor.getValue();
       const outputDiv = document.getElementById('code-output');
@@ -1604,7 +1469,6 @@ else:
       try {
         const startTime = performance.now();
         
-        // 重置并捕获 stdout 和 stderr
         let stdoutOutput = '';
         let stderrOutput = '';
         
@@ -1620,20 +1484,18 @@ else:
           }
         });
         
-        // 运行代码
         const result = await pyodide.runPythonAsync(code);
         
         const endTime = performance.now();
         const executionTime = (endTime - startTime).toFixed(2);
         
-        // 组合输出：优先显示 stdout，其次 stderr，然后是返回值
         let displayOutput = '';
         if (stdoutOutput.trim()) {
           displayOutput += stdoutOutput.trim();
         }
         if (stderrOutput.trim()) {
-          if (displayOutput) displayOutput += '\\n\\n';
-          displayOutput += '错误输出:\\n' + stderrOutput.trim();
+          if (displayOutput) displayOutput += '\n\n';
+          displayOutput += '错误输出:\n' + stderrOutput.trim();
         }
         if (!displayOutput && result !== undefined) {
           displayOutput = String(result);
@@ -1647,14 +1509,13 @@ else:
       } catch (error) {
         let errorMsg = `错误：${error.message}`;
         if (error.pyodide_type) {
-          errorMsg += ` (类型：${error.pyodide_type})`;
+          errorMsg += ` (类型: ${error.pyodide_type})`;
         }
         outputDiv.textContent = errorMsg;
         executionTimeDiv.textContent = '执行时间：0ms';
       }
     }
 
-    // 重置代码
     function resetCode() {
       const problem = problems.find(p => p.id === currentProblem);
       if (problem) {
@@ -1663,7 +1524,6 @@ else:
       }
     }
 
-    // 切换收藏状态
     function toggleFavorite(problemId) {
       const btn = document.getElementById('favorite-btn');
       if (btn.innerHTML.includes('fa-star-o')) {
@@ -1673,7 +1533,6 @@ else:
       }
     }
 
-    // 重置计时器
     function resetTimer() {
       clearInterval(timerInterval);
       seconds = 0;
@@ -1684,14 +1543,12 @@ else:
       }, 1000);
     }
 
-    // 更新计时器
     function updateTimer() {
       const minutes = Math.floor(seconds / 60);
       const secs = seconds % 60;
       document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
 
-    // 滚动到指定知识点
     function scrollToKnowledge(sectionId) {
       const section = document.getElementById(sectionId);
       if (section) {
@@ -1699,32 +1556,26 @@ else:
       }
     }
 
-    // 选择题相关变量和函数
     let currentChoiceQuestion = null;
     let selectedAnswer = null;
     let answeredQuestions = {};
 
-    // 加载选择题
     function loadChoiceQuestion(questionId) {
       currentChoiceQuestion = choiceQuestions.find(q => q.id === questionId);
       showTab("question-bank");
       if (!currentChoiceQuestion) return;
 
-      // 自动切换到题库标签页
       showTab('question-bank');
       
       selectedAnswer = answeredQuestions[questionId] || null;
       
-      // 更新问题信息
       document.getElementById('problem-title').textContent = currentChoiceQuestion.title;
       
-      // 更新难度标签
       const difficultyTag = document.getElementById('difficulty-tag');
       difficultyTag.className = 'difficulty-tag';
       difficultyTag.classList.add('difficulty-' + currentChoiceQuestion.difficulty);
       difficultyTag.textContent = currentChoiceQuestion.difficulty === 'easy' ? '简单' : currentChoiceQuestion.difficulty === 'medium' ? '中等' : '困难';
       
-      // 构建选择题HTML
       let optionsHtml = currentChoiceQuestion.options.map(opt => {
         let optionClass = 'choice-option';
         if (selectedAnswer === opt.label) {
@@ -1763,40 +1614,32 @@ else:
         </div>
       `;
 
-      // 隐藏代码编辑器和运行结果区域
       document.getElementById('code-editor-container').style.display = 'none';
       document.getElementById('code-output').parentElement.parentElement.style.display = 'none';
       
-      // 更新答案解析
       updateChoiceAnalysis();
       
-      // 滚动到问题描述区域
       document.getElementById('problem-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
       
-      // 重置计时器
       resetTimer();
       
-      // 更新问题项状态
       document.querySelectorAll('.problem-item').forEach(item => {
         item.classList.remove('active');
       });
-      // 给当前点击的问题项添加 active 类
       const allProblemItems = document.querySelectorAll('.problem-item');
       allProblemItems.forEach(item => {
         const onclickAttr = item.getAttribute('onclick');
-        if (onclickAttr && onclickAttr.includes('loadChoiceQuestion(\\'' + questionId + '\\')')) {
+        if (onclickAttr && onclickAttr.includes('loadChoiceQuestion(\'' + questionId + '\')')) {
           item.classList.add('active');
         }
       });
     }
 
-    // 选择答案
     function selectChoice(label) {
       if (answeredQuestions[currentChoiceQuestion.id]) return;
       
       selectedAnswer = label;
       
-      // 更新选项样式
       document.querySelectorAll('.choice-option').forEach(opt => {
         opt.classList.remove('selected');
         if (opt.dataset.label === label) {
@@ -1805,7 +1648,6 @@ else:
       });
     }
 
-    // 提交选择题答案
     function submitChoice() {
       if (!selectedAnswer) {
         alert('请先选择一个答案');
@@ -1814,7 +1656,6 @@ else:
       
       answeredQuestions[currentChoiceQuestion.id] = selectedAnswer;
       
-      // 更新选项样式
       document.querySelectorAll('.choice-option').forEach(opt => {
         opt.classList.add('disabled');
         if (opt.dataset.label === currentChoiceQuestion.answer) {
@@ -1824,20 +1665,16 @@ else:
         }
       });
       
-      // 禁用提交按钮，显示解析按钮
       document.getElementById('submit-choice-btn').disabled = true;
       document.getElementById('submit-choice-btn').style.opacity = '0.5';
       document.getElementById('submit-choice-btn').style.cursor = 'not-allowed';
       document.getElementById('show-analysis-btn').style.display = 'flex';
       
-      // 更新答案解析
       updateChoiceAnalysis();
       
-      // 更新进度
       updateChoiceProgress();
     }
 
-    // 显示选择题解析
     function showChoiceAnalysis() {
       if (!answeredQuestions[currentChoiceQuestion.id]) {
         alert('请先提交答案');
@@ -1846,7 +1683,6 @@ else:
       document.getElementById('answer-analysis').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // 更新选择题解析内容
     function updateChoiceAnalysis() {
       if (!currentChoiceQuestion) return;
       
@@ -1883,17 +1719,15 @@ else:
       `;
     }
 
-    // 获取知识点章节ID
     function getKnowledgeSection(chapter) {
       const sections = {
-        1: 'module1-basics',
+        1: 'module1-overview',
         2: 'module2-apriori',
         3: 'module3-visualization'
       };
-      return sections[chapter] || 'module1-basics';
+      return sections[chapter] || 'module1-overview';
     }
 
-    // 获取章节名称
     function getChapterName(chapter) {
       const names = {
         1: '购物篮分析基础',
@@ -1903,7 +1737,6 @@ else:
       return names[chapter] || '购物篮分析';
     }
 
-    // 更新选择题进度
     function updateChoiceProgress() {
       const totalChoice = choiceQuestions.length;
       const answeredChoice = Object.keys(answeredQuestions).length;
@@ -1912,7 +1745,6 @@ else:
         return q && q.answer === ans;
       }).length;
       
-      // 可以在这里更新总体进度显示
       console.log(`选择题进度: ${answeredChoice}/${totalChoice}, 正确: ${correctChoice}`);
     }
   </script>
