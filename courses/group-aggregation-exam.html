@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>供应链分析考试 - Xww的课程页面</title>
+  <title>分组聚合分析考试 - Xww的课程页面</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/ace.js"></script>
@@ -118,8 +118,8 @@
   <nav class="bg-dark-gray shadow-lg fixed w-full z-10">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
       <div class="flex items-center gap-4">
-        <a href="supply-chain-analysis.html" class="text-cyan-400 font-bold text-xl flex items-center gap-2">
-          <i class="fa fa-arrow-left mr-2"></i> 供应链分析
+        <a href="group-aggregation.html" class="text-cyan-400 font-bold text-xl flex items-center gap-2">
+          <i class="fa fa-arrow-left mr-2"></i> 分组聚合分析
         </a>
       </div>
       <div class="flex items-center gap-4">
@@ -137,7 +137,7 @@
       <div id="exam-start" class="py-12">
         <div class="max-w-3xl mx-auto bg-dark-gray rounded-xl p-8 border border-gray-700">
           <div class="text-center">
-            <h2 class="text-2xl font-bold text-gray-200 mb-6">供应链分析考试</h2>
+            <h2 class="text-2xl font-bold text-gray-200 mb-6">分组聚合分析考试</h2>
             <p class="text-gray-400 mb-8">请输入您的姓名，然后点击开始考试按钮</p>
             <div class="mb-6">
               <input type="text" id="student-name" placeholder="请输入您的姓名" class="w-full px-4 py-3 bg-dark border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-200">
@@ -146,7 +146,7 @@
               <h3 class="text-lg font-semibold text-gray-200 mb-4">考试规则</h3>
               <ul class="list-disc list-inside space-y-2 text-gray-400">
                 <li>考试时间：30分钟</li>
-                <li>共10道题目，包括1道编程题和9道选择题</li>
+                <li>共10道题目，包括2道编程题和8道选择题</li>
                 <li>选择题自动评分，编程题需运行代码后评分</li>
                 <li>请独立完成，不要参考外部资料</li>
                 <li>考试过程中不要刷新页面，否则会丢失进度</li>
@@ -176,7 +176,7 @@
             <!-- 题目描述 -->
             <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
               <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
-                <h3 class="text-xl font-bold text-gray-200" id="exam-problem-title">问题1：供应链数据预处理</h3>
+                <h3 class="text-xl font-bold text-gray-200" id="exam-problem-title">问题1：销售数据分组统计</h3>
                 <span class="difficulty-tag difficulty-easy" id="exam-difficulty-tag">简单</span>
               </div>
               <div class="problem-description" id="exam-problem-description">
@@ -312,16 +312,16 @@
     const examProblems = [
       {
         id: 1,
-        title: "编程题：供应链数据预处理",
-        description: `<p>编写一个程序，对供应链数据进行预处理，包括缺失值处理、异常值检测等。</p>
+        title: "编程题：销售数据分组统计",
+        description: `<p>编写一个程序，对销售数据按地区进行分组统计分析。</p>
         <p><strong>背景：</strong></p>
-        <p>一家零售公司提供了包含缺失值和异常值的供应链数据。</p>
+        <p>某公司在多个地区有销售记录，需要按地区分组统计销售情况。</p>
         <p><strong>要求：</strong></p>
         <ul class="list-disc list-inside space-y-1 mt-2">
-          <li>识别并统计缺失值</li>
-          <li>使用合适的方法填充缺失值</li>
-          <li>使用IQR方法检测并处理异常值</li>
-          <li>输出处理后的数据</li>
+          <li>按地区分组统计销售总额</li>
+          <li>计算每个地区的平均销售额</li>
+          <li>找出销售额最高的地区</li>
+          <li>统计每个地区的销售次数</li>
         </ul>`,
         difficulty: "easy",
         code: `# 请编写代码
@@ -329,40 +329,107 @@
         answer: `import pandas as pd
 import numpy as np
 
-# 创建示例数据
-data = {
-    'product_id': [1, 2, 3, 4, 5, 6],
-    'demand': [100, 120, np.nan, 150, 200, 1000],
-    'lead_time': [7, 8, 6, np.nan, 9, 8],
-    'supplier': ['A', 'B', 'A', 'C', 'B', 'A']
-}
-df = pd.DataFrame(data)
+# 销售数据
+sales_data = [
+    {'地区': '北京', '销售额': 1200, '产品': '手机'},
+    {'地区': '上海', '销售额': 1500, '产品': '电脑'},
+    {'地区': '北京', '销售额': 800, '产品': '平板'},
+    {'地区': '广州', '销售额': 950, '产品': '手机'},
+    {'地区': '上海', '销售额': 1100, '产品': '手机'},
+    {'地区': '北京', '销售额': 1800, '产品': '电脑'},
+    {'地区': '广州', '销售额': 700, '产品': '平板'},
+    {'地区': '上海', '销售额': 1300, '产品': '平板'}
+]
 
-# 识别缺失值
-print("缺失值统计:")
-print(df.isnull().sum())
+# 转换为DataFrame
+df = pd.DataFrame(sales_data)
 
-# 处理缺失值
-df['demand'] = df['demand'].fillna(df['demand'].mean())
-df['lead_time'] = df['lead_time'].fillna(df['lead_time'].median())
+# 按地区分组
+grouped = df.groupby('地区')
 
-# 检测异常值（IQR方法）
-Q1 = df['demand'].quantile(0.25)
-Q3 = df['demand'].quantile(0.75)
-IQR = Q3 - Q1
-lower = Q1 - 1.5 * IQR
-upper = Q3 + 1.5 * IQR
-outliers = df[(df['demand'] < lower) | (df['demand'] > upper)]
-print("\\n检测到的异常值:")
-print(outliers)
+# 统计销售总额
+total_sales = grouped['销售额'].sum()
+print("各地区销售总额:")
+print(total_sales)
+print()
 
-# 处理异常值（截断）
-df['demand'] = df['demand'].clip(lower, upper)
+# 计算平均销售额
+avg_sales = grouped['销售额'].mean()
+print("各地区平均销售额:")
+print(avg_sales.round(2))
+print()
 
-print("\\n处理后的数据:")
-print(df)
+# 统计销售次数
+count_sales = grouped['销售额'].count()
+print("各地区销售次数:")
+print(count_sales)
+print()
+
+# 找出销售额最高的地区
+top_region = total_sales.idxmax()
+top_amount = total_sales.max()
+print(f"销售额最高的地区: {top_region} ({top_amount}元)")
 `,
-        score: 10
+        score: 15
+      },
+      {
+        id: 2,
+        title: "编程题：多维度分组聚合",
+        description: `<p>编写一个程序，对电商数据进行多维度分组和聚合分析。</p>
+        <p><strong>背景：</strong></p>
+        <p>需要按产品类别和月份两个维度进行分组统计。</p>
+        <p><strong>要求：</strong></p>
+        <ul class="list-disc list-inside space-y-1 mt-2">
+          <li>实现按产品类别和月份的多维度分组</li>
+          <li>计算每个组的销售额总和</li>
+          <li>计算每个组的订单数量</li>
+          <li>找出每个类别销售额最高的月份</li>
+        </ul>`,
+        difficulty: "medium",
+        code: `# 请编写代码
+`,
+        answer: `import pandas as pd
+import numpy as np
+from collections import defaultdict
+
+# 电商数据
+ecommerce_data = [
+    {'产品类别': '电子产品', '月份': '1月', '销售额': 5000, '订单数': 20},
+    {'产品类别': '服装', '月份': '1月', '销售额': 3000, '订单数': 35},
+    {'产品类别': '电子产品', '月份': '2月', '销售额': 6500, '订单数': 25},
+    {'产品类别': '服装', '月份': '2月', '销售额': 4200, '订单数': 40},
+    {'产品类别': '食品', '月份': '1月', '销售额': 2500, '订单数': 50},
+    {'产品类别': '食品', '月份': '2月', '销售额': 2800, '订单数': 55},
+    {'产品类别': '电子产品', '月份': '1月', '销售额': 3500, '订单数': 15},
+    {'产品类别': '服装', '月份': '1月', '销售额': 2800, '订单数': 30}
+]
+
+# 转换为DataFrame
+df = pd.DataFrame(ecommerce_data)
+
+# 按产品类别和月份多维度分组
+grouped = df.groupby(['产品类别', '月份'])
+
+# 计算每个组的销售额总和和订单数总和
+result = grouped.agg({
+    '销售额': 'sum',
+    '订单数': 'sum'
+}).round(2)
+
+print("多维度分组聚合结果:")
+print(result)
+print()
+
+# 找出每个类别销售额最高的月份
+print("每个类别销售额最高的月份:")
+for category in df['产品类别'].unique():
+    category_data = df[df['产品类别'] == category]
+    monthly_sales = category_data.groupby('月份')['销售额'].sum()
+    top_month = monthly_sales.idxmax()
+    top_sales = monthly_sales.max()
+    print(f"{category}: {top_month} ({top_sales}元)")
+`,
+        score: 20
       }
     ];
 
@@ -371,97 +438,97 @@ print(df)
       {
         id: 11,
         type: "choice",
-        title: "选择题1：供应链基本概念",
-        question: "供应链是指从原材料采购到最终客户的整个流程，以下哪个不是供应链的核心要素？",
+        title: "选择题1：分组聚合概念",
+        question: "分组聚合分析主要用于什么？",
         options: {
-          A: "物流（物质流动）",
-          B: "信息流（信息传递）",
-          C: "技术流（技术传播）",
-          D: "资金流（资金往来）"
+          A: "数据清洗和预处理",
+          B: "将数据按某个特征分组并计算统计量",
+          C: "数据可视化和图表绘制",
+          D: "机器学习模型训练"
         },
-        answer: "C",
+        answer: "B",
         score: 10
       },
       {
         id: 12,
         type: "choice",
-        title: "选择题2：供应链核心流程",
-        question: "供应链管理包括五大核心流程，以下哪个顺序是正确的？",
+        title: "选择题2：聚合函数",
+        question: "以下哪个不是常见的聚合函数？",
         options: {
-          A: "计划-采购-制造-配送-退货",
-          B: "采购-计划-制造-配送-退货",
-          C: "计划-制造-采购-配送-退货",
-          D: "采购-制造-计划-配送-退货"
-        },
-        answer: "A",
-        score: 10
-      },
-      {
-        id: 13,
-        type: "choice",
-        title: "选择题3：供应链管理目标",
-        question: "以下哪个不是供应链管理的主要目标？",
-        options: {
-          A: "提高客户满意度",
-          B: "增加运营成本",
-          C: "优化库存水平",
-          D: "增强竞争力"
-        },
-        answer: "B",
-        score: 10
-      },
-      {
-        id: 14,
-        type: "choice",
-        title: "选择题4：预测方法比较",
-        question: "对于有明显趋势和季节性的数据，以下哪种预测方法最适合？",
-        options: {
-          A: "简单移动平均（SMA）",
-          B: "加权移动平均（WMA）",
-          C: "简单指数平滑（SES）",
-          D: "Holt-Winters指数平滑"
-        },
-        answer: "D",
-        score: 10
-      },
-      {
-        id: 15,
-        type: "choice",
-        title: "选择题5：预测误差分析",
-        question: "以下哪个误差指标可以避免正负误差相互抵消，并且对大误差比较敏感？",
-        options: {
-          A: "MAE（平均绝对误差）",
-          B: "MSE（均方误差）",
-          C: "MAPE（平均绝对百分比误差）",
-          D: "以上都不是"
-        },
-        answer: "B",
-        score: 10
-      },
-      {
-        id: 16,
-        type: "choice",
-        title: "选择题6：库存成本分析",
-        question: "EOQ（经济订货量）模型旨在最小化哪种成本？",
-        options: {
-          A: "只最小化订购成本",
-          B: "只最小化持有成本",
-          C: "总库存成本（订购成本+持有成本）",
-          D: "只最小化缺货成本"
+          A: "SUM（求和）",
+          B: "AVG（平均值）",
+          C: "CONCAT（连接）",
+          D: "MAX（最大值）"
         },
         answer: "C",
         score: 10
       },
       {
+        id: 13,
+        type: "choice",
+        title: "选择题3：分组键",
+        question: "在分组分析中，分组键指的是什么？",
+        options: {
+          A: "用于分组的字段或列",
+          B: "聚合计算的结果",
+          C: "数据的主键",
+          D: "数据的索引"
+        },
+        answer: "A",
+        score: 10
+      },
+      {
+        id: 14,
+        type: "choice",
+        title: "选择题4：多维度分组",
+        question: "多维度分组指的是什么？",
+        options: {
+          A: "使用多个聚合函数",
+          B: "按多个字段同时进行分组",
+          C: "对同一数据分组多次",
+          D: "在不同的数据集上分组"
+        },
+        answer: "B",
+        score: 10
+      },
+      {
+        id: 15,
+        type: "choice",
+        title: "选择题5：Pandas groupby",
+        question: "在Pandas中，groupby()方法返回什么类型的对象？",
+        options: {
+          A: "DataFrame",
+          B: "Series",
+          C: "GroupBy对象",
+          D: "List"
+        },
+        answer: "C",
+        score: 10
+      },
+      {
+        id: 16,
+        type: "choice",
+        title: "选择题6：业务场景",
+        question: "以下哪个场景最适合使用分组聚合分析？",
+        options: {
+          A: "预测未来销售额",
+          B: "按地区统计各门店的销售额",
+          C: "检测异常值",
+          D: "数据标准化"
+        },
+        answer: "B",
+        score: 10
+      },
+      {
         id: 17,
         type: "choice",
-        title: "选择题7：ABC分类法",
-        question: "在ABC分类法中，A类物品通常具有什么特点？",
+        title: "选择题7：agg方法",
+        question: "在Pandas中，agg()方法的作用是什么？",
         options: {
-          A: "价值高，数量多",
-          B: "价值高，数量少",
-          C: "价值低，数量多",
-          D: "价值低，数量少"
+          A: "进行数据过滤",
+          B: "应用一个或多个聚合函数",
+          C: "合并DataFrame",
+          D: "数据排序"
         },
         answer: "B",
         score: 10
@@ -469,27 +536,13 @@ print(df)
       {
         id: 18,
         type: "choice",
-        title: "选择题8：物流成本分析",
-        question: "运输路线优化的主要目标是？",
+        title: "选择题8：透视表",
+        question: "透视表（Pivot Table）与分组聚合的关系是？",
         options: {
-          A: "最大化运输距离",
-          B: "最小化运输成本或时间",
-          C: "增加运输次数",
-          D: "以上都不是"
-        },
-        answer: "B",
-        score: 10
-      },
-      {
-        id: 19,
-        type: "choice",
-        title: "选择题9：供应链风险管理",
-        question: "安全库存主要是为了应对什么风险？",
-        options: {
-          A: "价格波动风险",
-          B: "需求不确定性和供应延迟风险",
-          C: "供应商破产风险",
-          D: "自然灾害风险"
+          A: "完全相同的概念",
+          B: "透视表是分组聚合的一种特殊形式",
+          C: "分组聚合是透视表的子集",
+          D: "两者没有关系"
         },
         answer: "B",
         score: 10
@@ -516,7 +569,7 @@ print(df)
       
       // 绑定返回课程按钮事件
       document.getElementById('back-to-course').addEventListener('click', function() {
-        window.location.href = 'supply-chain-analysis.html';
+        window.location.href = 'group-aggregation.html';
       });
       
       // 绑定提交考试按钮事件
@@ -609,7 +662,7 @@ print(df)
     
     function initResultEvents() {
       document.getElementById('back-to-course').addEventListener('click', function() {
-        window.location.href = 'supply-chain-analysis.html';
+        window.location.href = 'group-aggregation.html';
       });
       document.getElementById('review-answers').addEventListener('click', function() {
         showAnswerReview();
@@ -759,7 +812,7 @@ print(df)
       if (!question) return;
       
       // 保存当前编程题答案
-      if (editor && currentQuestion <= 1) {
+      if (editor && currentQuestion <= 2) {
         studentAnswers[currentQuestion] = editor.getValue();
       }
       
@@ -975,7 +1028,7 @@ print(df)
       clearInterval(examTimer);
       
       // 保存当前答案
-      if (editor && currentQuestion <= 1) {
+      if (editor && currentQuestion <= 2) {
         studentAnswers[currentQuestion] = editor.getValue();
       }
       

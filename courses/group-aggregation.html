@@ -31,56 +31,151 @@
   </script>
   <style type="text/tailwindcss">
     @layer utilities {
-      .content-auto { content-visibility: auto; }
-      .code-editor { @apply w-full h-96 bg-dark rounded-lg overflow-hidden border border-gray-700; }
-      .code-output { @apply w-full h-64 bg-dark rounded-lg p-4 font-mono text-sm overflow-auto border border-gray-700; }
-      .btn-primary { @apply bg-cyan-500 hover:bg-cyan-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2; }
-      .btn-secondary { @apply bg-dark-gray hover:bg-gray-700 text-gray-200 px-4 py-2 rounded-lg transition-all duration-300 border border-gray-700 flex items-center gap-2; }
-      .btn-accent { @apply bg-emerald-500 hover:bg-emerald-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2; }
-      .nav-link { @apply relative text-gray-300 hover:text-cyan-400 transition-colors px-4 py-2 rounded-lg hover:bg-dark-gray flex items-center gap-2; }
-      .nav-link.active { @apply text-cyan-400 bg-dark-gray; }
-      .nav-link::after { content: ''; @apply absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300; }
-      .nav-link:hover::after { @apply w-full; }
-      .problem-item { @apply flex items-center gap-3 p-3 rounded-lg hover:bg-dark-gray transition-colors cursor-pointer border border-gray-700; }
-      .problem-item.active { @apply bg-dark-gray border-cyan-500; }
-      .problem-item.solved { @apply border-emerald-500; }
-      .problem-item.attempted { @apply border-yellow-500; }
-      .section-title { @apply text-xl font-bold text-gray-200 mb-4 relative pb-2; }
-      .section-title::after { content: ''; @apply absolute bottom-0 left-0 w-16 h-1 bg-cyan-500 rounded-full; }
-      .topic-title { @apply text-lg font-semibold text-gray-300 mb-3 flex items-center gap-2 cursor-pointer; }
-      .topic-title:hover { @apply text-cyan-400; }
-      .problem-description { @apply text-gray-300 space-y-4; }
-      .problem-description code { @apply bg-dark-gray px-2 py-1 rounded text-cyan-400; }
-      .answer-analysis { @apply text-gray-300 space-y-3; }
-      .answer-analysis h4 { @apply text-lg font-semibold text-emerald-400 mb-2; }
-      .run-info { @apply flex justify-between items-center mb-2 text-xs text-gray-400; }
-      .difficulty-tag { @apply text-xs px-2 py-1 rounded-full; }
-      .difficulty-easy { @apply bg-emerald-900 text-emerald-300; }
-      .difficulty-medium { @apply bg-yellow-900 text-yellow-300; }
-      .difficulty-hard { @apply bg-red-900 text-red-300; }
-      .chapter-item { @apply mb-6; }
-      .chapter-content { @apply space-y-2 ml-4 transition-all duration-300; }
-      .chapter-content.collapsed { @apply hidden; }
-      .scrollbar-thin { scrollbar-width: thin; }
-      .scrollbar-thin::-webkit-scrollbar { width: 6px; }
-      .scrollbar-thin::-webkit-scrollbar-track { @apply bg-dark; }
-      .scrollbar-thin::-webkit-scrollbar-thumb { @apply bg-gray-700 rounded-full; }
-      .scrollbar-thin::-webkit-scrollbar-thumb:hover { @apply bg-gray-600; }
-      .knowledge-nav.active { @apply bg-cyan-500 text-gray-900; }
-      .knowledge-nav:not(.active) { @apply bg-gray-600 text-gray-200 hover:bg-gray-500; }
-      .choice-option { @apply flex items-center gap-3 p-4 rounded-lg border border-gray-700 cursor-pointer transition-all duration-200 hover:border-cyan-500 hover:bg-dark-gray; }
-      .choice-option.selected { @apply border-cyan-500 bg-cyan-900 bg-opacity-30; }
-      .choice-option.correct { @apply border-emerald-500 bg-emerald-900 bg-opacity-30; }
-      .choice-option.wrong { @apply border-red-500 bg-red-900 bg-opacity-30; }
-      .choice-option.disabled { @apply cursor-not-allowed opacity-70; }
-      .choice-label { @apply w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold text-sm; }
-      .choice-option.selected .choice-label { @apply bg-cyan-500 text-gray-900; }
-      .choice-option.correct .choice-label { @apply bg-emerald-500 text-gray-900; }
-      .choice-option.wrong .choice-label { @apply bg-red-500 text-gray-900; }
+      .content-auto {
+        content-visibility: auto;
+      }
+      .code-editor {
+        @apply w-full h-96 bg-dark rounded-lg overflow-hidden border border-gray-700;
+      }
+      .code-output {
+        @apply w-full h-64 bg-dark rounded-lg p-4 font-mono text-sm overflow-auto border border-gray-700;
+      }
+      .btn-primary {
+        @apply bg-cyan-500 hover:bg-cyan-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2;
+      }
+      .btn-secondary {
+        @apply bg-dark-gray hover:bg-gray-700 text-gray-200 px-4 py-2 rounded-lg transition-all duration-300 border border-gray-700 flex items-center gap-2;
+      }
+      .btn-accent {
+        @apply bg-emerald-500 hover:bg-emerald-600 text-gray-900 px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2;
+      }
+      .nav-link {
+        @apply relative text-gray-300 hover:text-cyan-400 transition-colors px-4 py-2 rounded-lg hover:bg-dark-gray flex items-center gap-2;
+      }
+      .nav-link.active {
+        @apply text-cyan-400 bg-dark-gray;
+      }
+      .nav-link::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300;
+      }
+      .nav-link:hover::after {
+        @apply w-full;
+      }
+      .problem-item {
+        @apply flex items-center gap-3 p-3 rounded-lg hover:bg-dark-gray transition-colors cursor-pointer border border-gray-700;
+      }
+      .problem-item.active {
+        @apply bg-dark-gray border-cyan-500;
+      }
+      .problem-item.solved {
+        @apply border-emerald-500;
+      }
+      .problem-item.attempted {
+        @apply border-yellow-500;
+      }
+      .section-title {
+        @apply text-xl font-bold text-gray-200 mb-4 relative pb-2;
+      }
+      .section-title::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-16 h-1 bg-cyan-500 rounded-full;
+      }
+      .topic-title {
+        @apply text-lg font-semibold text-gray-300 mb-3 flex items-center gap-2 cursor-pointer;
+      }
+      .topic-title:hover {
+        @apply text-cyan-400;
+      }
+      .problem-description {
+        @apply text-gray-300 space-y-4;
+      }
+      .problem-description code {
+        @apply bg-dark-gray px-2 py-1 rounded text-cyan-400;
+      }
+      .answer-analysis {
+        @apply text-gray-300 space-y-3;
+      }
+      .answer-analysis h4 {
+        @apply text-lg font-semibold text-emerald-400 mb-2;
+      }
+      .run-info {
+        @apply flex justify-between items-center mb-2 text-xs text-gray-400;
+      }
+      .difficulty-tag {
+        @apply text-xs px-2 py-1 rounded-full;
+      }
+      .difficulty-easy {
+        @apply bg-emerald-900 text-emerald-300;
+      }
+      .difficulty-medium {
+        @apply bg-yellow-900 text-yellow-300;
+      }
+      .difficulty-hard {
+        @apply bg-red-900 text-red-300;
+      }
+      .chapter-item {
+        @apply mb-6;
+      }
+      .chapter-content {
+        @apply space-y-2 ml-4 transition-all duration-300;
+      }
+      .chapter-content.collapsed {
+        @apply hidden;
+      }
+      .scrollbar-thin {
+        scrollbar-width: thin;
+      }
+      .scrollbar-thin::-webkit-scrollbar {
+        width: 6px;
+      }
+      .scrollbar-thin::-webkit-scrollbar-track {
+        @apply bg-dark;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb {
+        @apply bg-gray-700 rounded-full;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        @apply bg-gray-600;
+      }
+      .knowledge-nav.active {
+        @apply bg-cyan-500 text-gray-900;
+      }
+      .knowledge-nav:not(.active) {
+        @apply bg-gray-600 text-gray-200 hover:bg-gray-500;
+      }
+      .choice-option {
+        @apply flex items-center gap-3 p-4 rounded-lg border border-gray-700 cursor-pointer transition-all duration-200 hover:border-cyan-500 hover:bg-dark-gray;
+      }
+      .choice-option.selected {
+        @apply border-cyan-500 bg-cyan-900 bg-opacity-30;
+      }
+      .choice-option.correct {
+        @apply border-emerald-500 bg-emerald-900 bg-opacity-30;
+      }
+      .choice-option.wrong {
+        @apply border-red-500 bg-red-900 bg-opacity-30;
+      }
+      .choice-option.disabled {
+        @apply cursor-not-allowed opacity-70;
+      }
+      .choice-label {
+        @apply w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold text-sm;
+      }
+      .choice-option.selected .choice-label {
+        @apply bg-cyan-500 text-gray-900;
+      }
+      .choice-option.correct .choice-label {
+        @apply bg-emerald-500 text-gray-900;
+      }
+      .choice-option.wrong .choice-label {
+        @apply bg-red-500 text-gray-900;
+      }
     }
   </style>
 </head>
 <body class="bg-dark min-h-screen text-gray-200">
+  <!-- 顶部导航栏 -->
   <nav class="bg-dark-gray shadow-lg fixed w-full z-10">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center flex-wrap gap-4">
       <div class="flex items-center gap-4">
@@ -106,31 +201,44 @@
         </a>
       </div>
       <div class="flex items-center gap-4">
-        <div class="text-sm text-gray-300">完成进度：<span id="overall-progress" class="text-cyan-400 font-bold">0%</span></div>
-        <div class="w-48 bg-gray-700 rounded-full h-2.5"><div id="progress-bar" class="bg-cyan-500 h-2.5 rounded-full" style="width: 0%"></div></div>
+        <div class="text-sm text-gray-300">
+          完成进度：<span id="overall-progress" class="text-cyan-400 font-bold">0%</span>
+        </div>
+        <div class="w-48 bg-gray-700 rounded-full h-2.5">
+          <div id="progress-bar" class="bg-cyan-500 h-2.5 rounded-full" style="width: 0%"></div>
+        </div>
       </div>
     </div>
   </nav>
 
+  <!-- 主要内容区 -->
   <div class="pt-24 min-h-screen">
     <div class="container mx-auto px-4">
+      <!-- 题库标签页 -->
       <div id="question-bank" class="tab-content">
         <div class="flex flex-col lg:flex-row gap-6 py-6">
+          <!-- 左侧：题目列表/章节目录 -->
           <div class="lg:w-1/4 bg-dark-gray rounded-xl p-4 border border-gray-700 h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin">
             <h2 class="section-title">分组聚合分析题库</h2>
+            
+            <!-- 章节列表 -->
             <div class="space-y-6">
+              <!-- 章节1：分组聚合基础 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter1')">
                   <i class="fa fa-chevron-down text-gray-400 transition-transform duration-300" id="chapter1-icon"></i>
                   分组聚合基础
-                  <span class="ml-auto text-xs text-gray-400"><span class="chapter-progress">0/5</span><span class="progress-percentage">(0%)</span></span>
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/5</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
                 </h3>
                 <div class="chapter-content" id="chapter1-content">
                   <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
                   <div class="problem-item active" onclick="loadProgrammingProblem(1)">
                     <div class="w-8 h-8 rounded-full bg-cyan-500 flex items-center justify-center text-gray-900 font-bold">1</div>
                     <div class="flex-1">
-                      <div class="font-medium">groupby基础操作</div>
+                      <div class="font-medium">数据加载与分组</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-easy">简单</span>
                         <span class="text-xs text-gray-400">20分钟</span>
@@ -140,7 +248,7 @@
                   <div class="problem-item" onclick="loadProgrammingProblem(2)">
                     <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">2</div>
                     <div class="flex-1">
-                      <div class="font-medium">多列分组聚合</div>
+                      <div class="font-medium">聚合函数使用</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-gray-400">25分钟</span>
@@ -151,7 +259,7 @@
                   <div class="problem-item" onclick="loadChoiceQuestion('c1')">
                     <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">A</div>
                     <div class="flex-1">
-                      <div class="font-medium">groupby概念</div>
+                      <div class="font-medium">分组聚合概念</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-easy">简单</span>
                         <span class="text-xs text-purple-400">选择题</span>
@@ -161,7 +269,7 @@
                   <div class="problem-item" onclick="loadChoiceQuestion('c2')">
                     <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">B</div>
                     <div class="flex-1">
-                      <div class="font-medium">聚合函数使用</div>
+                      <div class="font-medium">groupby原理</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-purple-400">选择题</span>
@@ -171,7 +279,7 @@
                   <div class="problem-item" onclick="loadChoiceQuestion('c3')">
                     <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">C</div>
                     <div class="flex-1">
-                      <div class="font-medium">多级索引</div>
+                      <div class="font-medium">聚合函数</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-easy">简单</span>
                         <span class="text-xs text-purple-400">选择题</span>
@@ -180,18 +288,23 @@
                   </div>
                 </div>
               </div>
+              
+              <!-- 章节2：高级聚合分析 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter2')">
                   <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter2-icon"></i>
                   高级聚合分析
-                  <span class="ml-auto text-xs text-gray-400"><span class="chapter-progress">0/4</span><span class="progress-percentage">(0%)</span></span>
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/4</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
                 </h3>
                 <div class="chapter-content collapsed" id="chapter2-content">
                   <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
                   <div class="problem-item" onclick="loadProgrammingProblem(3)">
                     <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">3</div>
                     <div class="flex-1">
-                      <div class="font-medium">自定义聚合函数</div>
+                      <div class="font-medium">多维度聚合</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-gray-400">30分钟</span>
@@ -201,7 +314,7 @@
                   <div class="problem-item" onclick="loadProgrammingProblem(4)">
                     <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">4</div>
                     <div class="flex-1">
-                      <div class="font-medium">分组统计与排序</div>
+                      <div class="font-medium">自定义聚合</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-hard">困难</span>
                         <span class="text-xs text-gray-400">35分钟</span>
@@ -212,7 +325,7 @@
                   <div class="problem-item" onclick="loadChoiceQuestion('c4')">
                     <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">D</div>
                     <div class="flex-1">
-                      <div class="font-medium">agg函数使用</div>
+                      <div class="font-medium">透视表与交叉表</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-purple-400">选择题</span>
@@ -222,9 +335,54 @@
                   <div class="problem-item" onclick="loadChoiceQuestion('c5')">
                     <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">E</div>
                     <div class="flex-1">
-                      <div class="font-medium">transform应用</div>
+                      <div class="font-medium">窗口函数</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 章节3：业务应用与案例 -->
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter3')">
+                  <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter3-icon"></i>
+                  业务应用与案例
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/3</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
+                </h3>
+                <div class="chapter-content collapsed" id="chapter3-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c6')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">F</div>
+                    <div class="flex-1">
+                      <div class="font-medium">销售分析</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c7')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">G</div>
+                    <div class="flex-1">
+                      <div class="font-medium">用户分群</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('c8')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">H</div>
+                    <div class="flex-1">
+                      <div class="font-medium">数据可视化</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
                         <span class="text-xs text-purple-400">选择题</span>
                       </div>
                     </div>
@@ -234,80 +392,113 @@
             </div>
           </div>
           
+          <!-- 右侧：问题、代码编辑器、运行结果、答案解析 -->
           <div class="lg:w-3/4 space-y-6">
+            <!-- 问题描述 -->
             <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
               <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
-                <h3 class="text-xl font-bold text-gray-200" id="problem-title">问题1：groupby基础操作</h3>
+                <h3 class="text-xl font-bold text-gray-200" id="problem-title">问题1：数据加载与分组</h3>
                 <div class="flex items-center gap-4 flex-wrap">
-                  <div class="flex items-center gap-2"><i class="fa fa-clock-o text-cyan-400"></i><span id="timer" class="text-gray-200 font-mono">00:00</span></div>
+                  <div class="flex items-center gap-2">
+                    <i class="fa fa-clock-o text-cyan-400"></i>
+                    <span id="timer" class="text-gray-200 font-mono">00:00</span>
+                  </div>
                   <span class="difficulty-tag difficulty-easy" id="difficulty-tag">简单</span>
-                  <button class="text-gray-400 hover:text-yellow-400 transition-colors" onclick="toggleFavorite(1)" id="favorite-btn"><i class="fa fa-star-o"></i></button>
+                  <button class="text-gray-400 hover:text-yellow-400 transition-colors" onclick="toggleFavorite(1)" id="favorite-btn">
+                    <i class="fa fa-star-o"></i>
+                  </button>
                 </div>
               </div>
               <div class="problem-description" id="problem-description">
-                <p>使用Pandas的groupby功能对数据进行分组和聚合操作。</p>
-                <p><strong>输入：</strong>零售订单数据</p>
-                <p><strong>输出：</strong>按类别统计的汇总数据</p>
-                <p><strong>要求：</strong>
+                <p>编写一个程序，加载销售数据并进行基础分组分析。</p>
+                <p><strong>输入：</strong></p>
+                <p>包含销售记录的DataFrame</p>
+                <p><strong>输出：</strong></p>
+                <p>按产品类别分组的销售统计</p>
+                <p><strong>要求：</strong></p>
                 <ul class="list-disc list-inside space-y-1 mt-2">
-                  <li>使用groupby按产品类别分组</li>
-                  <li>计算每个类别的销售总额</li>
-                  <li>计算每个类别的订单数量</li>
-                </ul></p>
+                  <li>加载示例数据</li>
+                  <li>按产品类别分组</li>
+                  <li>计算销售额的总和和平均值</li>
+                </ul>
               </div>
             </div>
             
+            <!-- 代码编辑框 -->
             <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
               <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
                 <h3 class="text-lg font-semibold text-gray-200">代码编辑器</h3>
                 <div class="flex gap-2">
-                  <button class="btn-secondary text-sm" onclick="toggleCodeEditor()" id="toggle-code-btn" title="折叠代码编辑器"><i class="fa fa-chevron-up" id="toggle-code-icon"></i></button>
-                  <button id="resetCode" class="btn-secondary text-sm"><i class="fa fa-refresh"></i> 重置</button>
-                  <button id="runCode" class="btn-primary"><i class="fa fa-play"></i> 运行代码</button>
+                  <button class="btn-secondary text-sm" onclick="toggleCodeEditor()" id="toggle-code-btn" title="折叠代码编辑器">
+                    <i class="fa fa-chevron-up" id="toggle-code-icon"></i>
+                  </button>
+                  <button id="resetCode" class="btn-secondary text-sm">
+                    <i class="fa fa-refresh"></i> 重置
+                  </button>
+                  <button id="runCode" class="btn-primary">
+                    <i class="fa fa-play"></i> 运行代码
+                  </button>
                 </div>
               </div>
               <div id="code-editor-container">
                 <div id="codeEditor" class="code-editor"></div>
-                <div id="pyodide-status" class="mt-2 text-sm text-yellow-400"><i class="fa fa-spinner fa-spin"></i> 正在加载Python解释器...</div>
+                <div id="pyodide-status" class="mt-2 text-sm text-yellow-400">
+                  <i class="fa fa-spinner fa-spin"></i> 正在加载Python解释器...
+                </div>
               </div>
             </div>
             
+            <!-- 运行结果和答案解析 -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- 运行结果 -->
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-lg font-semibold text-gray-200 mb-4">运行结果</h3>
-                <div class="run-info"><span id="execution-time">执行时间：0ms</span><span id="memory-usage">内存：0MB</span></div>
-                <div id="code-output" class="code-output">运行代码查看输出...</div>
+                <div class="run-info">
+                  <span id="execution-time">执行时间：0ms</span>
+                  <span id="memory-usage">内存：0MB</span>
+                </div>
+                <div id="code-output" class="code-output">
+                  运行代码查看输出...
+                </div>
               </div>
+              
+              <!-- 答案解析 -->
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-lg font-semibold text-gray-200 mb-4">答案解析</h3>
                 <div class="answer-analysis" id="answer-analysis">
                   <h4>解题思路</h4>
-                  <p>1. 使用groupby()按类别分组</p>
-                  <p>2. 使用agg()进行多指标聚合</p>
-                  <p>3. 重置索引得到DataFrame</p>
+                  <p>1. 使用pandas创建或加载销售数据</p>
+                  <p>2. 使用groupby()按产品类别分组</p>
+                  <p>3. 使用agg()或聚合函数计算统计指标</p>
                   <h4>代码示例</h4>
                   <div class="bg-dark p-3 rounded-lg font-mono text-sm">
-                    <pre class="text-cyan-300">
-import pandas as pd
+                    <pre class="text-cyan-300">import pandas as pd
+import numpy as np
 
+# 创建示例销售数据
 data = {
-    'category': ['电子产品', '服装', '电子产品', '食品', '服装'],
-    'product': ['手机', 'T恤', '电脑', '面包', '裤子'],
-    'price': [3000, 200, 5000, 15, 300],
-    'quantity': [1, 2, 1, 5, 1]
+    '产品类别': ['电子产品', '服装', '食品', '电子产品', '服装', '食品', '电子产品', '服装'],
+    '销售额': [1200, 850, 320, 2100, 560, 480, 1800, 720],
+    '销量': [2, 3, 8, 3, 2, 12, 2, 4],
+    '地区': ['北京', '上海', '广州', '深圳', '北京', '上海', '广州', '深圳']
 }
 df = pd.DataFrame(data)
 
-result = df.groupby('category').agg({
-    'price': 'sum',
-    'quantity': 'sum',
-    'product': 'count'
-}).rename(columns={'product': 'order_count'})
+# 按产品类别分组并计算统计指标
+result = df.groupby('产品类别').agg({
+    '销售额': ['sum', 'mean', 'count'],
+    '销量': ['sum', 'mean']
+}).round(2)
 
-print("按类别分组统计:")
-print(result)
-                    </pre>
+print("按产品类别分组的销售统计：")
+print(result)</pre>
                   </div>
+                  <h4>知识点</h4>
+                  <ul class="list-disc list-inside space-y-1 mt-2">
+                    <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module1-basics')">分组聚合基础</a></li>
+                    <li>groupby操作</li>
+                    <li>聚合函数</li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -315,6 +506,7 @@ print(result)
         </div>
       </div>
       
+      <!-- 错题标签页 -->
       <div id="wrong-questions" class="tab-content hidden">
         <div class="py-6">
           <h2 class="section-title">错题本</h2>
@@ -323,12 +515,15 @@ print(result)
               <i class="fa fa-times-circle text-4xl text-red-500 mb-4"></i>
               <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无错题</h3>
               <p class="text-gray-400">当你在练习中答错题目时，它们会自动添加到这里</p>
-              <button class="btn-primary mt-6" onclick="showTab('question-bank')"><i class="fa fa-list"></i> 开始练习</button>
+              <button class="btn-primary mt-6" onclick="showTab('question-bank')">
+                <i class="fa fa-list"></i> 开始练习
+              </button>
             </div>
           </div>
         </div>
       </div>
       
+      <!-- 收藏标签页 -->
       <div id="favorites" class="tab-content hidden">
         <div class="py-6">
           <h2 class="section-title">收藏题目</h2>
@@ -337,83 +532,188 @@ print(result)
               <i class="fa fa-star-o text-4xl text-yellow-500 mb-4"></i>
               <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无收藏</h3>
               <p class="text-gray-400">在题库中点击题目旁边的星标图标来收藏题目</p>
-              <button class="btn-primary mt-6" onclick="showTab('question-bank')"><i class="fa fa-list"></i> 浏览题库</button>
+              <button class="btn-primary mt-6" onclick="showTab('question-bank')">
+                <i class="fa fa-list"></i> 浏览题库
+              </button>
             </div>
           </div>
         </div>
       </div>
       
+      <!-- 知识点标签页 -->
       <div id="knowledge" class="tab-content hidden">
         <div class="py-6">
           <h2 class="section-title">📚 知识点学习</h2>
+          
+          <!-- 导航栏 -->
           <div class="flex flex-wrap gap-3 mb-8 bg-dark-gray p-4 rounded-xl border border-gray-700">
             <button class="knowledge-nav active px-4 py-2 rounded-lg font-semibold transition" data-target="module1-basics">模块1：分组聚合基础</button>
             <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="module2-advanced">模块2：高级聚合分析</button>
           </div>
+
           <div class="space-y-8">
+            <!-- 模块1：分组聚合基础 -->
             <div id="module1-basics" class="knowledge-section">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
-                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2"><i class="fa fa-object-group"></i> 模块1：分组聚合基础</h3>
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-database"></i> 模块1：分组聚合基础（8学时）
+                </h3>
+                
                 <div class="grid md:grid-cols-2 gap-6">
+                  <!-- groupby基础 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2"><i class="fa fa-lightbulb-o text-yellow-400"></i> groupby概述</h4>
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">groupby是Pandas中用于数据分组和聚合的核心功能，类似于SQL中的GROUP BY语句。它允许你将数据按照一个或多个列进行分组，然后对每个组应用聚合函数。</p>
-                    <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-df.groupby('category')
-  .agg({'sales': 'sum'})
-                      </pre>
-                    </div>
-                  </div>
-                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2"><i class="fa fa-calculator text-emerald-400"></i> 常用聚合函数</h4>
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-lightbulb-o text-yellow-400"></i> groupby基础
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">分组聚合是数据分析中最常用的操作之一。groupby的核心思想是"split-apply-combine"：将数据分组、对每组应用函数、再将结果合并。</p>
+                    
                     <div class="space-y-3 mb-4">
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-emerald-400 font-semibold mb-1">📊 sum()</h5>
-                        <p class="text-gray-400 text-sm">计算总和</p>
+                        <h5 class="text-emerald-400 font-semibold mb-1">🎯 核心步骤</h5>
+                        <p class="text-gray-400 text-sm">split（分组）→ apply（应用）→ combine（合并）</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-yellow-400 font-semibold mb-1">📈 mean()</h5>
-                        <p class="text-gray-400 text-sm">计算平均值</p>
+                        <h5 class="text-yellow-400 font-semibold mb-1">📊 常用场景</h5>
+                        <p class="text-gray-400 text-sm">按时间分组、按类别分组、按地区分组等</p>
+                      </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300">import pandas as pd
+
+# 基础分组
+df.groupby('类别')
+df.groupby(['类别', '地区'])  # 多列分组
+
+# 分组后选择列
+df.groupby('类别')['销售额']
+df.groupby('类别')[['销售额', '销量']]</pre>
+                    </div>
+                  </div>
+
+                  <!-- 聚合函数 -->
+                  <div class="bg-dark p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-calculator text-emerald-400"></i> 聚合函数
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">聚合函数用于对分组后的数据进行统计计算，如求和、均值、最大值等。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2 flex items-center gap-2">
+                          <span>📊</span> 常用聚合函数
+                        </h5>
+                        <p class="text-gray-400 text-sm">sum()、mean()、count()、std()、var()、min()、max()、median()</p>
                       </div>
                       <div class="bg-dark-gray p-3 rounded-lg">
-                        <h5 class="text-pink-400 font-semibold mb-1">📉 count()</h5>
-                        <p class="text-gray-400 text-sm">计算数量</p>
+                        <h5 class="text-yellow-400 font-semibold mb-2 flex items-center gap-2">
+                          <span>🔗</span> agg()方法
+                        </h5>
+                        <p class="text-gray-400 text-sm">可以同时应用多个聚合函数</p>
                       </div>
+                    </div>
+                    
+                    <div class="bg-dark p-3 rounded font-mono text-sm">
+                      <pre class="text-cyan-300"># 单个聚合函数
+df.groupby('类别')['销售额'].sum()
+
+# 多个聚合函数
+df.groupby('类别').agg({
+    '销售额': ['sum', 'mean', 'max'],
+    '销量': ['sum', 'count']
+})
+
+# 使用命名聚合
+df.groupby('类别').agg(
+    总销售额=('销售额', 'sum'),
+    平均销量=('销量', 'mean')
+)</pre>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
+            <!-- 模块2：高级聚合分析 -->
             <div id="module2-advanced" class="knowledge-section hidden">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
-                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2"><i class="fa fa-star"></i> 模块2：高级聚合分析</h3>
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-chart-bar"></i> 模块2：高级聚合分析（8学时）
+                </h3>
+                
                 <div class="grid md:grid-cols-2 gap-6">
+                  <!-- 透视表与交叉表 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2"><i class="fa fa-magic text-yellow-400"></i> agg()自定义聚合</h4>
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">agg()函数允许你对不同的列应用不同的聚合函数，实现更灵活的统计分析。</p>
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-table text-yellow-400"></i> 透视表与交叉表
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">pivot_table()和crosstab()是处理复杂分组聚合的强大工具，特别适合多维度分析。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">📊 pivot_table</h5>
+                        <p class="text-gray-400 text-sm">用于创建数据透视表，支持多索引、多值和自定义聚合</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">📈 crosstab</h5>
+                        <p class="text-gray-400 text-sm">用于计算交叉表，特别适合频数统计</p>
+                      </div>
+                    </div>
+                    
                     <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-df.groupby('category').agg({
-    'sales': ['sum', 'mean'],
-    'quantity': 'max'
-})
-                      </pre>
+                      <pre class="text-cyan-300"># 透视表
+pd.pivot_table(df, 
+               values='销售额', 
+               index='产品类别', 
+               columns='地区', 
+               aggfunc='sum',
+               margins=True)
+
+# 交叉表
+pd.crosstab(df['产品类别'], 
+            df['地区'],
+            values=df['销售额'],
+            aggfunc='sum',
+            normalize=True)</pre>
                     </div>
                   </div>
+
+                  <!-- 窗口函数与自定义聚合 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2"><i class="fa fa-arrows-alt text-emerald-400"></i> transform()</h4>
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">transform()函数可以对分组后的数据进行转换，保持原数据的结构。</p>
+                    <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                      <i class="fa fa-code text-emerald-400"></i> 窗口函数与自定义聚合
+                    </h4>
+                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">窗口函数允许在不分组的情况下进行滑动窗口计算，自定义聚合函数满足特殊需求。</p>
+                    
+                    <div class="space-y-3 mb-4">
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-1">🔍 窗口函数</h5>
+                        <p class="text-gray-400 text-sm">rolling()、expanding()、transform()、shift()等</p>
+                      </div>
+                      <div class="bg-dark-gray p-3 rounded-lg">
+                        <h5 class="text-yellow-400 font-semibold mb-1">✏️ 自定义聚合</h5>
+                        <p class="text-gray-400 text-sm">使用apply()或transform()应用自定义函数</p>
+                      </div>
+                    </div>
+                    
                     <div class="bg-dark p-3 rounded font-mono text-sm">
-                      <pre class="text-cyan-300">
-df['category_mean'] = df.groupby(
-    'category')['price'].transform('mean')
-                      </pre>
+                      <pre class="text-cyan-300"># 滚动窗口
+df['7天移动平均'] = df.groupby('产品类别')['销售额'].rolling(7).mean().values
+
+# 自定义聚合函数
+def iqr(x):
+    return x.quantile(0.75) - x.quantile(0.25)
+
+df.groupby('类别')['销售额'].agg(['mean', iqr])
+
+# transform使用
+df['组内占比'] = df['销售额'] / df.groupby('类别')['销售额'].transform('sum')</pre>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -421,194 +721,535 @@ df['category_mean'] = df.groupby(
   </div>
 
   <script>
+    // 问题数据
     const problems = [
       {
         id: 1,
-        title: "问题1：groupby基础操作",
-        description: `<p>使用Pandas的groupby功能对数据进行分组和聚合操作。</p>
-<p><strong>输入：</strong>零售订单数据</p>
-<p><strong>输出：</strong>按类别统计的汇总数据</p>
-<p><strong>要求：</strong></p>
+        title: "问题1：数据加载与分组",
+        description: `编写一个程序，加载销售数据并进行基础分组分析。
+<strong>输入：</strong>
+包含销售记录的DataFrame
+<strong>输出：</strong>
+按产品类别分组的销售统计
+<strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>使用groupby按产品类别分组</li>
-  <li>计算每个类别的销售总额</li>
-  <li>计算每个类别的订单数量</li>
+  <li>加载示例数据</li>
+  <li>按产品类别分组</li>
+  <li>计算销售额的总和和平均值</li>
 </ul>`,
         difficulty: "easy",
         time: "20分钟",
-        code: `# 请编写代码`,
-        analysis: `<h4>解题思路</h4>
-<p>1. 使用groupby()按类别分组</p>
-<p>2. 使用agg()进行多指标聚合</p>
-<p>3. 重置索引得到DataFrame</p>
-<h4>代码示例</h4>
-<div class="bg-dark p-3 rounded-lg font-mono text-sm">
-  <pre class="text-cyan-300">
-import pandas as pd
-
-data = {
-    'category': ['电子产品', '服装', '电子产品', '食品', '服装'],
-    'product': ['手机', 'T恤', '电脑', '面包', '裤子'],
-    'price': [3000, 200, 5000, 15, 300],
-    'quantity': [1, 2, 1, 5, 1]
-}
-df = pd.DataFrame(data)
-
-result = df.groupby('category').agg({
-    'price': 'sum',
-    'quantity': 'sum',
-    'product': 'count'
-}).rename(columns={'product': 'order_count'})
-
-print("按类别分组统计:")
-print(result)
-  </pre>
-</div>`
-      },
-      {
-        id: 2,
-        title: "问题2：多列分组聚合",
-        description: `<p>对数据进行多列分组和聚合分析。</p>
-<p><strong>输入：</strong>包含日期、类别和销售额的数据</p>
-<p><strong>输出：</strong>按月份和类别统计的销售数据</p>
-<p><strong>要求：</strong></p>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>使用多列进行groupby</li>
-  <li>计算销售额的总和和平均值</li>
-  <li>排序输出结果</li>
-</ul>`,
-        difficulty: "medium",
-        time: "25分钟",
-        code: `# 请编写代码`,
-        analysis: `<h4>解题思路</h4>
-<p>1. 按月份和类别分组</p>
-<p>2. 使用agg同时计算总和和平均值</p>
-<p>3. 使用sort_values排序</p>
-<h4>代码示例</h4>
-<div class="bg-dark p-3 rounded-lg font-mono text-sm">
-  <pre class="text-cyan-300">
-import pandas as pd
-
-data = {
-    'month': ['1月', '1月', '2月', '2月', '1月'],
-    'category': ['电子产品', '服装', '电子产品', '服装', '食品'],
-    'sales': [5000, 800, 6000, 900, 300]
-}
-df = pd.DataFrame(data)
-
-result = df.groupby(['month', 'category']).agg({
-    'sales': ['sum', 'mean']
-}).round(2)
-result.columns = ['sales_sum', 'sales_mean']
-result = result.sort_values('sales_sum', ascending=False)
-
-print("按月份和类别统计:")
-print(result)
-  </pre>
-</div>`
-      },
-      {
-        id: 3,
-        title: "问题3：自定义聚合函数",
-        description: `<p>使用自定义聚合函数进行数据分析。</p>
-<p><strong>输入：</strong>销售数据</p>
-<p><strong>输出：</strong>包含自定义统计指标的分组结果</p>
-<p><strong>要求：</strong></p>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>定义计算变异系数的函数</li>
-  <li>使用agg应用自定义函数</li>
-  <li>组合使用内置函数和自定义函数</li>
-</ul>`,
-        difficulty: "medium",
-        time: "30分钟",
-        code: `# 请编写代码`,
-        analysis: `<h4>解题思路</h4>
-<p>1. 定义计算变异系数的函数</p>
-<p>2. 使用agg应用自定义函数</p>
-<p>3. 组合使用内置和自定义函数</p>
-<h4>代码示例</h4>
-<div class="bg-dark p-3 rounded-lg font-mono text-sm">
-  <pre class="text-cyan-300">
+        code: `# 请编写代码
 import pandas as pd
 import numpy as np
 
-def coefficient_of_variation(x):
-    return x.std() / x.mean() * 100
-
+# 创建示例销售数据
 data = {
-    'category': ['A', 'A', 'B', 'B', 'A', 'B'],
-    'sales': [100, 120, 80, 90, 110, 85]
+    '产品类别': ['电子产品', '服装', '食品', '电子产品', '服装', '食品', '电子产品', '服装'],
+    '销售额': [1200, 850, 320, 2100, 560, 480, 1800, 720],
+    '销量': [2, 3, 8, 3, 2, 12, 2, 4],
+    '地区': ['北京', '上海', '广州', '深圳', '北京', '上海', '广州', '深圳']
 }
 df = pd.DataFrame(data)
 
-result = df.groupby('category')['sales'].agg([
-    'sum', 'mean', 'std', coefficient_of_variation
-])
-result.columns = ['总和', '均值', '标准差', '变异系数']
+# 按产品类别分组并计算统计指标
+result = df.groupby('产品类别').agg({
+    '销售额': ['sum', 'mean', 'count'],
+    '销量': ['sum', 'mean']
+}).round(2)
 
-print("分组统计结果:")
-print(result)
-  </pre>
-</div>`
+print("按产品类别分组的销售统计：")
+print(result)`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 使用pandas创建或加载销售数据</p>
+<p>2. 使用groupby()按产品类别分组</p>
+<p>3. 使用agg()或聚合函数计算统计指标</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">import pandas as pd
+import numpy as np
+
+# 创建示例销售数据
+data = {
+    '产品类别': ['电子产品', '服装', '食品', '电子产品', '服装', '食品', '电子产品', '服装'],
+    '销售额': [1200, 850, 320, 2100, 560, 480, 1800, 720],
+    '销量': [2, 3, 8, 3, 2, 12, 2, 4],
+    '地区': ['北京', '上海', '广州', '深圳', '北京', '上海', '广州', '深圳']
+}
+df = pd.DataFrame(data)
+
+# 按产品类别分组并计算统计指标
+result = df.groupby('产品类别').agg({
+    '销售额': ['sum', 'mean', 'count'],
+    '销量': ['sum', 'mean']
+}).round(2)
+
+print("按产品类别分组的销售统计：")
+print(result)</pre>
+</div>
+<h4>知识点</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module1-basics')">分组聚合基础</a></li>
+  <li>groupby操作</li>
+  <li>聚合函数</li>
+</ul>`
+      },
+      {
+        id: 2,
+        title: "问题2：聚合函数使用",
+        description: `编写一个程序，使用多种聚合函数进行数据分析。
+<strong>输入：</strong>
+销售数据表
+<strong>输出：</strong>
+完整的统计分析报告
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>使用sum、mean、max、min等聚合函数</li>
+  <li>使用agg()同时应用多个聚合</li>
+  <li>使用命名聚合</li>
+</ul>`,
+        difficulty: "medium",
+        time: "25分钟",
+        code: `# 请编写代码
+import pandas as pd
+import numpy as np
+
+# 创建示例数据
+data = {
+    '产品类别': ['电子产品', '服装', '食品', '电子产品', '服装', '食品', '电子产品', '服装', '食品', '电子产品'],
+    '销售额': [1200, 850, 320, 2100, 560, 480, 1800, 720, 390, 2500],
+    '销量': [2, 3, 8, 3, 2, 12, 2, 4, 10, 4],
+    '地区': ['北京', '上海', '广州', '深圳', '北京', '上海', '广州', '深圳', '北京', '上海']
+}
+df = pd.DataFrame(data)
+
+# 基础聚合
+print("=== 基础聚合 ===")
+basic_agg = df.groupby('产品类别').agg({
+    '销售额': ['sum', 'mean', 'max', 'min', 'count'],
+    '销量': ['sum', 'mean', 'std']
+}).round(2)
+print(basic_agg)
+
+print("\\n=== 命名聚合 ===")
+named_agg = df.groupby('产品类别').agg(
+    总销售额=('销售额', 'sum'),
+    平均销售额=('销售额', 'mean'),
+    最高销售额=('销售额', 'max'),
+    最低销售额=('销售额', 'min'),
+    销售笔数=('销售额', 'count'),
+    总销量=('销量', 'sum'),
+    销量标准差=('销量', 'std')
+).round(2)
+print(named_agg)`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 使用agg()方法可以同时应用多个聚合函数</p>
+<p>2. 命名聚合让结果更易读</p>
+<p>3. 可以对不同列应用不同的聚合函数</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">import pandas as pd
+import numpy as np
+
+# 创建示例数据
+data = {
+    '产品类别': ['电子产品', '服装', '食品', '电子产品', '服装', '食品', '电子产品', '服装', '食品', '电子产品'],
+    '销售额': [1200, 850, 320, 2100, 560, 480, 1800, 720, 390, 2500],
+    '销量': [2, 3, 8, 3, 2, 12, 2, 4, 10, 4],
+    '地区': ['北京', '上海', '广州', '深圳', '北京', '上海', '广州', '深圳', '北京', '上海']
+}
+df = pd.DataFrame(data)
+
+# 基础聚合
+print("=== 基础聚合 ===")
+basic_agg = df.groupby('产品类别').agg({
+    '销售额': ['sum', 'mean', 'max', 'min', 'count'],
+    '销量': ['sum', 'mean', 'std']
+}).round(2)
+print(basic_agg)
+
+print("\\n=== 命名聚合 ===")
+named_agg = df.groupby('产品类别').agg(
+    总销售额=('销售额', 'sum'),
+    平均销售额=('销售额', 'mean'),
+    最高销售额=('销售额', 'max'),
+    最低销售额=('销售额', 'min'),
+    销售笔数=('销售额', 'count'),
+    总销量=('销量', 'sum'),
+    销量标准差=('销量', 'std')
+).round(2)
+print(named_agg)</pre>
+</div>
+<h4>知识点</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module1-basics')">聚合函数</a></li>
+  <li>agg()方法</li>
+  <li>命名聚合</li>
+</ul>`
+      },
+      {
+        id: 3,
+        title: "问题3：多维度聚合",
+        description: `编写一个程序，进行多维度的分组聚合分析。
+<strong>输入：</strong>
+包含多个维度的销售数据
+<strong>输出：</strong>
+多维度聚合结果
+<strong>要求：</strong>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>使用多列分组</li>
+  <li>使用pivot_table创建透视表</li>
+  <li>使用crosstab创建交叉表</li>
+</ul>`,
+        difficulty: "medium",
+        time: "30分钟",
+        code: `# 请编写代码
+import pandas as pd
+import numpy as np
+
+# 创建示例数据
+data = {
+    '产品类别': ['电子产品', '服装', '食品', '电子产品', '服装', '食品', '电子产品', '服装', '食品', '电子产品', '服装', '食品'],
+    '销售额': [1200, 850, 320, 2100, 560, 480, 1800, 720, 390, 2500, 680, 420],
+    '销量': [2, 3, 8, 3, 2, 12, 2, 4, 10, 4, 3, 9],
+    '地区': ['北京', '上海', '广州', '深圳', '北京', '上海', '广州', '深圳', '北京', '上海', '广州', '深圳'],
+    '季度': ['Q1', 'Q1', 'Q1', 'Q1', 'Q2', 'Q2', 'Q2', 'Q2', 'Q3', 'Q3', 'Q3', 'Q3']
+}
+df = pd.DataFrame(data)
+
+print("=== 多列分组 ===")
+multi_group = df.groupby(['产品类别', '地区']).agg({
+    '销售额': ['sum', 'mean'],
+    '销量': 'sum'
+}).round(2)
+print(multi_group)
+
+print("\\n=== 透视表 ===")
+pivot = pd.pivot_table(df, 
+                       values='销售额', 
+                       index='产品类别', 
+                       columns='地区', 
+                       aggfunc='sum',
+                       margins=True,
+                       margins_name='总计')
+print(pivot)
+
+print("\\n=== 交叉表 ===")
+cross = pd.crosstab([df['产品类别'], df['地区']], 
+                    df['季度'], 
+                    values=df['销售额'],
+                    aggfunc='sum',
+                    normalize='columns')
+print(cross.round(4))`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 多列分组使用groupby(['列1', '列2'])</p>
+<p>2. pivot_table适合创建数据透视表</p>
+<p>3. crosstab适合交叉表分析</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">import pandas as pd
+import numpy as np
+
+# 创建示例数据
+data = {
+    '产品类别': ['电子产品', '服装', '食品', '电子产品', '服装', '食品', '电子产品', '服装', '食品', '电子产品', '服装', '食品'],
+    '销售额': [1200, 850, 320, 2100, 560, 480, 1800, 720, 390, 2500, 680, 420],
+    '销量': [2, 3, 8, 3, 2, 12, 2, 4, 10, 4, 3, 9],
+    '地区': ['北京', '上海', '广州', '深圳', '北京', '上海', '广州', '深圳', '北京', '上海', '广州', '深圳'],
+    '季度': ['Q1', 'Q1', 'Q1', 'Q1', 'Q2', 'Q2', 'Q2', 'Q2', 'Q3', 'Q3', 'Q3', 'Q3']
+}
+df = pd.DataFrame(data)
+
+print("=== 多列分组 ===")
+multi_group = df.groupby(['产品类别', '地区']).agg({
+    '销售额': ['sum', 'mean'],
+    '销量': 'sum'
+}).round(2)
+print(multi_group)
+
+print("\\n=== 透视表 ===")
+pivot = pd.pivot_table(df, 
+                       values='销售额', 
+                       index='产品类别', 
+                       columns='地区', 
+                       aggfunc='sum',
+                       margins=True,
+                       margins_name='总计')
+print(pivot)
+
+print("\\n=== 交叉表 ===")
+cross = pd.crosstab([df['产品类别'], df['地区']], 
+                    df['季度'], 
+                    values=df['销售额'],
+                    aggfunc='sum',
+                    normalize='columns')
+print(cross.round(4))</pre>
+</div>
+<h4>知识点</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module2-advanced')">透视表与交叉表</a></li>
+  <li>多列分组</li>
+  <li>pivot_table</li>
+  <li>crosstab</li>
+</ul>`
       },
       {
         id: 4,
-        title: "问题4：分组统计与排序",
-        description: `<p>进行复杂的分组统计并对结果进行排序分析。</p>
-<p><strong>输入：</strong>客户订单数据</p>
-<p><strong>输出：</strong>按客户分组的统计数据，按消费额排序</p>
-<p><strong>要求：</strong></p>
+        title: "问题4：自定义聚合",
+        description: `编写一个程序，使用自定义聚合函数和窗口函数进行高级分析。
+<strong>输入：</strong>
+销售时序数据
+<strong>输出：</strong>
+高级分析结果
+<strong>要求：</strong>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>按客户分组统计订单数和消费总额</li>
-  <li>计算平均订单金额</li>
-  <li>按消费总额降序排序</li>
-  <li>找出消费最高的Top3客户</li>
+  <li>定义自定义聚合函数</li>
+  <li>使用transform</li>
+  <li>使用窗口函数</li>
 </ul>`,
         difficulty: "hard",
         time: "35分钟",
-        code: `# 请编写代码`,
-        analysis: `<h4>解题思路</h4>
-<p>1. 按客户ID分组统计</p>
-<p>2. 使用agg计算多个指标</p>
-<p>3. 计算平均订单金额</p>
-<p>4. 按总额排序并取Top3</p>
-<h4>代码示例</h4>
-<div class="bg-dark p-3 rounded-lg font-mono text-sm">
-  <pre class="text-cyan-300">
+        code: `# 请编写代码
 import pandas as pd
+import numpy as np
 
+# 创建示例数据
+np.random.seed(42)
+dates = pd.date_range('2024-01-01', periods=30)
 data = {
-    'customer_id': [1, 1, 2, 2, 2, 3, 1, 3],
-    'order_id': [101, 102, 201, 202, 203, 301, 103, 302],
-    'amount': [150, 200, 300, 250, 180, 400, 180, 350]
+    '日期': np.tile(dates, 3),
+    '产品类别': np.repeat(['电子产品', '服装', '食品'], 30),
+    '销售额': np.concatenate([
+        np.random.normal(2000, 200, 30),
+        np.random.normal(800, 100, 30),
+        np.random.normal(400, 50, 30)
+    ]),
+    '销量': np.concatenate([
+        np.random.randint(2, 10, 30),
+        np.random.randint(3, 15, 30),
+        np.random.randint(5, 20, 30)
+    ])
 }
 df = pd.DataFrame(data)
 
-result = df.groupby('customer_id').agg({
-    'order_id': 'count',
-    'amount': ['sum', 'mean']
-})
-result.columns = ['order_count', 'total_amount', 'avg_amount']
-result = result.sort_values('total_amount', ascending=False)
-result['avg_amount'] = result['avg_amount'].round(2)
+# 自定义聚合函数
+def iqr(x):
+    """计算四分位距"""
+    return x.quantile(0.75) - x.quantile(0.25)
 
-print("客户消费排名:")
-print(result)
-print("\n消费最高的Top3客户:")
-print(result.head(3))
-  </pre>
-</div>`
+def coefficient_of_variation(x):
+    """计算变异系数"""
+    return (x.std() / x.mean()) * 100
+
+print("=== 自定义聚合 ===")
+custom_agg = df.groupby('产品类别').agg({
+    '销售额': ['mean', 'std', iqr, coefficient_of_variation],
+    '销量': ['median', iqr]
+}).round(2)
+print(custom_agg)
+
+print("\\n=== transform使用 ===")
+df['组内均值'] = df.groupby('产品类别')['销售额'].transform('mean')
+df['组内占比'] = df['销售额'] / df['组内均值']
+print(df[['产品类别', '销售额', '组内均值', '组内占比']].head(10))
+
+print("\\n=== 窗口函数 - 滚动平均 ===")
+df_sorted = df.sort_values(['产品类别', '日期'])
+df_sorted['7天移动平均'] = df_sorted.groupby('产品类别')['销售额'].rolling(7).mean().reset_index(0, drop=True)
+print(df_sorted[['产品类别', '日期', '销售额', '7天移动平均']].tail(15))`,
+        analysis: `
+<h4>解题思路</h4>
+<p>1. 自定义聚合函数可以满足特殊统计需求</p>
+<p>2. transform()保持数据形状，适合计算组内指标</p>
+<p>3. rolling()用于滑动窗口计算</p>
+<h4>代码示例</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+  <pre class="text-cyan-300">import pandas as pd
+import numpy as np
+
+# 创建示例数据
+np.random.seed(42)
+dates = pd.date_range('2024-01-01', periods=30)
+data = {
+    '日期': np.tile(dates, 3),
+    '产品类别': np.repeat(['电子产品', '服装', '食品'], 30),
+    '销售额': np.concatenate([
+        np.random.normal(2000, 200, 30),
+        np.random.normal(800, 100, 30),
+        np.random.normal(400, 50, 30)
+    ]),
+    '销量': np.concatenate([
+        np.random.randint(2, 10, 30),
+        np.random.randint(3, 15, 30),
+        np.random.randint(5, 20, 30)
+    ])
+}
+df = pd.DataFrame(data)
+
+# 自定义聚合函数
+def iqr(x):
+    """计算四分位距"""
+    return x.quantile(0.75) - x.quantile(0.25)
+
+def coefficient_of_variation(x):
+    """计算变异系数"""
+    return (x.std() / x.mean()) * 100
+
+print("=== 自定义聚合 ===")
+custom_agg = df.groupby('产品类别').agg({
+    '销售额': ['mean', 'std', iqr, coefficient_of_variation],
+    '销量': ['median', iqr]
+}).round(2)
+print(custom_agg)
+
+print("\\n=== transform使用 ===")
+df['组内均值'] = df.groupby('产品类别')['销售额'].transform('mean')
+df['组内占比'] = df['销售额'] / df['组内均值']
+print(df[['产品类别', '销售额', '组内均值', '组内占比']].head(10))
+
+print("\\n=== 窗口函数 - 滚动平均 ===")
+df_sorted = df.sort_values(['产品类别', '日期'])
+df_sorted['7天移动平均'] = df_sorted.groupby('产品类别')['销售额'].rolling(7).mean().reset_index(0, drop=True)
+print(df_sorted[['产品类别', '日期', '销售额', '7天移动平均']].tail(15))</pre>
+</div>
+<h4>知识点</h4>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('module2-advanced')">窗口函数与自定义聚合</a></li>
+  <li>自定义聚合函数</li>
+  <li>transform</li>
+  <li>rolling窗口函数</li>
+</ul>`
       }
     ];
 
+    // 选择题数据
     const choiceQuestions = [
-      { id: 'c1', chapter: 1, title: "选择题1：groupby概念", question: "Pandas中groupby的作用是什么？", options: [{ label: 'A', text: '对数据进行排序' }, { label: 'B', text: '将数据按列分组进行聚合分析' }, { label: 'C', text: '过滤数据' }, { label: 'D', text: '合并数据' }], answer: 'B', analysis: "groupby用于将数据按照一个或多个列进行分组，然后对每个组应用聚合函数进行分析。", difficulty: "easy" },
-      { id: 'c2', chapter: 1, title: "选择题2：聚合函数使用", question: "以下哪个不是Pandas的常用聚合函数？", options: [{ label: 'A', text: 'sum()' }, { label: 'B', text: 'mean()' }, { label: 'C', text: 'sort()' }, { label: 'D', text: 'count()' }], answer: 'C', analysis: "sort()是排序函数，不是聚合函数。sum()、mean()、count()都是常用的聚合函数。", difficulty: "medium" },
-      { id: 'c3', chapter: 1, title: "选择题3：多级索引", question: "使用多列进行groupby时，生成的结果索引类型是什么？", options: [{ label: 'A', text: '普通索引' }, { label: 'B', text: '多级索引(MultiIndex)' }, { label: 'C', text: '日期索引' }, { label: 'D', text: '无索引' }], answer: 'B', analysis: "使用多列进行groupby时，结果会使用MultiIndex（多级索引）作为行索引。", difficulty: "easy" },
-      { id: 'c4', chapter: 2, title: "选择题4：agg函数使用", question: "agg函数可以同时对同一列应用多个聚合操作吗？", options: [{ label: 'A', text: '不可以，只能应用一个' }, { label: 'B', text: '可以，用列表形式' }, { label: 'C', text: '只能对不同列操作' }, { label: 'D', text: '需要循环使用' }], answer: 'B', analysis: "agg函数可以对同一列应用多个聚合操作，例如：df.groupby('col').agg({'sales': ['sum', 'mean']})", difficulty: "medium" },
-      { id: 'c5', chapter: 2, title: "选择题5：transform应用", question: "transform函数和agg函数的主要区别是什么？", options: [{ label: 'A', text: '两者完全相同' }, { label: 'B', text: 'transform保持原数据形状，agg返回聚合结果' }, { label: 'C', text: 'transform只能用于分组后' }, { label: 'D', text: 'agg可以保持原形状' }], answer: 'B', analysis: "transform返回与原数据行数相同的结果，而agg返回分组后的聚合结果。", difficulty: "medium" }
+      {
+        id: 'c1',
+        chapter: 1,
+        title: "选择题1：分组聚合概念",
+        question: "groupby操作的核心思想'split-apply-combine'不包括以下哪个步骤？",
+        options: [
+          { label: 'A', text: '拆分（split）：将数据按某种规则分组' },
+          { label: 'B', text: '应用（apply）：对每组应用函数' },
+          { label: 'C', text: '缩放（scale）：对数据进行标准化' },
+          { label: 'D', text: '合并（combine）：将结果组合在一起' }
+        ],
+        answer: 'C',
+        analysis: "split-apply-combine是groupby的三个核心步骤：拆分数据、应用函数、合并结果，不包括缩放。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c2',
+        chapter: 1,
+        title: "选择题2：groupby原理",
+        question: "在pandas中，df.groupby('列名')返回什么类型的对象？",
+        options: [
+          { label: 'A', text: 'DataFrame' },
+          { label: 'B', text: 'Series' },
+          { label: 'C', text: 'GroupBy对象' },
+          { label: 'D', text: 'dict' }
+        ],
+        answer: 'C',
+        analysis: "groupby()返回的是GroupBy对象，需要配合聚合函数使用才能得到DataFrame或Series。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c3',
+        chapter: 1,
+        title: "选择题3：聚合函数",
+        question: "以下哪个不是pandas中的标准聚合函数？",
+        options: [
+          { label: 'A', text: 'sum()' },
+          { label: 'B', text: 'mean()' },
+          { label: 'C', text: 'unique()' },
+          { label: 'D', text: 'count()' }
+        ],
+        answer: 'C',
+        analysis: "unique()是用于获取唯一值的方法，不是聚合函数。常用聚合函数包括sum、mean、count、std、max、min等。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c4',
+        chapter: 2,
+        title: "选择题4：透视表与交叉表",
+        question: "关于pivot_table和crosstab的区别，以下说法正确的是？",
+        options: [
+          { label: 'A', text: 'pivot_table只能处理数值型数据' },
+          { label: 'B', text: 'crosstab专门用于计算交叉频数表' },
+          { label: 'C', text: '两者功能完全相同，可以互换' },
+          { label: 'D', text: 'crosstab比pivot_table性能更好' }
+        ],
+        answer: 'B',
+        analysis: "crosstab的主要用途是计算交叉表/列联表，特别适合频数统计；pivot_table更通用，支持更多聚合方式。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c5',
+        chapter: 2,
+        title: "选择题5：窗口函数",
+        question: "transform()和普通聚合函数的主要区别是什么？",
+        options: [
+          { label: 'A', text: 'transform()执行更快' },
+          { label: 'B', text: 'transform()返回与原始数据相同形状的结果' },
+          { label: 'C', text: 'transform()支持更多函数' },
+          { label: 'D', text: 'transform()只能用于数值列' }
+        ],
+        answer: 'B',
+        analysis: "transform()保持数据形状，适合计算组内指标（如组内标准化、组内占比等），而普通聚合会减少行数。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c6',
+        chapter: 3,
+        title: "选择题6：销售分析",
+        question: "在分析各地区销售情况时，想要同时看到按产品类别和地区分组的销售额总和，应该使用什么方法？",
+        options: [
+          { label: 'A', text: 'df.groupby(['地区'])['销售额'].sum()' },
+          { label: 'B', text: 'df.groupby(['产品类别', '地区'])['销售额'].sum()' },
+          { label: 'C', text: 'df['销售额'].groupby(df['产品类别']).sum()' },
+          { label: 'D', text: 'df.groupby('地区')['产品类别'].value_counts()' }
+        ],
+        answer: 'B',
+        analysis: "需要同时按产品类别和地区两个维度分组，使用多列分组groupby(['列1', '列2'])。",
+        difficulty: "easy"
+      },
+      {
+        id: 'c7',
+        chapter: 3,
+        title: "选择题7：用户分群",
+        question: "在做用户分群分析时，想要计算每个用户群的消费金额四分位距（IQR），应该怎么做？",
+        options: [
+          { label: 'A', text: '使用df.groupby('用户群')['消费金额'].quantile(0.75)' },
+          { label: 'B', text: '定义自定义函数：def iqr(x): return x.quantile(0.75) - x.quantile(0.25)，然后df.groupby('用户群')['消费金额'].agg(iqr)' },
+          { label: 'C', text: 'df.groupby('用户群')['消费金额'].std()' },
+          { label: 'D', text: 'df.groupby('用户群')['消费金额'].describe()' }
+        ],
+        answer: 'B',
+        analysis: "四分位距（IQR）是Q3-Q1，需要自定义聚合函数来计算。describe()虽然会显示分位数，但不会直接给出IQR。",
+        difficulty: "medium"
+      },
+      {
+        id: 'c8',
+        chapter: 3,
+        title: "选择题8：数据可视化",
+        question: "想要创建一个热力图展示各产品在各地区的销售情况，最适合先准备什么形式的数据？",
+        options: [
+          { label: 'A', text: '长格式的原始数据' },
+          { label: 'B', text: '用pivot_table生成的宽格式数据' },
+          { label: 'C', text: 'groupby后的单列结果' },
+          { label: 'D', text: '任何格式都可以' }
+        ],
+        answer: 'B',
+        analysis: "热力图通常需要矩阵形式（行×列）的数据，pivot_table生成的宽格式数据最适合作为热力图的输入。",
+        difficulty: "easy"
+      }
     ];
 
+    // 全局变量
     let currentProblem = 1;
     let pyodide = null;
     let editor = null;
@@ -616,138 +1257,11 @@ print(result.head(3))
     let seconds = 0;
     let isCodeEditorCollapsed = false;
 
-    document.addEventListener('DOMContentLoaded', function() {
-      editor = ace.edit('codeEditor');
-      editor.setTheme('ace/theme/tomorrow_night');
-      editor.getSession().setMode('ace/mode/python');
-      editor.setOptions({ fontSize: '14px', tabSize: 4, useSoftTabs: true, wrap: true });
-      editor.setValue('# 请编写代码');
-      editor.clearSelection();
-      initPyodide();
-      loadProgrammingProblem(1);
-      document.getElementById('runCode').addEventListener('click', runCode);
-      document.getElementById('resetCode').addEventListener('click', resetCode);
-      document.querySelectorAll('.knowledge-nav').forEach((button) => {
-        button.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          document.querySelectorAll('.knowledge-nav').forEach(btn => btn.classList.remove('active'));
-          this.classList.add('active');
-          const target = this.getAttribute('data-target');
-          document.querySelectorAll('.knowledge-section').forEach(section => section.classList.add('hidden'));
-          const targetElement = document.getElementById(target);
-          if (targetElement) targetElement.classList.remove('hidden');
-        });
-      });
-    });
-
-    async function initPyodide() {
-      const statusEl = document.getElementById('pyodide-status');
-      statusEl.innerHTML = '<i class="fa fa-spinner fa-spin text-amber-400"></i> 正在加载Python解释器...';
-      try {
-        pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/" });
-        await pyodide.loadPackage(['pandas', 'numpy']);
-        statusEl.innerHTML = '<i class="fa fa-check text-emerald-400"></i> Python解释器加载成功';
-      } catch (error) {
-        statusEl.innerHTML = '<i class="fa fa-exclamation-triangle text-red-400"></i> Python解释器加载失败';
-        console.error('Pyodide load error:', error);
-      }
-    }
-
-    function showTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
-      document.getElementById(tabId).classList.remove('hidden');
-      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-      document.querySelectorAll(`.nav-link[onclick*="${tabId}"]`).forEach(link => link.classList.add('active'));
-    }
-
-    function toggleChapter(chapterId) {
-      const content = document.getElementById(chapterId + '-content');
-      const icon = document.getElementById(chapterId + '-icon');
-      content.classList.toggle('collapsed');
-      if (content.classList.contains('collapsed')) {
-        icon.classList.remove('fa-chevron-down');
-        icon.classList.add('fa-chevron-right');
-      } else {
-        icon.classList.remove('fa-chevron-right');
-        icon.classList.add('fa-chevron-down');
-      }
-    }
-
-    function loadProgrammingProblem(id) {
-      const problem = problems.find(p => p.id === id);
-      if (!problem) return;
-      currentProblem = id;
-      document.getElementById('problem-title').textContent = problem.title;
-      document.getElementById('problem-description').innerHTML = problem.description;
-      document.getElementById('difficulty-tag').textContent = problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难';
-      document.getElementById('difficulty-tag').className = `difficulty-tag difficulty-${problem.difficulty === 'easy' ? 'easy' : problem.difficulty === 'medium' ? 'medium' : 'hard'}`;
-      document.getElementById('answer-analysis').innerHTML = problem.analysis;
-      editor.setValue(problem.code);
-      editor.clearSelection();
-      resetTimer();
-      startTimer();
-      document.querySelectorAll('.problem-item').forEach(item => item.classList.remove('active'));
-      event.target.closest('.problem-item')?.classList.add('active');
-    }
-
-    function loadChoiceQuestion(id) {
-      const question = choiceQuestions.find(q => q.id === id);
-      if (!question) return;
-      document.getElementById('problem-title').textContent = question.title;
-      document.getElementById('difficulty-tag').textContent = question.difficulty === 'easy' ? '简单' : '中等';
-      document.getElementById('difficulty-tag').className = `difficulty-tag difficulty-${question.difficulty === 'easy' ? 'easy' : 'medium'}`;
-      let html = `<p class="text-lg mb-4">${question.question}</p><div class="space-y-3">`;
-      question.options.forEach(opt => {
-        html += `<div class="choice-option" onclick="selectOption(this, '${opt.label}')"><span class="choice-label">${opt.label}</span><span>${opt.text}</span></div>`;
-      });
-      html += '</div>';
-      document.getElementById('problem-description').innerHTML = html;
-      document.getElementById('answer-analysis').innerHTML = `<h4>答案解析</h4><p>${question.analysis}</p>`;
-      editor.setValue('# 选择题无需编写代码');
-      editor.setReadOnly(true);
-      resetTimer();
-      startTimer();
-    }
-
-    function selectOption(element, label) {
-      document.querySelectorAll('.choice-option').forEach(opt => opt.classList.remove('selected'));
-      element.classList.add('selected');
-    }
-
-    function toggleFavorite(id) {
-      const btn = document.getElementById('favorite-btn');
-      const icon = btn.querySelector('i');
-      if (icon.classList.contains('fa-star-o')) {
-        icon.classList.remove('fa-star-o');
-        icon.classList.add('fa-star');
-        btn.classList.add('text-yellow-400');
-      } else {
-        icon.classList.remove('fa-star');
-        icon.classList.add('fa-star-o');
-        btn.classList.remove('text-yellow-400');
-      }
-    }
-
-    function startTimer() {
-      seconds = 0;
-      timerInterval = setInterval(() => {
-        seconds++;
-        const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
-        const secs = (seconds % 60).toString().padStart(2, '0');
-        document.getElementById('timer').textContent = `${mins}:${secs}`;
-      }, 1000);
-    }
-
-    function resetTimer() {
-      if (timerInterval) clearInterval(timerInterval);
-      seconds = 0;
-      document.getElementById('timer').textContent = '00:00';
-    }
-
+    // 切换代码编辑器折叠状态
     function toggleCodeEditor() {
       const container = document.getElementById('code-editor-container');
       const icon = document.getElementById('toggle-code-icon');
+      
       if (isCodeEditorCollapsed) {
         container.style.display = 'block';
         icon.classList.remove('fa-chevron-down');
@@ -761,29 +1275,522 @@ print(result.head(3))
       }
     }
 
-    async function runCode() {
-      if (!pyodide) {
-        document.getElementById('code-output').innerHTML = '<span class="text-red-400">Python解释器未加载完成，请稍候...</span>';
-        return;
+
+    // 初始化函数
+    document.addEventListener('DOMContentLoaded', function() {
+      // 初始化代码编辑器
+      editor = ace.edit('codeEditor');
+      editor.setTheme('ace/theme/tomorrow_night');
+      editor.getSession().setMode('ace/mode/python');
+      editor.setOptions({
+        fontSize: '14px',
+        tabSize: 4,
+        useSoftTabs: true,
+        wrap: true
+      });
+      
+      // 设置初始占位符文本
+      editor.setValue(problems[0].code);
+      editor.clearSelection();
+
+      // 加载Pyodide
+      initPyodide();
+
+      // 绑定按钮事件
+      document.getElementById('runCode').addEventListener('click', runCode);
+      document.getElementById('resetCode').addEventListener('click', resetCode);
+
+      // 绑定知识点导航事件
+      document.querySelectorAll('.knowledge-nav').forEach((button, index) => {
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // 更新按钮状态
+          document.querySelectorAll('.knowledge-nav').forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          
+          // 获取目标模块ID
+          const target = this.getAttribute('data-target');
+          
+          // 隐藏所有模块
+          document.querySelectorAll('.knowledge-section').forEach(section => {
+            section.classList.add('hidden');
+          });
+          
+          // 显示目标模块
+          const targetElement = document.getElementById(target);
+          if (targetElement) {
+            targetElement.classList.remove('hidden');
+          }
+        });
+      });
+    });
+
+    // 加载Pyodide
+    async function initPyodide() {
+      const statusEl = document.getElementById('pyodide-status');
+      const cdns = [
+        "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/",
+        "https://unpkg.com/pyodide@0.24.1/full/",
+        "https://cdnjs.cloudflare.com/ajax/libs/pyodide/0.24.1/full/"
+      ];
+      let currentCDN = 0;
+      let retryCount = 0;
+      const maxRetries = 3;
+      
+      statusEl.innerHTML = '<i class="fa fa-spinner fa-spin text-amber-400"></i> 正在加载Python解释器...';
+
+      async function switchCDN() {
+        currentCDN++;
+        if (currentCDN >= cdns.length) {
+          currentCDN = 0;
+          retryCount++;
+          if (retryCount >= maxRetries) {
+            throw new Error('所有CDN均无法访问');
+          }
+        }
       }
-      const code = editor.getValue();
-      const startTime = performance.now();
-      document.getElementById('code-output').innerHTML = '<span class="text-cyan-400"><i class="fa fa-spinner fa-spin"></i> 运行中...</span>';
-      try {
-        const result = await pyodide.runPythonAsync(code);
-        const endTime = performance.now();
-        document.getElementById('execution-time').textContent = `执行时间：${Math.round(endTime - startTime)}ms`;
-        document.getElementById('code-output').innerHTML = result ? `<pre class="text-gray-300 whitespace-pre-wrap">${result}</pre>` : '<span class="text-emerald-400">代码执行完成，无输出</span>';
-      } catch (error) {
-        document.getElementById('code-output').innerHTML = `<span class="text-red-400">错误: ${error.message}</span>`;
+
+      async function loadWithTimeout(indexURL) {
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('加载超时')), 30000);
+        });
+        const loadPromise = loadPyodide({ indexURL });
+        return Promise.race([loadPromise, timeoutPromise]);
+      }
+
+      while (retryCount < maxRetries) {
+        try {
+          pyodide = await loadWithTimeout(cdns[currentCDN]);
+          statusEl.innerHTML = '<i class="fa fa-check text-emerald-400"></i> Python解释器加载成功';
+          await pyodide.loadPackage(['pandas', 'numpy']);
+          return;
+        } catch (error) {
+          console.warn(`CDN ${cdns[currentCDN]} 加载失败:`, error);
+          await switchCDN();
+        }
+      }
+      
+      statusEl.innerHTML = '<i class="fa fa-exclamation-triangle text-red-400"></i> Python解释器加载失败';
+      console.error('Pyodide load error:', error);
+    }
+
+    // 切换标签页
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.add('hidden');
+      });
+      document.getElementById(tabId).classList.remove('hidden');
+      
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        // 找到对应的导航链接并激活
+        if(link.getAttribute('onclick') && link.getAttribute('onclick').includes("'" + tabId + "'")) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    // 切换章节
+    function toggleChapter(chapterId) {
+      const content = document.getElementById(chapterId + '-content');
+      const icon = document.getElementById(chapterId + '-icon');
+      
+      if (content.classList.contains('collapsed')) {
+        content.classList.remove('collapsed');
+        icon.classList.remove('fa-chevron-right');
+        icon.classList.add('fa-chevron-down');
+      } else {
+        content.classList.add('collapsed');
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-right');
       }
     }
 
+
+    // 加载编程题
+    function loadProgrammingProblem(problemId) {
+      currentProblem = problemId;
+      const problem = problems.find(p => p.id === problemId);
+      
+      if (!problem) return
+      showTab("question-bank");
+      
+      // 确保在题库标签页
+      showTab('question-bank');
+      
+      // 更新问题信息
+      document.getElementById('problem-title').textContent = problem.title;
+      document.getElementById('problem-description').innerHTML = problem.description;
+      
+      // 更新难度标签
+      const difficultyTag = document.getElementById('difficulty-tag');
+      difficultyTag.className = 'difficulty-tag';
+      difficultyTag.classList.add('difficulty-' + problem.difficulty);
+      difficultyTag.textContent = problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难';
+      
+      // 显示代码编辑器和运行结果区域
+      const codeContainer = document.getElementById('code-editor-container');
+      codeContainer.style.display = 'block';
+      if (isCodeEditorCollapsed) {
+        isCodeEditorCollapsed = false;
+        document.getElementById('toggle-code-icon').classList.remove('fa-chevron-down');
+        document.getElementById('toggle-code-icon').classList.add('fa-chevron-up');
+      }
+      document.getElementById('code-output').parentElement.parentElement.style.display = 'block';
+      
+      // 更新代码编辑器
+      editor.setValue(problem.code);
+      editor.clearSelection();
+      
+      // 更新答案解析
+      document.getElementById('answer-analysis').innerHTML = problem.analysis;
+      
+      // 重置计时器
+      resetTimer();
+      
+      // 更新问题项状态
+      document.querySelectorAll('.problem-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      // 给当前点击的问题项添加 active 类
+      const allProblemItems = document.querySelectorAll('.problem-item');
+      allProblemItems.forEach(item => {
+        const onclickAttr = item.getAttribute('onclick');
+        if (onclickAttr && onclickAttr.includes('loadProgrammingProblem(' + problemId + ')')) {
+          item.classList.add('active');
+        }
+      });
+    }
+
+    // 运行代码
+    async function runCode() {
+      const code = editor.getValue();
+      const outputDiv = document.getElementById('code-output');
+      const executionTimeDiv = document.getElementById('execution-time');
+      
+      if (!pyodide) {
+        outputDiv.textContent = 'Python解释器尚未加载完成，请稍候...';
+        return;
+      }
+      
+      outputDiv.textContent = '运行中...';
+      executionTimeDiv.textContent = '执行时间：计算中...';
+      
+      try {
+        const startTime = performance.now();
+        
+        // 重置并捕获 stdout 和 stderr
+        let stdoutOutput = '';
+        let stderrOutput = '';
+        
+        pyodide.setStdout({
+          batched: (text) => {
+            stdoutOutput += text;
+          }
+        });
+        
+        pyodide.setStderr({
+          batched: (text) => {
+            stderrOutput += text;
+          }
+        });
+        
+        // 运行代码
+        const result = await pyodide.runPythonAsync(code);
+        
+        const endTime = performance.now();
+        const executionTime = (endTime - startTime).toFixed(2);
+        
+        // 组合输出：优先显示 stdout，其次 stderr，然后是返回值
+        let displayOutput = '';
+        if (stdoutOutput.trim()) {
+          displayOutput += stdoutOutput.trim();
+        }
+        if (stderrOutput.trim()) {
+          if (displayOutput) displayOutput += '\n\n';
+          displayOutput += '错误输出:\n' + stderrOutput.trim();
+        }
+        if (!displayOutput && result !== undefined) {
+          displayOutput = String(result);
+        }
+        if (!displayOutput) {
+          displayOutput = '代码执行成功，无输出';
+        }
+        
+        outputDiv.textContent = displayOutput;
+        executionTimeDiv.textContent = `执行时间：${executionTime}ms`;
+      } catch (error) {
+        let errorMsg = `错误：${error.message}`;
+        if (error.pyodide_type) {
+          errorMsg += ` (类型: ${error.pyodide_type})`;
+        }
+        outputDiv.textContent = errorMsg;
+        executionTimeDiv.textContent = '执行时间：0ms';
+      }
+    }
+
+    // 重置代码
     function resetCode() {
       const problem = problems.find(p => p.id === currentProblem);
-      if (problem) editor.setValue(problem.code);
-      else editor.setValue('# 请编写代码');
-      editor.clearSelection();
+      if (problem) {
+        editor.setValue(problem.code);
+        editor.clearSelection();
+      }
+    }
+
+    // 切换收藏状态
+    function toggleFavorite(problemId) {
+      const btn = document.getElementById('favorite-btn');
+      if (btn.innerHTML.includes('fa-star-o')) {
+        btn.innerHTML = '<i class="fa fa-star text-yellow-400"></i>';
+      } else {
+        btn.innerHTML = '<i class="fa fa-star-o"></i>';
+      }
+    }
+
+    // 重置计时器
+    function resetTimer() {
+      clearInterval(timerInterval);
+      seconds = 0;
+      updateTimer();
+      timerInterval = setInterval(() => {
+        seconds++;
+        updateTimer();
+      }, 1000);
+    }
+
+    // 更新计时器
+    function updateTimer() {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    // 滚动到指定知识点
+    function scrollToKnowledge(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // 选择题相关变量和函数
+    let currentChoiceQuestion = null;
+    let selectedAnswer = null;
+    let answeredQuestions = {};
+
+    // 加载选择题
+    function loadChoiceQuestion(questionId) {
+      currentChoiceQuestion = choiceQuestions.find(q => q.id === questionId);
+      showTab("question-bank");
+      if (!currentChoiceQuestion) return;
+
+      // 自动切换到题库标签页
+      showTab('question-bank');
+      
+      selectedAnswer = answeredQuestions[questionId] || null;
+      
+      // 更新问题信息
+      document.getElementById('problem-title').textContent = currentChoiceQuestion.title;
+      
+      // 更新难度标签
+      const difficultyTag = document.getElementById('difficulty-tag');
+      difficultyTag.className = 'difficulty-tag';
+      difficultyTag.classList.add('difficulty-' + currentChoiceQuestion.difficulty);
+      difficultyTag.textContent = currentChoiceQuestion.difficulty === 'easy' ? '简单' : currentChoiceQuestion.difficulty === 'medium' ? '中等' : '困难';
+      
+      // 构建选择题HTML
+      let optionsHtml = currentChoiceQuestion.options.map(opt => {
+        let optionClass = 'choice-option';
+        if (selectedAnswer === opt.label) {
+          optionClass += ' selected';
+        }
+        if (answeredQuestions[questionId]) {
+          optionClass += ' disabled';
+          if (opt.label === currentChoiceQuestion.answer) {
+            optionClass += ' correct';
+          } else if (opt.label === selectedAnswer && selectedAnswer !== currentChoiceQuestion.answer) {
+            optionClass += ' wrong';
+          }
+        }
+        return `
+          <div class="${optionClass}" onclick="selectChoice('${opt.label}')" data-label="${opt.label}">
+            <div class="choice-label">${opt.label}</div>
+            <div class="flex-1 text-gray-200">${opt.text}</div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('problem-description').innerHTML = `
+        <div class="mb-6">
+          <p class="text-lg text-gray-200">${currentChoiceQuestion.question}</p>
+        </div>
+        <div class="space-y-3" id="choice-options">
+          ${optionsHtml}
+        </div>
+        <div class="mt-6 flex gap-3">
+          <button class="btn-primary" onclick="submitChoice()" id="submit-choice-btn" ${answeredQuestions[questionId] ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>
+            <i class="fa fa-check"></i> 提交答案
+          </button>
+          <button class="btn-secondary" onclick="showChoiceAnalysis()" id="show-analysis-btn" ${!answeredQuestions[questionId] ? 'style="display:none"' : ''}>
+            <i class="fa fa-lightbulb-o"></i> 查看解析
+          </button>
+        </div>
+      `;
+
+      // 隐藏代码编辑器和运行结果区域
+      document.getElementById('code-editor-container').style.display = 'none';
+      document.getElementById('code-output').parentElement.parentElement.style.display = 'none';
+      
+      // 更新答案解析
+      updateChoiceAnalysis();
+      
+      // 滚动到问题描述区域
+      document.getElementById('problem-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      // 重置计时器
+      resetTimer();
+      
+      // 更新问题项状态
+      document.querySelectorAll('.problem-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      // 给当前点击的问题项添加 active 类
+      const allProblemItems = document.querySelectorAll('.problem-item');
+      allProblemItems.forEach(item => {
+        const onclickAttr = item.getAttribute('onclick');
+        if (onclickAttr && onclickAttr.includes('loadChoiceQuestion(\'' + questionId + '\')')) {
+          item.classList.add('active');
+        }
+      });
+    }
+
+    // 选择答案
+    function selectChoice(label) {
+      if (answeredQuestions[currentChoiceQuestion.id]) return;
+      
+      selectedAnswer = label;
+      
+      // 更新选项样式
+      document.querySelectorAll('.choice-option').forEach(opt => {
+        opt.classList.remove('selected');
+        if (opt.dataset.label === label) {
+          opt.classList.add('selected');
+        }
+      });
+    }
+
+    // 提交选择题答案
+    function submitChoice() {
+      if (!selectedAnswer) {
+        alert('请先选择一个答案');
+        return;
+      }
+      
+      answeredQuestions[currentChoiceQuestion.id] = selectedAnswer;
+      
+      // 更新选项样式
+      document.querySelectorAll('.choice-option').forEach(opt => {
+        opt.classList.add('disabled');
+        if (opt.dataset.label === currentChoiceQuestion.answer) {
+          opt.classList.add('correct');
+        } else if (opt.dataset.label === selectedAnswer && selectedAnswer !== currentChoiceQuestion.answer) {
+          opt.classList.add('wrong');
+        }
+      });
+      
+      // 禁用提交按钮，显示解析按钮
+      document.getElementById('submit-choice-btn').disabled = true;
+      document.getElementById('submit-choice-btn').style.opacity = '0.5';
+      document.getElementById('submit-choice-btn').style.cursor = 'not-allowed';
+      document.getElementById('show-analysis-btn').style.display = 'flex';
+      
+      // 更新答案解析
+      updateChoiceAnalysis();
+      
+      // 更新进度
+      updateChoiceProgress();
+    }
+
+    // 显示选择题解析
+    function showChoiceAnalysis() {
+      if (!answeredQuestions[currentChoiceQuestion.id]) {
+        alert('请先提交答案');
+        return;
+      }
+      document.getElementById('answer-analysis').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // 更新选择题解析内容
+    function updateChoiceAnalysis() {
+      if (!currentChoiceQuestion) return;
+      
+      const isAnswered = !!answeredQuestions[currentChoiceQuestion.id];
+      const isCorrect = selectedAnswer === currentChoiceQuestion.answer;
+      
+      let contentHtml;
+      if (!isAnswered) {
+        contentHtml = `
+          <div class="bg-amber-900 bg-opacity-20 border border-amber-700 rounded-lg p-4 mb-4">
+            <p class="text-amber-400"><i class="fa fa-info-circle"></i> 请先选择一个答案，然后点击"提交答案"查看解析</p>
+          </div>
+        `;
+      } else {
+        contentHtml = `
+          <div class="mb-4">
+            <p class="text-gray-300 mb-2">正确答案：<span class="text-emerald-400 font-bold">${currentChoiceQuestion.answer}</span></p>
+            <p class="text-gray-300">您的答案：<span class="${isCorrect ? 'text-emerald-400' : 'text-red-400'} font-bold">${selectedAnswer || '未作答'}</span></p>
+          </div>
+          <div class="bg-dark p-4 rounded-lg mb-4">
+            <h5 class="text-cyan-400 font-semibold mb-2">解析</h5>
+            <p class="text-gray-300">${currentChoiceQuestion.analysis}</p>
+          </div>
+          <h4>相关知识点</h4>
+          <ul class="list-disc list-inside space-y-1 mt-2">
+            <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('${getKnowledgeSection(currentChoiceQuestion.chapter)}')">${getChapterName(currentChoiceQuestion.chapter)}</a></li>
+          </ul>
+        `;
+      }
+      
+      document.getElementById('answer-analysis').innerHTML = `
+        <h4>答案解析</h4>
+        ${contentHtml}
+      `;
+    }
+
+    // 获取知识点章节ID
+    function getKnowledgeSection(chapter) {
+      const sections = {
+        1: 'module1-basics',
+        2: 'module2-advanced',
+        3: 'module2-advanced'
+      };
+      return sections[chapter] || 'module1-basics';
+    }
+
+    // 获取章节名称
+    function getChapterName(chapter) {
+      const names = {
+        1: '分组聚合基础',
+        2: '高级聚合分析',
+        3: '业务应用与案例'
+      };
+      return names[chapter] || '分组聚合分析';
+    }
+
+    // 更新选择题进度
+    function updateChoiceProgress() {
+      const totalChoice = choiceQuestions.length;
+      const answeredChoice = Object.keys(answeredQuestions).length;
+      const correctChoice = Object.entries(answeredQuestions).filter(([id, ans]) => {
+        const q = choiceQuestions.find(q => q.id === id);
+        return q && q.answer === ans;
+      }).length;
+      
+      // 可以在这里更新总体进度显示
+      console.log(`选择题进度: ${answeredChoice}/${totalChoice}, 正确: ${correctChoice}`);
     }
   </script>
 </body>

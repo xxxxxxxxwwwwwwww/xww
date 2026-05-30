@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>供应链分析考试 - Xww的课程页面</title>
+  <title>客户聚类分析考试 - Xww的课程页面</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/ace.js"></script>
@@ -118,8 +118,8 @@
   <nav class="bg-dark-gray shadow-lg fixed w-full z-10">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
       <div class="flex items-center gap-4">
-        <a href="supply-chain-analysis.html" class="text-cyan-400 font-bold text-xl flex items-center gap-2">
-          <i class="fa fa-arrow-left mr-2"></i> 供应链分析
+        <a href="customer-clustering.html" class="text-cyan-400 font-bold text-xl flex items-center gap-2">
+          <i class="fa fa-arrow-left mr-2"></i> 客户聚类分析
         </a>
       </div>
       <div class="flex items-center gap-4">
@@ -137,7 +137,7 @@
       <div id="exam-start" class="py-12">
         <div class="max-w-3xl mx-auto bg-dark-gray rounded-xl p-8 border border-gray-700">
           <div class="text-center">
-            <h2 class="text-2xl font-bold text-gray-200 mb-6">供应链分析考试</h2>
+            <h2 class="text-2xl font-bold text-gray-200 mb-6">客户聚类分析考试</h2>
             <p class="text-gray-400 mb-8">请输入您的姓名，然后点击开始考试按钮</p>
             <div class="mb-6">
               <input type="text" id="student-name" placeholder="请输入您的姓名" class="w-full px-4 py-3 bg-dark border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-200">
@@ -176,7 +176,7 @@
             <!-- 题目描述 -->
             <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
               <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
-                <h3 class="text-xl font-bold text-gray-200" id="exam-problem-title">问题1：供应链数据预处理</h3>
+                <h3 class="text-xl font-bold text-gray-200" id="exam-problem-title">问题1：交易数据加载与探索</h3>
                 <span class="difficulty-tag difficulty-easy" id="exam-difficulty-tag">简单</span>
               </div>
               <div class="problem-description" id="exam-problem-description">
@@ -312,57 +312,124 @@
     const examProblems = [
       {
         id: 1,
-        title: "编程题：供应链数据预处理",
-        description: `<p>编写一个程序，对供应链数据进行预处理，包括缺失值处理、异常值检测等。</p>
+        title: "编程题：交易数据加载与探索",
+        description: `<p>编写一个程序，加载购物篮交易数据并进行初步探索分析。</p>
         <p><strong>背景：</strong></p>
-        <p>一家零售公司提供了包含缺失值和异常值的供应链数据。</p>
+        <p>一家超市收集了顾客的购物篮交易数据，需要进行初步分析。</p>
         <p><strong>要求：</strong></p>
         <ul class="list-disc list-inside space-y-1 mt-2">
-          <li>识别并统计缺失值</li>
-          <li>使用合适的方法填充缺失值</li>
-          <li>使用IQR方法检测并处理异常值</li>
-          <li>输出处理后的数据</li>
+          <li>统计交易总数和商品种类数</li>
+          <li>统计各商品的购买频次</li>
+          <li>计算平均每单商品数量</li>
+          <li>找出最受欢迎的商品</li>
         </ul>`,
         difficulty: "easy",
         code: `# 请编写代码
 `,
         answer: `import pandas as pd
 import numpy as np
+from collections import Counter
 
-# 创建示例数据
-data = {
-    'product_id': [1, 2, 3, 4, 5, 6],
-    'demand': [100, 120, np.nan, 150, 200, 1000],
-    'lead_time': [7, 8, 6, np.nan, 9, 8],
-    'supplier': ['A', 'B', 'A', 'C', 'B', 'A']
-}
-df = pd.DataFrame(data)
+# 交易数据
+transactions = [
+    ['面包', '牛奶', '鸡蛋'],
+    ['面包', '牛奶'],
+    ['牛奶', '鸡蛋', '饼干'],
+    ['面包', '饼干'],
+    ['面包', '牛奶', '鸡蛋', '饼干'],
+    ['鸡蛋', '饼干'],
+    ['面包', '牛奶', '饼干'],
+    ['牛奶', '鸡蛋']
+]
 
-# 识别缺失值
-print("缺失值统计:")
-print(df.isnull().sum())
+# 基本统计
+print(f"交易总数: {len(transactions)}")
 
-# 处理缺失值
-df['demand'] = df['demand'].fillna(df['demand'].mean())
-df['lead_time'] = df['lead_time'].fillna(df['lead_time'].median())
+# 统计商品频率
+all_items = [item for transaction in transactions for item in transaction]
+item_counts = Counter(all_items)
+print(f"\\n商品种类数: {len(item_counts)}")
 
-# 检测异常值（IQR方法）
-Q1 = df['demand'].quantile(0.25)
-Q3 = df['demand'].quantile(0.75)
-IQR = Q3 - Q1
-lower = Q1 - 1.5 * IQR
-upper = Q3 + 1.5 * IQR
-outliers = df[(df['demand'] < lower) | (df['demand'] > upper)]
-print("\\n检测到的异常值:")
-print(outliers)
+print("\\n商品购买频次:")
+for item, count in item_counts.most_common():
+    print(f"  {item}: {count}次")
 
-# 处理异常值（截断）
-df['demand'] = df['demand'].clip(lower, upper)
+# 平均每单商品数
+avg_items_per_trans = np.mean([len(t) for t in transactions])
+print(f"\\n平均每单商品数: {avg_items_per_trans:.2f}")
 
-print("\\n处理后的数据:")
-print(df)
+# 最受欢迎的商品
+top_item = item_counts.most_common(1)[0]
+print(f"最受欢迎的商品: {top_item[0]} (出现{top_item[1]}次)")
 `,
         score: 10
+      },
+      {
+        id: 2,
+        title: "编程题：支持度与置信度计算",
+        description: `<p>编写一个程序，计算商品组合的支持度和置信度。</p>
+        <p><strong>背景：</strong></p>
+        <p>需要计算"购买面包的顾客中购买牛奶的比例"等关联指标。</p>
+        <p><strong>要求：</strong></p>
+        <ul class="list-disc list-inside space-y-1 mt-2">
+          <li>实现支持度计算函数</li>
+          <li>实现置信度计算函数</li>
+          <li>计算面包→牛奶的关联规则</li>
+          <li>输出支持度、置信度和提升度</li>
+        </ul>`,
+        difficulty: "medium",
+        code: `# 请编写代码
+`,
+        answer: `def calculate_support(transactions, item_set):
+    count = 0
+    for transaction in transactions:
+        if item_set.issubset(set(transaction)):
+            count += 1
+    return count / len(transactions)
+
+def calculate_confidence(transactions, antecedent, consequent):
+    antecedent_set = set(antecedent)
+    consequent_set = set(consequent)
+    both_count = 0
+    antecedent_count = 0
+    
+    for transaction in transactions:
+        transaction_set = set(transaction)
+        if antecedent_set.issubset(transaction_set):
+            antecedent_count += 1
+            if consequent_set.issubset(transaction_set):
+                both_count += 1
+    
+    if antecedent_count == 0:
+        return 0
+    return both_count / antecedent_count
+
+# 交易数据
+transactions = [
+    ['面包', '牛奶', '鸡蛋'],
+    ['面包', '牛奶'],
+    ['牛奶', '鸡蛋', '饼干'],
+    ['面包', '饼干'],
+    ['面包', '牛奶', '鸡蛋', '饼干'],
+    ['鸡蛋', '饼干'],
+    ['面包', '牛奶', '饼干'],
+    ['牛奶', '鸡蛋']
+]
+
+# 计算规则：面包 -> 牛奶
+antecedent = ['面包']
+consequent = ['牛奶']
+
+support = calculate_support(transactions, set(antecedent + consequent))
+confidence = calculate_confidence(transactions, antecedent, consequent)
+lift = support / (calculate_support(transactions, set(consequent)))
+
+print(f"规则: {antecedent} -> {consequent}")
+print(f"支持度: {support:.3f}")
+print(f"置信度: {confidence:.3f}")
+print(f"提升度: {lift:.3f}")
+`,
+        score: 15
       }
     ];
 
@@ -371,41 +438,41 @@ print(df)
       {
         id: 11,
         type: "choice",
-        title: "选择题1：供应链基本概念",
-        question: "供应链是指从原材料采购到最终客户的整个流程，以下哪个不是供应链的核心要素？",
+        title: "选择题1：购物篮分析概念",
+        question: "购物篮分析主要用于发现什么？",
         options: {
-          A: "物流（物质流动）",
-          B: "信息流（信息传递）",
-          C: "技术流（技术传播）",
-          D: "资金流（资金往来）"
+          A: "商品价格变化",
+          B: "商品之间的关联关系",
+          C: "顾客购买频率",
+          D: "库存数量"
         },
-        answer: "C",
+        answer: "B",
         score: 10
       },
       {
         id: 12,
         type: "choice",
-        title: "选择题2：供应链核心流程",
-        question: "供应链管理包括五大核心流程，以下哪个顺序是正确的？",
+        title: "选择题2：支持度概念",
+        question: "支持度(Support)表示什么？",
         options: {
-          A: "计划-采购-制造-配送-退货",
-          B: "采购-计划-制造-配送-退货",
-          C: "计划-制造-采购-配送-退货",
-          D: "采购-制造-计划-配送-退货"
+          A: "购买X的顾客中购买Y的比例",
+          B: "同时购买X和Y的交易比例",
+          C: "规则的重要性",
+          D: "商品的销售数量"
         },
-        answer: "A",
+        answer: "B",
         score: 10
       },
       {
         id: 13,
         type: "choice",
-        title: "选择题3：供应链管理目标",
-        question: "以下哪个不是供应链管理的主要目标？",
+        title: "选择题3：置信度概念",
+        question: "置信度(Confidence)表示什么？",
         options: {
-          A: "提高客户满意度",
-          B: "增加运营成本",
-          C: "优化库存水平",
-          D: "增强竞争力"
+          A: "同时购买X和Y的概率",
+          B: "购买X的顾客中购买Y的概率",
+          C: "商品X的购买频率",
+          D: "规则的整体重要性"
         },
         answer: "B",
         score: 10
@@ -413,55 +480,55 @@ print(df)
       {
         id: 14,
         type: "choice",
-        title: "选择题4：预测方法比较",
-        question: "对于有明显趋势和季节性的数据，以下哪种预测方法最适合？",
+        title: "选择题4：Apriori原理",
+        question: "Apriori算法的核心原理是什么？",
         options: {
-          A: "简单移动平均（SMA）",
-          B: "加权移动平均（WMA）",
-          C: "简单指数平滑（SES）",
-          D: "Holt-Winters指数平滑"
+          A: "频繁项集的子集也是频繁的",
+          B: "使用神经网络进行预测",
+          C: "基于决策树进行分类",
+          D: "使用聚类算法分组"
         },
-        answer: "D",
+        answer: "A",
         score: 10
       },
       {
         id: 15,
         type: "choice",
-        title: "选择题5：预测误差分析",
-        question: "以下哪个误差指标可以避免正负误差相互抵消，并且对大误差比较敏感？",
+        title: "选择题5：提升度含义",
+        question: "当提升度(Lift)大于1时，表示什么？",
         options: {
-          A: "MAE（平均绝对误差）",
-          B: "MSE（均方误差）",
-          C: "MAPE（平均绝对百分比误差）",
-          D: "以上都不是"
-        },
-        answer: "B",
-        score: 10
-      },
-      {
-        id: 16,
-        type: "choice",
-        title: "选择题6：库存成本分析",
-        question: "EOQ（经济订货量）模型旨在最小化哪种成本？",
-        options: {
-          A: "只最小化订购成本",
-          B: "只最小化持有成本",
-          C: "总库存成本（订购成本+持有成本）",
-          D: "只最小化缺货成本"
+          A: "X和Y是负相关的",
+          B: "X和Y是独立的",
+          C: "X和Y是正相关的",
+          D: "规则无效"
         },
         answer: "C",
         score: 10
       },
       {
+        id: 16,
+        type: "choice",
+        title: "选择题6：业务应用",
+        question: "购物篮分析最常见的业务应用是什么？",
+        options: {
+          A: "商品定价",
+          B: "商品推荐和交叉销售",
+          C: "库存盘点",
+          D: "员工绩效评估"
+        },
+        answer: "B",
+        score: 10
+      },
+      {
         id: 17,
         type: "choice",
-        title: "选择题7：ABC分类法",
-        question: "在ABC分类法中，A类物品通常具有什么特点？",
+        title: "选择题7：货架摆放",
+        question: "根据购物篮分析结果，关联度高的商品应该如何摆放？",
         options: {
-          A: "价值高，数量多",
-          B: "价值高，数量少",
-          C: "价值低，数量多",
-          D: "价值低，数量少"
+          A: "放在商店入口处",
+          B: "放在相邻位置",
+          C: "放在货架最底层",
+          D: "分散摆放"
         },
         answer: "B",
         score: 10
@@ -469,27 +536,13 @@ print(df)
       {
         id: 18,
         type: "choice",
-        title: "选择题8：物流成本分析",
-        question: "运输路线优化的主要目标是？",
+        title: "选择题8：可视化方法",
+        question: "以下哪种可视化方法最适合展示商品关联关系？",
         options: {
-          A: "最大化运输距离",
-          B: "最小化运输成本或时间",
-          C: "增加运输次数",
-          D: "以上都不是"
-        },
-        answer: "B",
-        score: 10
-      },
-      {
-        id: 19,
-        type: "choice",
-        title: "选择题9：供应链风险管理",
-        question: "安全库存主要是为了应对什么风险？",
-        options: {
-          A: "价格波动风险",
-          B: "需求不确定性和供应延迟风险",
-          C: "供应商破产风险",
-          D: "自然灾害风险"
+          A: "折线图",
+          B: "网络图",
+          C: "面积图",
+          D: "直方图"
         },
         answer: "B",
         score: 10
@@ -516,7 +569,7 @@ print(df)
       
       // 绑定返回课程按钮事件
       document.getElementById('back-to-course').addEventListener('click', function() {
-        window.location.href = 'supply-chain-analysis.html';
+        window.location.href = 'market-basket-analysis.html';
       });
       
       // 绑定提交考试按钮事件
@@ -609,7 +662,7 @@ print(df)
     
     function initResultEvents() {
       document.getElementById('back-to-course').addEventListener('click', function() {
-        window.location.href = 'supply-chain-analysis.html';
+        window.location.href = 'market-basket-analysis.html';
       });
       document.getElementById('review-answers').addEventListener('click', function() {
         showAnswerReview();
