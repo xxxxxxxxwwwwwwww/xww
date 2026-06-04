@@ -7,6 +7,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/ace.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/ext-language_tools.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/ext-static_highlight.js"></script>
   <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
   <script>
     tailwind.config = {
@@ -516,50 +518,72 @@ else:
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-cube text-emerald-400"></i> 变量与数据类型
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">Python是动态类型语言，变量无需声明类型。</p>
+                    <p class="text-gray-400 mb-4 text-sm">
+                      <strong class="text-cyan-400">核心概念：</strong>Python是动态类型语言，采用引用语义，变量无需声明类型，但每个对象都有类型。
+                    </p>
                     <div class="bg-dark p-3 rounded font-mono text-sm">
                       <pre class="text-cyan-300">
-# 整数 (int)
+# 整数 (int) - 任意精度整数
 a = 10
 b = -5
 c = 0
 
-# 浮点数 (float)
+# 浮点数 (float) - 双精度浮点数
 pi = 3.14159
 d = 2.0
 e = 1.5e3  # 科学计数法
 
-# 字符串 (str)
+# 字符串 (str) - Unicode不可变序列
 name = "Alice"
 greeting = 'Hello, World!'
 multiline = """多行
 字符串"""
 
-# 布尔值 (bool)
+# 布尔值 (bool) - True/False
 is_student = True
 is_teacher = False
 
-# 空值 (None)
+# 空值 (None) - 特殊空值对象
 result = None
 
-# 查看类型
-print(type(a))  # <class 'int'>
-print(type(name))  # <class 'str'>
+# 类型检查
+print(type(a))        # <class 'int'>
+print(isinstance(a, int))  # True
 
-# 类型转换
+# 类型转换（显式转换更安全）
 num_str = "123"
-num = int(num_str)
-float_num = float("3.14")
-str_num = str(456)
+num = int(num_str)       # int()
+float_num = float("3.14") # float()
+str_num = str(456)        # str()
                       </pre>
+                    </div>
+                    <div class="mt-4 p-3 bg-dark-gray rounded-lg">
+                      <h5 class="text-sm font-semibold text-yellow-400 mb-2">💡 最佳实践</h5>
+                      <ul class="text-xs text-gray-300 space-y-1">
+                        <li>• 避免使用<code class="bg-dark px-1 rounded">==</code>比较浮点数，使用<code class="bg-dark px-1 rounded">math.isclose()</code></li>
+                        <li>• 字符串拼接优先使用f-string而非<code class="bg-dark px-1 rounded">+</code>运算符</li>
+                        <li>• 使用<code class="bg-dark px-1 rounded">is</code>比较None、True、False</li>
+                        <li>• 类型注解提高代码可读性：<code class="bg-dark px-1 rounded">x: int = 10</code></li>
+                      </ul>
+                    </div>
+                    <div class="mt-3 p-3 bg-dark-gray rounded-lg">
+                      <h5 class="text-sm font-semibold text-red-400 mb-2">⚠️ 常见错误</h5>
+                      <ul class="text-xs text-gray-300 space-y-1">
+                        <li>• <code class="bg-dark px-1 rounded">"123" + 456</code> → 类型错误，需转换</li>
+                        <li>• 浮点数精度问题：<code class="bg-dark px-1 rounded">0.1 + 0.2 ≠ 0.3</code></li>
+                        <li>• 使用可变对象作为默认参数（如列表）</li>
+                      </ul>
                     </div>
                   </div>
 
                   <!-- 运算符 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-calculator text-yellow-400"></i> 运算符
+                      <i class="fa fa-calculator text-yellow-400"></i> 运算符与表达式
                     </h4>
+                    <p class="text-gray-400 mb-4 text-sm">
+                      <strong class="text-cyan-400">理论阐述：</strong>运算符优先级影响表达式求值顺序，括号可明确指定优先级。
+                    </p>
                     <div class="space-y-4">
                       <div>
                         <h5 class="text-sm font-semibold text-gray-300 mb-2">算术运算符</h5>
@@ -617,9 +641,11 @@ print(not True)        # 非 False
                   <!-- 条件语句 -->
                   <div class="bg-dark p-5 rounded-lg border border-gray-700">
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
-                      <i class="fa fa-check-square text-emerald-400"></i> 条件语句 (if-else)
+                      <i class="fa fa-check-square text-emerald-400"></i> 条件语句 (if-elif-else)
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">根据条件执行不同的代码块。</p>
+                    <p class="text-gray-400 mb-4 text-sm">
+                      <strong class="text-cyan-400">理论阐述：</strong>Python使用缩进表示代码块，elif是"else if"的缩写，条件表达式从上到下依次判断，直到找到第一个为True的条件。
+                    </p>
                     <div class="bg-dark p-3 rounded font-mono text-sm">
                       <pre class="text-cyan-300">
 score = 85
@@ -638,6 +664,18 @@ else:
 print(f"成绩等级: {grade}")
                       </pre>
                     </div>
+                    <div class="mt-4 p-3 bg-dark-gray rounded-lg">
+                      <h5 class="text-sm font-semibold text-yellow-400 mb-2">💡 最佳实践</h5>
+                      <ul class="text-xs text-gray-300 space-y-1">
+                        <li>• 使用三元运算符简化简单判断：<code class="bg-dark px-1 rounded">result = "yes" if x > 0 else "no"</code></li>
+                        <li>• 条件表达式避免过长，保持简洁易读</li>
+                        <li>• 多条件时使用<code class="bg-dark px-1 rounded">and/or</code>逻辑运算符</li>
+                      </ul>
+                    </div>
+                    <div class="mt-3 p-3 bg-dark-gray rounded-lg">
+                      <h5 class="text-sm font-semibold text-purple-400 mb-2">📊 算法复杂度</h5>
+                      <p class="text-xs text-gray-300">时间复杂度：O(1) 最优，O(n) 最差（需要遍历所有条件）</p>
+                    </div>
                   </div>
 
                   <!-- 循环语句 -->
@@ -645,9 +683,12 @@ print(f"成绩等级: {grade}")
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-refresh text-yellow-400"></i> 循环语句
                     </h4>
+                    <p class="text-gray-400 mb-4 text-sm">
+                      <strong class="text-cyan-400">理论阐述：</strong>for循环用于遍历可迭代对象，while循环在条件为真时持续执行。break用于提前退出循环，continue用于跳过当前迭代。
+                    </p>
                     <div class="space-y-4">
                       <div>
-                        <h5 class="text-sm font-semibold text-gray-300 mb-2">for循环</h5>
+                        <h5 class="text-sm font-semibold text-gray-300 mb-2">for循环（遍历迭代器）</h5>
                         <div class="bg-dark-gray p-2 rounded font-mono text-xs">
                           <pre class="text-cyan-300">
 # 遍历列表
@@ -655,24 +696,24 @@ fruits = ["苹果", "香蕉", "橙子"]
 for fruit in fruits:
     print(fruit)
 
-# range()函数
-for i in range(5):      # 0,1,2,3,4
+# range()函数（生成整数序列）
+for i in range(5):       # 0,1,2,3,4
     print(i)
 for i in range(2, 7):   # 2,3,4,5,6
     print(i)
-for i in range(0, 10, 2): # 0,2,4,6,8
+for i in range(0, 10, 2): # 0,2,4,6,8 (步长)
     print(i)
                           </pre>
                         </div>
                       </div>
                       <div>
-                        <h5 class="text-sm font-semibold text-gray-300 mb-2">while循环</h5>
+                        <h5 class="text-sm font-semibold text-gray-300 mb-2">while循环（条件驱动）</h5>
                         <div class="bg-dark-gray p-2 rounded font-mono text-xs">
                           <pre class="text-cyan-300">
 count = 0
 while count < 5:
     print(count)
-    count += 1
+    count += 1  # 避免无限循环
                           </pre>
                         </div>
                       </div>
@@ -680,20 +721,43 @@ while count < 5:
                         <h5 class="text-sm font-semibold text-gray-300 mb-2">break和continue</h5>
                         <div class="bg-dark-gray p-2 rounded font-mono text-xs">
                           <pre class="text-cyan-300">
-# break: 跳出循环
+# break: 立即跳出整个循环
 for i in range(10):
     if i == 5:
         break
-    print(i)  # 0-4
+    print(i)  # 输出: 0,1,2,3,4
 
-# continue: 跳过本次
+# continue: 跳过当前迭代，继续下一次
 for i in range(10):
     if i % 2 == 0:
         continue
-    print(i)  # 1,3,5,7,9
+    print(i)  # 输出: 1,3,5,7,9
                           </pre>
                         </div>
                       </div>
+                      <div>
+                        <h5 class="text-sm font-semibold text-gray-300 mb-2">else子句（循环正常结束时执行）</h5>
+                        <div class="bg-dark-gray p-2 rounded font-mono text-xs">
+                          <pre class="text-cyan-300">
+for i in range(3):
+    print(i)
+else:
+    print("循环正常结束")  # 循环未被break时执行
+                          </pre>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-dark-gray rounded-lg">
+                      <h5 class="text-sm font-semibold text-yellow-400 mb-2">💡 最佳实践</h5>
+                      <ul class="text-xs text-gray-300 space-y-1">
+                        <li>• 优先使用enumerate()获取索引和值：<code class="bg-dark px-1 rounded">for i, val in enumerate(list)</code></li>
+                        <li>• 使用zip()并行遍历多个序列</li>
+                        <li>• while循环确保有终止条件，防止无限循环</li>
+                      </ul>
+                    </div>
+                    <div class="mt-3 p-3 bg-dark-gray rounded-lg">
+                      <h5 class="text-sm font-semibold text-purple-400 mb-2">📊 算法复杂度</h5>
+                      <p class="text-xs text-gray-300">遍历n个元素：时间O(n)，空间O(1)</p>
                     </div>
                   </div>
                 </div>
@@ -713,7 +777,9 @@ for i in range(10):
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-list text-emerald-400"></i> 列表 (List)
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">有序、可变的序列。</p>
+                    <p class="text-gray-400 mb-4 text-sm">
+                      <strong class="text-cyan-400">核心概念：</strong>列表是Python中最常用的数据结构，是有序、可变的序列，支持索引访问和动态增长。
+                    </p>
                     <div class="bg-dark p-3 rounded font-mono text-sm">
                       <pre class="text-cyan-300">
 # 创建列表
@@ -721,7 +787,7 @@ numbers = [1, 2, 3, 4, 5]
 mixed = [1, "hello", True, 3.14]
 empty = []
 
-# 访问元素（索引从0开始）
+# 访问元素（索引从0开始，负数从后向前）
 print(numbers[0])   # 1
 print(numbers[-1])  # 5（最后一个）
 
@@ -729,28 +795,43 @@ print(numbers[-1])  # 5（最后一个）
 print(numbers[1:3])      # [2, 3]
 print(numbers[:3])       # [1, 2, 3]
 print(numbers[2:])       # [3, 4, 5]
-print(numbers[::2])      # [1, 3, 5]
+print(numbers[::2])      # [1, 3, 5] (步长2)
 
 # 修改
 numbers[0] = 100
 
 # 添加元素
-numbers.append(6)         # 末尾添加
-numbers.insert(0, 0)      # 指定位置插入
+numbers.append(6)         # 末尾添加 O(1)
+numbers.insert(0, 0)      # 指定位置插入 O(n)
 
 # 删除
-numbers.remove(3)         # 删除第一个匹配值
-popped = numbers.pop()    # 弹出最后一个
-del numbers[0]            # 删除指定索引
+numbers.remove(3)         # 删除第一个匹配值 O(n)
+popped = numbers.pop()    # 弹出最后一个 O(1)
+del numbers[0]            # 删除指定索引 O(n)
 
 # 常用方法
 print(len(numbers))       # 长度
-print(2 in numbers)       # 包含判断
-numbers.sort()            # 排序
-numbers.reverse()         # 反转
-print(numbers.index(2))   # 查找索引
-print(numbers.count(2))   # 统计次数
+print(2 in numbers)       # 包含判断 O(n)
+numbers.sort()            # 排序 O(n log n)
+numbers.reverse()         # 反转 O(n)
+print(numbers.index(2))   # 查找索引 O(n)
+print(numbers.count(2))   # 统计次数 O(n)
                       </pre>
+                    </div>
+                    <div class="mt-4 p-3 bg-dark-gray rounded-lg">
+                      <h5 class="text-sm font-semibold text-yellow-400 mb-2">💡 最佳实践</h5>
+                      <ul class="text-xs text-gray-300 space-y-1">
+                        <li>• 使用列表推导式替代循环创建列表：<code class="bg-dark px-1 rounded">[x**2 for x in range(5)]</code></li>
+                        <li>• 频繁在头部插入使用deque替代列表</li>
+                        <li>• 使用切片复制列表：<code class="bg-dark px-1 rounded">copy = lst[:]</code></li>
+                      </ul>
+                    </div>
+                    <div class="mt-3 p-3 bg-dark-gray rounded-lg">
+                      <h5 class="text-sm font-semibold text-purple-400 mb-2">📊 算法复杂度</h5>
+                      <p class="text-xs text-gray-300">
+                        索引访问: O(1) | 末尾追加: O(1) | 中间插入: O(n)<br>
+                        搜索: O(n) | 排序: O(n log n)
+                      </p>
                     </div>
                   </div>
 
@@ -759,7 +840,9 @@ print(numbers.count(2))   # 统计次数
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-book text-yellow-400"></i> 字典 (Dict)
                     </h4>
-                    <p class="text-gray-400 mb-4 text-sm">键值对的无序集合，键必须唯一。</p>
+                    <p class="text-gray-400 mb-4 text-sm">
+                      <strong class="text-cyan-400">核心概念：</strong>字典是基于哈希表实现的无序键值对集合，提供O(1)时间复杂度的查找、插入和删除操作。
+                    </p>
                     <div class="bg-dark p-3 rounded font-mono text-sm">
                       <pre class="text-cyan-300">
 # 创建字典
@@ -772,24 +855,42 @@ student = {
 # 访问
 print(student["name"])           # 张三
 print(student.get("age", 0))     # 20（get带默认值）
+print(student.get("gender"))     # None（无默认值）
 
 # 添加/修改
 student["grade"] = "大二"        # 添加
 student["age"] = 21              # 修改
 
 # 删除
-del student["major"]
-age = student.pop("age")
+del student["major"]              # O(1)
+age = student.pop("age")          # O(1)，返回被删除的值
 
 # 常用操作
-print(student.keys())            # 所有键
-print(student.values())          # 所有值
-print(student.items())           # 所有键值对
+print(student.keys())            # dict_keys(['name', 'age', 'grade'])
+print(student.values())          # dict_values(['张三', 21, '大二'])
+print(student.items())           # dict_items([...])
 
 # 遍历
 for key, value in student.items():
     print(f"{key}: {value}")
+
+# 字典推导式
+squares = {x: x**2 for x in range(5)}
                       </pre>
+                    </div>
+                    <div class="mt-4 p-3 bg-dark-gray rounded-lg">
+                      <h5 class="text-sm font-semibold text-yellow-400 mb-2">💡 最佳实践</h5>
+                      <ul class="text-xs text-gray-300 space-y-1">
+                        <li>• 键必须可哈希（不可变类型）：字符串、数字、元组</li>
+                        <li>• 使用<code class="bg-dark px-1 rounded">setdefault()</code>处理默认值</li>
+                        <li>• 使用<code class="bg-dark px-1 rounded">collections.defaultdict</code>简化逻辑</li>
+                      </ul>
+                    </div>
+                    <div class="mt-3 p-3 bg-dark-gray rounded-lg">
+                      <h5 class="text-sm font-semibold text-purple-400 mb-2">📊 算法复杂度</h5>
+                      <p class="text-xs text-gray-300">
+                        查找/插入/删除: O(1) 平均 | O(n) 最坏（哈希冲突）
+                      </p>
                     </div>
                   </div>
 
@@ -867,6 +968,9 @@ unique = list(set(lst))  # [1,2,3,4]
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-wrench text-emerald-400"></i> 函数基础
                     </h4>
+                    <p class="text-gray-400 mb-4 text-sm">
+                      <strong class="text-cyan-400">核心概念：</strong>函数是一段可重用的代码块，通过def关键字定义。Python函数支持默认参数、可变参数、关键字参数等多种参数形式。
+                    </p>
                     <div class="bg-dark p-3 rounded font-mono text-sm">
                       <pre class="text-cyan-300">
 # 定义函数
@@ -902,6 +1006,14 @@ def print_info(**kwargs):
 print_info(name="张三", age=20)
                       </pre>
                     </div>
+                    <div class="mt-4 p-3 bg-dark-gray rounded-lg">
+                      <h5 class="text-sm font-semibold text-yellow-400 mb-2">💡 最佳实践</h5>
+                      <ul class="text-xs text-gray-300 space-y-1">
+                        <li>• 每个函数都应该有文档字符串(docstring)</li>
+                        <li>• 使用类型注解提高代码可读性：<code class="bg-dark px-1 rounded">def func(x: int) -> str:</code></li>
+                        <li>• 函数应该保持简短，职责单一</li>
+                      </ul>
+                    </div>
                   </div>
 
                   <!-- 递归与作用域 -->
@@ -909,6 +1021,9 @@ print_info(name="张三", age=20)
                     <h4 class="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
                       <i class="fa fa-repeat text-yellow-400"></i> 递归与作用域
                     </h4>
+                    <p class="text-gray-400 mb-4 text-sm">
+                      <strong class="text-cyan-400">理论阐述：</strong>递归函数通过调用自身来解决问题，需设置终止条件防止无限递归。Python使用LEGB规则管理变量作用域。
+                    </p>
                     <div class="space-y-4">
                       <div>
                         <h5 class="text-sm font-semibold text-gray-300 mb-2">递归函数</h5>
@@ -922,25 +1037,26 @@ def factorial(n):
 
 print(factorial(5))  # 120
 
-# 斐波那契
-def fib(n):
+# 斐波那契（优化版本）
+def fib(n, memo={}):
+    if n in memo:
+        return memo[n]
     if n <= 1:
         return n
-    return fib(n - 1) + fib(n - 2)
-
-print(fib(10))  # 55
+    memo[n] = fib(n-1, memo) + fib(n-2, memo)
+    return memo[n]
                           </pre>
                         </div>
                       </div>
                       <div>
-                        <h5 class="text-sm font-semibold text-gray-300 mb-2">变量作用域</h5>
+                        <h5 class="text-sm font-semibold text-gray-300 mb-2">变量作用域 (LEGB规则)</h5>
                         <div class="bg-dark-gray p-2 rounded font-mono text-xs">
                           <pre class="text-cyan-300">
 x = 10  # 全局变量
 
 def func():
     x = 20  # 局部变量
-    print(x)  # 20
+    print(x)  # 20 (局部)
 
 func()
 print(x)  # 10（全局x没变）
@@ -1342,6 +1458,9 @@ print(s.study())  # 自己的方法
     const editor = ace.edit('codeEditor');
     editor.setTheme('ace/theme/monokai');
     editor.session.setMode('ace/mode/python');
+    
+    // 启用自动补全
+    ace.require("ace/ext/language_tools");
     editor.setOptions({
       fontSize: '14px',
       tabSize: 4,
@@ -1349,8 +1468,88 @@ print(s.study())  # 自己的方法
       showPrintMargin: false,
       enableBasicAutocompletion: true,
       enableSnippets: true,
-      enableLiveAutocompletion: true
+      enableLiveAutocompletion: true,
+      enableAutoIndent: true,
+      autoScrollEditorIntoView: true,
+      printMarginColumn: false,
+     minLines: 10,
+      maxLines: 50
     });
+
+    // 设置Python代码片段
+    if (!window.pythonSnippets) {
+      window.pythonSnippets = [
+        {
+          caption: 'def',
+          snippet: 'def ${1:func_name}(${2:args}):\n\t${3:pass}',
+          meta: 'function',
+          type: 'snippet'
+        },
+        {
+          caption: 'for',
+          snippet: 'for ${1:item} in ${2:iterable}:\n\t${3:pass}',
+          meta: 'loop',
+          type: 'snippet'
+        },
+        {
+          caption: 'while',
+          snippet: 'while ${1:condition}:\n\t${2:pass}',
+          meta: 'loop',
+          type: 'snippet'
+        },
+        {
+          caption: 'if',
+          snippet: 'if ${1:condition}:\n\t${2:pass}',
+          meta: 'condition',
+          type: 'snippet'
+        },
+        {
+          caption: 'class',
+          snippet: 'class ${1:ClassName}:\n\tdef __init__(self${2:args}):\n\t\t${3:pass}',
+          meta: 'class',
+          type: 'snippet'
+        },
+        {
+          caption: 'try',
+          snippet: 'try:\n\t${1:pass}\nexcept ${2:Exception} as e:\n\t${3:pass}',
+          meta: 'exception',
+          type: 'snippet'
+        },
+        {
+          caption: 'print',
+          snippet: 'print(${1:content})',
+          meta: 'function',
+          type: 'snippet'
+        },
+        {
+          caption: 'input',
+          snippet: 'input(${1:prompt})',
+          meta: 'function',
+          type: 'snippet'
+        },
+        {
+          caption: 'list comprehension',
+          snippet: '[${1:expr} for ${2:x} in ${3:iterable}]',
+          meta: 'comprehension',
+          type: 'snippet'
+        },
+        {
+          caption: 'dict comprehension',
+          snippet: '{${1:key}: ${2:value} for ${3:x} in ${4:iterable}}',
+          meta: 'comprehension',
+          type: 'snippet'
+        }
+      ];
+    }
+    
+    // 添加自定义代码片段
+    const snippetManager = ace.require('ace/snippets').snippetManager;
+    if (window.pythonSnippets) {
+      const pythonMode = editor.session.getMode();
+      window.pythonSnippets.forEach(snippet => {
+        snippetManager.register(snippet, snippet.caption);
+      });
+    }
 
     // 设置默认代码
     const defaultCode = `# 请编写代码
@@ -1359,16 +1558,25 @@ print(s.study())  # 自己的方法
     editor.setValue(defaultCode);
 
     // Pyodide初始化
-    let pyodide;
+    // Pyodide配置优化 - 增加多个可靠的CDN源
+    let pyodide = null;
     let initAttempts = 0;
     const maxAttempts = 3;
-    const initTimeout = 30000; // 30秒超时
+    const initTimeout = 30000;
     let currentCDNIndex = 0;
+    
+    // 增强的CDN源列表（按优先级排序）
     const cdnSources = [
       "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/",
       "https://unpkg.com/pyodide@0.24.1/full/",
-      "https://cdnjs.cloudflare.com/ajax/libs/pyodide/0.24.1/"
+      "https://cdn.jsdelivr.net/npm/pyodide@0.24.1/full/",
+      "https://cdnjs.cloudflare.com/ajax/libs/pyodide/0.24.1/",
+      "https://fastly.jsdelivr.net/gh/pyodide/pyodide@0.24.1/full/"
     ];
+    
+    // 常用Python包预加载列表
+    const commonPackages = ["math", "random", "datetime", "re", "json", "collections", "itertools", "functools"];
+    let packagesLoaded = false;
     
     async function initPyodide() {
       initAttempts++;
@@ -1399,15 +1607,14 @@ print(s.study())  # 自己的方法
         
         // 加载常用包（可选，即使失败也不影响核心功能）
         try {
-          statusEl.innerHTML = `<i class="fa fa-spinner fa-spin"></i> 正在加载Python解释器... 加载常用包 (尝试 ${initAttempts}/${maxAttempts})`;
-          await pyodide.loadPackage(["math", "random", "datetime"]);
+          statusEl.innerHTML = `<i class="fa fa-spinner fa-spin"></i> 正在预加载Python常用库...`;
+          await pyodide.loadPackage(commonPackages);
         } catch (pkgError) {
           console.warn('包加载失败，继续使用核心功能:', pkgError);
           // 包加载失败不影响核心功能，继续执行
         }
         
-        statusEl.innerHTML = '<i class="fa fa-check-circle text-emerald-400"></i> Python解释器已就绪 (CDN: ' + (currentCDNIndex + 1) + '/' + cdnSources.length + ')';
-        
+        statusEl.innerHTML = '<i class="fa fa-check-circle text-emerald-400"></i> Python解释器已就绪 (常用库已预加载)';
         statusEl.className = 'mt-2 text-sm text-emerald-400';
       } catch (error) {
         console.error('Pyodide加载失败:', error);
