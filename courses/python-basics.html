@@ -1472,84 +1472,62 @@ print(s.study())  # 自己的方法
       enableAutoIndent: true,
       autoScrollEditorIntoView: true,
       printMarginColumn: false,
-     minLines: 10,
+      minLines: 10,
       maxLines: 50
     });
 
-    // 设置Python代码片段
-    if (!window.pythonSnippets) {
-      window.pythonSnippets = [
+    // 设置Python代码片段（使用标准方式）
+    ace.define('ace/snippets/python', ['require', 'exports', 'module'], function(require, exports, module) {
+      const snippetManager = require('ace/snippets').snippetManager;
+      
+      // 注册自定义代码片段
+      const pythonSnippets = [
         {
-          caption: 'def',
-          snippet: 'def ${1:func_name}(${2:args}):\n\t${3:pass}',
-          meta: 'function',
-          type: 'snippet'
+          name: 'def',
+          content: 'def ${1:func_name}(${2:args}):\n\t${3:pass}'
         },
         {
-          caption: 'for',
-          snippet: 'for ${1:item} in ${2:iterable}:\n\t${3:pass}',
-          meta: 'loop',
-          type: 'snippet'
+          name: 'for',
+          content: 'for ${1:item} in ${2:iterable}:\n\t${3:pass}'
         },
         {
-          caption: 'while',
-          snippet: 'while ${1:condition}:\n\t${2:pass}',
-          meta: 'loop',
-          type: 'snippet'
+          name: 'while',
+          content: 'while ${1:condition}:\n\t${2:pass}'
         },
         {
-          caption: 'if',
-          snippet: 'if ${1:condition}:\n\t${2:pass}',
-          meta: 'condition',
-          type: 'snippet'
+          name: 'if',
+          content: 'if ${1:condition}:\n\t${2:pass}'
         },
         {
-          caption: 'class',
-          snippet: 'class ${1:ClassName}:\n\tdef __init__(self${2:args}):\n\t\t${3:pass}',
-          meta: 'class',
-          type: 'snippet'
+          name: 'class',
+          content: 'class ${1:ClassName}:\n\tdef __init__(self${2:args}):\n\t\t${3:pass}'
         },
         {
-          caption: 'try',
-          snippet: 'try:\n\t${1:pass}\nexcept ${2:Exception} as e:\n\t${3:pass}',
-          meta: 'exception',
-          type: 'snippet'
+          name: 'try',
+          content: 'try:\n\t${1:pass}\nexcept ${2:Exception} as e:\n\t${3:pass}'
         },
         {
-          caption: 'print',
-          snippet: 'print(${1:content})',
-          meta: 'function',
-          type: 'snippet'
+          name: 'print',
+          content: 'print(${1:content})'
         },
         {
-          caption: 'input',
-          snippet: 'input(${1:prompt})',
-          meta: 'function',
-          type: 'snippet'
+          name: 'input',
+          content: 'input(${1:prompt})'
         },
         {
-          caption: 'list comprehension',
-          snippet: '[${1:expr} for ${2:x} in ${3:iterable}]',
-          meta: 'comprehension',
-          type: 'snippet'
+          name: 'list_comp',
+          content: '[${1:expr} for ${2:x} in ${3:iterable}]'
         },
         {
-          caption: 'dict comprehension',
-          snippet: '{${1:key}: ${2:value} for ${3:x} in ${4:iterable}}',
-          meta: 'comprehension',
-          type: 'snippet'
+          name: 'dict_comp',
+          content: '{${1:key}: ${2:value} for ${3:x} in ${4:iterable}}'
         }
       ];
-    }
-    
-    // 添加自定义代码片段
-    const snippetManager = ace.require('ace/snippets').snippetManager;
-    if (window.pythonSnippets) {
-      const pythonMode = editor.session.getMode();
-      window.pythonSnippets.forEach(snippet => {
-        snippetManager.register(snippet, snippet.caption);
-      });
-    }
+      
+      // 注册片段到snippetManager
+      exports.snippets = pythonSnippets;
+      snippetManager.register(pythonSnippets, 'python');
+    });
 
     // 设置默认代码
     const defaultCode = `# 请编写代码
@@ -1663,17 +1641,26 @@ print(s.study())  # 自己的方法
     
     // 输出管理
     let currentOutput = '';
+    let outputType = 'normal'; // 'normal', 'error'
     
     function appendOutput(text, type = 'normal') {
       currentOutput += text;
       const outputEl = document.getElementById('code-output');
-      outputEl.innerHTML = currentOutput.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      
+      if (type === 'error') {
+        outputEl.innerHTML = currentOutput.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+      } else {
+        outputEl.innerHTML = currentOutput;
+      }
       outputEl.scrollTop = outputEl.scrollHeight;
     }
     
     function clearOutput() {
       currentOutput = '';
-      document.getElementById('code-output').innerHTML = '';
+      const outputEl = document.getElementById('code-output');
+      if (outputEl) {
+        outputEl.innerHTML = '';
+      }
     }
 
     // 章节展开/折叠功能
@@ -2216,13 +2203,13 @@ for c, num in count.items():
       const memoryUsageEl = document.getElementById('memory-usage');
       
       if (!pyodide) {
-        output.textContent = 'Python解释器还在加载中，请稍等...';
+        output.innerHTML = '<span class="text-yellow-400">⏳ Python解释器还在加载中，请稍等...</span>';
         return;
       }
       
       // 清空输出
       clearOutput();
-      output.textContent = '运行中...';
+      output.innerHTML = '<span class="text-cyan-400">🔄 正在运行代码...</span>';
       executionTimeEl.textContent = '执行时间：计算中...';
       memoryUsageEl.textContent = '内存：计算中...';
       
@@ -2246,6 +2233,9 @@ for c, num in count.items():
         // 替换代码中的input()调用
         let processedCode = code.replace(/input\s*\(/g, 'py_input(');
         
+        // 清空之前的输出
+        clearOutput();
+        
         // 运行代码
         await pyodide.runPythonAsync(processedCode);
         
@@ -2255,6 +2245,11 @@ for c, num in count.items():
         
         executionTimeEl.textContent = `执行时间：${executionTime}ms`;
         memoryUsageEl.textContent = `内存：${memoryUsage}MB`;
+        
+        // 如果没有输出，添加提示
+        if (!currentOutput || currentOutput.trim() === '') {
+          appendOutput('<span class="text-gray-400">（无输出）</span>');
+        }
         
         // 标记题目为完成
         markProblemAsCompleted(currentProblemNumber);
@@ -2272,7 +2267,7 @@ for c, num in count.items():
         }
         
       } catch (error) {
-        const errorHtml = `<span style="color: #ef4444;">运行错误: ${error.message}</span>`;
+        const errorHtml = `<span style="color: #ef4444;">❌ 运行错误: ${error.message}</span>`;
         output.innerHTML = errorHtml;
         executionTimeEl.textContent = '执行时间：0ms';
         memoryUsageEl.textContent = '内存：0MB';
