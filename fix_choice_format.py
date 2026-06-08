@@ -1,339 +1,186 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""修复选择题数据格式，使其与原格式匹配"""
-import os
+"""
+修复选择题格式和隐藏代码编辑器中的代码
+"""
 
-def main():
-    target_file = '/workspace/courses/business-intelligence.html'
-    
-    print("修复选择题数据格式...")
-    
-    with open(target_file, 'r', encoding='utf-8') as f:
-        content = f.read()
-    
-    # 正确的选择题数据格式
-    correct_choice_data = '''    // 选择题数据
-    const choiceQuestions = [
+from pathlib import Path
+
+file_path = Path('/workspace/courses/data-analysis-tech.html')
+
+# 读取文件
+with open(file_path, 'r', encoding='utf-8') as f:
+    content = f.read()
+
+# 1. 修复选择题数据格式
+# 将简单字符串数组改为包含label和text的对象数组
+new_choice_questions = '''    const choiceQuestions = [
+      // 第一章：NumPy数组基础
       {
-        id: 'bi-cq1',
-        chapter: 1,
-        title: "选择题1：BI概念与价值",
-        question: "商务智能（BI）的核心目标是什么？",
+        id: 'chapter1_0',
+        question: '在NumPy中，创建数组的基本函数是？',
         options: [
-          { label: 'A', text: '收集海量数据' },
-          { label: 'B', text: '将数据转化为知识，帮助做出明智的业务决策' },
-          { label: 'C', text: '开发数据分析软件' },
-          { label: 'D', text: '建立数据库系统' }
-        ],
-        answer: 'B',
-        analysis: "商务智能的核心目标是将企业数据转化为知识，帮助企业做出明智的业务经营决策。",
-        difficulty: "easy"
-      },
-      {
-        id: 'bi-cq2',
-        chapter: 1,
-        title: "选择题2：数据价值链条",
-        question: "在数据→信息→知识→决策的价值链条中，哪个环节体现了从经验决策到科学决策的转变？",
-        options: [
-          { label: 'A', text: '数据到信息' },
-          { label: 'B', text: '信息到知识' },
-          { label: 'C', text: '知识到决策' },
-          { label: 'D', text: '数据到决策' }
-        ],
-        answer: 'C',
-        analysis: "知识到决策的环节体现了从经验决策到科学决策的转变，因为决策是基于已发现的规律和模式。",
-        difficulty: "easy"
-      },
-      {
-        id: 'bi-cq3',
-        chapter: 1,
-        title: "选择题3：BI架构与ETL",
-        question: "BI核心架构中，ETL代表什么？",
-        options: [
-          { label: 'A', text: 'Extract, Transform, Load' },
-          { label: 'B', text: 'Execute, Transfer, Log' },
-          { label: 'C', text: 'Extract, Transfer, Load' },
-          { label: 'D', text: 'Execute, Transform, Log' }
+          {label: 'A', text: 'array()'},
+          {label: 'B', text: 'create()'},
+          {label: 'C', text: 'make()'},
+          {label: 'D', text: 'new()'}
         ],
         answer: 'A',
-        analysis: "ETL代表Extract（抽取）、Transform（转换）、Load（加载），是数据仓库建设中的核心流程。",
-        difficulty: "easy"
+        explanation: 'NumPy使用np.array()函数创建数组。',
+        difficulty: 'easy',
+        chapter: 1,
+        title: 'NumPy基础知识'
       },
       {
-        id: 'bi-cq4',
+        id: 'chapter2_0',
+        question: 'NumPy数组的哪个属性返回数组的维度数？',
+        options: [
+          {label: 'A', text: 'size'},
+          {label: 'B', text: 'shape'},
+          {label: 'C', text: 'ndim'},
+          {label: 'D', text: 'dtype'}
+        ],
+        answer: 'C',
+        explanation: 'ndim属性返回数组的维度数，shape返回形状，size返回元素总数，dtype返回数据类型。',
+        difficulty: 'easy',
         chapter: 2,
-        title: "选择题4：四种分析层次",
-        question: "以下哪个不是描述性分析的特点？",
-        options: [
-          { label: 'A', text: '回答发生了什么' },
-          { label: 'B', text: '汇总历史数据' },
-          { label: 'C', text: '预测未来趋势' },
-          { label: 'D', text: '生成报表和图表' }
-        ],
-        answer: 'C',
-        analysis: "预测未来趋势属于预测性分析的范畴，不是描述性分析的特点。",
-        difficulty: "easy"
+        title: 'NumPy高级特性'
       },
       {
-        id: 'bi-cq5',
-        chapter: 2,
-        title: "选择题5：维度拆解",
-        question: "在维度拆解中，哪个维度用于分析不同地区的销售表现？",
+        id: 'chapter3_0',
+        question: 'Pandas中用于存储一维数据的结构是？',
         options: [
-          { label: 'A', text: '时间维度' },
-          { label: 'B', text: '地区维度' },
-          { label: 'C', text: '产品维度' },
-          { label: 'D', text: '渠道维度' }
+          {label: 'A', text: 'DataFrame'},
+          {label: 'B', text: 'Series'},
+          {label: 'C', text: 'Panel'},
+          {label: 'D', text: 'Table'}
         ],
         answer: 'B',
-        analysis: "地区维度用于分析不同地理区域的销售数据，如华东、华南、华北等。",
-        difficulty: "easy"
+        explanation: 'Series是Pandas的一维数据结构，DataFrame是二维的表格结构。',
+        difficulty: 'easy',
+        chapter: 3,
+        title: 'Pandas数据结构'
       },
       {
-        id: 'bi-cq6',
-        chapter: 3,
-        title: "选择题6：SQL基础",
-        question: "SQL中用于去重的关键字是？",
+        id: 'chapter4_0',
+        question: '读取CSV文件使用的Pandas函数是？',
         options: [
-          { label: 'A', text: 'UNIQUE' },
-          { label: 'B', text: 'DISTINCT' },
-          { label: 'C', text: 'GROUP BY' },
-          { label: 'D', text: 'WHERE' }
+          {label: 'A', text: 'pd.load_csv()'},
+          {label: 'B', text: 'pd.read_csv()'},
+          {label: 'C', text: 'pd.open_csv()'},
+          {label: 'D', text: 'pd.import_csv()'}
         ],
         answer: 'B',
-        analysis: "DISTINCT关键字用于去除查询结果中的重复记录。",
-        difficulty: "easy"
-      },
-      {
-        id: 'bi-cq7',
-        chapter: 3,
-        title: "选择题7：JOIN查询",
-        question: "LEFT JOIN和INNER JOIN的主要区别是什么？",
-        options: [
-          { label: 'A', text: 'LEFT JOIN返回左表全部记录，INNER JOIN只返回匹配的记录' },
-          { label: 'B', text: '性能不同' },
-          { label: 'C', text: '语法不同' },
-          { label: 'D', text: '没有区别' }
-        ],
-        answer: 'A',
-        analysis: "LEFT JOIN会返回左表的全部记录以及右表匹配的记录，而INNER JOIN只返回两表都匹配的记录。",
-        difficulty: "easy"
-      },
-      {
-        id: 'bi-cq8',
-        chapter: 3,
-        title: "选择题8：窗口函数",
-        question: "窗口函数ROW_NUMBER()的作用是什么？",
-        options: [
-          { label: 'A', text: '计算总和' },
-          { label: 'B', text: '为每一行分配唯一的序号' },
-          { label: 'C', text: '计算平均值' },
-          { label: 'D', text: '分组统计' }
-        ],
-        answer: 'B',
-        analysis: "ROW_NUMBER()为查询结果的每一行分配一个唯一的序号，可用于排名、分页等场景。",
-        difficulty: "easy"
-      },
-      {
-        id: 'bi-cq9',
+        explanation: '使用pd.read_csv()函数读取CSV文件。',
+        difficulty: 'easy',
         chapter: 4,
-        title: "选择题9：数据仓库与维度建模",
-        question: "在数据仓库维度建模中，星型模型的特点是？",
+        title: '文件格式选择'
+      },
+      {
+        id: 'chapter5_0',
+        question: 'DataFrame中缺失值的表示方法是？',
         options: [
-          { label: 'A', text: '只有一张表' },
-          { label: 'B', text: '事实表在中心，连接多个维度表' },
-          { label: 'C', text: '所有表都是维度表' },
-          { label: 'D', text: '表之间没有关联' }
+          {label: 'A', text: 'null'},
+          {label: 'B', text: 'None'},
+          {label: 'C', text: 'NaN'},
+          {label: 'D', text: 'NA'}
+        ],
+        answer: 'C',
+        explanation: 'NumPy和Pandas使用NaN（Not a Number）表示缺失值。',
+        difficulty: 'easy',
+        chapter: 5,
+        title: '数据清洗方法'
+      },
+      {
+        id: 'chapter6_0',
+        question: '哪个方法可以计算DataFrame的描述性统计？',
+        options: [
+          {label: 'A', text: 'df.summary()'},
+          {label: 'B', text: 'df.describe()'},
+          {label: 'C', text: 'df.statistics()'},
+          {label: 'D', text: 'df.analyze()'}
         ],
         answer: 'B',
-        analysis: "星型模型由一个事实表和多个维度表组成，事实表在中心，维度表围绕在四周，形似星星。",
-        difficulty: "medium"
+        explanation: 'describe()方法提供数据的计数、均值、标准差、最小值、最大值和分位数等统计信息。',
+        difficulty: 'medium',
+        chapter: 6,
+        title: '探索性分析技术'
       },
       {
-        id: 'bi-cq10',
-        chapter: 4,
-        title: "选择题10：数据分层",
-        question: "数据仓库中的ODS层是指？",
+        id: 'chapter7_0',
+        question: '在数据可视化中，折线图最适合展示什么类型的数据？',
         options: [
-          { label: 'A', text: '汇总数据层' },
-          { label: 'B', text: '明细数据层' },
-          { label: 'C', text: '操作数据层' },
-          { label: 'D', text: '应用数据层' }
-        ],
-        answer: 'C',
-        analysis: "ODS（Operational Data Store）是操作数据层，存放原始数据，基本不做清洗转换。",
-        difficulty: "easy"
-      },
-      {
-        id: 'bi-cq11',
-        chapter: 5,
-        title: "选择题11：Excel高级函数",
-        question: "Excel中哪个函数用于多条件求和？",
-        options: [
-          { label: 'A', text: 'VLOOKUP' },
-          { label: 'B', text: 'SUMIF' },
-          { label: 'C', text: 'SUMIFS' },
-          { label: 'D', text: 'COUNT' }
-        ],
-        answer: 'C',
-        analysis: "SUMIFS函数用于根据多个条件对指定区域求和。",
-        difficulty: "easy"
-      },
-      {
-        id: 'bi-cq12',
-        chapter: 4,
-        title: "选择题12：RFM模型",
-        question: "RFM模型中，R代表什么？",
-        options: [
-          { label: 'A', text: '消费金额' },
-          { label: 'B', text: '消费频率' },
-          { label: 'C', text: '最近一次消费时间' },
-          { label: 'D', text: '客户等级' }
-        ],
-        answer: 'C',
-        analysis: "RFM模型中，R代表Recency（最近一次消费时间），用于衡量客户的活跃度。",
-        difficulty: "easy"
-      },
-      {
-        id: 'bi-cq13',
-        chapter: 4,
-        title: "选择题13：ABC分类法",
-        question: "ABC分类法中，A类商品通常占销售额的比例是？",
-        options: [
-          { label: 'A', text: '50%' },
-          { label: 'B', text: '60%' },
-          { label: 'C', text: '80%' },
-          { label: 'D', text: '20%' }
-        ],
-        answer: 'C',
-        analysis: "ABC分类法中，A类商品通常占销售总额的80%，但数量只占20%，需要重点管理。",
-        difficulty: "easy"
-      },
-      {
-        id: 'bi-cq14',
-        chapter: 5,
-        title: "选择题14：Power BI与DAX",
-        question: "Power BI中，DAX是指什么？",
-        options: [
-          { label: 'A', text: '数据清洗语言' },
-          { label: 'B', text: '数据分析表达式' },
-          { label: 'C', text: '数据库查询语言' },
-          { label: 'D', text: '数据可视化语言' }
+          {label: 'A', text: '分类比较'},
+          {label: 'B', text: '趋势变化'},
+          {label: 'C', text: '部分与整体关系'},
+          {label: 'D', text: '数据分布'}
         ],
         answer: 'B',
-        analysis: "DAX（Data Analysis Expressions）是Power BI中的数据分析表达式语言，用于创建计算列和度量值。",
-        difficulty: "medium"
+        explanation: '折线图最适合展示数据随时间变化的趋势。',
+        difficulty: 'easy',
+        chapter: 7,
+        title: '可视化最佳实践'
       },
       {
-        id: 'bi-cq15',
-        chapter: 5,
-        title: "选择题15：Python数据分析库",
-        question: "Python中用于数据处理的核心库是？",
+        id: 'chapter8_0',
+        question: '在Pandas中，按列分组聚合使用的方法是？',
         options: [
-          { label: 'A', text: 'NumPy' },
-          { label: 'B', text: 'Pandas' },
-          { label: 'C', text: 'Matplotlib' },
-          { label: 'D', text: 'Scikit-learn' }
-        ],
-        answer: 'B',
-        analysis: "Pandas是Python中用于数据处理和分析的核心库，提供了DataFrame数据结构。",
-        difficulty: "easy"
-      },
-      {
-        id: 'bi-cq16',
-        chapter: 3,
-        title: "选择题16：同比环比计算",
-        question: "同比增长率的计算公式是？",
-        options: [
-          { label: 'A', text: '(本期值 - 上期值) / 上期值 × 100%' },
-          { label: 'B', text: '(本期值 - 上期值) / 本期值 × 100%' },
-          { label: 'C', text: '上期值 / 本期值 × 100%' },
-          { label: 'D', text: '本期值 / 上期值 × 100%' }
-        ],
-        answer: 'A',
-        analysis: "同比增长率 = (本期值 - 上期值) / 上期值 × 100%，反映与去年同期相比的增长情况。",
-        difficulty: "medium"
-      },
-      {
-        id: 'bi-cq17',
-        chapter: 3,
-        title: "选择题17：SQL聚合函数",
-        question: "在SQL聚合函数中，哪个函数用于计算平均值？",
-        options: [
-          { label: 'A', text: 'SUM' },
-          { label: 'B', text: 'COUNT' },
-          { label: 'C', text: 'AVG' },
-          { label: 'D', text: 'MAX' }
+          {label: 'A', text: 'df.sort()'},
+          {label: 'B', text: 'df.filter()'},
+          {label: 'C', text: 'df.groupby()'},
+          {label: 'D', text: 'df.aggregate()'}
         ],
         answer: 'C',
-        analysis: "AVG函数用于计算指定字段的平均值。",
-        difficulty: "easy"
+        explanation: 'groupby()方法用于按一个或多个列分组，然后进行聚合计算。',
+        difficulty: 'medium',
+        chapter: 8,
+        title: '聚合函数'
       },
       {
-        id: 'bi-cq18',
-        chapter: 5,
-        title: "选择题18：数据可视化原则",
-        question: "数据可视化的首要原则是？",
+        id: 'chapter9_0',
+        question: '将字符串转换为日期时间的Pandas函数是？',
         options: [
-          { label: 'A', text: '使用最复杂的图表' },
-          { label: 'B', text: '使用多种颜色' },
-          { label: 'C', text: '清晰准确地传达信息' },
-          { label: 'D', text: '展示所有数据' }
-        ],
-        answer: 'C',
-        analysis: "数据可视化的首要原则是清晰准确地传达信息，让观众快速理解数据背后的含义。",
-        difficulty: "easy"
-      },
-      {
-        id: 'bi-cq19',
-        chapter: 3,
-        title: "选择题19：窗口函数应用",
-        question: "在窗口函数中，LAG函数的作用是？",
-        options: [
-          { label: 'A', text: '获取前N行的值' },
-          { label: 'B', text: '获取后N行的值' },
-          { label: 'C', text: '计算排名' },
-          { label: 'D', text: '计算聚合值' }
-        ],
-        answer: 'A',
-        analysis: "LAG函数用于获取当前行之前的第N行数据，常用于计算同比、环比等。",
-        difficulty: "medium"
-      },
-      {
-        id: 'bi-cq20',
-        chapter: 5,
-        title: "选择题20：数据治理",
-        question: "数据治理的主要目标是什么？",
-        options: [
-          { label: 'A', text: '收集更多数据' },
-          { label: 'B', text: '建立数据标准，确保数据质量和安全' },
-          { label: 'C', text: '开发数据系统' },
-          { label: 'D', text: '培训数据人才' }
+          {label: 'A', text: 'pd.to_date()'},
+          {label: 'B', text: 'pd.to_datetime()'},
+          {label: 'C', text: 'pd.parse_date()'},
+          {label: 'D', text: 'pd.date_convert()'}
         ],
         answer: 'B',
-        analysis: "数据治理的主要目标是建立数据标准、规范数据管理流程，确保数据质量和安全。",
-        difficulty: "easy"
+        explanation: 'pd.to_datetime()函数将字符串或其他格式转换为datetime类型。',
+        difficulty: 'medium',
+        chapter: 9,
+        title: '时间序列方法'
+      },
+      {
+        id: 'chapter10_0',
+        question: '在机器学习中，将数据划分为训练集和测试集的目的是？',
+        options: [
+          {label: 'A', text: '减少数据量'},
+          {label: 'B', text: '提高计算速度'},
+          {label: 'C', text: '评估模型泛化能力'},
+          {label: 'D', text: '简化数据结构'}
+        ],
+        answer: 'C',
+        explanation: '使用训练集训练模型，测试集评估模型的泛化能力。',
+        difficulty: 'medium',
+        chapter: 10,
+        title: '机器学习概念'
       }
-    ]'''
-    
-    # 找到并替换选择题数据
-    start_marker = '    // 选择题数据\n    const choiceQuestions = ['
-    end_marker = '    const problems = ['
-    
-    start_idx = content.find(start_marker)
-    end_idx = content.find(end_marker, start_idx)
-    
-    if start_idx == -1 or end_idx == -1:
-        print("❌ 找不到标记位置！")
-        return
-    
-    # 替换
-    content = content[:start_idx] + correct_choice_data + '\n    ' + content[end_idx:]
-    
-    with open(target_file, 'w', encoding='utf-8') as f:
-        f.write(content)
-    
-    print("✅ 已修复选择题数据格式！")
+    ];'''
 
-if __name__ == '__main__':
-    main()
+# 替换选择题数据
+import re
+pattern = r'const choiceQuestions = \[.*?\];'
+content = re.sub(pattern, new_choice_questions, content, flags=re.DOTALL)
+
+# 2. 隐藏代码编辑器中的代码，只显示 "# 请编写代码"
+# 找到所有的 code 字段并替换
+content = re.sub(r"'code': `[^`]+`", "'code': `# 请编写代码\\n`", content)
+content = re.sub(r'code: `[^`]+`', 'code: `# 请编写代码\\n`', content)
+
+# 写入文件
+with open(file_path, 'w', encoding='utf-8') as f:
+    f.write(content)
+
+print("修复完成！")
+print("1. 选择题格式已修复")
+print("2. 代码编辑器中的代码已隐藏，只显示 '# 请编写代码'")

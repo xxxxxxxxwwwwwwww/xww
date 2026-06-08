@@ -7,6 +7,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/ace.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/ext-language_tools.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-noconflict/ext-static_highlight.js"></script>
   <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
   <script>
     tailwind.config = {
@@ -223,224 +225,203 @@
             
             <!-- 章节列表 -->
             <div class="space-y-6">
-                            <!-- 章节1：数据分析基础 -->
+              <!-- 章节：NumPy数组基础 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter1')">
-                  <i class="fa fa-chevron-down text-gray-400 transition-transform duration-300" id="chapter1-icon"></i>
-                  数据分析基础
+                  <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter1-icon"></i>
+                  NumPy数组基础
                   <span class="ml-auto text-xs text-gray-400">
-                    <span class="chapter-progress">0/5</span>
+                    <span class="chapter-progress">0/3</span>
                     <span class="progress-percentage">(0%)</span>
                   </span>
                 </h3>
-                <div class="chapter-content" id="chapter1-content">
+                <div class="chapter-content collapsed" id="chapter1-content">
                   <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
-                  <div class="problem-item active" onclick="loadProgrammingProblem(1)">
-                    <div class="w-8 h-8 rounded-full bg-cyan-500 flex items-center justify-center text-gray-900 font-bold">1</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(1)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">1</div>
                     <div class="flex-1">
-                      <div class="font-medium">数据分析流程</div>
+                      <div class="font-medium">创建NumPy数组</div>
                       <div class="flex items-center gap-2 mt-1">
-                        <span class="difficulty-tag difficulty-medium">中等</span>
-                        <span class="text-xs text-gray-400">20分钟</span>
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-gray-400">10分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('numpy_basics')">关联知识点</a>
                       </div>
                     </div>
                   </div>
                   <div class="problem-item" onclick="loadProgrammingProblem(2)">
                     <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">2</div>
                     <div class="flex-1">
-                      <div class="font-medium">缺失值处理</div>
-                      <div class="flex items-center gap-2 mt-1">
-                        <span class="difficulty-tag difficulty-easy">简单</span>
-                        <span class="text-xs text-gray-400">15分钟</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="problem-item" onclick="loadProgrammingProblem(3)">
-                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">3</div>
-                    <div class="flex-1">
-                      <div class="font-medium">异常值检测</div>
+                      <div class="font-medium">数组运算</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-gray-400">20分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('numpy_basics')">关联知识点</a>
                       </div>
                     </div>
                   </div>
                   <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c1')">
+                  <div class="problem-item" onclick="loadChoiceQuestion('chapter1_0')">
                     <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">A</div>
                     <div class="flex-1">
-                      <div class="font-medium">数据分析定义</div>
+                      <div class="font-medium">NumPy基础知识</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-easy">简单</span>
                         <span class="text-xs text-purple-400">选择题</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c2')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">B</div>
-                    <div class="flex-1">
-                      <div class="font-medium">CRISP-DM方法论</div>
-                      <div class="flex items-center gap-2 mt-1">
-                        <span class="difficulty-tag difficulty-easy">简单</span>
-                        <span class="text-xs text-purple-400">选择题</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('numpy_basics')">关联知识点</a>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              
-              <!-- 章节2：数据准备与清洗 -->
+              <!-- 章节：NumPy进阶操作 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter2')">
                   <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter2-icon"></i>
-                  数据准备与清洗
+                  NumPy进阶操作
                   <span class="ml-auto text-xs text-gray-400">
-                    <span class="chapter-progress">0/4</span>
+                    <span class="chapter-progress">0/3</span>
                     <span class="progress-percentage">(0%)</span>
                   </span>
                 </h3>
                 <div class="chapter-content collapsed" id="chapter2-content">
-                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">选择题</div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c3')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">C</div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(4)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">4</div>
                     <div class="flex-1">
-                      <div class="font-medium">缺失值处理</div>
+                      <div class="font-medium">数组切片与索引</div>
                       <div class="flex items-center gap-2 mt-1">
-                        <span class="difficulty-tag difficulty-easy">简单</span>
-                        <span class="text-xs text-purple-400">选择题</span>
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('numpy_advanced')">关联知识点</a>
                       </div>
                     </div>
                   </div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c4')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">D</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(5)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">5</div>
                     <div class="flex-1">
-                      <div class="font-medium">异常值检测</div>
+                      <div class="font-medium">广播机制</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-hard">困难</span>
+                        <span class="text-xs text-gray-400">30分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('numpy_advanced')">关联知识点</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('chapter2_0')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">A</div>
+                    <div class="flex-1">
+                      <div class="font-medium">NumPy高级特性</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-purple-400">选择题</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('numpy_advanced')">关联知识点</a>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              
-              <!-- 章节3：核心工具实操 -->
+              <!-- 章节：Pandas数据结构 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter3')">
                   <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter3-icon"></i>
-                  核心工具实操
+                  Pandas数据结构
                   <span class="ml-auto text-xs text-gray-400">
-                    <span class="chapter-progress">0/4</span>
+                    <span class="chapter-progress">0/3</span>
                     <span class="progress-percentage">(0%)</span>
                   </span>
                 </h3>
                 <div class="chapter-content collapsed" id="chapter3-content">
                   <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
-                  <div class="problem-item" onclick="loadProgrammingProblem(4)">
-                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">4</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(7)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">7</div>
                     <div class="flex-1">
-                      <div class="font-medium">SQL查询实战</div>
+                      <div class="font-medium">创建Series</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-gray-400">10分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('pandas_structures')">关联知识点</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(8)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">8</div>
+                    <div class="flex-1">
+                      <div class="font-medium">DataFrame操作</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-gray-400">20分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('pandas_structures')">关联知识点</a>
                       </div>
                     </div>
                   </div>
                   <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c5')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">E</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('chapter3_0')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">A</div>
                     <div class="flex-1">
-                      <div class="font-medium">SQL查询</div>
+                      <div class="font-medium">Pandas数据结构</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-easy">简单</span>
                         <span class="text-xs text-purple-400">选择题</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c6')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">F</div>
-                    <div class="flex-1">
-                      <div class="font-medium">Pandas操作</div>
-                      <div class="flex items-center gap-2 mt-1">
-                        <span class="difficulty-tag difficulty-easy">简单</span>
-                        <span class="text-xs text-purple-400">选择题</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('pandas_structures')">关联知识点</a>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              
-              <!-- 章节4：统计分析方法 -->
+              <!-- 章节：数据读取与写入 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter4')">
                   <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter4-icon"></i>
-                  统计分析方法
+                  数据读取与写入
                   <span class="ml-auto text-xs text-gray-400">
-                    <span class="chapter-progress">0/5</span>
+                    <span class="chapter-progress">0/3</span>
                     <span class="progress-percentage">(0%)</span>
                   </span>
                 </h3>
                 <div class="chapter-content collapsed" id="chapter4-content">
                   <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
-                  <div class="problem-item" onclick="loadProgrammingProblem(5)">
-                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">5</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(10)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">10</div>
                     <div class="flex-1">
-                      <div class="font-medium">描述性统计分析</div>
-                      <div class="flex items-center gap-2 mt-1">
-                        <span class="difficulty-tag difficulty-easy">简单</span>
-                        <span class="text-xs text-gray-400">10分钟</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="problem-item" onclick="loadProgrammingProblem(6)">
-                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">6</div>
-                    <div class="flex-1">
-                      <div class="font-medium">假设检验</div>
+                      <div class="font-medium">读取CSV文件</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-gray-400">20分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data_io')">关联知识点</a>
                       </div>
                     </div>
                   </div>
-                  <div class="problem-item" onclick="loadProgrammingProblem(7)">
-                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">7</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(11)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">11</div>
                     <div class="flex-1">
-                      <div class="font-medium">线性回归</div>
+                      <div class="font-medium">数据导出</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
-                        <span class="text-xs text-gray-400">25分钟</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data_io')">关联知识点</a>
                       </div>
                     </div>
                   </div>
                   <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c7')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">G</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('chapter4_0')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">A</div>
                     <div class="flex-1">
-                      <div class="font-medium">描述性统计</div>
+                      <div class="font-medium">文件格式选择</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-easy">简单</span>
                         <span class="text-xs text-purple-400">选择题</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c8')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">H</div>
-                    <div class="flex-1">
-                      <div class="font-medium">假设检验</div>
-                      <div class="flex items-center gap-2 mt-1">
-                        <span class="difficulty-tag difficulty-medium">中等</span>
-                        <span class="text-xs text-purple-400">选择题</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data_io')">关联知识点</a>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              
-              <!-- 章节5：高级数据分析 -->
+              <!-- 章节：数据预处理 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter5')">
                   <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter5-icon"></i>
-                  高级数据分析
+                  数据预处理
                   <span class="ml-auto text-xs text-gray-400">
                     <span class="chapter-progress">0/3</span>
                     <span class="progress-percentage">(0%)</span>
@@ -448,139 +429,287 @@
                 </h3>
                 <div class="chapter-content collapsed" id="chapter5-content">
                   <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
-                  <div class="problem-item" onclick="loadProgrammingProblem(8)">
-                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">8</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(13)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">13</div>
                     <div class="flex-1">
-                      <div class="font-medium">K-Means聚类</div>
+                      <div class="font-medium">缺失值处理</div>
                       <div class="flex items-center gap-2 mt-1">
-                        <span class="difficulty-tag difficulty-hard">困难</span>
-                        <span class="text-xs text-gray-400">30分钟</span>
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data_preprocessing')">关联知识点</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(14)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">14</div>
+                    <div class="flex-1">
+                      <div class="font-medium">数据类型转换</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="text-xs text-gray-400">10分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data_preprocessing')">关联知识点</a>
                       </div>
                     </div>
                   </div>
                   <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c9')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">I</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('chapter5_0')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">A</div>
                     <div class="flex-1">
-                      <div class="font-medium">机器学习类型</div>
+                      <div class="font-medium">数据清洗方法</div>
                       <div class="flex items-center gap-2 mt-1">
-                        <span class="difficulty-tag difficulty-easy">简单</span>
+                        <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-purple-400">选择题</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c10')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">J</div>
-                    <div class="flex-1">
-                      <div class="font-medium">回归分析</div>
-                      <div class="flex items-center gap-2 mt-1">
-                        <span class="difficulty-tag difficulty-easy">简单</span>
-                        <span class="text-xs text-purple-400">选择题</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data_preprocessing')">关联知识点</a>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              
-              <!-- 章节6：数据可视化 -->
+              <!-- 章节：数据探索分析 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter6')">
                   <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter6-icon"></i>
-                  数据可视化
+                  数据探索分析
                   <span class="ml-auto text-xs text-gray-400">
-                    <span class="chapter-progress">0/2</span>
+                    <span class="chapter-progress">0/3</span>
                     <span class="progress-percentage">(0%)</span>
                   </span>
                 </h3>
                 <div class="chapter-content collapsed" id="chapter6-content">
-                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">选择题</div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c11')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">K</div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(16)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">16</div>
                     <div class="flex-1">
-                      <div class="font-medium">数据可视化</div>
+                      <div class="font-medium">描述性统计</div>
                       <div class="flex items-center gap-2 mt-1">
-                        <span class="difficulty-tag difficulty-easy">简单</span>
-                        <span class="text-xs text-purple-400">选择题</span>
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('exploratory_analysis')">关联知识点</a>
                       </div>
                     </div>
                   </div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c12')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">L</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(17)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">17</div>
                     <div class="flex-1">
-                      <div class="font-medium">报告撰写</div>
+                      <div class="font-medium">相关性分析</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-hard">困难</span>
+                        <span class="text-xs text-gray-400">30分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('exploratory_analysis')">关联知识点</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('chapter6_0')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">A</div>
+                    <div class="flex-1">
+                      <div class="font-medium">探索性分析技术</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-purple-400">选择题</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('exploratory_analysis')">关联知识点</a>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              
-              <!-- 章节7：行业实战案例 -->
+              <!-- 章节：数据可视化 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter7')">
                   <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter7-icon"></i>
-                  行业实战案例
+                  数据可视化
                   <span class="ml-auto text-xs text-gray-400">
-                    <span class="chapter-progress">0/2</span>
+                    <span class="chapter-progress">0/3</span>
                     <span class="progress-percentage">(0%)</span>
                   </span>
                 </h3>
                 <div class="chapter-content collapsed" id="chapter7-content">
-                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">选择题</div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c13')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">M</div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(19)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">19</div>
                     <div class="flex-1">
-                      <div class="font-medium">RFM分析</div>
+                      <div class="font-medium">折线图绘制</div>
                       <div class="flex items-center gap-2 mt-1">
-                        <span class="difficulty-tag difficulty-easy">简单</span>
-                        <span class="text-xs text-purple-400">选择题</span>
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data_visualization')">关联知识点</a>
                       </div>
                     </div>
                   </div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c14')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">N</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(20)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">20</div>
                     <div class="flex-1">
-                      <div class="font-medium">转化率</div>
+                      <div class="font-medium">散点图与热图</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data_visualization')">关联知识点</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('chapter7_0')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">A</div>
+                    <div class="flex-1">
+                      <div class="font-medium">可视化最佳实践</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-easy">简单</span>
                         <span class="text-xs text-purple-400">选择题</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('data_visualization')">关联知识点</a>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              
-              <!-- 章节8：课程总结 -->
+              <!-- 章节：分组与聚合 -->
               <div class="chapter-item">
                 <h3 class="topic-title" onclick="toggleChapter('chapter8')">
                   <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter8-icon"></i>
-                  课程总结
+                  分组与聚合
                   <span class="ml-auto text-xs text-gray-400">
-                    <span class="chapter-progress">0/1</span>
+                    <span class="chapter-progress">0/3</span>
                     <span class="progress-percentage">(0%)</span>
                   </span>
                 </h3>
                 <div class="chapter-content collapsed" id="chapter8-content">
-                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">选择题</div>
-                  <div class="problem-item" onclick="loadChoiceQuestion('c15')">
-                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">O</div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(22)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">22</div>
                     <div class="flex-1">
-                      <div class="font-medium">职业发展</div>
+                      <div class="font-medium">GroupBy操作</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('group_aggregation')">关联知识点</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(23)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">23</div>
+                    <div class="flex-1">
+                      <div class="font-medium">透视表与交叉表</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-hard">困难</span>
+                        <span class="text-xs text-gray-400">30分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('group_aggregation')">关联知识点</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('chapter8_0')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">A</div>
+                    <div class="flex-1">
+                      <div class="font-medium">聚合函数</div>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="difficulty-tag difficulty-medium">中等</span>
                         <span class="text-xs text-purple-400">选择题</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('group_aggregation')">关联知识点</a>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <!-- 章节：时间序列分析 -->
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter9')">
+                  <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter9-icon"></i>
+                  时间序列分析
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/3</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
+                </h3>
+                <div class="chapter-content collapsed" id="chapter9-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(25)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">25</div>
+                    <div class="flex-1">
+                      <div class="font-medium">时间数据处理</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('time_series')">关联知识点</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(26)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">26</div>
+                    <div class="flex-1">
+                      <div class="font-medium">时间序列可视化</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('time_series')">关联知识点</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('chapter9_0')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">A</div>
+                    <div class="flex-1">
+                      <div class="font-medium">时间序列方法</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-hard">困难</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('time_series')">关联知识点</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 章节：机器学习入门 -->
+              <div class="chapter-item">
+                <h3 class="topic-title" onclick="toggleChapter('chapter10')">
+                  <i class="fa fa-chevron-right text-gray-400 transition-transform duration-300" id="chapter10-icon"></i>
+                  机器学习入门
+                  <span class="ml-auto text-xs text-gray-400">
+                    <span class="chapter-progress">0/3</span>
+                    <span class="progress-percentage">(0%)</span>
+                  </span>
+                </h3>
+                <div class="chapter-content collapsed" id="chapter10-content">
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-2">编程题</div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(28)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">28</div>
+                    <div class="flex-1">
+                      <div class="font-medium">数据拆分</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-gray-400">20分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('ml_intro')">关联知识点</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-item" onclick="loadProgrammingProblem(29)">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold">29</div>
+                    <div class="flex-1">
+                      <div class="font-medium">简单线性回归</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-hard">困难</span>
+                        <span class="text-xs text-gray-400">30分钟</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('ml_intro')">关联知识点</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 mt-4">选择题</div>
+                  <div class="problem-item" onclick="loadChoiceQuestion('chapter10_0')">
+                    <div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-sm">A</div>
+                    <div class="flex-1">
+                      <div class="font-medium">机器学习概念</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="difficulty-tag difficulty-medium">中等</span>
+                        <span class="text-xs text-purple-400">选择题</span>
+                        <a href="#" class="text-xs text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('ml_intro')">关联知识点</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          
-          <!-- 右侧：问题、代码编辑器、运行结果、答案解析 -->
+        </div>
+        
+        <!-- 右侧：问题、代码编辑器、运行结果、答案解析 -->问题、代码编辑器、运行结果、答案解析 -->
           <div class="lg:w-3/4 space-y-6">
             <!-- 题目描述 -->
             <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
@@ -732,6 +861,1162 @@ print(df)
         </div>
       </div>
       
+                  <!-- 知识点标签页 -->
+      <div id="knowledge" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">📚 知识点学习</h2>
+          
+          <!-- 导航栏 -->
+          <div class="flex flex-wrap gap-3 mb-8 bg-dark-gray p-4 rounded-xl border border-gray-700">
+            <button class="knowledge-nav active px-4 py-2 rounded-lg font-semibold transition" data-target="numpy_basics">第一章：NumPy数组基础</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="numpy_advanced">第二章：NumPy进阶操作</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="pandas_structures">第三章：Pandas数据结构</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="data_io">第四章：数据读取与写入</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="data_preprocessing">第五章：数据预处理</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="exploratory_analysis">第六章：数据探索分析</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="data_visualization">第七章：数据可视化</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="group_aggregation">第八章：分组与聚合</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="time_series">第九章：时间序列分析</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="ml_intro">第十章：机器学习入门</button>
+          </div>
+          <div class="space-y-8">
+            <!-- 第一章：NumPy数组基础 -->
+            <div id="numpy_basics" class="knowledge-section" style="display: block;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-database"></i> 第一章：NumPy数组基础
+                </h3>
+                
+                <div class="space-y-8">
+                  <!-- 核心定义 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-book text-yellow-400"></i> 一、核心定义
+                    </h4>
+                    <p class="text-gray-300 leading-relaxed mb-4">
+                      NumPy（Numerical Python）是Python科学计算的核心库，提供高性能的多维数组对象（ndarray）和丰富的数学函数。NumPy数组是一个由相同类型元素组成的网格，可以通过索引访问。它是数据科学、机器学习和深度学习的基础工具。
+                    </p>
+                    <p class="text-gray-300 leading-relaxed">
+                      NumPy数组的主要特点包括：同构性（所有元素类型相同）、固定大小（创建后大小不可变）、高效的内存布局和向量化运算能力。
+                    </p>
+                  </div>
+                  
+                  <!-- 数组属性 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-list text-green-400"></i> 二、数组属性
+                    </h4>
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div class="space-y-3">
+                        <div class="flex items-start gap-3">
+                          <span class="text-cyan-400 font-mono">shape</span>
+                          <p class="text-gray-300">返回数组的维度大小，是一个元组。例如，形状为(3, 4)表示3行4列的二维数组。</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                          <span class="text-cyan-400 font-mono">ndim</span>
+                          <p class="text-gray-300">返回数组的维度数。一维数组返回1，二维数组返回2。</p>
+                        </div>
+                      </div>
+                      <div class="space-y-3">
+                        <div class="flex items-start gap-3">
+                          <span class="text-cyan-400 font-mono">size</span>
+                          <p class="text-gray-300">返回数组的总元素数，等于shape中各元素的乘积。</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                          <span class="text-cyan-400 font-mono">dtype</span>
+                          <p class="text-gray-300">返回数组元素的数据类型，如int32、float64、bool等。</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- 创建数组的方法 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-code text-purple-400"></i> 三、创建数组的方法
+                    </h4>
+                    <div class="bg-dark-gray p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <pre class="text-cyan-300">import numpy as np
+
+# 1. 从列表创建
+arr1 = np.array([1, 2, 3, 4, 5])
+
+# 2. 创建特殊数组
+zeros = np.zeros((3, 3))    # 全零数组
+ones = np.ones((2, 4))      # 全一数组
+identity = np.eye(3)        # 单位矩阵
+
+# 3. 创建数值序列
+arange = np.arange(0, 10, 2)    # 0到10步长为2
+linspace = np.linspace(0, 1, 5) # 0到1分成5份
+
+# 4. 随机数组
+rand = np.random.rand(3, 3)     # 0-1均匀分布
+randn = np.random.randn(3, 3)   # 标准正态分布</pre>
+                    </div>
+                  </div>
+                  
+                  <!-- 应用场景 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-lightbulb text-yellow-400"></i> 四、应用场景
+                    </h4>
+                    <ul class="list-disc list-inside space-y-2 text-gray-300">
+                      <li><strong>数值计算：</strong>矩阵运算、线性代数、傅里叶变换</li>
+                      <li><strong>数据分析：</strong>数据清洗、统计分析、数据转换</li>
+                      <li><strong>机器学习：</strong>特征工程、模型训练、预测计算</li>
+                      <li><strong>科学计算：</strong>物理模拟、信号处理、图像处理</li>
+                    </ul>
+                  </div>
+                  
+                  <!-- 常见易错点 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-exclamation-triangle text-orange-400"></i> 五、常见易错点
+                    </h4>
+                    <ul class="list-disc list-inside space-y-2 text-gray-300">
+                      <li><strong>类型不匹配：</strong>NumPy数组要求所有元素类型相同，混合类型会自动转换为更通用的类型</li>
+                      <li><strong>视图与副本：</strong>切片返回的是原数组的视图而非副本，修改切片会影响原数组</li>
+                      <li><strong>广播规则：</strong>不同形状数组运算时需要符合广播规则</li>
+                      <li><strong>内存顺序：</strong>默认按行优先（C风格）存储，某些操作可能受影响</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第二章：NumPy进阶操作 -->
+            <div id="numpy_advanced" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-cogs"></i> 第二章：NumPy进阶操作
+                </h3>
+                
+                <div class="space-y-8">
+                  <!-- 切片与索引 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-scissors text-green-400"></i> 一、切片与索引
+                    </h4>
+                    <p class="text-gray-300 mb-4">NumPy支持多种索引方式，包括基本索引、切片、布尔索引和花式索引。</p>
+                    <div class="bg-dark-gray p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <pre class="text-cyan-300">import numpy as np
+
+arr = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+
+# 1. 基本索引
+print(arr[0, 0])    # 输出: 1
+print(arr[1, 2])    # 输出: 6
+
+# 2. 切片操作
+print(arr[0:2, :])  # 前两行所有列
+print(arr[:, 1:3])  # 所有行的第2-3列
+
+# 3. 布尔索引
+mask = arr > 5
+print(arr[mask])    # 输出所有大于5的元素
+
+# 4. 花式索引
+rows = [0, 2]
+cols = [1, 2]
+print(arr[rows, cols])  # 输出指定位置的元素</pre>
+                    </div>
+                  </div>
+                  
+                  <!-- 广播机制 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-broadcast-tower text-blue-400"></i> 二、广播机制
+                    </h4>
+                    <p class="text-gray-300 mb-4">广播是NumPy中强大的特性，允许不同形状的数组进行算术运算。</p>
+                    <div class="bg-dark-gray p-4 rounded-lg">
+                      <h5 class="text-emerald-400 font-semibold mb-3">广播规则：</h5>
+                      <ol class="list-decimal list-inside space-y-2 text-gray-300">
+                        <li>如果两个数组的维度数不同，小维度数组的形状会在前面补1</li>
+                        <li>如果两个数组在某个维度上的大小不同，且其中一个数组在该维度上的大小为1，则该维度会被扩展以匹配另一个数组的大小</li>
+                        <li>如果两个数组在某个维度上的大小都不为1且不相等，则会报错</li>
+                      </ol>
+                    </div>
+                    <div class="bg-dark-gray p-4 rounded-lg font-mono text-sm mt-4">
+                      <pre class="text-cyan-300"># 示例：(3, 3) + (3, 1)
+A = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+B = np.array([[1], [2], [3]])
+result = A + B  # B被广播为(3, 3)形状</pre>
+                    </div>
+                  </div>
+                  
+                  <!-- 数组操作 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-arrows text-purple-400"></i> 三、数组操作
+                    </h4>
+                    <div class="bg-dark-gray p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <pre class="text-cyan-300">import numpy as np
+
+arr = np.arange(9).reshape(3, 3)
+
+# 转置
+print(arr.T)
+
+# 重塑形状
+print(arr.reshape(9, 1))
+
+# 展平
+print(arr.flatten())
+
+# 拼接
+arr1 = np.array([[1, 2], [3, 4]])
+arr2 = np.array([[5, 6], [7, 8]])
+print(np.concatenate([arr1, arr2], axis=0))  # 垂直拼接
+print(np.concatenate([arr1, arr2], axis=1))  # 水平拼接</pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第三章：Pandas数据结构 -->
+            <div id="pandas_structures" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-table"></i> 第三章：Pandas数据结构
+                </h3>
+                
+                <div class="space-y-8">
+                  <!-- Series -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-list text-green-400"></i> 一、Series
+                    </h4>
+                    <p class="text-gray-300 mb-4">Series是Pandas的一维数据结构，类似于带标签的数组。它由索引（index）和数据（values）两部分组成。</p>
+                    <div class="bg-dark-gray p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <pre class="text-cyan-300">import pandas as pd
+
+# 创建Series
+s = pd.Series([1, 3, 5, 7, 9], index=['a', 'b', 'c', 'd', 'e'])
+
+# 访问元素
+print(s['a'])      # 通过索引访问
+print(s[1])        # 通过位置访问
+print(s[['a', 'c']])  # 多重索引
+
+# 基本操作
+print(s + 2)       # 向量化运算
+print(s.mean())    # 统计计算</pre>
+                    </div>
+                  </div>
+                  
+                  <!-- DataFrame -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-database text-blue-400"></i> 二、DataFrame
+                    </h4>
+                    <p class="text-gray-300 mb-4">DataFrame是Pandas的二维表格数据结构，由行索引、列索引和数据组成，类似于Excel表格或SQL表。</p>
+                    <div class="bg-dark-gray p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <pre class="text-cyan-300">import pandas as pd
+
+# 创建DataFrame
+data = {
+    '姓名': ['张三', '李四', '王五'],
+    '年龄': [25, 30, 35],
+    '城市': ['北京', '上海', '广州']
+}
+df = pd.DataFrame(data)
+
+# 查看数据
+print(df.head())    # 前5行
+print(df.info())    # 数据信息
+print(df.describe()) # 统计摘要
+
+# 访问列
+print(df['姓名'])   # 通过列名访问
+print(df.年龄)      # 通过属性访问
+
+# 访问行
+print(df.loc[0])    # 通过标签访问
+print(df.iloc[1])   # 通过位置访问</pre>
+                    </div>
+                  </div>
+                  
+                  <!-- 索引操作 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-search text-purple-400"></i> 三、索引与选择
+                    </h4>
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h5 class="text-emerald-400 font-semibold mb-2">loc（标签索引）</h5>
+                        <div class="bg-dark-gray p-3 rounded-lg font-mono text-sm">
+                          <pre class="text-cyan-300"># 选择行
+df.loc[0]
+
+# 选择行和列
+df.loc[0, '姓名']
+
+# 切片选择
+df.loc[0:2, ['姓名', '年龄']]</pre>
+                        </div>
+                      </div>
+                      <div>
+                        <h5 class="text-emerald-400 font-semibold mb-2">iloc（位置索引）</h5>
+                        <div class="bg-dark-gray p-3 rounded-lg font-mono text-sm">
+                          <pre class="text-cyan-300"># 选择第0行
+df.iloc[0]
+
+# 选择第0行第1列
+df.iloc[0, 1]
+
+# 切片选择
+df.iloc[0:2, 0:2]</pre>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第四章：数据读取与写入 -->
+            <div id="data_io" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-file-text"></i> 第四章：数据读取与写入
+                </h3>
+                
+                <div class="space-y-8">
+                  <!-- 读取CSV文件 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-file-excel-o text-green-400"></i> 一、读取CSV文件
+                    </h4>
+                    <div class="bg-dark-gray p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <pre class="text-cyan-300">import pandas as pd
+
+# 基本读取
+df = pd.read_csv('data.csv')
+
+# 指定参数
+df = pd.read_csv(
+    'data.csv',
+    sep=',',           # 分隔符
+    header=0,          # 表头行
+    index_col=0,       # 索引列
+    usecols=['A', 'B'], # 指定列
+    dtype={'A': str},  # 数据类型
+    na_values=['NA', 'N/A']  # 缺失值标记
+)
+
+# 保存CSV
+df.to_csv('output.csv', index=False)</pre>
+                    </div>
+                  </div>
+                  
+                  <!-- 其他格式 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-file-text-o text-blue-400"></i> 二、其他数据格式
+                    </h4>
+                    <div class="grid md:grid-cols-2 gap-4">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">Excel文件</h5>
+                        <pre class="text-cyan-300 font-mono text-sm"># 需要安装openpyxl
+df = pd.read_excel('data.xlsx', sheet_name='Sheet1')
+df.to_excel('output.xlsx')</pre>
+                      </div>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">JSON文件</h5>
+                        <pre class="text-cyan-300 font-mono text-sm">df = pd.read_json('data.json')
+df.to_json('output.json')</pre>
+                      </div>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">SQL数据库</h5>
+                        <pre class="text-cyan-300 font-mono text-sm"># 需要安装sqlalchemy
+import sqlalchemy
+conn = sqlalchemy.create_engine('sqlite:///data.db')
+df = pd.read_sql('SELECT * FROM table', conn)</pre>
+                      </div>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">Parquet文件</h5>
+                        <pre class="text-cyan-300 font-mono text-sm"># 需要安装pyarrow
+df = pd.read_parquet('data.parquet')
+df.to_parquet('output.parquet')</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第五章：数据预处理 -->
+            <div id="data_preprocessing" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-magic"></i> 第五章：数据预处理
+                </h3>
+                
+                <div class="space-y-8">
+                  <!-- 缺失值处理 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-eraser text-green-400"></i> 一、缺失值处理
+                    </h4>
+                    <div class="bg-dark-gray p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <pre class="text-cyan-300">import pandas as pd
+import numpy as np
+
+# 创建示例数据
+df = pd.DataFrame({
+    'A': [1, 2, np.nan, 4],
+    'B': [5, np.nan, 7, 8]
+})
+
+# 方法1：删除缺失值
+df_drop = df.dropna()
+
+# 方法2：填充缺失值
+df_fill = df.fillna({
+    'A': df['A'].mean(),
+    'B': df['B'].median()
+})
+
+# 方法3：向前/向后填充
+df_ffill = df.fillna(method='ffill')  # 向前填充
+df_bfill = df.fillna(method='bfill')  # 向后填充</pre>
+                    </div>
+                  </div>
+                  
+                  <!-- 数据类型转换 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-exchange text-blue-400"></i> 二、数据类型转换
+                    </h4>
+                    <div class="bg-dark-gray p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <pre class="text-cyan-300">import pandas as pd
+
+# 创建数据
+df = pd.DataFrame({
+    'A': ['1', '2', '3'],
+    'B': ['2024-01-01', '2024-01-02', '2024-01-03']
+})
+
+# 转换为数值类型
+df['A'] = pd.to_numeric(df['A'])
+
+# 转换为日期类型
+df['B'] = pd.to_datetime(df['B'])
+
+# 转换为分类类型
+df['C'] = df['C'].astype('category')
+
+# 查看数据类型
+print(df.dtypes)</pre>
+                    </div>
+                  </div>
+                  
+                  <!-- 数据清洗 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-filter text-purple-400"></i> 三、数据清洗
+                    </h4>
+                    <div class="bg-dark-gray p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <pre class="text-cyan-300">import pandas as pd
+
+# 去除重复值
+df = df.drop_duplicates()
+
+# 重命名列
+df = df.rename(columns={'old_name': 'new_name'})
+
+# 字符串处理
+df['name'] = df['name'].str.strip()       # 去除空格
+df['name'] = df['name'].str.lower()      # 转换小写
+df['name'] = df['name'].str.replace(' ', '_')  # 替换
+
+# 异常值处理（IQR方法）
+Q1 = df['value'].quantile(0.25)
+Q3 = df['value'].quantile(0.75)
+IQR = Q3 - Q1
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+df = df[(df['value'] >= lower_bound) & (df['value'] <= upper_bound)]</pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第六章：数据探索分析 -->
+            <div id="exploratory_analysis" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-search"></i> 第六章：数据探索分析
+                </h3>
+                
+                <div class="space-y-8">
+                  <!-- 描述性统计 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-bar-chart text-green-400"></i> 一、描述性统计
+                    </h4>
+                    <div class="bg-dark-gray p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <pre class="text-cyan-300">import pandas as pd
+
+# 创建数据
+df = pd.DataFrame({
+    'A': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    'B': [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+})
+
+# 基本统计信息
+print(df.describe())
+
+# 相关系数矩阵
+print(df.corr())
+
+# 协方差矩阵
+print(df.cov())
+
+# 频率统计
+print(df['A'].value_counts())
+
+# 分位数
+print(df['A'].quantile([0.25, 0.5, 0.75]))</pre>
+                    </div>
+                  </div>
+                  
+                  <!-- 相关性分析 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-link text-blue-400"></i> 二、相关性分析
+                    </h4>
+                    <p class="text-gray-300 mb-4">相关性分析用于衡量两个变量之间的线性关系强度，常用皮尔逊相关系数（Pearson correlation coefficient）。</p>
+                    <div class="bg-dark-gray p-4 rounded-lg">
+                      <h5 class="text-emerald-400 font-semibold mb-3">相关系数解读：</h5>
+                      <ul class="list-disc list-inside space-y-2 text-gray-300">
+                        <li><strong>1.0：</strong>完全正相关</li>
+                        <li><strong>0.7-0.9：</strong>强正相关</li>
+                        <li><strong>0.3-0.7：</strong>中等正相关</li>
+                        <li><strong>0-0.3：</strong>弱正相关</li>
+                        <li><strong>0：</strong>无相关性</li>
+                        <li><strong>-0.3-0：</strong>弱负相关</li>
+                        <li><strong>-0.7--0.3：</strong>中等负相关</li>
+                        <li><strong>-0.9--0.7：</strong>强负相关</li>
+                        <li><strong>-1.0：</strong>完全负相关</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第七章：数据可视化 -->
+            <div id="data_visualization" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-bar-chart"></i> 第七章：数据可视化
+                </h3>
+                
+                <div class="space-y-8">
+                  <!-- 常用图表类型 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-pie-chart text-green-400"></i> 一、常用图表类型
+                    </h4>
+                    <div class="grid md:grid-cols-2 gap-4">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">📈 折线图</h5>
+                        <p class="text-gray-400 text-sm">展示数据随时间的变化趋势</p>
+                      </div>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">📊 柱状图</h5>
+                        <p class="text-gray-400 text-sm">比较不同类别之间的数据</p>
+                      </div>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">🔵 散点图</h5>
+                        <p class="text-gray-400 text-sm">展示两个变量之间的关系</p>
+                      </div>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">🔥 热图</h5>
+                        <p class="text-gray-400 text-sm">展示矩阵数据的相关性</p>
+                      </div>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">📉 直方图</h5>
+                        <p class="text-gray-400 text-sm">展示数据的分布情况</p>
+                      </div>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">📦 箱线图</h5>
+                        <p class="text-gray-400 text-sm">展示数据的统计分布</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Matplotlib基础 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-code text-blue-400"></i> 二、Matplotlib基础
+                    </h4>
+                    <div class="bg-dark-gray p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <pre class="text-cyan-300">import matplotlib.pyplot as plt
+import pandas as pd
+
+# 创建数据
+df = pd.DataFrame({
+    'x': [1, 2, 3, 4, 5],
+    'y': [2, 4, 6, 8, 10]
+})
+
+# 绘制折线图
+plt.figure(figsize=(10, 6))
+plt.plot(df['x'], df['y'], marker='o', label='数据')
+plt.title('示例折线图')
+plt.xlabel('X轴')
+plt.ylabel('Y轴')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# 绘制柱状图
+plt.figure(figsize=(10, 6))
+plt.bar(df['x'], df['y'], color='skyblue')
+plt.title('示例柱状图')
+plt.xlabel('类别')
+plt.ylabel('数值')
+plt.show()</pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第八章：分组与聚合 -->
+            <div id="group_aggregation" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-object-group"></i> 第八章：分组与聚合
+                </h3>
+                
+                <div class="space-y-8">
+                  <!-- GroupBy基础 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-layer-group text-green-400"></i> 一、GroupBy基础
+                    </h4>
+                    <div class="bg-dark-gray p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <pre class="text-cyan-300">import pandas as pd
+
+# 创建数据
+df = pd.DataFrame({
+    '部门': ['A', 'B', 'A', 'B', 'A'],
+    '员工': ['张三', '李四', '王五', '赵六', '孙七'],
+    '薪资': [8000, 9000, 8500, 9500, 8200]
+})
+
+# 按部门分组
+grouped = df.groupby('部门')
+
+# 计算各组统计量
+print(grouped['薪资'].mean())    # 平均薪资
+print(grouped['薪资'].sum())     # 总薪资
+print(grouped.size())            # 人数
+
+# 多列聚合
+print(grouped.agg({
+    '薪资': ['mean', 'sum', 'max'],
+    '员工': 'count'
+}))</pre>
+                    </div>
+                  </div>
+                  
+                  <!-- 透视表与交叉表 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-table text-blue-400"></i> 二、透视表与交叉表
+                    </h4>
+                    <div class="bg-dark-gray p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <pre class="text-cyan-300">import pandas as pd
+
+# 创建数据
+df = pd.DataFrame({
+    '产品': ['A', 'B', 'A', 'B', 'A'],
+    '地区': ['北京', '北京', '上海', '上海', '北京'],
+    '销售额': [100, 200, 150, 250, 120]
+})
+
+# 透视表
+pivot = pd.pivot_table(
+    df,
+    values='销售额',
+    index='产品',
+    columns='地区',
+    aggfunc='sum',
+    fill_value=0
+)
+print(pivot)
+
+# 交叉表（计算频率）
+crosstab = pd.crosstab(
+    index=df['产品'],
+    columns=df['地区']
+)
+print(crosstab)</pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第九章：时间序列分析 -->
+            <div id="time_series" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-clock-o"></i> 第九章：时间序列分析
+                </h3>
+                
+                <div class="space-y-8">
+                  <!-- 时间数据处理 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-calendar text-green-400"></i> 一、时间数据处理
+                    </h4>
+                    <div class="bg-dark-gray p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <pre class="text-cyan-300">import pandas as pd
+
+# 创建数据
+df = pd.DataFrame({
+    '日期': ['2024-01-01', '2024-02-15', '2024-03-20'],
+    '销售额': [100, 200, 150]
+})
+
+# 转换为datetime类型
+df['日期'] = pd.to_datetime(df['日期'])
+
+# 设置日期为索引
+df = df.set_index('日期')
+
+# 提取时间信息
+df['年'] = df.index.year
+df['月'] = df.index.month
+df['日'] = df.index.day
+df['星期'] = df.index.dayofweek
+
+# 时间切片
+df_2024 = df['2024']
+df_jan = df['2024-01']</pre>
+                    </div>
+                  </div>
+                  
+                  <!-- 时间序列操作 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-refresh text-blue-400"></i> 二、时间序列操作
+                    </h4>
+                    <div class="bg-dark-gray p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <pre class="text-cyan-300">import pandas as pd
+
+# 创建时间序列数据
+dates = pd.date_range('2024-01-01', periods=30, freq='D')
+sales = [100 + i*2 for i in range(30)]
+df = pd.DataFrame({'销售额': sales}, index=dates)
+
+# 重采样
+monthly = df.resample('M').sum()
+weekly = df.resample('W').mean()
+
+# 移动窗口
+df['7日平均'] = df['销售额'].rolling(window=7).mean()
+
+# 差分（计算增长率）
+df['差分'] = df['销售额'].diff()
+df['增长率'] = df['销售额'].pct_change() * 100
+
+# 滚动统计
+df['滚动标准差'] = df['销售额'].rolling(window=7).std()</pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第十章：机器学习入门 -->
+            <div id="ml_intro" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-robot"></i> 第十章：机器学习入门
+                </h3>
+                
+                <div class="space-y-8">
+                  <!-- 机器学习基础流程 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-list-ol text-green-400"></i> 一、机器学习基础流程
+                    </h4>
+                    <div class="bg-dark-gray p-4 rounded-lg">
+                      <ol class="list-decimal list-inside space-y-3 text-gray-300">
+                        <li><strong>数据收集：</strong>收集相关数据，可以是结构化数据（表格）或非结构化数据（文本、图像等）</li>
+                        <li><strong>数据预处理：</strong>清洗数据、处理缺失值、特征工程、数据标准化</li>
+                        <li><strong>数据拆分：</strong>将数据分为训练集（70-80%）和测试集（20-30%）</li>
+                        <li><strong>模型选择：</strong>根据问题类型选择合适的模型（分类、回归、聚类等）</li>
+                        <li><strong>模型训练：</strong>使用训练数据训练模型</li>
+                        <li><strong>模型评估：</strong>使用测试数据评估模型性能</li>
+                        <li><strong>模型优化：</strong>调整参数、特征选择、尝试不同模型</li>
+                        <li><strong>模型部署：</strong>将模型应用到实际场景</li>
+                      </ol>
+                    </div>
+                  </div>
+                  
+                  <!-- 数据拆分示例 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-random text-blue-400"></i> 二、数据拆分示例
+                    </h4>
+                    <div class="bg-dark-gray p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <pre class="text-cyan-300">import pandas as pd
+import numpy as np
+
+# 创建示例数据
+np.random.seed(42)
+X = np.random.randint(1, 100, (100, 3))
+y = np.random.randint(0, 2, 100)
+
+df = pd.DataFrame(X, columns=['特征1', '特征2', '特征3'])
+df['目标'] = y
+
+# 方法1：手动拆分
+train_size = int(len(df) * 0.8)
+train = df[:train_size]
+test = df[train_size:]
+
+print(f"训练集大小: {len(train)}")
+print(f"测试集大小: {len(test)}")
+
+# 方法2：使用sklearn
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)</pre>
+                    </div>
+                  </div>
+                  
+                  <!-- 常见机器学习算法 -->
+                  <div class="bg-dark p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                      <i class="fa fa-brain text-purple-400"></i> 三、常见机器学习算法
+                    </h4>
+                    <div class="grid md:grid-cols-2 gap-4">
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">📊 监督学习</h5>
+                        <ul class="list-disc list-inside text-sm text-gray-400">
+                          <li>线性回归</li>
+                          <li>逻辑回归</li>
+                          <li>决策树</li>
+                          <li>随机森林</li>
+                          <li>支持向量机</li>
+                        </ul>
+                      </div>
+                      <div class="bg-dark-gray p-4 rounded-lg">
+                        <h5 class="text-emerald-400 font-semibold mb-2">🔍 无监督学习</h5>
+                        <ul class="list-disc list-inside text-sm text-gray-400">
+                          <li>K-Means聚类</li>
+                          <li>层次聚类</li>
+                          <li>PCA降维</li>
+                          <li>关联规则</li>
+                          <li>异常检测</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 错题标签页 -->
+      <div id="wrong-questions" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">错题本</h2>
+          <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+            <div class="text-center py-12">
+              <i class="fa fa-times-circle text-4xl text-red-500 mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无错题</h3>
+              <p class="text-gray-400">当你在练习中答错题目时，它们会自动添加到这里</p>
+              <button class="btn-primary mt-6" onclick="showTab('question-bank')">
+                <i class="fa fa-list"></i> 开始练习
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 收藏标签页 -->
+      <div id="favorites" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">收藏题目</h2>
+          <div class="bg-dark-gray rounded-xl p-6 border border-gray-700" id="favorites-container">
+            <div class="text-center py-12">
+              <i class="fa fa-star-o text-4xl text-yellow-500 mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无收藏</h3>
+              <p class="text-gray-400">在题库中点击题目旁边的星标图标来收藏题目</p>
+              <button class="btn-primary mt-6" onclick="showTab('question-bank')">
+                <i class="fa fa-list"></i> 浏览题库
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+            <!-- 知识点标签页 -->
+      <div id="knowledge" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">📚 知识点学习</h2>
+          
+          <!-- 导航栏 -->
+          <div class="flex flex-wrap gap-3 mb-8 bg-dark-gray p-4 rounded-xl border border-gray-700">
+            <button class="knowledge-nav active px-4 py-2 rounded-lg font-semibold transition" data-target="numpy_basics">第一章：NumPy数组基础</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="numpy_advanced">第二章：NumPy进阶操作</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="pandas_structures">第三章：Pandas数据结构</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="data_io">第四章：数据读取与写入</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="data_preprocessing">第五章：数据预处理</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="exploratory_analysis">第六章：数据探索分析</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="data_visualization">第七章：数据可视化</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="group_aggregation">第八章：分组与聚合</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="time_series">第九章：时间序列分析</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="ml_intro">第十章：机器学习入门</button>
+          </div>
+          <div class="space-y-8">
+            <!-- 第一章：NumPy数组基础 -->
+            <div id="numpy_basics" class="knowledge-section" style="display: block;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-database"></i> 第一章：NumPy数组基础
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>NumPy是Python科学计算的基础库，提供高性能的多维数组对象。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">创建数组</h4>
+                  <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                    <pre>import numpy as np
+
+# 创建一维数组
+arr1 = np.array([1, 2, 3, 4, 5])
+
+# 创建二维数组
+arr2 = np.array([[1, 2, 3], [4, 5, 6]])
+
+# 创建特殊数组
+zeros = np.zeros((3, 3))
+ones = np.ones((2, 4))
+arange = np.arange(0, 10, 2)
+linspace = np.linspace(0, 1, 5)</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第二章：NumPy进阶操作 -->
+            <div id="numpy_advanced" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-cogs"></i> 第二章：NumPy进阶操作
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>掌握NumPy的高级操作，包括切片、索引、广播机制等。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">切片与索引</h4>
+                  <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                    <pre>arr = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+
+# 基础切片
+sub_arr = arr[0:2, 1:3]
+
+# 布尔索引
+filter_arr = arr[arr > 5]</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第三章：Pandas数据结构 -->
+            <div id="pandas_structures" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-table"></i> 第三章：Pandas数据结构
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>Pandas提供Series和DataFrame两种核心数据结构。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">DataFrame</h4>
+                  <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                    <pre>data = {
+    'name': ['Alice', 'Bob', 'Charlie'],
+    'age': [25, 30, 35]
+}
+df = pd.DataFrame(data)</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第四章：数据读取与写入 -->
+            <div id="data_io" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-file-text"></i> 第四章：数据读取与写入
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>Pandas支持多种格式的数据读取和写入。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">常用数据格式</h4>
+                  <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                    <pre># CSV文件
+df = pd.read_csv('data.csv')
+df.to_csv('output.csv', index=False)</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第五章：数据预处理 -->
+            <div id="data_preprocessing" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-magic"></i> 第五章：数据预处理
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>数据预处理是数据分析的关键步骤。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">缺失值处理</h4>
+                  <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                    <pre># 填充缺失值
+df_filled = df.fillna(df.mean())</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第六章：数据探索分析 -->
+            <div id="exploratory_analysis" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-search"></i> 第六章：数据探索分析
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>通过描述性统计和可视化探索数据特征。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">描述性统计</h4>
+                  <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                    <pre># 基本统计信息
+df.describe()</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第七章：数据可视化 -->
+            <div id="data_visualization" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-bar-chart"></i> 第七章：数据可视化
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>使用图表直观展示数据特征和模式。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">常用图表类型</h4>
+                  <ul class="list-disc list-inside space-y-2">
+                    <li>折线图：展示趋势</li>
+                    <li>柱状图：比较类别</li>
+                    <li>散点图：展示关系</li>
+                    <li>热图：展示相关性</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第八章：分组与聚合 -->
+            <div id="group_aggregation" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-object-group"></i> 第八章：分组与聚合
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>按类别分组并进行聚合计算。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">GroupBy操作</h4>
+                  <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                    <pre># 简单分组聚合
+df.groupby('category')['value'].sum()</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第九章：时间序列分析 -->
+            <div id="time_series" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-clock-o"></i> 第九章：时间序列分析
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>处理和分析时间相关的数据序列。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">时间数据处理</h4>
+                  <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                    <pre># 转换为datetime
+df['timestamp'] = pd.to_datetime(df['timestamp'])</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第十章：机器学习入门 -->
+            <div id="ml_intro" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-robot"></i> 第十章：机器学习入门
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>机器学习让计算机从数据中学习模式。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">基础流程</h4>
+                  <ul class="list-disc list-inside space-y-2">
+                    <li>数据准备与预处理</li>
+                    <li>数据拆分（训练集/测试集）</li>
+                    <li>选择模型</li>
+                    <li>训练模型</li>
+                    <li>评估性能</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 错题标签页 -->
+      <div id="wrong-questions" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">错题本</h2>
+          <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+            <div class="text-center py-12">
+              <i class="fa fa-times-circle text-4xl text-red-500 mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无错题</h3>
+              <p class="text-gray-400">当你在练习中答错题目时，它们会自动添加到这里</p>
+              <button class="btn-primary mt-6" onclick="showTab('question-bank')">
+                <i class="fa fa-list"></i> 开始练习
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 收藏标签页 -->
+      <div id="favorites" class="tab-content hidden">
+        <div class="py-6">
+          <h2 class="section-title">收藏题目</h2>
+          <div class="bg-dark-gray rounded-xl p-6 border border-gray-700" id="favorites-container">
+            <div class="text-center py-12">
+              <i class="fa fa-star-o text-4xl text-yellow-500 mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-200 mb-2">暂无收藏</h3>
+              <p class="text-gray-400">在题库中点击题目旁边的星标图标来收藏题目</p>
+              <button class="btn-primary mt-6" onclick="showTab('question-bank')">
+                <i class="fa fa-list"></i> 浏览题库
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <!-- 知识点标签页 -->
       <div id="knowledge" class="tab-content hidden">
         <div class="py-6">
@@ -739,22 +2024,212 @@ print(df)
           
           <!-- 导航栏 -->
           <div class="flex flex-wrap gap-3 mb-8 bg-dark-gray p-4 rounded-xl border border-gray-700">
-            <button class="knowledge-nav active px-4 py-2 rounded-lg font-semibold transition" data-target="chapter1-basics">第一章：数据分析概述</button>
-            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="chapter2-preprocessing">第二章：数据准备与清洗</button>
-            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="chapter3-tools">第三章：核心工具实操</button>
-            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="chapter4-statistics">第四章：统计分析方法</button>
-            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="chapter5-advanced">第五章：高级数据分析</button>
-            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="chapter6-visualization">第六章：数据可视化</button>
-            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="chapter7-cases">第七章：行业实战案例</button>
-            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="chapter8-summary">第八章：课程总结</button>
+            <button class="knowledge-nav active px-4 py-2 rounded-lg font-semibold transition" data-target="numpy_basics">第一章：NumPy数组基础</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="numpy_advanced">第二章：NumPy进阶操作</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="pandas_structures">第三章：Pandas数据结构</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="data_io">第四章：数据读取与写入</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="data_preprocessing">第五章：数据预处理</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="exploratory_analysis">第六章：数据探索分析</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="data_visualization">第七章：数据可视化</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="group_aggregation">第八章：分组与聚合</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="time_series">第九章：时间序列分析</button>
+            <button class="knowledge-nav px-4 py-2 rounded-lg hover:bg-gray-500 transition" data-target="ml_intro">第十章：机器学习入门</button>
           </div>
 <div class="space-y-8">
-            <!-- 第一章：数据分析概述 -->
-            <div id="chapter1-basics" class="knowledge-section" style="display: block;">
+            <!-- 第一章：NumPy数组基础 -->
+            <div id="numpy_basics" class="knowledge-section" style="display: block;">
               <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
                 <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                  <i class="fa fa-database"></i> 第一章：数据分析概述（6学时）
+                  <i class="fa fa-database"></i> 第一章：NumPy数组基础
                 </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>NumPy是Python科学计算的基础库，提供高性能的多维数组对象。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">创建数组</h4>
+                  <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                    <pre>import numpy as np
+
+# 创建一维数组
+arr1 = np.array([1, 2, 3, 4, 5])
+
+# 创建二维数组
+arr2 = np.array([[1, 2, 3], [4, 5, 6]])
+
+# 创建特殊数组
+zeros = np.zeros((3, 3))
+ones = np.ones((2, 4))
+arange = np.arange(0, 10, 2)
+linspace = np.linspace(0, 1, 5)</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第二章：NumPy进阶操作 -->
+            <div id="numpy_advanced" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-cogs"></i> 第二章：NumPy进阶操作
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>掌握NumPy的高级操作，包括切片、索引、广播机制等。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">切片与索引</h4>
+                  <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                    <pre>arr = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+
+# 基础切片
+sub_arr = arr[0:2, 1:3]
+
+# 布尔索引
+filter_arr = arr[arr > 5]</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第三章：Pandas数据结构 -->
+            <div id="pandas_structures" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-table"></i> 第三章：Pandas数据结构
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>Pandas提供Series和DataFrame两种核心数据结构。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">DataFrame</h4>
+                  <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                    <pre>data = {
+    'name': ['Alice', 'Bob', 'Charlie'],
+    'age': [25, 30, 35]
+}
+df = pd.DataFrame(data)</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第四章：数据读取与写入 -->
+            <div id="data_io" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-file-text"></i> 第四章：数据读取与写入
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>Pandas支持多种格式的数据读取和写入。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">常用数据格式</h4>
+                  <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                    <pre># CSV文件
+df = pd.read_csv('data.csv')
+df.to_csv('output.csv', index=False)</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第五章：数据预处理 -->
+            <div id="data_preprocessing" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-magic"></i> 第五章：数据预处理
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>数据预处理是数据分析的关键步骤。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">缺失值处理</h4>
+                  <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                    <pre># 填充缺失值
+df_filled = df.fillna(df.mean())</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第六章：数据探索分析 -->
+            <div id="exploratory_analysis" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-search"></i> 第六章：数据探索分析
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>通过描述性统计和可视化探索数据特征。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">描述性统计</h4>
+                  <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                    <pre># 基本统计信息
+df.describe()</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第七章：数据可视化 -->
+            <div id="data_visualization" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-bar-chart"></i> 第七章：数据可视化
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>使用图表直观展示数据特征和模式。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">常用图表类型</h4>
+                  <ul class="list-disc list-inside space-y-2">
+                    <li>折线图：展示趋势</li>
+                    <li>柱状图：比较类别</li>
+                    <li>散点图：展示关系</li>
+                    <li>热图：展示相关性</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第八章：分组与聚合 -->
+            <div id="group_aggregation" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-object-group"></i> 第八章：分组与聚合
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>按类别分组并进行聚合计算。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">GroupBy操作</h4>
+                  <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                    <pre># 简单分组聚合
+df.groupby('category')['value'].sum()</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第九章：时间序列分析 -->
+            <div id="time_series" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-clock-o"></i> 第九章：时间序列分析
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>处理和分析时间相关的数据序列。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">时间数据处理</h4>
+                  <div class="bg-dark p-4 rounded-lg font-mono text-sm">
+                    <pre># 转换为datetime
+df['timestamp'] = pd.to_datetime(df['timestamp'])</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 第十章：机器学习入门 -->
+            <div id="ml_intro" class="knowledge-section" style="display: none;">
+              <div class="bg-dark-gray rounded-xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                  <i class="fa fa-robot"></i> 第十章：机器学习入门
+                </h3>
+                <div class="space-y-6 text-gray-300">
+                  <p><strong>核心概念：</strong>机器学习让计算机从数据中学习模式。</p>
+                  <h4 class="text-xl font-semibold text-gray-200 mb-4">基础流程</h4>
+                  <ul class="list-disc list-inside space-y-2">
+                    <li>数据准备与预处理</li>
+                    <li>数据拆分（训练集/测试集）</li>
+                    <li>选择模型</li>
+                    <li>训练模型</li>
+                    <li>评估性能</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
                 
                 <div class="space-y-6">
                   <div class="bg-dark p-6 rounded-lg border border-gray-700">
@@ -2411,678 +3886,620 @@ print(funnel)</pre>
 
   <script>
     // 问题数据
-    const problems = [
+        const problems = [
+      // 第一章：NumPy数组基础
       {
         id: 1,
-        title: "问题1：数据分析流程",
-        description: `编写一个程序，模拟完整的数据分析流程。
-
-<strong>输入：</strong>
-一个包含销售数据的CSV文件
-
-<strong>输出：</strong>
-分析报告摘要
-
-<strong>要求：</strong>
+        title: "创建NumPy数组",
+        description: `<p>请使用NumPy创建以下数组并输出：</p>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>读取数据文件</li>
-  <li>数据清洗和预处理</li>
-  <li>基本统计分析</li>
-  <li>输出分析报告</li>
-</ul>`,
-        difficulty: "medium",
-        time: "20分钟",
-        code: `# 请编写代码
-`,
-        analysis: `
-<h4>解题思路</h4>
-<p>1. 使用Pandas读取和处理数据</p>
-<p>2. 识别并处理缺失值</p>
-<p>3. 进行基本统计分析和分组汇总</p>
-<p>4. 生成简洁的分析报告</p>
-<h4>代码示例</h4>
-<div class="bg-dark p-3 rounded-lg font-mono text-sm">
-  <pre class="text-cyan-300">
-import pandas as pd
-import numpy as np
-
-# 模拟数据
-data = {
-    '日期': ['2024-01-01', '2024-01-02', '2024-01-03', '2024-01-04', '2024-01-05'],
-    '销售额': [1000, 1500, np.nan, 1800, 2000],
-    '客户数': [20, 30, 25, np.nan, 40],
-    '产品类别': ['A', 'B', 'A', 'C', 'B']
-}
-df = pd.DataFrame(data)
-
-# 步骤1: 数据概览
-print("=== 步骤1: 数据概览 ===")
-print(f"数据形状: {df.shape}")
-print(df.head())
-
-# 步骤2: 数据清洗
-df['销售额'] = df['销售额'].fillna(df['销售额'].mean())
-df['客户数'] = df['客户数'].fillna(df['客户数'].median())
-
-# 步骤3: 统计分析
-print("
-=== 步骤3: 统计分析 ===")
-print(df.describe())
-
-# 步骤4: 生成报告
-print("
-=== 步骤4: 分析报告 ===")
-print(f"总销售额: {df['销售额'].sum():.2f}")
-  </pre>
-</div>
-<h4>知识点</h4>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter1-basics')">第一章：数据分析概述</a></li>
-  <li>数据分析流程</li>
-  <li>CRISP-DM方法论</li>
-</ul>`
-      },
-      {
-        id: 2,
-        title: "问题2：缺失值处理",
-        description: `编写一个程序，使用Pandas处理DataFrame中的缺失值。
-
-<strong>输入：</strong>
-一个包含缺失值的DataFrame
-
-<strong>输出：</strong>
-处理后的DataFrame，其中缺失值已被适当处理
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>识别并统计缺失值</li>
-  <li>使用合适的方法填充缺失值（如均值、中位数或众数）</li>
-  <li>返回处理后的DataFrame</li>
-</ul>`,
-        difficulty: "easy",
-        time: "15分钟",
-        code: `# 请编写代码
-`,
-        analysis: `
-<h4>解题思路</h4>
-<p>1. 使用Pandas的isnull()和sum()方法识别并统计缺失值</p>
-<p>2. 根据数据类型选择合适的填充方法：数值型数据使用均值或中位数，分类型数据使用众数</p>
-<p>3. 使用fillna()方法填充缺失值</p>
-<h4>代码示例</h4>
-<div class="bg-dark p-3 rounded-lg font-mono text-sm">
-  <pre class="text-cyan-300">
-import pandas as pd
-import numpy as np
-
-data = {
-    '姓名': ['张三', '李四', '王五', np.nan, '赵六'],
-    '年龄': [25, 30, np.nan, 35, 40],
-    '性别': ['男', '女', '男', np.nan, '女'],
-    '工资': [5000, 6000, 5500, np.nan, 7000]
-}
-df = pd.DataFrame(data)
-
-print("缺失值统计:")
-print(df.isnull().sum())
-
-df['年龄'] = df['年龄'].fillna(df['年龄'].mean())
-df['工资'] = df['工资'].fillna(df['工资'].median())
-df['性别'] = df['性别'].fillna(df['性别'].mode()[0])
-df['姓名'] = df['姓名'].fillna('未知')
-  </pre>
-</div>
-<h4>知识点</h4>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter2-preprocessing')">第二章：数据准备与清洗</a></li>
-  <li>缺失值处理方法</li>
-  <li>数据质量评估</li>
-</ul>`
-      },
-      {
-        id: 3,
-        title: "问题3：异常值检测",
-        description: `编写一个程序，使用IQR方法检测数据中的异常值。
-
-<strong>输入：</strong>
-一个包含可能异常值的数据集
-
-<strong>输出：</strong>
-检测到的异常值
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>计算四分位数和IQR</li>
-  <li>定义异常值边界</li>
-  <li>检测并返回异常值</li>
-</ul>`,
-        difficulty: "medium",
-        time: "20分钟",
-        code: `# 请编写代码
-`,
-        analysis: `
-<h4>解题思路</h4>
-<p>1. 计算数据的第一四分位数(Q1)和第三四分位数(Q3)</p>
-<p>2. 计算四分位距(IQR) = Q3 - Q1</p>
-<p>3. 定义异常值边界：下界 = Q1 - 1.5 * IQR，上界 = Q3 + 1.5 * IQR</p>
-<p>4. 检测并返回超出边界的值作为异常值</p>
-<h4>代码示例</h4>
-<div class="bg-dark p-3 rounded-lg font-mono text-sm">
-  <pre class="text-cyan-300">
-import pandas as pd
-import numpy as np
-
-np.random.seed(42)
-data = np.random.normal(100, 10, 100)
-data = np.append(data, [50, 180, 185])
-df = pd.DataFrame({'数值': data})
-
-Q1 = df.quantile(0.25)
-Q3 = df.quantile(0.75)
-IQR = Q3 - Q1
-lower_bound = Q1 - 1.5 * IQR
-upper_bound = Q3 + 1.5 * IQR
-
-outliers = df[(df < lower_bound) | (df > upper_bound)]
-print("异常值:", outliers)
-  </pre>
-</div>
-<h4>知识点</h4>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter2-preprocessing')">第二章：数据准备与清洗</a></li>
-  <li>异常值检测方法</li>
-  <li>统计方法应用</li>
-</ul>`
-      },
-      {
-        id: 4,
-        title: "问题4：SQL查询实战",
-        description: `编写SQL查询语句，从数据库中提取所需数据。
-
-<strong>输入：</strong>
-包含订单表(orders)和客户表(customers)的数据库
-
-<strong>输出：</strong>
-查询结果
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>查询2024年1月的订单</li>
-  <li>关联客户表获取客户信息</li>
-  <li>按客户分组统计订单金额</li>
-</ul>`,
-        difficulty: "medium",
-        time: "20分钟",
-        code: `# 请编写代码
-`,
-        analysis: `
-<h4>解题思路</h4>
-<p>1. 使用WHERE子句过滤特定日期范围的订单</p>
-<p>2. 使用JOIN语句关联订单表和客户表</p>
-<p>3. 使用GROUP BY分组统计，HAVING过滤分组结果</p>
-<p>4. 使用ORDER BY对结果排序</p>
-<h4>代码示例</h4>
-<div class="bg-dark p-3 rounded-lg font-mono text-sm">
-  <pre class="text-cyan-300">
--- 查询2024年1月订单并关联客户信息
-SELECT 
-    o.order_id,
-    o.order_date,
-    o.amount,
-    c.name AS customer_name
-FROM orders o
-JOIN customers c ON o.customer_id = c.id
-WHERE o.order_date >= '2024-01-01' 
-  AND o.order_date < '2024-02-01';
-  </pre>
-</div>
-<h4>知识点</h4>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter3-tools')">第三章：核心工具实操</a></li>
-  <li>SQL查询语法</li>
-  <li>多表连接</li>
-</ul>`
-      },
-      {
-        id: 5,
-        title: "问题5：描述性统计分析",
-        description: `编写一个程序，对数据进行描述性统计分析。
-
-<strong>输入：</strong>
-一个包含数值型数据的DataFrame
-
-<strong>输出：</strong>
-数据的基本统计信息
-
-<strong>要求：</strong>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li>计算基本统计量（均值、中位数、标准差等）</li>
-  <li>计算相关性矩阵</li>
-</ul>`,
+  <li>创建一个包含元素 [1, 2, 3, 4, 5] 的一维数组</li>
+  <li>创建一个3x3的零数组</li>
+  <li>创建一个包含0到10之间偶数的数组</li>
+</ul>
+<strong>要求：</strong>输出各个数组的内容`,
         difficulty: "easy",
         time: "10分钟",
         code: `# 请编写代码
 `,
-        analysis: `
-<h4>解题思路</h4>
-<p>1. 使用DataFrame的describe()方法获取基本统计信息</p>
-<p>2. 使用median()方法计算中位数</p>
-<p>3. 使用std()方法计算标准差</p>
-<p>4. 使用corr()方法计算相关性矩阵</p>
-<h4>代码示例</h4>
+        analysis: `<h4>解题思路</h4>
+<p>1. 使用np.array()创建一维数组</p>
+<p>2. 使用np.zeros()创建指定形状的零数组</p>
+<p>3. 使用np.arange()创建等差数组</p>
+<h4>参考代码</h4>
 <div class="bg-dark p-3 rounded-lg font-mono text-sm">
-  <pre class="text-cyan-300">
-import pandas as pd
-
-df = pd.DataFrame({
-    '年龄': [20, 25, 30, 35, 40],
-    '收入': [5000, 6000, 8000, 10000, 12000],
-    '消费': [1000, 1500, 2000, 2500, 3000]
-})
-
-print("基本统计:")
-print(df.describe())
-print("
-相关性:")
-print(df.corr())
-  </pre>
-</div>
-<h4>知识点</h4>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter4-statistics')">第四章：统计分析方法</a></li>
-  <li>描述性统计</li>
-  <li>相关性分析</li>
-</ul>`
+<pre>import numpy as np
+arr1 = np.array([1, 2, 3, 4, 5])
+arr2 = np.zeros((3, 3))
+arr3 = np.arange(0, 11, 2)
+print(arr1, arr2, arr3)</pre>
+</div>`
       },
       {
-        id: 6,
-        title: "问题6：假设检验",
-        description: `编写一个程序，进行独立样本t检验。
-
-<strong>输入：</strong>
-两组独立样本数据
-
-<strong>输出：</strong>
-检验结果（t值和p值）
-
-<strong>要求：</strong>
+        id: 2,
+        title: "数组运算",
+        description: `<p>对两个NumPy数组进行数学运算：</p>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>生成两组模拟数据</li>
-  <li>进行独立样本t检验</li>
-  <li>解释检验结果</li>
+  <li>创建数组 a = [1, 2, 3, 4, 5] 和 b = [5, 4, 3, 2, 1]</li>
+  <li>计算 a + b（加法）</li>
+  <li>计算 a * b（乘法）</li>
+  <li>计算 a - b（减法）</li>
 </ul>`,
         difficulty: "medium",
         time: "20分钟",
         code: `# 请编写代码
 `,
-        analysis: `
-<h4>解题思路</h4>
-<p>1. 使用numpy生成两组符合正态分布的模拟数据</p>
-<p>2. 使用scipy.stats.ttest_ind进行独立样本t检验</p>
-<p>3. 根据p值判断是否拒绝原假设</p>
-<p>4. 输出检验结果和解释</p>
-<h4>代码示例</h4>
+        analysis: `<h4>解题思路</h4>
+<p>NumPy数组支持元素级别的数学运算，无需循环即可对整个数组进行操作。</p>
+<h4>参考代码</h4>
 <div class="bg-dark p-3 rounded-lg font-mono text-sm">
-  <pre class="text-cyan-300">
-import numpy as np
-from scipy import stats
-
-np.random.seed(42)
-group1 = np.random.normal(50, 10, 30)
-group2 = np.random.normal(55, 10, 30)
-
-t_stat, p_value = stats.ttest_ind(group1, group2)
-print(f"t值: {t_stat:.4f}, p值: {p_value:.4f}")
-
-alpha = 0.05
-if p_value < alpha:
-    print("拒绝原假设，存在显著差异")
-else:
-    print("接受原假设，无显著差异")
-  </pre>
-</div>
-<h4>知识点</h4>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter4-statistics')">第四章：统计分析方法</a></li>
-  <li>推断统计</li>
-  <li>假设检验</li>
-</ul>`
+<pre>import numpy as np
+a = np.array([1, 2, 3, 4, 5])
+b = np.array([5, 4, 3, 2, 1])
+print(a + b, a * b, a - b)</pre>
+</div>`
       },
       {
-        id: 7,
-        title: "问题7：线性回归",
-        description: `编写一个程序，使用线性回归预测销售数据。
-
-<strong>输入：</strong>
-包含广告投入和销售额的数据集
-
-<strong>输出：</strong>
-回归模型和预测结果
-
-<strong>要求：</strong>
+        id: 4,
+        title: "数组切片与索引",
+        description: `<p>对二维NumPy数组进行切片和索引操作：</p>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>构建线性回归模型</li>
-  <li>评估模型性能</li>
-  <li>进行预测</li>
+  <li>创建一个3x3的数组（1-9的数字）</li>
+  <li>提取第一行</li>
+  <li>提取最后一列</li>
+  <li>提取对角线元素</li>
 </ul>`,
         difficulty: "medium",
-        time: "25分钟",
+        time: "20分钟",
         code: `# 请编写代码
 `,
-        analysis: `
-<h4>解题思路</h4>
-<p>1. 使用sklearn的LinearRegression创建线性回归模型</p>
-<p>2. 使用train_test_split划分训练集和测试集</p>
-<p>3. 使用fit()方法训练模型</p>
-<p>4. 使用predict()方法进行预测</p>
-<p>5. 使用MSE和R²评估模型性能</p>
-<h4>代码示例</h4>
+        analysis: `<h4>解题思路</h4>
+<p>使用冒号:表示选取全部，索引从0开始，-1表示最后一个。</p>
+<h4>参考代码</h4>
 <div class="bg-dark p-3 rounded-lg font-mono text-sm">
-  <pre class="text-cyan-300">
-import pandas as pd
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-
-data = pd.DataFrame({
-    '广告投入': [1, 2, 3, 4, 5],
-    '销售额': [10, 20, 30, 40, 50]
-})
-
-X = data[['广告投入']]
-y = data['销售额']
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-model = LinearRegression()
-model.fit(X_train, y_train)
-
-print(f"系数: {model.coef_[0]:.2f}")
-print(f"预测: {model.predict([[6]])[0]:.2f}")
-  </pre>
-</div>
-<h4>知识点</h4>
-<ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter4-statistics')">第四章：统计分析方法</a></li>
-  <li>回归分析</li>
-  <li>机器学习基础</li>
-</ul>`
+<pre>import numpy as np
+arr = np.arange(1, 10).reshape(3, 3)
+print(arr[0, :], arr[:, -1], np.diag(arr))</pre>
+</div>`
       },
       {
-        id: 8,
-        title: "问题8：K-Means聚类",
-        description: `编写一个程序，使用K-Means算法对客户进行聚类分析。
-
-<strong>输入：</strong>
-包含客户消费数据的数据集
-
-<strong>输出：</strong>
-聚类结果
-
-<strong>要求：</strong>
+        id: 5,
+        title: "广播机制",
+        description: `<p>理解并演示NumPy的广播机制：</p>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li>使用肘部法确定最佳K值</li>
-  <li>进行K-Means聚类</li>
-  <li>分析聚类结果</li>
+  <li>创建一个形状为(3, 3)的数组A</li>
+  <li>创建一个形状为(3, 1)的数组B</li>
+  <li>演示A + B的广播效果</li>
 </ul>`,
         difficulty: "hard",
         time: "30分钟",
         code: `# 请编写代码
 `,
-        analysis: `
-<h4>解题思路</h4>
-<p>1. 使用肘部法选择最佳聚类数K</p>
-<p>2. 使用KMeans进行聚类</p>
-<p>3. 分析聚类中心和各簇数量</p>
-<p>4. 为数据添加聚类标签</p>
-<h4>代码示例</h4>
+        analysis: `<h4>解题思路</h4>
+<p>广播机制允许不同形状的数组进行运算，小数组会在缺失的维度上"广播"。</p>
+<h4>参考代码</h4>
 <div class="bg-dark p-3 rounded-lg font-mono text-sm">
-  <pre class="text-cyan-300">
-import pandas as pd
-from sklearn.cluster import KMeans
-
-data = pd.DataFrame({
-    '消费金额': [100, 200, 500, 800, 900],
-    '购买频率': [1, 2, 5, 8, 10]
-})
-
-kmeans = KMeans(n_clusters=3, n_init=10)
-data['聚类标签'] = kmeans.fit_predict(data)
-print(data)
-  </pre>
-</div>
-<h4>知识点</h4>
+<pre>import numpy as np
+A = np.arange(1, 10).reshape(3, 3)
+B = np.array([[1], [2], [3]])
+print(A + B)</pre>
+</div>`
+      },
+      {
+        id: 7,
+        title: "创建Series",
+        description: `<p>使用Pandas创建Series并操作：</p>
 <ul class="list-disc list-inside space-y-1 mt-2">
-  <li><a href="#" class="text-cyan-400 hover:underline" onclick="showTab('knowledge'); scrollToKnowledge('chapter5-advanced')">第五章：高级数据分析方法</a></li>
-  <li>聚类分析</li>
-  <li>K-Means算法</li>
-</ul>`
+  <li>创建包含数字1, 3, 5, 7, 9的Series</li>
+  <li>设置索引为a, b, c, d, e</li>
+  <li>访问索引为'c'的元素</li>
+</ul>`,
+        difficulty: "easy",
+        time: "10分钟",
+        code: `# 请编写代码
+`,
+        analysis: `<h4>解题思路</h4>
+<p>Pandas Series类似于带索引的一维数组，可以通过位置或标签访问。</p>
+<h4>参考代码</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre>import pandas as pd
+s = pd.Series([1, 3, 5, 7, 9], index=['a', 'b', 'c', 'd', 'e'])
+print(s['c'])</pre>
+</div>`
+      },
+      {
+        id: 8,
+        title: "DataFrame操作",
+        description: `<p>创建并操作DataFrame：</p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>创建包含姓名、年龄、城市的数据框</li>
+  <li>添加一列"薪资"</li>
+  <li>计算平均年龄</li>
+</ul>`,
+        difficulty: "medium",
+        time: "20分钟",
+        code: `# 请编写代码
+`,
+        analysis: `<h4>解题思路</h4>
+<p>DataFrame是Pandas的核心数据结构，类似于Excel表格或SQL表。</p>
+<h4>参考代码</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre>import pandas as pd
+df = pd.DataFrame({'姓名': ['张三', '李四'], '年龄': [25, 30]})
+df['薪资'] = [8000, 10000]
+print(df['年龄'].mean())</pre>
+</div>`
+      },
+      {
+        id: 10,
+        title: "读取CSV文件",
+        description: `<p>演示CSV文件的读取操作：</p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>使用Pandas创建示例数据</li>
+  <li>保存为CSV文件</li>
+  <li>重新读取CSV文件</li>
+</ul>`,
+        difficulty: "medium",
+        time: "20分钟",
+        code: `# 请编写代码
+`,
+        analysis: `<h4>解题思路</h4>
+<p>使用pd.read_csv()读取CSV文件，使用df.to_csv()保存为CSV文件。</p>
+<h4>参考代码</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre>import pandas as pd
+df = pd.DataFrame({'产品': ['A', 'B'], '销量': [100, 150]})
+# df.to_csv('data.csv')
+# df = pd.read_csv('data.csv')</pre>
+</div>`
+      },
+      {
+        id: 11,
+        title: "数据导出",
+        description: `<p>将数据导出为不同格式：</p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>创建DataFrame</li>
+  <li>演示导出为JSON格式</li>
+  <li>演示导出为字典格式</li>
+</ul>`,
+        difficulty: "medium",
+        time: "20分钟",
+        code: `# 请编写代码
+`,
+        analysis: `<h4>解题思路</h4>
+<p>Pandas支持多种导出格式：to_csv()、to_json()、to_dict()、to_excel()等。</p>
+<h4>参考代码</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre>import pandas as pd
+df = pd.DataFrame({'name': ['Alice'], 'age': [25]})
+print(df.to_dict(), df.to_json())</pre>
+</div>`
+      },
+      {
+        id: 13,
+        title: "缺失值处理",
+        description: `<p>处理DataFrame中的缺失值：</p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>创建包含NaN的DataFrame</li>
+  <li>用均值填充数值列的缺失值</li>
+  <li>删除包含缺失值的行</li>
+</ul>`,
+        difficulty: "medium",
+        time: "20分钟",
+        code: `# 请编写代码
+`,
+        analysis: `<h4>解题思路</h4>
+<p>使用fillna()填充缺失值，dropna()删除缺失值行。</p>
+<h4>参考代码</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre>import pandas as pd
+import numpy as np
+df = pd.DataFrame({'A': [1, 2, np.nan], 'B': [5, np.nan, 7]})
+print(df.fillna(df.mean()))</pre>
+</div>`
+      },
+      {
+        id: 14,
+        title: "数据类型转换",
+        description: `<p>进行数据类型转换：</p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>创建包含混合类型数据的DataFrame</li>
+  <li>将数值列转换为整数类型</li>
+  <li>将字符串转换为数值类型</li>
+</ul>`,
+        difficulty: "easy",
+        time: "10分钟",
+        code: `# 请编写代码
+`,
+        analysis: `<h4>解题思路</h4>
+<p>使用astype()进行类型转换，使用pd.to_numeric()转换字符串为数值。</p>
+<h4>参考代码</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre>import pandas as pd
+df = pd.DataFrame({'A': [1.5, 2.7]})
+print(df['A'].astype(int))</pre>
+</div>`
+      },
+      {
+        id: 16,
+        title: "描述性统计",
+        description: `<p>进行描述性统计分析：</p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>创建包含数值的DataFrame</li>
+  <li>计算基本统计量（均值、中位数、标准差）</li>
+  <li>获取数据摘要</li>
+</ul>`,
+        difficulty: "medium",
+        time: "20分钟",
+        code: `# 请编写代码
+`,
+        analysis: `<h4>解题思路</h4>
+<p>describe()提供数据的基本统计摘要，包括计数、均值、标准差、最值、分位数。</p>
+<h4>参考代码</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre>import pandas as pd
+df = pd.DataFrame({'A': [1, 2, 3, 4, 5]})
+print(df.describe())</pre>
+</div>`
+      },
+      {
+        id: 17,
+        title: "相关性分析",
+        description: `<p>计算数据的相关性：</p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>创建包含相关性的示例数据</li>
+  <li>计算相关系数矩阵</li>
+  <li>分析变量间的相关性</li>
+</ul>`,
+        difficulty: "hard",
+        time: "30分钟",
+        code: `# 请编写代码
+`,
+        analysis: `<h4>解题思路</h4>
+<p>corr()计算Pearson相关系数，范围从-1到1，表示变量间的线性关系强度。</p>
+<h4>参考代码</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre>import pandas as pd
+df = pd.DataFrame({'X': [1, 2, 3], 'Y': [2, 4, 6]})
+print(df.corr())</pre>
+</div>`
+      },
+      {
+        id: 19,
+        title: "折线图绘制",
+        description: `<p>使用Matplotlib绘制折线图：</p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>准备数据（月份和销售额）</li>
+  <li>绘制折线图</li>
+  <li>添加标题和标签</li>
+</ul>`,
+        difficulty: "medium",
+        time: "20分钟",
+        code: `# 请编写代码
+`,
+        analysis: `<h4>解题思路</h4>
+<p>使用pct_change()计算增长率，*100转换为百分比。</p>
+<h4>参考代码</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre>import pandas as pd
+df = pd.DataFrame({'销售额': [100, 150, 130]})
+print(df['销售额'].pct_change() * 100)</pre>
+</div>`
+      },
+      {
+        id: 20,
+        title: "散点图与热图",
+        description: `<p>创建散点图数据和相关性热图数据：</p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>创建两个相关的数值变量</li>
+  <li>准备散点图所需的数据对</li>
+  <li>准备热图所需的相关系数矩阵</li>
+</ul>`,
+        difficulty: "medium",
+        time: "20分钟",
+        code: `# 请编写代码
+`,
+        analysis: `<h4>解题思路</h4>
+<p>散点图用于展示两个变量的关系，热图通过颜色展示相关性强度。</p>
+<h4>参考代码</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre>import pandas as pd
+df = pd.DataFrame({'A': [1,2,3], 'B': [2,4,6]})
+print(df.corr())</pre>
+</div>`
+      },
+      {
+        id: 22,
+        title: "GroupBy操作",
+        description: `<p>使用GroupBy进行分组聚合：</p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>创建包含部门和薪资的DataFrame</li>
+  <li>按部门分组计算平均薪资</li>
+  <li>计算各部门的人数</li>
+</ul>`,
+        difficulty: "medium",
+        time: "20分钟",
+        code: `# 请编写代码
+`,
+        analysis: `<h4>解题思路</h4>
+<p>groupby()用于将数据按一个或多个列分组，然后进行聚合操作。</p>
+<h4>参考代码</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre>import pandas as pd
+df = pd.DataFrame({'部门': ['A', 'B', 'A'], '薪资': [8000, 9000, 8500]})
+print(df.groupby('部门')['薪资'].mean())</pre>
+</div>`
+      },
+      {
+        id: 23,
+        title: "透视表与交叉表",
+        description: `<p>创建透视表和交叉表：</p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>创建包含产品、地区、销售额的数据</li>
+  <li>使用pivot_table创建透视表</li>
+  <li>使用crosstab创建交叉表</li>
+</ul>`,
+        difficulty: "hard",
+        time: "30分钟",
+        code: `# 请编写代码
+`,
+        analysis: `<h4>解题思路</h4>
+<p>透视表(pivot_table)用于重新组织数据，交叉表(crosstab)用于计算频率。</p>
+<h4>参考代码</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre>import pandas as pd
+df = pd.DataFrame({'产品': ['A', 'B'], '地区': ['北京', '北京'], '销售额': [100, 200]})
+print(pd.pivot_table(df, values='销售额', index='产品', columns='地区'))</pre>
+</div>`
+      },
+      {
+        id: 25,
+        title: "时间数据处理",
+        description: `<p>处理时间序列数据：</p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>创建包含日期的DataFrame</li>
+  <li>将日期列转换为datetime类型</li>
+  <li>提取年、月、日信息</li>
+</ul>`,
+        difficulty: "medium",
+        time: "20分钟",
+        code: `# 请编写代码
+`,
+        analysis: `<h4>解题思路</h4>
+<p>使用pd.to_datetime()转换日期，使用.dt访问器提取时间组件。</p>
+<h4>参考代码</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre>import pandas as pd
+df = pd.DataFrame({'日期': ['2024-01-01']})
+df['日期'] = pd.to_datetime(df['日期'])
+print(df['日期'].dt.year)</pre>
+</div>`
+      },
+      {
+        id: 26,
+        title: "时间序列可视化",
+        description: `<p>处理时间序列数据并进行可视化准备：</p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>创建日期范围数据</li>
+  <li>设置日期为索引</li>
+  <li>准备月度汇总数据</li>
+</ul>`,
+        difficulty: "medium",
+        time: "20分钟",
+        code: `# 请编写代码
+`,
+        analysis: `<h4>解题思路</h4>
+<p>使用set_index()设置索引，resample()进行时间频率重采样。</p>
+<h4>参考代码</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre>import pandas as pd
+df = pd.DataFrame({'日期': pd.date_range('2024-01-01', periods=3), '销售额': [100, 200, 150]})
+df = df.set_index('日期')
+print(df.resample('M').sum())</pre>
+</div>`
+      },
+      {
+        id: 28,
+        title: "数据拆分",
+        description: `<p>将数据拆分为训练集和测试集：</p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>创建特征和目标变量</li>
+  <li>使用train_test_split拆分数据</li>
+  <li>输出训练集和测试集的大小</li>
+</ul>`,
+        difficulty: "medium",
+        time: "20分钟",
+        code: `# 请编写代码
+`,
+        analysis: `<h4>解题思路</h4>
+<p>通常使用sklearn的train_test_split函数，默认按80%/20%拆分。</p>
+<h4>参考代码</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre>import pandas as pd
+df = pd.DataFrame({'X': range(100)})
+train = df[:80]
+test = df[80:]
+print(len(train), len(test))</pre>
+</div>`
+      },
+      {
+        id: 29,
+        title: "简单线性回归",
+        description: `<p>使用NumPy实现简单线性回归：</p>
+<ul class="list-disc list-inside space-y-1 mt-2">
+  <li>创建一对相关的变量X和y</li>
+  <li>计算回归系数（斜率和截距）</li>
+  <li>进行简单预测</li>
+</ul>`,
+        difficulty: "hard",
+        time: "30分钟",
+        code: `# 请编写代码
+`,
+        analysis: `<h4>解题思路</h4>
+<p>线性回归通过最小二乘法找到最佳拟合直线，使用公式计算斜率和截距。</p>
+<h4>参考代码</h4>
+<div class="bg-dark p-3 rounded-lg font-mono text-sm">
+<pre>import numpy as np
+X = np.array([1, 2, 3])
+y = np.array([2, 4, 5])
+slope = np.sum((X - X.mean()) * (y - y.mean())) / np.sum((X - X.mean())**2)
+print(f"斜率: {slope:.2f}")</pre>
+</div>`
       }
     ];
 
     // 选择题数据
-    const choiceQuestions = [
+            const choiceQuestions = [
+      // 第一章：NumPy数组基础
       {
-        id: 'c1',
-        chapter: 1,
-        title: "选择题1：数据分析定义",
-        question: "数据分析的核心目标是什么？",
+        id: 'chapter1_0',
+        question: '在NumPy中，创建数组的基本函数是？',
         options: [
-          { label: 'A', text: '收集数据' },
-          { label: 'B', text: '清洗数据' },
-          { label: 'C', text: '提取洞察支持决策' },
-          { label: 'D', text: '存储数据' }
-        ],
-        answer: 'C',
-        analysis: "数据分析的核心目标是从数据中提取有价值的洞察，为决策提供支持。收集、清洗和存储数据都是数据分析过程中的步骤，而非最终目标。",
-        difficulty: "easy"
-      },
-      {
-        id: 'c2',
-        chapter: 1,
-        title: "选择题2：CRISP-DM方法论",
-        question: "CRISP-DM方法论包含几个阶段？",
-        options: [
-          { label: 'A', text: '4个' },
-          { label: 'B', text: '5个' },
-          { label: 'C', text: '6个' },
-          { label: 'D', text: '7个' }
-        ],
-        answer: 'C',
-        analysis: "CRISP-DM方法论包含6个阶段：业务理解、数据理解、数据准备、建模、评估、部署。这是数据挖掘项目的标准流程。",
-        difficulty: "easy"
-      },
-      {
-        id: 'c3',
-        chapter: 2,
-        title: "选择题3：缺失值处理",
-        question: "对于数值型数据的缺失值，以下哪种处理方法最合适？",
-        options: [
-          { label: 'A', text: '直接删除' },
-          { label: 'B', text: '用均值或中位数填充' },
-          { label: 'C', text: '用0填充' },
-          { label: 'D', text: '用最大值填充' }
-        ],
-        answer: 'B',
-        analysis: "对于数值型数据，使用均值或中位数填充缺失值是常用且合适的方法。均值适用于正态分布数据，中位数适用于偏态分布数据。",
-        difficulty: "easy"
-      },
-      {
-        id: 'c4',
-        chapter: 2,
-        title: "选择题4：异常值检测",
-        question: "IQR方法中，异常值的判定标准是什么？",
-        options: [
-          { label: 'A', text: '超出均值±1倍标准差' },
-          { label: 'B', text: '超出Q1-1.5×IQR或Q3+1.5×IQR' },
-          { label: 'C', text: '超出均值±2倍标准差' },
-          { label: 'D', text: '超出中位数±1倍IQR' }
-        ],
-        answer: 'B',
-        analysis: "IQR方法中，异常值定义为小于Q1-1.5×IQR或大于Q3+1.5×IQR的值。Q1是第一四分位数，Q3是第三四分位数，IQR=Q3-Q1。",
-        difficulty: "medium"
-      },
-      {
-        id: 'c5',
-        chapter: 3,
-        title: "选择题5：SQL查询",
-        question: "在SQL中，用于从多个表中获取数据的关键字是？",
-        options: [
-          { label: 'A', text: 'SELECT' },
-          { label: 'B', text: 'JOIN' },
-          { label: 'C', text: 'WHERE' },
-          { label: 'D', text: 'GROUP BY' }
-        ],
-        answer: 'B',
-        analysis: "JOIN关键字用于将两个或多个表按照共同的列连接在一起。SELECT用于选择列，WHERE用于过滤行，GROUP BY用于分组。",
-        difficulty: "easy"
-      },
-      {
-        id: 'c6',
-        chapter: 3,
-        title: "选择题6：Pandas操作",
-        question: "在Pandas中，以下哪个方法用于查看数据的前几行？",
-        options: [
-          { label: 'A', text: 'describe()' },
-          { label: 'B', text: 'info()' },
-          { label: 'C', text: 'head()' },
-          { label: 'D', text: 'shape()' }
-        ],
-        answer: 'C',
-        analysis: "head()方法用于查看DataFrame的前几行（默认前5行）。describe()显示统计摘要，info()显示数据信息，shape是属性不是方法。",
-        difficulty: "easy"
-      },
-      {
-        id: 'c7',
-        chapter: 4,
-        title: "选择题7：描述性统计",
-        question: "以下哪个统计量不受极端值影响？",
-        options: [
-          { label: 'A', text: '均值' },
-          { label: 'B', text: '标准差' },
-          { label: 'C', text: '中位数' },
-          { label: 'D', text: '极差' }
-        ],
-        answer: 'C',
-        analysis: "中位数是数据排序后位于中间位置的值，不受极端值影响。均值、标准差和极差都容易受到极端值的影响。",
-        difficulty: "easy"
-      },
-      {
-        id: 'c8',
-        chapter: 4,
-        title: "选择题8：假设检验",
-        question: "p值小于0.05表示什么？",
-        options: [
-          { label: 'A', text: '接受原假设' },
-          { label: 'B', text: '拒绝原假设' },
-          { label: 'C', text: '无法判断' },
-          { label: 'D', text: '需要更多数据' }
-        ],
-        answer: 'B',
-        analysis: "当p值小于显著性水平（通常是0.05）时，我们拒绝原假设，认为存在显著差异。p值表示在原假设成立的情况下观察到当前数据的概率。",
-        difficulty: "medium"
-      },
-      {
-        id: 'c9',
-        chapter: 5,
-        title: "选择题9：机器学习类型",
-        question: "K-Means属于哪种机器学习类型？",
-        options: [
-          { label: 'A', text: '监督学习' },
-          { label: 'B', text: '无监督学习' },
-          { label: 'C', text: '强化学习' },
-          { label: 'D', text: '半监督学习' }
-        ],
-        answer: 'B',
-        analysis: "K-Means是一种无监督学习算法，它不需要标注数据，而是自动从数据中发现模式和结构，将相似的数据点分组到同一个簇中。",
-        difficulty: "easy"
-      },
-      {
-        id: 'c10',
-        chapter: 5,
-        title: "选择题10：回归分析",
-        question: "线性回归的目标是什么？",
-        options: [
-          { label: 'A', text: '分类' },
-          { label: 'B', text: '预测连续数值' },
-          { label: 'C', text: '聚类' },
-          { label: 'D', text: '降维' }
-        ],
-        answer: 'B',
-        analysis: "线性回归用于预测连续数值型变量。分类是分类算法的目标，聚类是无监督学习的目标，降维是如PCA等方法的目标。",
-        difficulty: "easy"
-      },
-      {
-        id: 'c11',
-        chapter: 6,
-        title: "选择题11：数据可视化",
-        question: "展示时间趋势最合适的图表类型是？",
-        options: [
-          { label: 'A', text: '饼图' },
-          { label: 'B', text: '柱状图' },
-          { label: 'C', text: '折线图' },
-          { label: 'D', text: '散点图' }
-        ],
-        answer: 'C',
-        analysis: "折线图最适合展示数据随时间的变化趋势。饼图适合展示占比，柱状图适合比较类别，散点图适合展示两个变量的关系。",
-        difficulty: "easy"
-      },
-      {
-        id: 'c12',
-        chapter: 6,
-        title: "选择题12：报告撰写",
-        question: "数据分析报告的核心部分是什么？",
-        options: [
-          { label: 'A', text: '封面' },
-          { label: 'B', text: '执行摘要' },
-          { label: 'C', text: '分析结果' },
-          { label: 'D', text: '结论建议' }
-        ],
-        answer: 'D',
-        analysis: "结论建议是报告的核心，包含分析的核心发现和针对业务问题的具体行动建议。执行摘要提供概览，分析结果提供详细数据支持。",
-        difficulty: "medium"
-      },
-      {
-        id: 'c13',
-        chapter: 7,
-        title: "选择题13：RFM分析",
-        question: "RFM分析中的R代表什么？",
-        options: [
-          { label: 'A', text: 'Recency（最近购买时间）' },
-          { label: 'B', text: 'Frequency（购买频率）' },
-          { label: 'C', text: 'Monetary（购买金额）' },
-          { label: 'D', text: 'Revenue（收入）' }
+          {label: 'A', text: 'array()'},
+          {label: 'B', text: 'create()'},
+          {label: 'C', text: 'make()'},
+          {label: 'D', text: 'new()'}
         ],
         answer: 'A',
-        analysis: "RFM是客户价值分析的常用方法：R代表Recency（最近一次购买时间），F代表Frequency（购买频率），M代表Monetary（购买金额）。",
-        difficulty: "easy"
+        explanation: 'NumPy使用np.array()函数创建数组。',
+        difficulty: 'easy',
+        chapter: 1,
+        title: 'NumPy基础知识'
       },
       {
-        id: 'c14',
-        chapter: 7,
-        title: "选择题14：转化率",
-        question: "转化率的计算公式是？",
+        id: 'chapter2_0',
+        question: 'NumPy数组的哪个属性返回数组的维度数？',
         options: [
-          { label: 'A', text: '访问数 / 购买数' },
-          { label: 'B', text: '购买数 / 访问数' },
-          { label: 'C', text: '购买数 / 曝光数' },
-          { label: 'D', text: '点击数 / 曝光数' }
-        ],
-        answer: 'B',
-        analysis: "转化率 = 购买数 / 访问数 × 100%。它衡量的是访问用户中有多少比例完成了购买行为。",
-        difficulty: "easy"
-      },
-      {
-        id: 'c15',
-        chapter: 8,
-        title: "选择题15：职业发展",
-        question: "数据分析师最核心的技能是什么？",
-        options: [
-          { label: 'A', text: '编程能力' },
-          { label: 'B', text: '统计知识' },
-          { label: 'C', text: '业务理解能力' },
-          { label: 'D', text: '可视化能力' }
+          {label: 'A', text: 'size'},
+          {label: 'B', text: 'shape'},
+          {label: 'C', text: 'ndim'},
+          {label: 'D', text: 'dtype'}
         ],
         answer: 'C',
-        analysis: "虽然技术技能很重要，但业务理解能力是数据分析师最核心的技能。能够将业务问题转化为分析问题，并将分析结果转化为业务洞察，才是数据分析的核心价值。",
-        difficulty: "medium"
+        explanation: 'ndim属性返回数组的维度数，shape返回形状，size返回元素总数，dtype返回数据类型。',
+        difficulty: 'easy',
+        chapter: 2,
+        title: 'NumPy高级特性'
+      },
+      {
+        id: 'chapter3_0',
+        question: 'Pandas中用于存储一维数据的结构是？',
+        options: [
+          {label: 'A', text: 'DataFrame'},
+          {label: 'B', text: 'Series'},
+          {label: 'C', text: 'Panel'},
+          {label: 'D', text: 'Table'}
+        ],
+        answer: 'B',
+        explanation: 'Series是Pandas的一维数据结构，DataFrame是二维的表格结构。',
+        difficulty: 'easy',
+        chapter: 3,
+        title: 'Pandas数据结构'
+      },
+      {
+        id: 'chapter4_0',
+        question: '读取CSV文件使用的Pandas函数是？',
+        options: [
+          {label: 'A', text: 'pd.load_csv()'},
+          {label: 'B', text: 'pd.read_csv()'},
+          {label: 'C', text: 'pd.open_csv()'},
+          {label: 'D', text: 'pd.import_csv()'}
+        ],
+        answer: 'B',
+        explanation: '使用pd.read_csv()函数读取CSV文件。',
+        difficulty: 'easy',
+        chapter: 4,
+        title: '文件格式选择'
+      },
+      {
+        id: 'chapter5_0',
+        question: 'DataFrame中缺失值的表示方法是？',
+        options: [
+          {label: 'A', text: 'null'},
+          {label: 'B', text: 'None'},
+          {label: 'C', text: 'NaN'},
+          {label: 'D', text: 'NA'}
+        ],
+        answer: 'C',
+        explanation: 'NumPy和Pandas使用NaN（Not a Number）表示缺失值。',
+        difficulty: 'easy',
+        chapter: 5,
+        title: '数据清洗方法'
+      },
+      {
+        id: 'chapter6_0',
+        question: '哪个方法可以计算DataFrame的描述性统计？',
+        options: [
+          {label: 'A', text: 'df.summary()'},
+          {label: 'B', text: 'df.describe()'},
+          {label: 'C', text: 'df.statistics()'},
+          {label: 'D', text: 'df.analyze()'}
+        ],
+        answer: 'B',
+        explanation: 'describe()方法提供数据的计数、均值、标准差、最小值、最大值和分位数等统计信息。',
+        difficulty: 'medium',
+        chapter: 6,
+        title: '探索性分析技术'
+      },
+      {
+        id: 'chapter7_0',
+        question: '在数据可视化中，折线图最适合展示什么类型的数据？',
+        options: [
+          {label: 'A', text: '分类比较'},
+          {label: 'B', text: '趋势变化'},
+          {label: 'C', text: '部分与整体关系'},
+          {label: 'D', text: '数据分布'}
+        ],
+        answer: 'B',
+        explanation: '折线图最适合展示数据随时间变化的趋势。',
+        difficulty: 'easy',
+        chapter: 7,
+        title: '可视化最佳实践'
+      },
+      {
+        id: 'chapter8_0',
+        question: '在Pandas中，按列分组聚合使用的方法是？',
+        options: [
+          {label: 'A', text: 'df.sort()'},
+          {label: 'B', text: 'df.filter()'},
+          {label: 'C', text: 'df.groupby()'},
+          {label: 'D', text: 'df.aggregate()'}
+        ],
+        answer: 'C',
+        explanation: 'groupby()方法用于按一个或多个列分组，然后进行聚合计算。',
+        difficulty: 'medium',
+        chapter: 8,
+        title: '聚合函数'
+      },
+      {
+        id: 'chapter9_0',
+        question: '将字符串转换为日期时间的Pandas函数是？',
+        options: [
+          {label: 'A', text: 'pd.to_date()'},
+          {label: 'B', text: 'pd.to_datetime()'},
+          {label: 'C', text: 'pd.parse_date()'},
+          {label: 'D', text: 'pd.date_convert()'}
+        ],
+        answer: 'B',
+        explanation: 'pd.to_datetime()函数将字符串或其他格式转换为datetime类型。',
+        difficulty: 'medium',
+        chapter: 9,
+        title: '时间序列方法'
+      },
+      {
+        id: 'chapter10_0',
+        question: '在机器学习中，将数据划分为训练集和测试集的目的是？',
+        options: [
+          {label: 'A', text: '减少数据量'},
+          {label: 'B', text: '提高计算速度'},
+          {label: 'C', text: '评估模型泛化能力'},
+          {label: 'D', text: '简化数据结构'}
+        ],
+        answer: 'C',
+        explanation: '使用训练集训练模型，测试集评估模型的泛化能力。',
+        difficulty: 'medium',
+        chapter: 10,
+        title: '机器学习概念'
       }
     ];
 
@@ -3205,7 +4622,17 @@ print(data)
         try {
           pyodide = await loadWithTimeout(cdns[currentCDN]);
           statusEl.innerHTML = '<i class="fa fa-check text-emerald-400"></i> Python解释器加载成功';
-          await pyodide.loadPackage(['pandas', 'numpy', 'matplotlib', 'scipy', 'scikit-learn', 'seaborn']);
+          // 分步加载包，确保pandas正确安装
+          try {
+            statusEl.innerHTML = '<i class="fa fa-spinner fa-spin"></i> 正在加载pandas...';
+            await pyodide.loadPackage('pandas');
+            statusEl.innerHTML = '<i class="fa fa-spinner fa-spin"></i> 正在加载numpy...';
+            await pyodide.loadPackage('numpy');
+            statusEl.innerHTML = '<i class="fa fa-check text-emerald-400"></i> Python解释器加载成功 (pandas+numpy已就绪)';
+          } catch (pkgError) {
+            console.warn('包加载失败:', pkgError);
+            statusEl.innerHTML = '<i class="fa fa-check text-emerald-400"></i> Python解释器加载成功 (部分包未加载)';
+          }
           return;
         } catch (error) {
           console.warn(`CDN ${cdns[currentCDN]} 加载失败:`, error);
@@ -3535,29 +4962,33 @@ print(data)
     // 获取知识点章节ID
     function getKnowledgeSection(chapter) {
       const sections = {
-        1: 'chapter1-basics',
-        2: 'chapter2-preprocessing',
-        3: 'chapter3-tools',
-        4: 'chapter4-statistics',
-        5: 'chapter5-advanced',
-        6: 'chapter6-visualization',
-        7: 'chapter7-cases',
-        8: 'chapter8-summary'
+        1: 'numpy_basics',
+        2: 'numpy_advanced',
+        3: 'pandas_structures',
+        4: 'data_io',
+        5: 'data_preprocessing',
+        6: 'exploratory_analysis',
+        7: 'data_visualization',
+        8: 'group_aggregation',
+        9: 'time_series',
+        10: 'ml_intro'
       };
-      return sections[chapter] || 'chapter1-basics';
+      return sections[chapter] || 'numpy_basics';
     }
 
     // 获取章节名称
     function getChapterName(chapter) {
       const names = {
-        1: '第一章：数据分析概述',
-        2: '第二章：数据准备与清洗',
-        3: '第三章：核心工具实操',
-        4: '第四章：统计分析方法',
-        5: '第五章：高级数据分析',
-        6: '第六章：数据可视化',
-        7: '第七章：行业实战案例',
-        8: '第八章：课程总结'
+        1: '第一章：NumPy数组基础',
+        2: '第二章：NumPy进阶操作',
+        3: '第三章：Pandas数据结构',
+        4: '第四章：数据读取与写入',
+        5: '第五章：数据预处理',
+        6: '第六章：数据探索分析',
+        7: '第七章：数据可视化',
+        8: '第八章：分组与聚合',
+        9: '第九章：时间序列分析',
+        10: '第十章：机器学习入门'
       };
       return names[chapter] || '数据分析';
     }
